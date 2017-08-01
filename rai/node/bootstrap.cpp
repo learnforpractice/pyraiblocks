@@ -151,7 +151,8 @@ rai::bootstrap_client::bootstrap_client (std::shared_ptr <rai::node> node_a, std
 node (node_a),
 attempt (attempt_a),
 socket (node_a->network.service),
-pull_client (*this),
+bulk_pull_client (*this),
+forward_pull_client (*this),
 endpoint (endpoint_a),
 timeout (node_a->network.service)
 {
@@ -159,10 +160,10 @@ timeout (node_a->network.service)
 
 rai::bootstrap_client::~bootstrap_client ()
 {
-	if (!pull_client.pull.account.is_zero ())
+	if (!bulk_pull_client.pull.account.is_zero ())
 	{
 		// If this connection is ending and request_account hasn't been cleared it didn't finish, requeue
-		attempt->requeue_pull (pull_client.pull);
+		attempt->requeue_pull (bulk_pull_client.pull);
 		--attempt->pulling;
 	}
 	--attempt->connections;
@@ -481,7 +482,7 @@ void rai::bulk_pull_client::request (rai::pull_info const & pull_a)
 		connection_l->stop_timeout ();
 		if (!ec)
 		{
-			connection_l->pull_client.receive_block ();
+			connection_l->bulk_pull_client.receive_block ();
 		}
 		else
 		{
@@ -499,7 +500,7 @@ void rai::bulk_pull_client::receive_block ()
 		connection_l->stop_timeout ();
         if (!ec)
         {
-            connection_l->pull_client.received_type ();
+            connection_l->bulk_pull_client.received_type ();
         }
         else
         {
@@ -520,7 +521,7 @@ void rai::bulk_pull_client::received_type ()
             boost::asio::async_read (connection.socket, boost::asio::buffer (connection.receive_buffer.data () + 1, rai::send_block::size), [connection_l] (boost::system::error_code const & ec, size_t size_a)
             {
 				connection_l->stop_timeout ();
-                connection_l->pull_client.received_block (ec, size_a);
+                connection_l->bulk_pull_client.received_block (ec, size_a);
             });
             break;
         }
@@ -530,7 +531,7 @@ void rai::bulk_pull_client::received_type ()
             boost::asio::async_read (connection.socket, boost::asio::buffer (connection.receive_buffer.data () + 1, rai::receive_block::size), [connection_l] (boost::system::error_code const & ec, size_t size_a)
             {
 				connection_l->stop_timeout ();
-                connection_l->pull_client.received_block (ec, size_a);
+                connection_l->bulk_pull_client.received_block (ec, size_a);
             });
             break;
         }
@@ -540,7 +541,7 @@ void rai::bulk_pull_client::received_type ()
             boost::asio::async_read (connection.socket, boost::asio::buffer (connection.receive_buffer.data () + 1, rai::open_block::size), [connection_l] (boost::system::error_code const & ec, size_t size_a)
             {
 				connection_l->stop_timeout ();
-                connection_l->pull_client.received_block (ec, size_a);
+                connection_l->bulk_pull_client.received_block (ec, size_a);
             });
             break;
         }
@@ -550,7 +551,7 @@ void rai::bulk_pull_client::received_type ()
             boost::asio::async_read (connection.socket, boost::asio::buffer (connection.receive_buffer.data () + 1, rai::change_block::size), [connection_l] (boost::system::error_code const & ec, size_t size_a)
             {
 				connection_l->stop_timeout ();
-                connection_l->pull_client.received_block (ec, size_a);
+                connection_l->bulk_pull_client.received_block (ec, size_a);
             });
             break;
         }
@@ -586,6 +587,178 @@ void rai::bulk_pull_client::received_block (boost::system::error_code const & ec
 			{
 				expected = block->previous ();
 			}
+			connection.node->process_receive_many (std::move (block), [this] (MDB_txn * transaction_a, rai::process_return result_a, std::shared_ptr <rai::block> block_a)
+			{
+				switch (result_a.code)
+				{
+					case rai::process_result::progress:
+					case rai::process_result::old:
+						break;
+					case rai::process_result::fork:
+					{
+						auto node_l (connection.node);
+						std::shared_ptr <rai::block> block (node_l->ledger.forked_block (transaction_a, *block_a));
+						node_l->active.start (transaction_a, block);
+						connection.node->network.broadcast_confirm_req (block_a);
+						connection.node->network.broadcast_confirm_req (block);
+						BOOST_LOG (connection.node->log) << boost::str (boost::format ("Fork received in bootstrap between: %1% and %2% root %3%") % block_a->hash ().to_string () % block->hash ().to_string () % block_a->root ().to_string ());
+						break;
+					}
+					default:
+						break;
+				}
+			});
+            receive_block ();
+		}
+        else
+        {
+            BOOST_LOG (connection.node->log) << "Error deserializing block received from pull request";
+        }
+	}
+	else
+	{
+		BOOST_LOG (connection.node->log) << boost::str (boost::format ("Error bulk receiving block: %1%") % ec.message ());
+	}
+}
+
+rai::forward_pull_client::forward_pull_client (rai::bootstrap_client & connection_a) :
+connection (connection_a),
+account_count (0)
+{
+}
+
+rai::forward_pull_client::~forward_pull_client ()
+{
+}
+
+void rai::forward_pull_client::request (rai::pull_info const & pull_a)
+{
+	pull = pull_a;
+	rai::forward_pull req;
+	req.start = pull_a.head;
+	auto buffer (std::make_shared <std::vector <uint8_t>> ());
+	{
+		rai::vectorstream stream (*buffer);
+		req.serialize (stream);
+	}
+	if (connection.node->config.logging.bulk_pull_logging ())
+	{
+		BOOST_LOG (connection.node->log) << boost::str (boost::format ("Requesting successors from block %1% from %2%") % req.start.to_account ()  % connection.endpoint);
+	}
+	else if (connection.node->config.logging.network_logging () && account_count % 256 == 0)
+	{
+		BOOST_LOG (connection.node->log) << boost::str (boost::format ("Requesting successors from block %1% from %2%") % req.start.to_account () % connection.endpoint);
+	}
+	++account_count;
+	auto connection_l (connection.shared ());
+	connection.start_timeout ();
+	boost::asio::async_write (connection.socket, boost::asio::buffer (buffer->data (), buffer->size ()), [connection_l, buffer] (boost::system::error_code const & ec, size_t size_a)
+	{
+		connection_l->stop_timeout ();
+		if (!ec)
+		{
+			connection_l->bulk_pull_client.receive_block ();
+		}
+		else
+		{
+			BOOST_LOG (connection_l->node->log) << boost::str (boost::format ("Error sending forward pull request %1% to %2%") % ec.message () % connection_l->endpoint);
+		}
+	});
+}
+
+void rai::forward_pull_client::receive_block ()
+{
+    auto connection_l (connection.shared ());
+	connection.start_timeout ();
+    boost::asio::async_read (connection.socket, boost::asio::buffer (connection.receive_buffer.data (), 1), [connection_l] (boost::system::error_code const & ec, size_t size_a)
+    {
+		connection_l->stop_timeout ();
+        if (!ec)
+        {
+            connection_l->bulk_pull_client.received_type ();
+        }
+        else
+        {
+            BOOST_LOG (connection_l->node->log) << boost::str (boost::format ("Error receiving block type %1%") % ec.message ());
+        }
+    });
+}
+
+void rai::forward_pull_client::received_type ()
+{
+    auto connection_l (connection.shared ());
+    rai::block_type type (static_cast <rai::block_type> (connection.receive_buffer [0]));
+    switch (type)
+    {
+        case rai::block_type::send:
+        {
+			connection.start_timeout ();
+            boost::asio::async_read (connection.socket, boost::asio::buffer (connection.receive_buffer.data () + 1, rai::send_block::size), [connection_l] (boost::system::error_code const & ec, size_t size_a)
+            {
+				connection_l->stop_timeout ();
+                connection_l->bulk_pull_client.received_block (ec, size_a);
+            });
+            break;
+        }
+        case rai::block_type::receive:
+        {
+			connection.start_timeout ();
+            boost::asio::async_read (connection.socket, boost::asio::buffer (connection.receive_buffer.data () + 1, rai::receive_block::size), [connection_l] (boost::system::error_code const & ec, size_t size_a)
+            {
+				connection_l->stop_timeout ();
+                connection_l->bulk_pull_client.received_block (ec, size_a);
+            });
+            break;
+        }
+        case rai::block_type::open:
+        {
+			connection.start_timeout ();
+            boost::asio::async_read (connection.socket, boost::asio::buffer (connection.receive_buffer.data () + 1, rai::open_block::size), [connection_l] (boost::system::error_code const & ec, size_t size_a)
+            {
+				connection_l->stop_timeout ();
+                connection_l->bulk_pull_client.received_block (ec, size_a);
+            });
+            break;
+        }
+        case rai::block_type::change:
+        {
+			connection.start_timeout ();
+            boost::asio::async_read (connection.socket, boost::asio::buffer (connection.receive_buffer.data () + 1, rai::change_block::size), [connection_l] (boost::system::error_code const & ec, size_t size_a)
+            {
+				connection_l->stop_timeout ();
+                connection_l->bulk_pull_client.received_block (ec, size_a);
+            });
+            break;
+        }
+        case rai::block_type::not_a_block:
+        {
+            connection.completed_pull ();
+            break;
+        }
+        default:
+        {
+            BOOST_LOG (connection.node->log) << boost::str (boost::format ("Unknown type received as block type: %1%") % static_cast <int> (type));
+            break;
+        }
+    }
+}
+
+void rai::forward_pull_client::received_block (boost::system::error_code const & ec, size_t size_a)
+{
+	if (!ec)
+	{
+		rai::bufferstream stream (connection.receive_buffer.data (), 1 + size_a);
+		auto block (rai::deserialize_block (stream));
+		if (block != nullptr)
+		{
+            auto hash (block->hash ());
+            if (connection.node->config.logging.bulk_pull_logging ())
+            {
+                std::string block_l;
+                block->serialize_json (block_l);
+                BOOST_LOG (connection.node->log) << boost::str (boost::format ("Pulled block %1% %2%") % hash.to_string () % block_l);
+            }
+			last = block->hash ();
 			connection.node->process_receive_many (std::move (block), [this] (MDB_txn * transaction_a, rai::process_return result_a, std::shared_ptr <rai::block> block_a)
 			{
 				switch (result_a.code)
@@ -846,15 +1019,15 @@ void rai::bootstrap_client::completed_frontier_request ()
 
 void rai::bootstrap_client::completed_pull ()
 {
-	if (pull_client.expected == pull_client.pull.end)
+	if (bulk_pull_client.expected == bulk_pull_client.pull.end)
 	{
-		pull_client.pull = rai::pull_info ();
+		bulk_pull_client.pull = rai::pull_info ();
 		--attempt->pulling;
 		work ();
 	}
 	else
 	{
-		attempt->requeue_pull (pull_client.pull);
+		attempt->requeue_pull (bulk_pull_client.pull);
 		BOOST_LOG (node->log) << boost::str (boost::format ("Disconnecting from %1% because it didn't give us what we requested") % endpoint);
 	}
 }
@@ -908,7 +1081,7 @@ void rai::bootstrap_client::work ()
 				attempt->pulls.pop_front ();
 				++attempt->pulling;
 				lock.unlock ();
-				pull_client.request (pull);
+				bulk_pull_client.request (pull);
 			}
 			else
 			{

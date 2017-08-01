@@ -115,6 +115,21 @@ public:
 	rai::block_hash expected;
 	rai::pull_info pull;
 };
+class forward_pull_client
+{
+public:
+    forward_pull_client (rai::bootstrap_client &);
+    ~forward_pull_client ();
+    void request (rai::pull_info const &);
+    void receive_block ();
+    void received_type ();
+    void received_block (boost::system::error_code const &, size_t);
+	rai::block_hash first ();
+    rai::bootstrap_client & connection;
+	size_t account_count;
+	rai::block_hash last;
+	rai::pull_info pull;
+};
 class bootstrap_client : public std::enable_shared_from_this <bootstrap_client>
 {
 public:
@@ -136,7 +151,8 @@ public:
 	std::shared_ptr <rai::bootstrap_attempt> attempt;
     boost::asio::ip::tcp::socket socket;
     std::array <uint8_t, 200> receive_buffer;
-	rai::bulk_pull_client pull_client;
+	rai::bulk_pull_client bulk_pull_client;
+	rai::forward_pull_client forward_pull_client;
 	rai::tcp_endpoint endpoint;
 	boost::asio::deadline_timer timeout;
 };
