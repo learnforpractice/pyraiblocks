@@ -220,6 +220,22 @@ public:
     std::vector <uint8_t> send_buffer;
     rai::block_hash current;
 };
+class forward_pull;
+class forward_pull_server : public std::enable_shared_from_this <rai::forward_pull_server>
+{
+public:
+    forward_pull_server (std::shared_ptr <rai::bootstrap_server> const &, std::unique_ptr <rai::forward_pull>);
+    void set_current_end ();
+    std::unique_ptr <rai::block> get_next ();
+    void send_next ();
+    void sent_action (boost::system::error_code const &, size_t);
+    void send_finished ();
+    void no_block_sent (boost::system::error_code const &, size_t);
+    std::shared_ptr <rai::bootstrap_server> connection;
+    std::unique_ptr <rai::forward_pull> request;
+    std::vector <uint8_t> send_buffer;
+    rai::block_hash current;
+};
 class bulk_push_server : public std::enable_shared_from_this <rai::bulk_push_server>
 {
 public:

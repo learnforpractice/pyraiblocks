@@ -1249,7 +1249,8 @@ public:
     }
 	void forward_pull (rai::forward_pull const &) override
 	{
-		assert (false);
+		auto response (std::make_shared <rai::forward_pull_server> (connection, std::unique_ptr <rai::forward_pull> (static_cast <rai::forward_pull *> (connection->requests.front ().release ()))));
+		response->send_next ();
 	}
     std::shared_ptr <rai::bootstrap_server> connection;
 };
@@ -1393,6 +1394,115 @@ void rai::bulk_pull_server::no_block_sent (boost::system::error_code const & ec,
 }
 
 rai::bulk_pull_server::bulk_pull_server (std::shared_ptr <rai::bootstrap_server> const & connection_a, std::unique_ptr <rai::bulk_pull> request_a) :
+connection (connection_a),
+request (std::move (request_a))
+{
+    set_current_end ();
+}
+
+void rai::forward_pull_server::set_current_end ()
+{
+    assert (request != nullptr);
+	rai::transaction transaction (connection->node->store.environment, nullptr, false);
+	rai::account_info info;
+	auto no_address (connection->node->store.account_get (transaction, request->start, info));
+	if (no_address)
+	{
+		if (!connection->node->store.block_exists (transaction, request->start))
+		{
+			current = 0;
+		}
+		else
+		{
+			current = request->start;
+		}
+	}
+	else
+	{
+		current = info.open_block;
+	}
+}
+
+void rai::forward_pull_server::send_next ()
+{
+    std::unique_ptr <rai::block> block (get_next ());
+    if (block != nullptr)
+    {
+        {
+            send_buffer.clear ();
+            rai::vectorstream stream (send_buffer);
+            rai::serialize_block (stream, *block);
+        }
+        auto this_l (shared_from_this ());
+        if (connection->node->config.logging.bulk_pull_logging ())
+        {
+            BOOST_LOG (connection->node->log) << boost::str (boost::format ("Sending block: %1%") % block->hash ().to_string ());
+        }
+        async_write (*connection->socket, boost::asio::buffer (send_buffer.data (), send_buffer.size ()), [this_l] (boost::system::error_code const & ec, size_t size_a)
+        {
+            this_l->sent_action (ec, size_a);
+        });
+    }
+    else
+    {
+        send_finished ();
+    }
+}
+
+std::unique_ptr <rai::block> rai::forward_pull_server::get_next ()
+{
+    std::unique_ptr <rai::block> result;
+    if (!current.is_zero ())
+    {
+		rai::transaction transaction (connection->node->store.environment, nullptr, false);
+        result = connection->node->store.block_get (transaction, current);
+        assert (result != nullptr);
+		current = connection->node->store.block_successor (transaction, current);
+    }
+    return result;
+}
+
+void rai::forward_pull_server::sent_action (boost::system::error_code const & ec, size_t size_a)
+{
+    if (!ec)
+    {
+        send_next ();
+    }
+	else
+	{
+		BOOST_LOG (connection->node->log) << boost::str (boost::format ("Unable to forward send block: %1%") % ec.message ());
+	}
+}
+
+void rai::forward_pull_server::send_finished ()
+{
+    send_buffer.clear ();
+    send_buffer.push_back (static_cast <uint8_t> (rai::block_type::not_a_block));
+    auto this_l (shared_from_this ());
+    if (connection->node->config.logging.bulk_pull_logging ())
+    {
+        BOOST_LOG (connection->node->log) << "Forward sending finished";
+    }
+    async_write (*connection->socket, boost::asio::buffer (send_buffer.data (), 1), [this_l] (boost::system::error_code const & ec, size_t size_a)
+    {
+        this_l->no_block_sent (ec, size_a);
+    });
+}
+
+void rai::forward_pull_server::no_block_sent (boost::system::error_code const & ec, size_t size_a)
+{
+    if (!ec)
+    {
+        assert (size_a == 1);
+		connection->finish_request ();
+    }
+	else
+	{
+		BOOST_LOG (connection->node->log) << "Unable to send not-a-block";
+	}
+}
+
+rai::forward_pull_server::forward_pull_server (std::shared_ptr <rai::bootstrap_server> const & connection_a, std::unique_ptr <rai::forward_pull> request_a) :
 connection (connection_a),
 request (std::move (request_a))
 {
