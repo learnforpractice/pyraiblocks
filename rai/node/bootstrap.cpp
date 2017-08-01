@@ -1081,7 +1081,7 @@ void rai::bootstrap_client::work ()
 				attempt->pulls.pop_front ();
 				++attempt->pulling;
 				lock.unlock ();
-				bulk_pull_client.request (pull);
+				forward_pull_client.request (pull);
 			}
 			else
 			{
