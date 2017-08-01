@@ -401,6 +401,10 @@ public:
     {
         assert (false);
     }
+	void forward_pull (rai::forward_pull const &) override
+	{
+		assert (false);
+	}
     rai::node & node;
     rai::endpoint sender;
 };

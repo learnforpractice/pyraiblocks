@@ -498,6 +498,35 @@ void rai::bulk_pull::serialize (rai::stream & stream_a)
     write (stream_a, end);
 }
 
+rai::forward_pull::forward_pull () :
+message (rai::message_type::forward_pull)
+{
+}
+
+void rai::forward_pull::visit (rai::message_visitor & visitor_a) const
+{
+    visitor_a.forward_pull (*this);
+}
+
+bool rai::forward_pull::deserialize (rai::stream & stream_a)
+{
+	auto result (read_header (stream_a, version_max, version_using, version_min, type, extensions));
+	assert (!result);
+	assert (rai::message_type::forward_pull == type);
+    if (!result)
+    {
+        assert (type == rai::message_type::forward_pull);
+        result = read (stream_a, start);
+    }
+    return result;
+}
+
+void rai::forward_pull::serialize (rai::stream & stream_a)
+{
+	write_header (stream_a);
+    write (stream_a, start);
+}
+
 rai::bulk_push::bulk_push () :
 message (rai::message_type::bulk_push)
 {

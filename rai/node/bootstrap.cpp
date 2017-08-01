@@ -1247,6 +1247,10 @@ public:
         auto response (std::make_shared <rai::frontier_req_server> (connection, std::unique_ptr <rai::frontier_req> (static_cast <rai::frontier_req *> (connection->requests.front ().release ()))));
         response->send_next ();
     }
+	void forward_pull (rai::forward_pull const &) override
+	{
+		assert (false);
+	}
     std::shared_ptr <rai::bootstrap_server> connection;
 };
 }
