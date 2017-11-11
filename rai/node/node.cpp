@@ -86,7 +86,7 @@ void rai::network::send_keepalive (rai::endpoint const & endpoint_a)
     }
     ++outgoing.keepalive;
 	std::weak_ptr <rai::node> node_w (node.shared ());
-    send_buffer (bytes->data (), bytes->size (), endpoint_a, [bytes, node_w, endpoint_a] (boost::system::error_code const & ec, size_t)
+    send_buffer (bytes, endpoint_a, [node_w, endpoint_a] (boost::system::error_code const & ec, size_t)
 	{
 		if (auto node_l = node_w.lock ())
 		{
@@ -133,7 +133,7 @@ void rai::network::republish (rai::block_hash const & hash_a, std::shared_ptr <s
 		BOOST_LOG (node.log) << boost::str (boost::format ("Publishing %1% to %2%") % hash_a.to_string () % endpoint_a);
 	}
     std::weak_ptr <rai::node> node_w (node.shared ());
-	send_buffer (buffer_a->data (), buffer_a->size (), endpoint_a, [buffer_a, node_w, endpoint_a] (boost::system::error_code const & ec, size_t size)
+	send_buffer (buffer_a, endpoint_a, [node_w, endpoint_a] (boost::system::error_code const & ec, size_t size)
 	{
 		if (auto node_l = node_w.lock ())
 		{
@@ -283,7 +283,7 @@ void rai::network::send_confirm_req (rai::endpoint const & endpoint_a, std::shar
     }
     std::weak_ptr <rai::node> node_w (node.shared ());
 	++outgoing.confirm_req;
-    send_buffer (bytes->data (), bytes->size (), endpoint_a, [bytes, node_w] (boost::system::error_code const & ec, size_t size)
+    send_buffer (bytes, endpoint_a, [node_w] (boost::system::error_code const & ec, size_t size)
 	{
 		if (auto node_l = node_w.lock ())
 		{
@@ -1586,7 +1586,7 @@ void rai::network::confirm_send (rai::confirm_ack const & confirm_a, std::shared
     }
     std::weak_ptr <rai::node> node_w (node.shared ());
 	++outgoing.confirm_ack;
-    node.network.send_buffer (bytes_a->data (), bytes_a->size (), endpoint_a, [bytes_a, node_w, endpoint_a] (boost::system::error_code const & ec, size_t size_a)
+    node.network.send_buffer (bytes_a, endpoint_a, [node_w, endpoint_a] (boost::system::error_code const & ec, size_t size_a)
 	{
 		if (auto node_l = node_w.lock ())
 		{
@@ -2576,14 +2576,14 @@ std::ostream & operator << (std::ostream & stream_a, std::chrono::system_clock::
     return stream_a;
 }
 
-void rai::network::send_buffer (uint8_t const * data_a, size_t size_a, rai::endpoint const & endpoint_a, std::function <void (boost::system::error_code const &, size_t)> callback_a)
+void rai::network::send_buffer (std::shared_ptr <std::vector <uint8_t>> buffer_a, rai::endpoint const & endpoint_a, std::function <void (boost::system::error_code const &, size_t)> callback_a)
 {
 	std::unique_lock <std::mutex> lock (socket_mutex);
 	if (node.config.logging.network_packet_logging ())
 	{
 		BOOST_LOG (node.log) << "Sending packet";
 	}
-	socket.async_send_to (boost::asio::buffer (data_a, size_a), endpoint_a, [this, callback_a] (boost::system::error_code const & ec, size_t size_a)
+	socket.async_send_to (boost::asio::buffer (buffer_a->data (), buffer_a->size ()), endpoint_a, [this, callback_a, buffer_a] (boost::system::error_code const & ec, size_t size_a)
 	{
 		callback_a (ec, size_a);
 		if (this->node.config.logging.network_packet_logging ())

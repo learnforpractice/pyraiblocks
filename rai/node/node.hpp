@@ -309,7 +309,7 @@ public:
     void send_keepalive (rai::endpoint const &);
 	void broadcast_confirm_req (std::shared_ptr <rai::block>);
     void send_confirm_req (rai::endpoint const &, std::shared_ptr <rai::block>);
-    void send_buffer (uint8_t const *, size_t, rai::endpoint const &, std::function <void (boost::system::error_code const &, size_t)>);
+    void send_buffer (std::shared_ptr <std::vector <uint8_t>>, rai::endpoint const &, std::function <void (boost::system::error_code const &, size_t)>);
     rai::endpoint endpoint ();
     rai::endpoint remote;
     std::array <uint8_t, 512> buffer;
