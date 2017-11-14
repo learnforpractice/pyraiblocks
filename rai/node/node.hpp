@@ -291,10 +291,57 @@ public:
     > arrival;
     std::mutex mutex;
 };
+class flow_packet
+{
+public:
+	std::chrono::system_clock::time_point time;
+	std::shared_ptr <std::vector <uint8_t>> data;
+	rai::endpoint destination;
+};
+class flow_sample
+{
+public:
+	std::chrono::system_clock::time_point time;
+	size_t size;
+};
+// The flow_control class manages outbound traffic for UDP packets
+// It tracks packet generation rate over sample_period
+// The outbound traffic rate is set to current_rate * outbound_factor
+// Count in-rate and out-rate, wait while out-rate > in-rate * outbound_factor
+// Wait until another in packet arrives, an out packet falls past the sample period, or the out-rate would drop below the in-rate
+class flow_control
+{
+public:
+	flow_control (boost::asio::ip::udp::socket &, std::mutex &);
+	~flow_control ();
+	float rate_in () const;
+	float rate_out () const;
+	void send (rai::endpoint const &, std::shared_ptr <std::vector <uint8_t>>);
+	void stop ();
+	void run ();
+	void process ();
+	static float constexpr minimum_out = 8.0 * 1024; // Bytes / sec
+	static std::chrono::seconds constexpr sample_period_in = std::chrono::seconds (30);
+	static std::chrono::seconds constexpr sample_period_out = std::chrono::seconds (1);
+	static float constexpr outbound_factor = 1.2; // Multiplier
+	float rate_in_locked () const;
+	float rate_out_locked () const;
+    boost::asio::ip::udp::socket & socket;
+    std::mutex & socket_mutex;
+	std::thread thread;
+	mutable std::mutex mutex;
+	std::condition_variable condition;
+	std::deque <rai::flow_sample> data_in;
+	size_t data_in_total;
+	std::deque <rai::flow_sample> data_out;
+	size_t data_out_total;
+	std::deque <rai::flow_packet> unsent;
+};
 class network
 {
 public:
     network (rai::node &, uint16_t);
+    ~network ();
     void receive ();
     void stop ();
     void receive_action (boost::system::error_code const &, size_t);
@@ -309,12 +356,13 @@ public:
     void send_keepalive (rai::endpoint const &);
 	void broadcast_confirm_req (std::shared_ptr <rai::block>);
     void send_confirm_req (rai::endpoint const &, std::shared_ptr <rai::block>);
-    void send_buffer (std::shared_ptr <std::vector <uint8_t>>, rai::endpoint const &, std::function <void (boost::system::error_code const &, size_t)>);
+    void send_buffer (std::shared_ptr <std::vector <uint8_t>>, rai::endpoint const &);
     rai::endpoint endpoint ();
     rai::endpoint remote;
     std::array <uint8_t, 512> buffer;
-    boost::asio::ip::udp::socket socket;
     std::mutex socket_mutex;
+    boost::asio::ip::udp::socket socket;
+    rai::flow_control flow;
     boost::asio::ip::udp::resolver resolver;
     rai::node & node;
     uint64_t bad_sender_count;

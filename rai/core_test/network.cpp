@@ -248,7 +248,7 @@ TEST (network, send_insufficient_work)
         publish.serialize (stream);
     }
     auto node1 (system.nodes [1]->shared ());
-    system.nodes [0]->network.send_buffer (bytes, system.nodes [1]->network.endpoint (), [node1] (boost::system::error_code const & ec, size_t size) {});
+    system.nodes [0]->network.send_buffer (bytes, system.nodes [1]->network.endpoint ());
     ASSERT_EQ (0, system.nodes [0]->network.insufficient_work_count);
     auto iterations (0);
     while (system.nodes [1]->network.insufficient_work_count == 0)
@@ -898,4 +898,61 @@ TEST (node, port_mapping)
 	{
 		system.poll ();
 	}
+}
+
+TEST (flow_control, rate)
+{
+    boost::asio::io_service service;
+    rai::endpoint endpoint1 (boost::asio::ip::address_v6::any (), 24000);
+    boost::asio::ip::udp::socket socket1 (service, endpoint1);
+    rai::flow_control flow (socket1);
+    socket1.close ();
+    flow.stop ();
+    ASSERT_FLOAT_EQ (flow.rate_in (), rai::flow_control::minimum_out);
+    ASSERT_FLOAT_EQ (flow.rate_out (), 0.0);
+    flow.data_in_total = 48 * 1024 * rai::flow_control::sample_period.count ();
+    ASSERT_FLOAT_EQ (flow.rate_in (), 48.0 * 1024);
+    flow.data_out_total = 56 * 1024 * rai::flow_control::sample_period.count ();
+    ASSERT_FLOAT_EQ (flow.rate_out (), 56.0 * 1024);
+}
+
+TEST (flow_control, send)
+{
+    boost::asio::io_service service;
+    rai::endpoint endpoint1 (boost::asio::ip::address_v6::any (), 24000);
+    boost::asio::ip::udp::socket socket1 (service, endpoint1);
+    rai::flow_control flow (socket1);
+    auto buffer (std::make_shared <std::vector <uint8_t>> (500));
+    auto rate_out1 (flow.rate_out ());
+    flow.send (endpoint1, buffer);
+    ASSERT_EQ (500, flow.data_in_total);
+    auto iterations (0);
+    while (flow.rate_out () == rate_out1 || flow.data_out.empty () || !flow.unsent.empty ())
+    {
+		std::this_thread::sleep_for (std::chrono::milliseconds (20));
+		++iterations;
+		ASSERT_LT (iterations, 200);
+	}
+    socket1.close ();
+    flow.stop ();
+}
+
+TEST (flow_control, expire)
+{
+    boost::asio::io_service service;
+    rai::endpoint endpoint1 (boost::asio::ip::address_v6::any (), 24000);
+    boost::asio::ip::udp::socket socket1 (service, endpoint1);
+    rai::flow_control flow (socket1);
+    socket1.close ();
+    flow.stop ();
+    auto now (std::chrono::system_clock::now ());
+    flow.data_in_total = 500;
+    flow.data_in.push_back ({now - rai::flow_control::sample_period - std::chrono::seconds (1), 500});
+    flow.data_out_total = 500;
+    flow.data_out.push_back ({now - rai::flow_control::sample_period - std::chrono::seconds (1), 500});
+    ASSERT_FALSE (flow.data_in.empty ());
+    ASSERT_FALSE (flow.data_out.empty ());
+   	flow.process ();
+    ASSERT_TRUE (flow.data_in.empty ());
+    ASSERT_TRUE (flow.data_out.empty ());
 }

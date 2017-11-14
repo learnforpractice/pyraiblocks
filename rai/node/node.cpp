@@ -30,6 +30,10 @@ std::chrono::minutes constexpr rai::node::backup_interval;
 int constexpr rai::port_mapping::mapping_timeout;
 int constexpr rai::port_mapping::check_timeout;
 unsigned constexpr rai::active_transactions::announce_interval_ms;
+float constexpr rai::flow_control::minimum_out;
+std::chrono::seconds constexpr rai::flow_control::sample_period_in;
+std::chrono::seconds constexpr rai::flow_control::sample_period_out;
+float constexpr rai::flow_control::outbound_factor;
 
 rai::message_statistics::message_statistics () :
 keepalive (0),
@@ -39,8 +43,128 @@ confirm_ack (0)
 {
 }
 
+rai::flow_control::flow_control (boost::asio::ip::udp::socket & socket_a, std::mutex & socket_mutex_a) :
+socket (socket_a),
+socket_mutex (socket_mutex_a),
+thread ([this] () { run (); }),
+data_in_total (0),
+data_out_total (0)
+{
+}
+
+rai::flow_control::~flow_control ()
+{
+	stop ();
+}
+
+void rai::flow_control::send (rai::endpoint const & endpoint_a, std::shared_ptr <std::vector <uint8_t>> data_a)
+{
+	std::lock_guard <std::mutex> lock (mutex);
+	auto now (std::chrono::system_clock::now ());
+	unsent.push_back ({now, data_a, endpoint_a});
+	data_in.push_back ({now, data_a->size ()});
+	data_in_total += data_a->size ();
+	condition.notify_all ();
+}
+
+void rai::flow_control::stop ()
+{
+	assert (!socket.is_open ());
+	condition.notify_all ();
+	if (thread.joinable ())
+	{
+		thread.join ();
+	}
+}
+
+void rai::flow_control::run ()
+{
+	std::unique_lock <std::mutex> lock (mutex);
+	while (socket.is_open ())
+	{
+		if (!unsent.empty ())
+		{
+			process ();
+			auto now (std::chrono::system_clock::now ());
+			auto data_in_expire (sample_period_in + (data_in.empty () ? now : data_in.front ().time));
+			auto data_out_expire (sample_period_out + (data_out.empty () ? now : data_out.front ().time));
+			condition.wait_until (lock, std::min (data_in_expire, data_out_expire));
+		}
+		else
+		{
+			condition.wait (lock);
+		}
+	}
+}
+
+void rai::flow_control::process ()
+{
+	auto now (std::chrono::system_clock::now ());
+	while (!data_out.empty () && data_out.front ().time < (now - sample_period_out))
+	{
+		assert (data_out.front ().size <= data_out_total);
+		data_out_total -= data_out.front ().size;
+		data_out.pop_front ();
+	}
+	while (!data_in.empty () && data_in.front ().time < (now - sample_period_in))
+	{
+		assert (data_in.front ().size <= data_in_total);
+		data_in_total -= data_in.front ().size;
+		data_in.pop_front ();
+	}
+	while (!unsent.empty () && (rate_out_locked () + unsent.front ().data->size () < (rate_in_locked () * outbound_factor)))
+	{
+		auto item (unsent.front ());
+		unsent.pop_front ();
+		auto buffer (item.data);
+		data_out.push_back ({now, buffer->size ()});
+		data_out_total += buffer->size ();
+		static auto last_log (std::chrono::system_clock::now ());
+		if (last_log < std::chrono::system_clock::now () - std::chrono::seconds (1))
+		{
+			std::cerr << boost::str (boost::format ("Rate in: %1% rate out: %2%, packets %3%\n") % rate_in_locked () % rate_out_locked () % data_out.size ());
+			last_log = std::chrono::system_clock::now ();
+		}
+		socket.async_send_to (boost::asio::buffer (buffer->data (), buffer->size ()), item.destination, [buffer] (boost::system::error_code const & ec, size_t size_a)
+		{
+			if (ec)
+			{
+				std::cerr << boost::str (boost::format ("Error sending packet %1%\n") % ec.message ());
+			}
+		});
+	}
+}
+
+float rai::flow_control::rate_in () const
+{
+	std::lock_guard <std::mutex> lock (mutex);
+	return rate_in_locked ();
+}
+
+float rai::flow_control::rate_in_locked () const
+{
+	assert (!mutex.try_lock ());
+	auto result (float (data_in_total) / sample_period_in.count ());
+	result = std::max (result, minimum_out);
+	return result;
+}
+
+float rai::flow_control::rate_out () const
+{
+	std::lock_guard <std::mutex> lock (mutex);
+	return rate_out_locked ();
+}
+
+float rai::flow_control::rate_out_locked () const
+{
+	assert (!mutex.try_lock ());
+	auto result (float (data_out_total) / sample_period_out.count ());
+	return result;
+}
+
 rai::network::network (rai::node & node_a, uint16_t port) :
 socket (node_a.service, rai::endpoint (boost::asio::ip::address_v6::any (), port)),
+flow (socket, socket_mutex),
 resolver (node_a.service),
 node (node_a),
 bad_sender_count (0),
@@ -50,13 +174,18 @@ error_count (0)
 {
 }
 
+rai::network::~network ()
+{
+	stop ();
+}
+
 void rai::network::receive ()
 {
     if (node.config.logging.network_packet_logging ())
     {
         BOOST_LOG (node.log) << "Receiving packet";
     }
-    std::unique_lock <std::mutex> lock (socket_mutex);
+    std::lock_guard <std::mutex> lock (socket_mutex);
     socket.async_receive_from (boost::asio::buffer (buffer.data (), buffer.size ()), remote, [this] (boost::system::error_code const & error, size_t size_a)
 	{
 		receive_action (error, size_a);
@@ -67,6 +196,7 @@ void rai::network::stop ()
 {
     on = false;
     socket.close ();
+    flow.stop ();
     resolver.cancel ();
 }
 
@@ -86,19 +216,7 @@ void rai::network::send_keepalive (rai::endpoint const & endpoint_a)
     }
     ++outgoing.keepalive;
 	std::weak_ptr <rai::node> node_w (node.shared ());
-    send_buffer (bytes, endpoint_a, [node_w, endpoint_a] (boost::system::error_code const & ec, size_t)
-	{
-		if (auto node_l = node_w.lock ())
-		{
-			if (node_l->config.logging.network_keepalive_logging ())
-			{
-				if (ec)
-				{
-					BOOST_LOG (node_l->log) << boost::str (boost::format ("Error sending keepalive to %1% %2%") % endpoint_a % ec.message ());
-				}
-			}
-		}
-	});
+    send_buffer (bytes, endpoint_a);
 }
 
 void rai::node::keepalive (std::string const & address_a, uint16_t port_a)
@@ -133,19 +251,7 @@ void rai::network::republish (rai::block_hash const & hash_a, std::shared_ptr <s
 		BOOST_LOG (node.log) << boost::str (boost::format ("Publishing %1% to %2%") % hash_a.to_string () % endpoint_a);
 	}
     std::weak_ptr <rai::node> node_w (node.shared ());
-	send_buffer (buffer_a, endpoint_a, [node_w, endpoint_a] (boost::system::error_code const & ec, size_t size)
-	{
-		if (auto node_l = node_w.lock ())
-		{
-			if (node_l->config.logging.network_logging ())
-			{
-				if (ec)
-				{
-					BOOST_LOG (node_l->log) << boost::str (boost::format ("Error sending publish: %1% to %2%") % ec.message () % endpoint_a);
-				}
-			}
-		}
-	});
+	send_buffer (buffer_a, endpoint_a);
 }
 
 void rai::network::rebroadcast_reps (std::shared_ptr <rai::block> block_a)
@@ -283,19 +389,7 @@ void rai::network::send_confirm_req (rai::endpoint const & endpoint_a, std::shar
     }
     std::weak_ptr <rai::node> node_w (node.shared ());
 	++outgoing.confirm_req;
-    send_buffer (bytes, endpoint_a, [node_w] (boost::system::error_code const & ec, size_t size)
-	{
-		if (auto node_l = node_w.lock ())
-		{
-			if (node_l->config.logging.network_logging ())
-			{
-				if (ec)
-				{
-					BOOST_LOG (node_l->log) << boost::str (boost::format ("Error sending confirm request: %1%") % ec.message ());
-				}
-			}
-		}
-	});
+    send_buffer (bytes, endpoint_a);
 }
 
 template <typename T>
@@ -379,7 +473,7 @@ public:
     {
         if (node.config.logging.network_message_logging ())
         {
-			BOOST_LOG (node.log) << boost::str (boost::format ("Received confirm_ack message from %1% for %2% sequence %3%") % sender % message_a.vote->block->hash ().to_string () % std::to_string (message_a.vote->sequence));
+			BOOST_LOG (node.log) << boost::str (boost::format ("Received confirm_ack message from %1% representative %4% for %2% sequence %3%") % sender % message_a.vote->block->hash ().to_string () % std::to_string (message_a.vote->sequence) % message_a.vote->account.to_account ());
         }
         ++node.network.incoming.confirm_ack;
         node.peers.contacted (sender, message_a.version_using);
@@ -1586,19 +1680,7 @@ void rai::network::confirm_send (rai::confirm_ack const & confirm_a, std::shared
     }
     std::weak_ptr <rai::node> node_w (node.shared ());
 	++outgoing.confirm_ack;
-    node.network.send_buffer (bytes_a, endpoint_a, [node_w, endpoint_a] (boost::system::error_code const & ec, size_t size_a)
-	{
-		if (auto node_l = node_w.lock ())
-		{
-			if (node_l->config.logging.network_logging ())
-			{
-				if (ec)
-				{
-					BOOST_LOG (node_l->log) << boost::str (boost::format ("Error broadcasting confirm_ack to %1%: %2%") % endpoint_a % ec.message ());
-				}
-			}
-		}
-	});
+    node.network.send_buffer (bytes_a, endpoint_a);
 }
 
 void rai::node::process_active (std::shared_ptr <rai::block> incoming)
@@ -2576,21 +2658,9 @@ std::ostream & operator << (std::ostream & stream_a, std::chrono::system_clock::
     return stream_a;
 }
 
-void rai::network::send_buffer (std::shared_ptr <std::vector <uint8_t>> buffer_a, rai::endpoint const & endpoint_a, std::function <void (boost::system::error_code const &, size_t)> callback_a)
+void rai::network::send_buffer (std::shared_ptr <std::vector <uint8_t>> buffer_a, rai::endpoint const & endpoint_a)
 {
-	std::unique_lock <std::mutex> lock (socket_mutex);
-	if (node.config.logging.network_packet_logging ())
-	{
-		BOOST_LOG (node.log) << "Sending packet";
-	}
-	socket.async_send_to (boost::asio::buffer (buffer_a->data (), buffer_a->size ()), endpoint_a, [this, callback_a, buffer_a] (boost::system::error_code const & ec, size_t size_a)
-	{
-		callback_a (ec, size_a);
-		if (this->node.config.logging.network_packet_logging ())
-		{
-			BOOST_LOG (this->node.log) << "Packet send complete";
-		}
-	});
+	flow.send (endpoint_a, buffer_a);
 }
 
 uint64_t rai::block_store::now ()
