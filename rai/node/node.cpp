@@ -30,7 +30,6 @@ std::chrono::minutes constexpr rai::node::backup_interval;
 int constexpr rai::port_mapping::mapping_timeout;
 int constexpr rai::port_mapping::check_timeout;
 unsigned constexpr rai::active_transactions::announce_interval_ms;
-float constexpr rai::flow_control::minimum_out;
 std::chrono::seconds constexpr rai::flow_control::sample_period_in;
 std::chrono::seconds constexpr rai::flow_control::sample_period_out;
 float constexpr rai::flow_control::outbound_factor;
@@ -112,25 +111,30 @@ void rai::flow_control::process ()
 		data_in_total -= data_in.front ().size;
 		data_in.pop_front ();
 	}
-	while (!unsent.empty () && (rate_out_locked () + unsent.front ().data->size () < (rate_in_locked () * outbound_factor)))
+	while (socket.is_open () && !unsent.empty () && (rate_out_locked () + unsent.front ().data->size () < (rate_in_locked () * outbound_factor)))
 	{
 		auto item (unsent.front ());
 		unsent.pop_front ();
 		auto buffer (item.data);
 		data_out.push_back ({now, buffer->size ()});
 		data_out_total += buffer->size ();
-		static auto last_log (std::chrono::system_clock::now ());
+		/*static auto last_log (std::chrono::system_clock::now ());
 		if (last_log < std::chrono::system_clock::now () - std::chrono::seconds (1))
 		{
-			std::cerr << boost::str (boost::format ("Rate in: %1% rate out: %2%, packets %3%\n") % rate_in_locked () % rate_out_locked () % data_out.size ());
+			std::cerr << boost::str (boost::format ("Rate in: %1%, queue in: %4%, rate out: %2%, queue out: %3%\n") % rate_in_locked () % rate_out_locked () % data_out.size () % unsent.size ());
 			last_log = std::chrono::system_clock::now ();
 		}
-		socket.async_send_to (boost::asio::buffer (buffer->data (), buffer->size ()), item.destination, [buffer] (boost::system::error_code const & ec, size_t size_a)
+		if (unsent.empty ())
 		{
-			if (ec)
+			std::cerr << '.';
+		}*/
+		auto address (item.destination);
+		socket.async_send_to (boost::asio::buffer (buffer->data (), buffer->size ()), item.destination, [buffer, address] (boost::system::error_code const & ec, size_t size_a)
+		{
+			/*if (ec)
 			{
-				std::cerr << boost::str (boost::format ("Error sending packet %1%\n") % ec.message ());
-			}
+				std::cerr << boost::str (boost::format ("Error sending packet %1% %2% %3% %4%\n") % ec.message () % std::to_string (size_a) % std::to_string (ec.value ()) % address);
+			}*/
 		});
 	}
 }
@@ -145,7 +149,11 @@ float rai::flow_control::rate_in_locked () const
 {
 	assert (!mutex.try_lock ());
 	auto result (float (data_in_total) / sample_period_in.count ());
-	result = std::max (result, minimum_out);
+	if (!unsent.empty ())
+	{
+		// 
+		result = std::max (result, static_cast <float> (unsent.front ().data->size ()));
+	}
 	return result;
 }
 

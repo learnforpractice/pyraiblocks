@@ -320,8 +320,7 @@ public:
 	void stop ();
 	void run ();
 	void process ();
-	static float constexpr minimum_out = 8.0 * 1024; // Bytes / sec
-	static std::chrono::seconds constexpr sample_period_in = std::chrono::seconds (30);
+	static std::chrono::seconds constexpr sample_period_in = std::chrono::seconds (8);
 	static std::chrono::seconds constexpr sample_period_out = std::chrono::seconds (1);
 	static float constexpr outbound_factor = 1.2; // Multiplier
 	float rate_in_locked () const;
