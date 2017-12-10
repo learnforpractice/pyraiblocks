@@ -1,5 +1,6 @@
 #include <rai/node/wallet.hpp>
 
+#include <rai/interface.h>
 #include <rai/node/node.hpp>
 #include <rai/node/xorshift.hpp>
 
@@ -7,8 +8,6 @@
 
 #include <boost/property_tree/ptree.hpp>
 #include <boost/property_tree/json_parser.hpp>
-
-#include <ed25519-donna/ed25519.h>
 
 #include <future>
 

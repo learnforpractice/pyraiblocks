@@ -3,7 +3,7 @@
 #include <cryptopp/aes.h>
 #include <cryptopp/modes.h>
 
-#include <ed25519-donna/ed25519.h>
+#include <rai/interface.h>
 
 #include <lmdb/libraries/liblmdb/lmdb.h>
 

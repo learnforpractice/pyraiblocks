@@ -5,8 +5,6 @@
 #include <condition_variable>
 #include <type_traits>
 
-#include <blake2/blake2.h>
-
 #include <boost/iostreams/device/back_inserter.hpp>
 #include <boost/iostreams/stream.hpp>
 #include <boost/filesystem.hpp>
@@ -18,6 +16,7 @@
 #include <lmdb/libraries/liblmdb/lmdb.h>
 
 #include <rai/config.hpp>
+#include <rai/interface.h>
 
 namespace rai
 {

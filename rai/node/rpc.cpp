@@ -1,9 +1,9 @@
 #include <rai/node/rpc.hpp>
 
-#include <rai/node/node.hpp>
 #include <boost/algorithm/string.hpp>
 
-#include <ed25519-donna/ed25519.h>
+#include <rai/interface.h>
+#include <rai/node/node.hpp>
 
 rai::rpc_config::rpc_config () :
 address (boost::asio::ip::address_v6::loopback ()),
