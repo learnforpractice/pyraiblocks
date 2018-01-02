@@ -8,6 +8,7 @@
 #include <queue>
 #include <unordered_set>
 #include <stack>
+#include <set>
 
 #include <boost/log/sources/logger.hpp>
 
@@ -57,7 +58,8 @@ public:
 	rai::account account;
 	rai::block_hash head;
 	rai::block_hash end;
-	unsigned attempts;
+	// For pointer comparison only, not guaranteed to be live
+	std::set <rai::tcp_endpoint> fails;
 };
 class frontier_req_client;
 class bulk_push_client;

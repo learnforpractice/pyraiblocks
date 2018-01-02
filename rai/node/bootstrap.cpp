@@ -451,6 +451,7 @@ rai::bulk_pull_client::~bulk_pull_client ()
 	}
 	if (!pull.account.is_zero ())
 	{
+		pull.fails.insert (connection->endpoint);
 		connection->attempt->requeue_pull (pull);
 	}
 }
@@ -752,16 +753,14 @@ void rai::bulk_push_client::push_block (rai::block const & block_a)
 
 rai::pull_info::pull_info () :
 account (0),
-end (0),
-attempts (0)
+end (0)
 {
 }
 
 rai::pull_info::pull_info (rai::account const & account_a, rai::block_hash const & head_a, rai::block_hash const & end_a) :
 account (account_a),
 head (head_a),
-end (end_a),
-attempts (0)
+end (end_a)
 {
 }
 
@@ -822,15 +821,26 @@ void rai::bootstrap_attempt::request_pull (std::unique_lock <std::mutex> & lock_
 	auto connection_l (connection (lock_a));
 	if (connection_l)
 	{
-		auto pull (pulls.front ());
-		pulls.pop_front ();
-		auto client (std::make_shared <rai::bulk_pull_client> (connection_l));
-		// The bulk_pull_client destructor attempt to requeue_pull which can cause a deadlock if this is the last reference
-		// Dispatch request in an external thread in case it needs to be destroyed
-		node->background ([client, pull] ()
+		std::shared_ptr <rai::bulk_pull_client> client;
+		rai::pull_info pull;
+		for (auto i (pulls.begin ()), n (pulls.end ()); i != n && client == nullptr; ++i)
 		{
-			client->request (pull);
-		});
+			if (i->fails.find (connection_l->endpoint) == i->fails.end ())
+			{
+				pull = pulls.front ();
+				pulls.pop_front ();
+			 	client = std::make_shared <rai::bulk_pull_client> (connection_l);
+			}
+		}
+		if (client != nullptr)
+		{
+			// The bulk_pull_client destructor attempt to requeue_pull which can cause a deadlock if this is the last reference
+			// Dispatch request in an external thread in case it needs to be destroyed
+			node->background ([client, pull] ()
+			{
+				client->request (pull);
+			});
+		}
 	}
 }
 
@@ -1025,7 +1035,7 @@ void rai::bootstrap_attempt::stop ()
 void rai::bootstrap_attempt::requeue_pull (rai::pull_info const & pull_a)
 {
 	auto pull (pull_a);
-	if (++pull.attempts < 4)
+	if (pull.fails.size () < 4)
 	{
 		std::lock_guard <std::mutex> lock (mutex);
 		pulls.push_front (pull);
@@ -1035,7 +1045,7 @@ void rai::bootstrap_attempt::requeue_pull (rai::pull_info const & pull_a)
 	{
 		if (node->config.logging.bulk_pull_logging ())
 		{
-			BOOST_LOG (node->log) << boost::str (boost::format ("Failed to pull account %1% down to %2% after %3% attempts") % pull.account.to_account () % pull.end.to_string () % pull.attempts);
+			BOOST_LOG (node->log) << boost::str (boost::format ("Failed to pull account %1% down to %2% after %3% attempts") % pull.account.to_account () % pull.end.to_string () % pull.fails.size ());
 		}
 	}
 }
