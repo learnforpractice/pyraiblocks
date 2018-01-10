@@ -248,6 +248,21 @@ add_library (rai_lib SHARED
 	rai/lib/work.hpp
 	rai/lib/work.cpp)
 
+add_custom_command(
+    OUTPUT ${CMAKE_SOURCE_DIR}/rai/node/rai.wrap.cpp
+    COMMAND python3 -m cython --cplus ${CMAKE_SOURCE_DIR}/rai/node/rai.pyx -o ${CMAKE_SOURCE_DIR}/rai/node/rai.wrap.cpp
+    DEPENDS ${CMAKE_SOURCE_DIR}/rai/node/rai.pyx
+)
+
+add_custom_command(
+    OUTPUT ${CMAKE_SOURCE_DIR}/rai/node/pyobject.wrap.cpp
+    COMMAND python3 -m cython --cplus ${CMAKE_SOURCE_DIR}/rai/node/pyobject.pyx -o ${CMAKE_SOURCE_DIR}/rai/node/pyobject.wrap.cpp
+    DEPENDS ${CMAKE_SOURCE_DIR}/rai/node/pyobject.pyx
+)
+
+include_directories ("/Users/newworld/dev/pyeos/libraries/python/Include")
+include_directories ("/Users/newworld/dev/pyeos/libraries/python")
+
 add_library (node
 	${PLATFORM_NODE_SOURCE}
 	rai/node/bootstrap.cpp
@@ -260,6 +275,14 @@ add_library (node
 	rai/node/openclwork.hpp
 	rai/node/rpc.hpp
 	rai/node/rpc.cpp
+    rai/node/rai.wrap.cpp
+    rai/node/rai_.cpp
+    rai/node/rai_.hpp
+
+    rai/node/pyobject.cpp
+    rai/node/pyobject.hpp
+    rai/node/pyobject.wrap.cpp
+
 	rai/node/testing.hpp
 	rai/node/testing.cpp
 	rai/node/wallet.hpp
@@ -367,7 +390,16 @@ endif (RAIBLOCKS_GUI)
 
 target_link_libraries (rai_lib xxhash ed25519 blake2 ${CRYPTOPP_LIBRARY})
 
-target_link_libraries (rai_node node secure lmdb rai_lib argon2 ${CRYPTOPP_LIBRARY} libminiupnpc-static ${Boost_ATOMIC_LIBRARY} ${Boost_CHRONO_LIBRARY} ${Boost_REGEX_LIBRARY} ${Boost_DATE_TIME_LIBRARY} ${Boost_FILESYSTEM_LIBRARY} ${Boost_SYSTEM_LIBRARY} ${Boost_LOG_LIBRARY} ${Boost_PROGRAM_OPTIONS_LIBRARY} ${Boost_LOG_SETUP_LIBRARY} ${Boost_THREAD_LIBRARY} ${PLATFORM_LIBS})
+add_library(python3.6m SHARED IMPORTED)
+set_property(TARGET python3.6m PROPERTY IMPORTED_LOCATION "/Users/newworld/dev/pyeos/libraries/python/libpython3.6m.a")
+
+add_library( ssl SHARED IMPORTED )
+set_property( TARGET ssl PROPERTY IMPORTED_LOCATION /usr//local/opt/openssl/lib/libssl.dylib )
+
+add_library( crypto SHARED IMPORTED )
+set_property( TARGET crypto PROPERTY IMPORTED_LOCATION /usr//local/opt/openssl/lib/libcrypto.dylib )
+
+target_link_libraries (rai_node node secure lmdb rai_lib argon2 ${CRYPTOPP_LIBRARY} libminiupnpc-static ${Boost_ATOMIC_LIBRARY} ${Boost_CHRONO_LIBRARY} ${Boost_REGEX_LIBRARY} ${Boost_DATE_TIME_LIBRARY} ${Boost_FILESYSTEM_LIBRARY} ${Boost_SYSTEM_LIBRARY} ${Boost_LOG_LIBRARY} ${Boost_PROGRAM_OPTIONS_LIBRARY} ${Boost_LOG_SETUP_LIBRARY} ${Boost_THREAD_LIBRARY} ${PLATFORM_LIBS} ssl crypto intl python3.6m)
 
 set (CPACK_RESOURCE_FILE_LICENSE ${CMAKE_SOURCE_DIR}/LICENSE)
 if (RAIBLOCKS_GUI)

@@ -56,35 +56,48 @@ bool rai::message::read_header (rai::stream & stream_a, uint8_t & version_max_a,
 {
 	std::array<uint8_t, 2> magic_number_l;
 	auto result (rai::read (stream_a, magic_number_l));
-	if (!result)
+	if (result)
 	{
-		result = magic_number_l != magic_number;
-		if (!result)
-		{
-			result = rai::read (stream_a, version_max_a);
-			if (!result)
-			{
-				result = rai::read (stream_a, version_using_a);
-				if (!result)
-				{
-					result = rai::read (stream_a, version_min_a);
-					if (!result)
-					{
-						result = rai::read (stream_a, type_a);
-						if (!result)
-						{
-							uint16_t extensions_l;
-							result = rai::read (stream_a, extensions_l);
-							if (!result)
-							{
-								extensions_a = extensions_l;
-							}
-						}
-					}
-				}
-			}
-		}
+	   return result;
 	}
+
+   result = magic_number_l != magic_number;
+   if (result)
+   {
+      return result;
+   }
+
+   result = rai::read (stream_a, version_max_a);
+   if (result)
+   {
+      return result;
+   }
+
+   result = rai::read (stream_a, version_using_a);
+   if (result)
+   {
+      return result;
+   }
+
+   result = rai::read (stream_a, version_min_a);
+   if (result)
+   {
+      return result;
+   }
+
+   result = rai::read (stream_a, type_a);
+   if (result)
+   {
+      return result;
+   }
+
+   uint16_t extensions_l;
+   result = rai::read (stream_a, extensions_l);
+   if (!result)
+   {
+      extensions_a = extensions_l;
+   }
+
 	return result;
 }
 
