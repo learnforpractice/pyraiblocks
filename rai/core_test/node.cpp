@@ -939,7 +939,7 @@ TEST (node, fork_bootstrap_flip)
 		system0.poll ();
 		system1.poll ();
 		++iterations2;
-		ASSERT_LT (iterations2, 200);
+		ASSERT_LT (iterations2, 1000);
 		rai::transaction transaction (node2.store.environment, nullptr, false);
 		again = !node2.store.block_exists (transaction, send1->hash ());
 	}
@@ -1146,6 +1146,10 @@ TEST (node, broadcast_elected)
 	//std::cerr << "fork0: " << fork_hash.to_string () << std::endl;
 	//std::cerr << "fork1: " << fork1.hash ().to_string () << std::endl;
 	auto iterations (0);
+	while (!node0->ledger.block_exists (fork0->hash ()) || !node1->ledger.block_exists (fork0->hash ()))
+	{
+		system.poll ();
+	}
 	while (!node2->ledger.block_exists (fork0->hash ()))
 	{
 		system.poll ();

@@ -1,30 +1,50 @@
 #!/bin/bash
-set -e
+
+qt_dir=${1}
+src_dir=${2}
+
+set -o errexit
+set -o nounset
+set -o xtrace
 OS=`uname`
 
 mkdir build
 pushd build
 
+if [[ ${ASAN_INT-0} -eq 1 ]]; then
+    SANITIZERS="-DRAIBLOCKS_ASAN_INT=ON"
+elif [[ ${ASAN-0} -eq 1 ]]; then
+    SANITIZERS="-DRAIBLOCKS_ASAN=ON"
+elif [[ ${TSAN-0} -eq 1 ]]; then
+    SANITIZERS="-DRAIBLOCKS_TSAN=ON"
+else
+    SANITIZERS=""
+fi
+
 cmake \
+    -G'Unix Makefiles' \
     -DACTIVE_NETWORK=rai_test_network \
     -DRAIBLOCKS_TEST=ON \
     -DRAIBLOCKS_GUI=ON \
     -DCMAKE_BUILD_TYPE=Debug \
     -DCMAKE_VERBOSE_MAKEFILE=ON \
     -DBOOST_ROOT=/usr/local \
-    -DQt5_DIR=$1 \
+    -DQt5_DIR=${qt_dir} \
+    ${SANITIZERS} \
     ..
 
-make -j2 rai_node
-make -j2 core_test
 
 if [[ "$OS" == 'Linux' ]]; then
-    make -j2 rai_wallet
+    cmake --build ${PWD} -- -j2
 else
-    sudo make -j2 rai_wallet
+    sudo cmake --build ${PWD} -- -j2
 fi
 
-# Exclude flaky or stalling tests.
-#./core_test --gtest_filter="-gap_cache.gap_bootstrap:bulk_pull.get_next_on_open:system.system_genesis"
-
 popd
+
+if [[ "$OSTYPE" == "darwin"* ]]; then
+    TRUE_CMD=gtrue
+else
+    TRUE_CMD=true
+fi
+./ci/test.sh ./build || ${TRUE_CMD}

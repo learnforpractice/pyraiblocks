@@ -1343,8 +1343,8 @@ warmed_up (0),
 block_processor (*this),
 block_processor_thread ([this]() { this->block_processor.process_blocks (); })
 {
-	wallets.observer = [this](rai::account const & account_a, bool active) {
-		observers.wallet (account_a, active);
+	wallets.observer = [this](bool active) {
+		observers.wallet (active);
 	};
 	peers.peer_observer = [this](rai::endpoint const & endpoint_a) {
 		observers.endpoint (endpoint_a);
@@ -1796,6 +1796,7 @@ void rai::node::stop ()
 	bootstrap_initiator.stop ();
 	bootstrap.stop ();
 	port_mapping.stop ();
+	wallets.stop ();
 	if (block_processor_thread.joinable ())
 	{
 		block_processor_thread.join ();
@@ -2776,8 +2777,9 @@ void rai::active_transactions::announce_votes ()
 	std::vector<rai::block_hash> inactive;
 	rai::transaction transaction (node.store.environment, nullptr, true);
 	std::lock_guard<std::mutex> lock (mutex);
-	size_t announcements (0);
+
 	{
+		size_t announcements (0);
 		auto i (roots.begin ());
 		auto n (roots.end ());
 		// Announce our decision for up to `announcements_per_interval' conflicts
@@ -3299,7 +3301,7 @@ bool rai::handle_node_options (boost::program_options::variables_map & vm)
 				}
 				else
 				{
-					std::cerr << "wallet_destroy requires one <wallet> option\n";
+					std::cerr << "wallet_import requires one <wallet> option\n";
 					result = true;
 				}
 			}
