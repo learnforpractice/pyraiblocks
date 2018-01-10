@@ -23,3 +23,9 @@
 
 # IDEs
 .idea
+
+.cproject
+.project
+.pydevproject
+.settings
+build

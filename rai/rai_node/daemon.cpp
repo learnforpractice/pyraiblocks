@@ -5,6 +5,25 @@
 #include <iostream>
 #include <rai/node/working.hpp>
 
+void set_node(rai::node *node);
+#include <boost/thread/thread.hpp>
+#include <Python.h>
+
+extern "C" {
+   void PyInit_rai();
+}
+void interactive_console()
+{
+   printf("hello, world\n");
+   Py_Initialize();
+   PyEval_InitThreads();
+
+   PyInit_rai();
+   PyRun_SimpleString("import readline");
+   PyRun_SimpleString("import rai");
+   PyRun_InteractiveLoop(stdin, "<stdin>");
+}
+
 rai_daemon::daemon_config::daemon_config (boost::filesystem::path const & application_path_a) :
 rpc_enable (false),
 opencl_enable (false)
@@ -119,6 +138,10 @@ void rai_daemon::daemon::run (boost::filesystem::path const & data_path)
 			if (!init.error ())
 			{
 				node->start ();
+		      printf("hello, worlddddddd\n");
+		      set_node(node.get());
+		      auto thread_ = boost::thread(interactive_console);
+
 				rai::rpc rpc (service, *node, config.rpc);
 				if (config.rpc_enable)
 				{
