@@ -263,6 +263,9 @@ add_custom_command(
 include_directories ("/Users/newworld/dev/pyeos/libraries/python/Include")
 include_directories ("/Users/newworld/dev/pyeos/libraries/python")
 
+add_library (rai_lib SHARED ${RAI_LIB_SOURCES})
+add_library (rai_lib_static STATIC ${RAI_LIB_SOURCES})
+
 add_library (node
 	${PLATFORM_NODE_SOURCE}
 	rai/node/bootstrap.cpp
