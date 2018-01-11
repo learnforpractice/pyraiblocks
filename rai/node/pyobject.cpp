@@ -22,7 +22,9 @@ void PyArray::append(double n) { array_append_double(arr, n); }
 
 PyObject* PyArray::get() { return arr; }
 
-PyDict::PyDict() { pydict = dict_create(); }
+PyDict::PyDict() {
+   pydict = dict_create();
+}
 
 PyDict::PyDict(PyObject* dictObj) { pydict = dictObj; }
 
@@ -31,6 +33,14 @@ void PyDict::add(PyObject* key, PyObject* value) {
       return;
    }
    dict_add(pydict, key, value);
+}
+
+void PyDict::add(std::string key, PyObject* value) {
+   if (key.size() == 0 || value == NULL) {
+      return;
+   }
+   PyObject* pykey = py_new_string(key);
+   dict_add(pydict, pykey, value);
 }
 
 void PyDict::add(std::string& key, PyObject* value) {
@@ -49,11 +59,19 @@ void PyDict::add(const char* key, std::string value)
    dict_add(pydict, pykey, pyvalue);
 }
 
+void PyDict::add(std::string key, std::string value) {
+   PyObject* pykey = py_new_string(key);
+   PyObject* pyvalue = py_new_string(value);
+   dict_add(pydict, pykey, pyvalue);
+}
+
+#if 0
 void PyDict::add(std::string& key, std::string& value) {
    PyObject* pykey = py_new_string(key);
    PyObject* pyvalue = py_new_string(value);
    dict_add(pydict, pykey, pyvalue);
 }
+#endif
 
 void PyDict::add(std::string& key, long long n) {
    PyObject* pykey = py_new_string(key);
@@ -61,4 +79,13 @@ void PyDict::add(std::string& key, long long n) {
    dict_add(pydict, pykey, pyvalue);
 }
 
-PyObject* PyDict::get() { return pydict; }
+PyObject* PyDict::get() {
+   Py_XINCREF(pydict);
+   return pydict;
+}
+
+PyDict::~PyDict() {
+   Py_XDECREF(pydict);
+}
+
+

@@ -11,8 +11,7 @@ cdef extern object py_new_none():
     return None
 
 cdef extern object py_new_string(string& s):
-    ss = s
-    return ss.decode('utf8')
+    return s
 
 cdef extern object py_new_int(int n):
     return n
@@ -29,12 +28,14 @@ cdef extern object py_new_float(double n):
 cdef extern object array_create():
     return []
 
+cdef extern int array_size(object arr):
+    return len(arr)
+
 cdef extern void array_append(object arr, object v):
     arr.append(v)
 
 cdef extern void array_append_string(object arr, string& s):
-    ss = s
-    arr.append(ss.decode('utf8'))
+    arr.append(s)
 
 cdef extern void array_append_int(object arr, int n):
     arr.append(n)

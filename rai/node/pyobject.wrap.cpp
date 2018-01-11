@@ -717,23 +717,34 @@ static const char *__pyx_f[] = {
 #define __Pyx_CLEAR(r)    do { PyObject* tmp = ((PyObject*)(r)); r = NULL; __Pyx_DECREF(tmp);} while(0)
 #define __Pyx_XCLEAR(r)   do { if((r) != NULL) {PyObject* tmp = ((PyObject*)(r)); r = NULL; __Pyx_DECREF(tmp);}} while(0)
 
-/* IncludeCppStringH.proto */
-#include <string>
+/* PyThreadStateGet.proto */
+#if CYTHON_FAST_THREAD_STATE
+#define __Pyx_PyThreadState_declare  PyThreadState *__pyx_tstate;
+#define __Pyx_PyThreadState_assign  __pyx_tstate = PyThreadState_GET();
+#else
+#define __Pyx_PyThreadState_declare
+#define __Pyx_PyThreadState_assign
+#endif
 
-/* decode_c_bytes.proto */
-static CYTHON_INLINE PyObject* __Pyx_decode_c_bytes(
-         const char* cstring, Py_ssize_t length, Py_ssize_t start, Py_ssize_t stop,
-         const char* encoding, const char* errors,
-         PyObject* (*decode_func)(const char *s, Py_ssize_t size, const char *errors));
+/* PyErrFetchRestore.proto */
+#if CYTHON_FAST_THREAD_STATE
+#define __Pyx_ErrRestoreWithState(type, value, tb)  __Pyx_ErrRestoreInState(PyThreadState_GET(), type, value, tb)
+#define __Pyx_ErrFetchWithState(type, value, tb)    __Pyx_ErrFetchInState(PyThreadState_GET(), type, value, tb)
+#define __Pyx_ErrRestore(type, value, tb)  __Pyx_ErrRestoreInState(__pyx_tstate, type, value, tb)
+#define __Pyx_ErrFetch(type, value, tb)    __Pyx_ErrFetchInState(__pyx_tstate, type, value, tb)
+static CYTHON_INLINE void __Pyx_ErrRestoreInState(PyThreadState *tstate, PyObject *type, PyObject *value, PyObject *tb);
+static CYTHON_INLINE void __Pyx_ErrFetchInState(PyThreadState *tstate, PyObject **type, PyObject **value, PyObject **tb);
+#else
+#define __Pyx_ErrRestoreWithState(type, value, tb)  PyErr_Restore(type, value, tb)
+#define __Pyx_ErrFetchWithState(type, value, tb)  PyErr_Fetch(type, value, tb)
+#define __Pyx_ErrRestore(type, value, tb)  PyErr_Restore(type, value, tb)
+#define __Pyx_ErrFetch(type, value, tb)  PyErr_Fetch(type, value, tb)
+#endif
 
-/* decode_cpp_string.proto */
-static CYTHON_INLINE PyObject* __Pyx_decode_cpp_string(
-         std::string cppstring, Py_ssize_t start, Py_ssize_t stop,
-         const char* encoding, const char* errors,
-         PyObject* (*decode_func)(const char *s, Py_ssize_t size, const char *errors)) {
-    return __Pyx_decode_c_bytes(
-        cppstring.data(), cppstring.size(), start, stop, encoding, errors, decode_func);
-}
+/* WriteUnraisableException.proto */
+static void __Pyx_WriteUnraisable(const char *name, int clineno,
+                                  int lineno, const char *filename,
+                                  int full_traceback, int nogil);
 
 /* ListAppend.proto */
 #if CYTHON_USE_PYLIST_INTERNALS && CYTHON_ASSUME_SAFE_MACROS
@@ -806,35 +817,6 @@ static PyObject* __Pyx_PyObject_CallMethod1(PyObject* obj, PyObject* method_name
 
 /* append.proto */
 static CYTHON_INLINE int __Pyx_PyObject_Append(PyObject* L, PyObject* x);
-
-/* PyThreadStateGet.proto */
-#if CYTHON_FAST_THREAD_STATE
-#define __Pyx_PyThreadState_declare  PyThreadState *__pyx_tstate;
-#define __Pyx_PyThreadState_assign  __pyx_tstate = PyThreadState_GET();
-#else
-#define __Pyx_PyThreadState_declare
-#define __Pyx_PyThreadState_assign
-#endif
-
-/* PyErrFetchRestore.proto */
-#if CYTHON_FAST_THREAD_STATE
-#define __Pyx_ErrRestoreWithState(type, value, tb)  __Pyx_ErrRestoreInState(PyThreadState_GET(), type, value, tb)
-#define __Pyx_ErrFetchWithState(type, value, tb)    __Pyx_ErrFetchInState(PyThreadState_GET(), type, value, tb)
-#define __Pyx_ErrRestore(type, value, tb)  __Pyx_ErrRestoreInState(__pyx_tstate, type, value, tb)
-#define __Pyx_ErrFetch(type, value, tb)    __Pyx_ErrFetchInState(__pyx_tstate, type, value, tb)
-static CYTHON_INLINE void __Pyx_ErrRestoreInState(PyThreadState *tstate, PyObject *type, PyObject *value, PyObject *tb);
-static CYTHON_INLINE void __Pyx_ErrFetchInState(PyThreadState *tstate, PyObject **type, PyObject **value, PyObject **tb);
-#else
-#define __Pyx_ErrRestoreWithState(type, value, tb)  PyErr_Restore(type, value, tb)
-#define __Pyx_ErrFetchWithState(type, value, tb)  PyErr_Fetch(type, value, tb)
-#define __Pyx_ErrRestore(type, value, tb)  PyErr_Restore(type, value, tb)
-#define __Pyx_ErrFetch(type, value, tb)  PyErr_Fetch(type, value, tb)
-#endif
-
-/* WriteUnraisableException.proto */
-static void __Pyx_WriteUnraisable(const char *name, int clineno,
-                                  int lineno, const char *filename,
-                                  int full_traceback, int nogil);
 
 /* CodeObjectCache.proto */
 typedef struct {
@@ -1023,12 +1005,11 @@ PyObject *py_new_none(void) {
  *     return None
  * 
  * cdef extern object py_new_string(string& s):             # <<<<<<<<<<<<<<
- *     ss = s
- *     return ss.decode('utf8')
+ *     return s
+ * 
  */
 
 PyObject *py_new_string(std::string &__pyx_v_s) {
-  std::string __pyx_v_ss;
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
@@ -1037,21 +1018,12 @@ PyObject *py_new_string(std::string &__pyx_v_s) {
   /* "pyobject.pyx":14
  * 
  * cdef extern object py_new_string(string& s):
- *     ss = s             # <<<<<<<<<<<<<<
- *     return ss.decode('utf8')
- * 
- */
-  __pyx_v_ss = __pyx_v_s;
-
-  /* "pyobject.pyx":15
- * cdef extern object py_new_string(string& s):
- *     ss = s
- *     return ss.decode('utf8')             # <<<<<<<<<<<<<<
+ *     return s             # <<<<<<<<<<<<<<
  * 
  * cdef extern object py_new_int(int n):
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __Pyx_decode_cpp_string(__pyx_v_ss, 0, PY_SSIZE_T_MAX, NULL, NULL, PyUnicode_DecodeUTF8); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 15, __pyx_L1_error)
+  __pyx_t_1 = __pyx_convert_PyBytes_string_to_py_std__in_string(__pyx_v_s); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 14, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -1061,8 +1033,8 @@ PyObject *py_new_string(std::string &__pyx_v_s) {
  *     return None
  * 
  * cdef extern object py_new_string(string& s):             # <<<<<<<<<<<<<<
- *     ss = s
- *     return ss.decode('utf8')
+ *     return s
+ * 
  */
 
   /* function exit code */
@@ -1076,8 +1048,8 @@ PyObject *py_new_string(std::string &__pyx_v_s) {
   return __pyx_r;
 }
 
-/* "pyobject.pyx":17
- *     return ss.decode('utf8')
+/* "pyobject.pyx":16
+ *     return s
  * 
  * cdef extern object py_new_int(int n):             # <<<<<<<<<<<<<<
  *     return n
@@ -1090,7 +1062,7 @@ PyObject *py_new_int(int __pyx_v_n) {
   PyObject *__pyx_t_1 = NULL;
   __Pyx_RefNannySetupContext("py_new_int", 0);
 
-  /* "pyobject.pyx":18
+  /* "pyobject.pyx":17
  * 
  * cdef extern object py_new_int(int n):
  *     return n             # <<<<<<<<<<<<<<
@@ -1098,14 +1070,14 @@ PyObject *py_new_int(int __pyx_v_n) {
  * cdef extern object py_new_int64(long long n):
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __Pyx_PyInt_From_int(__pyx_v_n); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 18, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyInt_From_int(__pyx_v_n); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 17, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "pyobject.pyx":17
- *     return ss.decode('utf8')
+  /* "pyobject.pyx":16
+ *     return s
  * 
  * cdef extern object py_new_int(int n):             # <<<<<<<<<<<<<<
  *     return n
@@ -1123,7 +1095,7 @@ PyObject *py_new_int(int __pyx_v_n) {
   return __pyx_r;
 }
 
-/* "pyobject.pyx":20
+/* "pyobject.pyx":19
  *     return n
  * 
  * cdef extern object py_new_int64(long long n):             # <<<<<<<<<<<<<<
@@ -1137,7 +1109,7 @@ PyObject *py_new_int64(PY_LONG_LONG __pyx_v_n) {
   PyObject *__pyx_t_1 = NULL;
   __Pyx_RefNannySetupContext("py_new_int64", 0);
 
-  /* "pyobject.pyx":21
+  /* "pyobject.pyx":20
  * 
  * cdef extern object py_new_int64(long long n):
  *     return n             # <<<<<<<<<<<<<<
@@ -1145,13 +1117,13 @@ PyObject *py_new_int64(PY_LONG_LONG __pyx_v_n) {
  * cdef extern object py_new_uint64(unsigned long long n):
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __Pyx_PyInt_From_PY_LONG_LONG(__pyx_v_n); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 21, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyInt_From_PY_LONG_LONG(__pyx_v_n); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 20, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "pyobject.pyx":20
+  /* "pyobject.pyx":19
  *     return n
  * 
  * cdef extern object py_new_int64(long long n):             # <<<<<<<<<<<<<<
@@ -1170,7 +1142,7 @@ PyObject *py_new_int64(PY_LONG_LONG __pyx_v_n) {
   return __pyx_r;
 }
 
-/* "pyobject.pyx":23
+/* "pyobject.pyx":22
  *     return n
  * 
  * cdef extern object py_new_uint64(unsigned long long n):             # <<<<<<<<<<<<<<
@@ -1184,7 +1156,7 @@ PyObject *py_new_uint64(unsigned PY_LONG_LONG __pyx_v_n) {
   PyObject *__pyx_t_1 = NULL;
   __Pyx_RefNannySetupContext("py_new_uint64", 0);
 
-  /* "pyobject.pyx":24
+  /* "pyobject.pyx":23
  * 
  * cdef extern object py_new_uint64(unsigned long long n):
  *     return n             # <<<<<<<<<<<<<<
@@ -1192,13 +1164,13 @@ PyObject *py_new_uint64(unsigned PY_LONG_LONG __pyx_v_n) {
  * cdef extern object py_new_float(double n):
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __Pyx_PyInt_From_unsigned_PY_LONG_LONG(__pyx_v_n); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 24, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyInt_From_unsigned_PY_LONG_LONG(__pyx_v_n); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 23, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "pyobject.pyx":23
+  /* "pyobject.pyx":22
  *     return n
  * 
  * cdef extern object py_new_uint64(unsigned long long n):             # <<<<<<<<<<<<<<
@@ -1217,7 +1189,7 @@ PyObject *py_new_uint64(unsigned PY_LONG_LONG __pyx_v_n) {
   return __pyx_r;
 }
 
-/* "pyobject.pyx":26
+/* "pyobject.pyx":25
  *     return n
  * 
  * cdef extern object py_new_float(double n):             # <<<<<<<<<<<<<<
@@ -1231,7 +1203,7 @@ PyObject *py_new_float(double __pyx_v_n) {
   PyObject *__pyx_t_1 = NULL;
   __Pyx_RefNannySetupContext("py_new_float", 0);
 
-  /* "pyobject.pyx":27
+  /* "pyobject.pyx":26
  * 
  * cdef extern object py_new_float(double n):
  *     return float(n)             # <<<<<<<<<<<<<<
@@ -1239,13 +1211,13 @@ PyObject *py_new_float(double __pyx_v_n) {
  * cdef extern object array_create():
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = PyFloat_FromDouble(__pyx_v_n); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 27, __pyx_L1_error)
+  __pyx_t_1 = PyFloat_FromDouble(__pyx_v_n); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 26, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "pyobject.pyx":26
+  /* "pyobject.pyx":25
  *     return n
  * 
  * cdef extern object py_new_float(double n):             # <<<<<<<<<<<<<<
@@ -1264,7 +1236,7 @@ PyObject *py_new_float(double __pyx_v_n) {
   return __pyx_r;
 }
 
-/* "pyobject.pyx":29
+/* "pyobject.pyx":28
  *     return float(n)
  * 
  * cdef extern object array_create():             # <<<<<<<<<<<<<<
@@ -1278,21 +1250,21 @@ PyObject *array_create(void) {
   PyObject *__pyx_t_1 = NULL;
   __Pyx_RefNannySetupContext("array_create", 0);
 
-  /* "pyobject.pyx":30
+  /* "pyobject.pyx":29
  * 
  * cdef extern object array_create():
  *     return []             # <<<<<<<<<<<<<<
  * 
- * cdef extern void array_append(object arr, object v):
+ * cdef extern int array_size(object arr):
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = PyList_New(0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 30, __pyx_L1_error)
+  __pyx_t_1 = PyList_New(0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 29, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "pyobject.pyx":29
+  /* "pyobject.pyx":28
  *     return float(n)
  * 
  * cdef extern object array_create():             # <<<<<<<<<<<<<<
@@ -1311,8 +1283,50 @@ PyObject *array_create(void) {
   return __pyx_r;
 }
 
-/* "pyobject.pyx":32
+/* "pyobject.pyx":31
  *     return []
+ * 
+ * cdef extern int array_size(object arr):             # <<<<<<<<<<<<<<
+ *     return len(arr)
+ * 
+ */
+
+int array_size(PyObject *__pyx_v_arr) {
+  int __pyx_r;
+  __Pyx_RefNannyDeclarations
+  Py_ssize_t __pyx_t_1;
+  __Pyx_RefNannySetupContext("array_size", 0);
+
+  /* "pyobject.pyx":32
+ * 
+ * cdef extern int array_size(object arr):
+ *     return len(arr)             # <<<<<<<<<<<<<<
+ * 
+ * cdef extern void array_append(object arr, object v):
+ */
+  __pyx_t_1 = PyObject_Length(__pyx_v_arr); if (unlikely(__pyx_t_1 == -1)) __PYX_ERR(0, 32, __pyx_L1_error)
+  __pyx_r = __pyx_t_1;
+  goto __pyx_L0;
+
+  /* "pyobject.pyx":31
+ *     return []
+ * 
+ * cdef extern int array_size(object arr):             # <<<<<<<<<<<<<<
+ *     return len(arr)
+ * 
+ */
+
+  /* function exit code */
+  __pyx_L1_error:;
+  __Pyx_WriteUnraisable("pyobject.array_size", __pyx_clineno, __pyx_lineno, __pyx_filename, 0, 0);
+  __pyx_r = 0;
+  __pyx_L0:;
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* "pyobject.pyx":34
+ *     return len(arr)
  * 
  * cdef extern void array_append(object arr, object v):             # <<<<<<<<<<<<<<
  *     arr.append(v)
@@ -1324,17 +1338,17 @@ void array_append(PyObject *__pyx_v_arr, PyObject *__pyx_v_v) {
   int __pyx_t_1;
   __Pyx_RefNannySetupContext("array_append", 0);
 
-  /* "pyobject.pyx":33
+  /* "pyobject.pyx":35
  * 
  * cdef extern void array_append(object arr, object v):
  *     arr.append(v)             # <<<<<<<<<<<<<<
  * 
  * cdef extern void array_append_string(object arr, string& s):
  */
-  __pyx_t_1 = __Pyx_PyObject_Append(__pyx_v_arr, __pyx_v_v); if (unlikely(__pyx_t_1 == -1)) __PYX_ERR(0, 33, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_Append(__pyx_v_arr, __pyx_v_v); if (unlikely(__pyx_t_1 == -1)) __PYX_ERR(0, 35, __pyx_L1_error)
 
-  /* "pyobject.pyx":32
- *     return []
+  /* "pyobject.pyx":34
+ *     return len(arr)
  * 
  * cdef extern void array_append(object arr, object v):             # <<<<<<<<<<<<<<
  *     arr.append(v)
@@ -1349,48 +1363,38 @@ void array_append(PyObject *__pyx_v_arr, PyObject *__pyx_v_v) {
   __Pyx_RefNannyFinishContext();
 }
 
-/* "pyobject.pyx":35
+/* "pyobject.pyx":37
  *     arr.append(v)
  * 
  * cdef extern void array_append_string(object arr, string& s):             # <<<<<<<<<<<<<<
- *     ss = s
- *     arr.append(ss.decode('utf8'))
+ *     arr.append(s)
+ * 
  */
 
 void array_append_string(PyObject *__pyx_v_arr, std::string &__pyx_v_s) {
-  std::string __pyx_v_ss;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
   int __pyx_t_2;
   __Pyx_RefNannySetupContext("array_append_string", 0);
 
-  /* "pyobject.pyx":36
+  /* "pyobject.pyx":38
  * 
  * cdef extern void array_append_string(object arr, string& s):
- *     ss = s             # <<<<<<<<<<<<<<
- *     arr.append(ss.decode('utf8'))
- * 
- */
-  __pyx_v_ss = __pyx_v_s;
-
-  /* "pyobject.pyx":37
- * cdef extern void array_append_string(object arr, string& s):
- *     ss = s
- *     arr.append(ss.decode('utf8'))             # <<<<<<<<<<<<<<
+ *     arr.append(s)             # <<<<<<<<<<<<<<
  * 
  * cdef extern void array_append_int(object arr, int n):
  */
-  __pyx_t_1 = __Pyx_decode_cpp_string(__pyx_v_ss, 0, PY_SSIZE_T_MAX, NULL, NULL, PyUnicode_DecodeUTF8); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 37, __pyx_L1_error)
+  __pyx_t_1 = __pyx_convert_PyBytes_string_to_py_std__in_string(__pyx_v_s); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 38, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = __Pyx_PyObject_Append(__pyx_v_arr, __pyx_t_1); if (unlikely(__pyx_t_2 == -1)) __PYX_ERR(0, 37, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_Append(__pyx_v_arr, __pyx_t_1); if (unlikely(__pyx_t_2 == -1)) __PYX_ERR(0, 38, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "pyobject.pyx":35
+  /* "pyobject.pyx":37
  *     arr.append(v)
  * 
  * cdef extern void array_append_string(object arr, string& s):             # <<<<<<<<<<<<<<
- *     ss = s
- *     arr.append(ss.decode('utf8'))
+ *     arr.append(s)
+ * 
  */
 
   /* function exit code */
@@ -1402,8 +1406,8 @@ void array_append_string(PyObject *__pyx_v_arr, std::string &__pyx_v_s) {
   __Pyx_RefNannyFinishContext();
 }
 
-/* "pyobject.pyx":39
- *     arr.append(ss.decode('utf8'))
+/* "pyobject.pyx":40
+ *     arr.append(s)
  * 
  * cdef extern void array_append_int(object arr, int n):             # <<<<<<<<<<<<<<
  *     arr.append(n)
@@ -1416,20 +1420,20 @@ void array_append_int(PyObject *__pyx_v_arr, int __pyx_v_n) {
   int __pyx_t_2;
   __Pyx_RefNannySetupContext("array_append_int", 0);
 
-  /* "pyobject.pyx":40
+  /* "pyobject.pyx":41
  * 
  * cdef extern void array_append_int(object arr, int n):
  *     arr.append(n)             # <<<<<<<<<<<<<<
  * 
  * cdef extern void array_append_double(object arr, double n):
  */
-  __pyx_t_1 = __Pyx_PyInt_From_int(__pyx_v_n); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 40, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyInt_From_int(__pyx_v_n); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 41, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = __Pyx_PyObject_Append(__pyx_v_arr, __pyx_t_1); if (unlikely(__pyx_t_2 == -1)) __PYX_ERR(0, 40, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_Append(__pyx_v_arr, __pyx_t_1); if (unlikely(__pyx_t_2 == -1)) __PYX_ERR(0, 41, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "pyobject.pyx":39
- *     arr.append(ss.decode('utf8'))
+  /* "pyobject.pyx":40
+ *     arr.append(s)
  * 
  * cdef extern void array_append_int(object arr, int n):             # <<<<<<<<<<<<<<
  *     arr.append(n)
@@ -1445,7 +1449,7 @@ void array_append_int(PyObject *__pyx_v_arr, int __pyx_v_n) {
   __Pyx_RefNannyFinishContext();
 }
 
-/* "pyobject.pyx":42
+/* "pyobject.pyx":43
  *     arr.append(n)
  * 
  * cdef extern void array_append_double(object arr, double n):             # <<<<<<<<<<<<<<
@@ -1459,19 +1463,19 @@ void array_append_double(PyObject *__pyx_v_arr, double __pyx_v_n) {
   int __pyx_t_2;
   __Pyx_RefNannySetupContext("array_append_double", 0);
 
-  /* "pyobject.pyx":43
+  /* "pyobject.pyx":44
  * 
  * cdef extern void array_append_double(object arr, double n):
  *     arr.append(n)             # <<<<<<<<<<<<<<
  * 
  * cdef extern void array_append_uint64(object arr, unsigned long long n):
  */
-  __pyx_t_1 = PyFloat_FromDouble(__pyx_v_n); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 43, __pyx_L1_error)
+  __pyx_t_1 = PyFloat_FromDouble(__pyx_v_n); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 44, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = __Pyx_PyObject_Append(__pyx_v_arr, __pyx_t_1); if (unlikely(__pyx_t_2 == -1)) __PYX_ERR(0, 43, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_Append(__pyx_v_arr, __pyx_t_1); if (unlikely(__pyx_t_2 == -1)) __PYX_ERR(0, 44, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "pyobject.pyx":42
+  /* "pyobject.pyx":43
  *     arr.append(n)
  * 
  * cdef extern void array_append_double(object arr, double n):             # <<<<<<<<<<<<<<
@@ -1488,7 +1492,7 @@ void array_append_double(PyObject *__pyx_v_arr, double __pyx_v_n) {
   __Pyx_RefNannyFinishContext();
 }
 
-/* "pyobject.pyx":45
+/* "pyobject.pyx":46
  *     arr.append(n)
  * 
  * cdef extern void array_append_uint64(object arr, unsigned long long n):             # <<<<<<<<<<<<<<
@@ -1502,19 +1506,19 @@ void array_append_uint64(PyObject *__pyx_v_arr, unsigned PY_LONG_LONG __pyx_v_n)
   int __pyx_t_2;
   __Pyx_RefNannySetupContext("array_append_uint64", 0);
 
-  /* "pyobject.pyx":46
+  /* "pyobject.pyx":47
  * 
  * cdef extern void array_append_uint64(object arr, unsigned long long n):
  *     arr.append(n)             # <<<<<<<<<<<<<<
  * 
  * cdef extern object dict_create():
  */
-  __pyx_t_1 = __Pyx_PyInt_From_unsigned_PY_LONG_LONG(__pyx_v_n); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 46, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyInt_From_unsigned_PY_LONG_LONG(__pyx_v_n); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 47, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = __Pyx_PyObject_Append(__pyx_v_arr, __pyx_t_1); if (unlikely(__pyx_t_2 == -1)) __PYX_ERR(0, 46, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_Append(__pyx_v_arr, __pyx_t_1); if (unlikely(__pyx_t_2 == -1)) __PYX_ERR(0, 47, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "pyobject.pyx":45
+  /* "pyobject.pyx":46
  *     arr.append(n)
  * 
  * cdef extern void array_append_uint64(object arr, unsigned long long n):             # <<<<<<<<<<<<<<
@@ -1531,7 +1535,7 @@ void array_append_uint64(PyObject *__pyx_v_arr, unsigned PY_LONG_LONG __pyx_v_n)
   __Pyx_RefNannyFinishContext();
 }
 
-/* "pyobject.pyx":48
+/* "pyobject.pyx":49
  *     arr.append(n)
  * 
  * cdef extern object dict_create():             # <<<<<<<<<<<<<<
@@ -1545,7 +1549,7 @@ PyObject *dict_create(void) {
   PyObject *__pyx_t_1 = NULL;
   __Pyx_RefNannySetupContext("dict_create", 0);
 
-  /* "pyobject.pyx":49
+  /* "pyobject.pyx":50
  * 
  * cdef extern object dict_create():
  *     return {}             # <<<<<<<<<<<<<<
@@ -1553,13 +1557,13 @@ PyObject *dict_create(void) {
  * cdef extern void dict_add(object d, object key, object value):
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = PyDict_New(); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 49, __pyx_L1_error)
+  __pyx_t_1 = PyDict_New(); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 50, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "pyobject.pyx":48
+  /* "pyobject.pyx":49
  *     arr.append(n)
  * 
  * cdef extern object dict_create():             # <<<<<<<<<<<<<<
@@ -1578,7 +1582,7 @@ PyObject *dict_create(void) {
   return __pyx_r;
 }
 
-/* "pyobject.pyx":51
+/* "pyobject.pyx":52
  *     return {}
  * 
  * cdef extern void dict_add(object d, object key, object value):             # <<<<<<<<<<<<<<
@@ -1590,16 +1594,16 @@ void dict_add(PyObject *__pyx_v_d, PyObject *__pyx_v_key, PyObject *__pyx_v_valu
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("dict_add", 0);
 
-  /* "pyobject.pyx":52
+  /* "pyobject.pyx":53
  * 
  * cdef extern void dict_add(object d, object key, object value):
  *     d[key] = value             # <<<<<<<<<<<<<<
  * 
  * cdef extern object py_new_exception(const char* error):
  */
-  if (unlikely(PyObject_SetItem(__pyx_v_d, __pyx_v_key, __pyx_v_value) < 0)) __PYX_ERR(0, 52, __pyx_L1_error)
+  if (unlikely(PyObject_SetItem(__pyx_v_d, __pyx_v_key, __pyx_v_value) < 0)) __PYX_ERR(0, 53, __pyx_L1_error)
 
-  /* "pyobject.pyx":51
+  /* "pyobject.pyx":52
  *     return {}
  * 
  * cdef extern void dict_add(object d, object key, object value):             # <<<<<<<<<<<<<<
@@ -1615,7 +1619,7 @@ void dict_add(PyObject *__pyx_v_d, PyObject *__pyx_v_key, PyObject *__pyx_v_valu
   __Pyx_RefNannyFinishContext();
 }
 
-/* "pyobject.pyx":54
+/* "pyobject.pyx":55
  *     d[key] = value
  * 
  * cdef extern object py_new_exception(const char* error):             # <<<<<<<<<<<<<<
@@ -1630,28 +1634,28 @@ PyObject *py_new_exception(char const *__pyx_v_error) {
   PyObject *__pyx_t_2 = NULL;
   __Pyx_RefNannySetupContext("py_new_exception", 0);
 
-  /* "pyobject.pyx":55
+  /* "pyobject.pyx":56
  * 
  * cdef extern object py_new_exception(const char* error):
  *     return Exception(error)             # <<<<<<<<<<<<<<
  * 
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __Pyx_PyBytes_FromString(__pyx_v_error); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 55, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyBytes_FromString(__pyx_v_error); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 56, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = PyTuple_New(1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 55, __pyx_L1_error)
+  __pyx_t_2 = PyTuple_New(1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 56, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_GIVEREF(__pyx_t_1);
   PyTuple_SET_ITEM(__pyx_t_2, 0, __pyx_t_1);
   __pyx_t_1 = 0;
-  __pyx_t_1 = __Pyx_PyObject_Call(((PyObject *)(&((PyTypeObject*)PyExc_Exception)[0])), __pyx_t_2, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 55, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_Call(((PyObject *)(&((PyTypeObject*)PyExc_Exception)[0])), __pyx_t_2, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 56, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "pyobject.pyx":54
+  /* "pyobject.pyx":55
  *     d[key] = value
  * 
  * cdef extern object py_new_exception(const char* error):             # <<<<<<<<<<<<<<
@@ -2101,31 +2105,70 @@ end:
 }
 #endif
 
-/* decode_c_bytes */
-static CYTHON_INLINE PyObject* __Pyx_decode_c_bytes(
-         const char* cstring, Py_ssize_t length, Py_ssize_t start, Py_ssize_t stop,
-         const char* encoding, const char* errors,
-         PyObject* (*decode_func)(const char *s, Py_ssize_t size, const char *errors)) {
-    if (unlikely((start < 0) | (stop < 0))) {
-        if (start < 0) {
-            start += length;
-            if (start < 0)
-                start = 0;
-        }
-        if (stop < 0)
-            stop += length;
+/* PyErrFetchRestore */
+#if CYTHON_FAST_THREAD_STATE
+static CYTHON_INLINE void __Pyx_ErrRestoreInState(PyThreadState *tstate, PyObject *type, PyObject *value, PyObject *tb) {
+    PyObject *tmp_type, *tmp_value, *tmp_tb;
+    tmp_type = tstate->curexc_type;
+    tmp_value = tstate->curexc_value;
+    tmp_tb = tstate->curexc_traceback;
+    tstate->curexc_type = type;
+    tstate->curexc_value = value;
+    tstate->curexc_traceback = tb;
+    Py_XDECREF(tmp_type);
+    Py_XDECREF(tmp_value);
+    Py_XDECREF(tmp_tb);
+}
+static CYTHON_INLINE void __Pyx_ErrFetchInState(PyThreadState *tstate, PyObject **type, PyObject **value, PyObject **tb) {
+    *type = tstate->curexc_type;
+    *value = tstate->curexc_value;
+    *tb = tstate->curexc_traceback;
+    tstate->curexc_type = 0;
+    tstate->curexc_value = 0;
+    tstate->curexc_traceback = 0;
+}
+#endif
+
+/* WriteUnraisableException */
+static void __Pyx_WriteUnraisable(const char *name, CYTHON_UNUSED int clineno,
+                                  CYTHON_UNUSED int lineno, CYTHON_UNUSED const char *filename,
+                                  int full_traceback, CYTHON_UNUSED int nogil) {
+    PyObject *old_exc, *old_val, *old_tb;
+    PyObject *ctx;
+    __Pyx_PyThreadState_declare
+#ifdef WITH_THREAD
+    PyGILState_STATE state;
+    if (nogil)
+        state = PyGILState_Ensure();
+#ifdef _MSC_VER
+    else state = (PyGILState_STATE)-1;
+#endif
+#endif
+    __Pyx_PyThreadState_assign
+    __Pyx_ErrFetch(&old_exc, &old_val, &old_tb);
+    if (full_traceback) {
+        Py_XINCREF(old_exc);
+        Py_XINCREF(old_val);
+        Py_XINCREF(old_tb);
+        __Pyx_ErrRestore(old_exc, old_val, old_tb);
+        PyErr_PrintEx(1);
     }
-    if (stop > length)
-        stop = length;
-    length = stop - start;
-    if (unlikely(length <= 0))
-        return PyUnicode_FromUnicode(NULL, 0);
-    cstring += start;
-    if (decode_func) {
-        return decode_func(cstring, length, errors);
+    #if PY_MAJOR_VERSION < 3
+    ctx = PyString_FromString(name);
+    #else
+    ctx = PyUnicode_FromString(name);
+    #endif
+    __Pyx_ErrRestore(old_exc, old_val, old_tb);
+    if (!ctx) {
+        PyErr_WriteUnraisable(Py_None);
     } else {
-        return PyUnicode_Decode(cstring, length, encoding, errors);
+        PyErr_WriteUnraisable(ctx);
+        Py_DECREF(ctx);
     }
+#ifdef WITH_THREAD
+    if (nogil)
+        PyGILState_Release(state);
+#endif
 }
 
 /* PyCFunctionFastCall */
@@ -2407,72 +2450,6 @@ done:
         Py_DECREF(retval);
     }
     return 0;
-}
-
-/* PyErrFetchRestore */
-  #if CYTHON_FAST_THREAD_STATE
-static CYTHON_INLINE void __Pyx_ErrRestoreInState(PyThreadState *tstate, PyObject *type, PyObject *value, PyObject *tb) {
-    PyObject *tmp_type, *tmp_value, *tmp_tb;
-    tmp_type = tstate->curexc_type;
-    tmp_value = tstate->curexc_value;
-    tmp_tb = tstate->curexc_traceback;
-    tstate->curexc_type = type;
-    tstate->curexc_value = value;
-    tstate->curexc_traceback = tb;
-    Py_XDECREF(tmp_type);
-    Py_XDECREF(tmp_value);
-    Py_XDECREF(tmp_tb);
-}
-static CYTHON_INLINE void __Pyx_ErrFetchInState(PyThreadState *tstate, PyObject **type, PyObject **value, PyObject **tb) {
-    *type = tstate->curexc_type;
-    *value = tstate->curexc_value;
-    *tb = tstate->curexc_traceback;
-    tstate->curexc_type = 0;
-    tstate->curexc_value = 0;
-    tstate->curexc_traceback = 0;
-}
-#endif
-
-/* WriteUnraisableException */
-  static void __Pyx_WriteUnraisable(const char *name, CYTHON_UNUSED int clineno,
-                                  CYTHON_UNUSED int lineno, CYTHON_UNUSED const char *filename,
-                                  int full_traceback, CYTHON_UNUSED int nogil) {
-    PyObject *old_exc, *old_val, *old_tb;
-    PyObject *ctx;
-    __Pyx_PyThreadState_declare
-#ifdef WITH_THREAD
-    PyGILState_STATE state;
-    if (nogil)
-        state = PyGILState_Ensure();
-#ifdef _MSC_VER
-    else state = (PyGILState_STATE)-1;
-#endif
-#endif
-    __Pyx_PyThreadState_assign
-    __Pyx_ErrFetch(&old_exc, &old_val, &old_tb);
-    if (full_traceback) {
-        Py_XINCREF(old_exc);
-        Py_XINCREF(old_val);
-        Py_XINCREF(old_tb);
-        __Pyx_ErrRestore(old_exc, old_val, old_tb);
-        PyErr_PrintEx(1);
-    }
-    #if PY_MAJOR_VERSION < 3
-    ctx = PyString_FromString(name);
-    #else
-    ctx = PyUnicode_FromString(name);
-    #endif
-    __Pyx_ErrRestore(old_exc, old_val, old_tb);
-    if (!ctx) {
-        PyErr_WriteUnraisable(Py_None);
-    } else {
-        PyErr_WriteUnraisable(ctx);
-        Py_DECREF(ctx);
-    }
-#ifdef WITH_THREAD
-    if (nogil)
-        PyGILState_Release(state);
-#endif
 }
 
 /* CodeObjectCache */

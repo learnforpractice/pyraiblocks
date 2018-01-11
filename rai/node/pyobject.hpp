@@ -20,6 +20,8 @@ PyObject* py_new_uint64(unsigned long long n);
 PyObject* py_new_float(double n);
 
 PyObject* array_create();
+int array_size(PyObject* arr);
+
 void array_append(PyObject* arr, PyObject* v);
 void array_append_string(PyObject* arr, std::string& s);
 void array_append_int(PyObject* arr, int n);
@@ -43,6 +45,10 @@ class PyArray {
    void append(uint64_t n);
    void append(double n);
    PyObject* get();
+   int size()
+   {
+      return array_size(arr);
+   }
 
   private:
    PyObject* arr;
@@ -51,11 +57,14 @@ class PyArray {
 class PyDict {
   public:
    PyDict();
+   ~PyDict();
    PyDict(PyObject* dictObj);
    void add(PyObject* key, PyObject* value);
+   void add(std::string key, PyObject* value);
    void add(std::string& key, PyObject* value);
    void add(const char* key, std::string value);
-   void add(std::string& key, std::string& value);
+//   void add(std::string& key, std::string& value);
+   void add(std::string key, std::string value);
    void add(std::string& key, long long n);
    PyObject* get();
 
