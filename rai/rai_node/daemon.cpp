@@ -11,6 +11,7 @@ void set_node(rai::node *node);
 
 extern "C" {
    void PyInit_rai();
+   void PyInit_pyobject();
 }
 void interactive_console()
 {
@@ -19,6 +20,7 @@ void interactive_console()
    PyEval_InitThreads();
 
    PyInit_rai();
+   PyInit_pyobject();
    PyRun_SimpleString("import readline");
    PyRun_SimpleString("import rai");
    PyRun_InteractiveLoop(stdin, "<stdin>");

@@ -1,6 +1,7 @@
 from libcpp.string cimport string
 from libcpp.vector cimport vector
 from libcpp.map cimport map
+from libcpp cimport bool
 
 cdef extern object py_new_bool(int b):
     if b:
@@ -52,6 +53,17 @@ cdef extern object dict_create():
 
 cdef extern void dict_add(object d, object key, object value):
     d[key] = value
+
+cdef extern bool dict_get_value(object d, const char* key, string& value):
+    _key = key
+    _key = _key.decode('utf8')
+    if d.get(_key):
+        _value = d[_key]
+        if isinstance(_value, str):
+            _value = _value.encode('utf8')
+        (&value)[0] = _value
+        return 1
+    return 0
 
 cdef extern object py_new_exception(const char* error):
     return Exception(error)

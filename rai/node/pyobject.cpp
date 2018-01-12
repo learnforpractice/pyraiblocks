@@ -41,7 +41,10 @@ PyDict::PyDict() {
    pydict = dict_create();
 }
 
-PyDict::PyDict(PyObject* dictObj) { pydict = dictObj; }
+PyDict::PyDict(PyObject* dictObj) {
+   pydict = dictObj;
+   Py_XINCREF(pydict);
+}
 
 void PyDict::add(PyObject* key, PyObject* value) {
    if (key == NULL || value == NULL) {
@@ -104,6 +107,10 @@ int PyDict::size()
 PyObject* PyDict::get() {
    Py_XINCREF(pydict);
    return pydict;
+}
+
+bool PyDict::get_value(const char* key, string& value) {
+   return dict_get_value(pydict, key, value);
 }
 
 PyDict::~PyDict() {

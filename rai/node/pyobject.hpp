@@ -11,6 +11,7 @@
 #include <Python.h>
 #include <string>
 #include <vector>
+
 PyObject* py_new_none();
 PyObject* py_new_bool(int b);
 PyObject* py_new_string(std::string s);
@@ -30,6 +31,7 @@ void array_append_uint64(PyObject* arr, unsigned long long n);
 
 PyObject* dict_create();
 void dict_add(PyObject* d, PyObject* key, PyObject* value);
+bool dict_get_value(PyObject* d, const char* key, std::string& value);
 
 PyObject* py_new_exception(const char* error);
 
@@ -54,8 +56,8 @@ class PyArray {
 class PyDict {
   public:
    PyDict();
-   ~PyDict();
    PyDict(PyObject* dictObj);
+   ~PyDict();
    void add(PyObject* key, PyObject* value);
    void add(std::string key, PyObject* value);
 //   void add(std::string& key, PyObject* value);
@@ -63,6 +65,7 @@ class PyDict {
 //   void add(std::string& key, std::string& value);
    void add(std::string key, std::string value);
    void add(std::string& key, long long n);
+   bool get_value(const char* key, std::string& value);
    PyObject* get();
    int size();
   private:

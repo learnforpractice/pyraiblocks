@@ -890,25 +890,38 @@ static int __Pyx_InitStrings(__Pyx_StringTabEntry *t);
 
 /* Module declarations from 'libcpp.map' */
 
+/* Module declarations from 'libcpp' */
+
 /* Module declarations from 'pyobject' */
 static CYTHON_INLINE PyObject *__pyx_convert_PyObject_string_to_py_std__in_string(std::string const &); /*proto*/
 static CYTHON_INLINE PyObject *__pyx_convert_PyUnicode_string_to_py_std__in_string(std::string const &); /*proto*/
 static CYTHON_INLINE PyObject *__pyx_convert_PyStr_string_to_py_std__in_string(std::string const &); /*proto*/
 static CYTHON_INLINE PyObject *__pyx_convert_PyBytes_string_to_py_std__in_string(std::string const &); /*proto*/
 static CYTHON_INLINE PyObject *__pyx_convert_PyByteArray_string_to_py_std__in_string(std::string const &); /*proto*/
+static std::string __pyx_convert_string_from_py_std__in_string(PyObject *); /*proto*/
 #define __Pyx_MODULE_NAME "pyobject"
 int __pyx_module_is_main_pyobject = 0;
 
 /* Implementation of 'pyobject' */
+static const char __pyx_k_get[] = "get";
 static const char __pyx_k_main[] = "__main__";
 static const char __pyx_k_test[] = "__test__";
+static const char __pyx_k_utf8[] = "utf8";
 static const char __pyx_k_append[] = "append";
+static const char __pyx_k_decode[] = "decode";
+static const char __pyx_k_encode[] = "encode";
 static PyObject *__pyx_n_s_append;
+static PyObject *__pyx_n_s_decode;
+static PyObject *__pyx_n_s_encode;
+static PyObject *__pyx_n_s_get;
 static PyObject *__pyx_n_s_main;
 static PyObject *__pyx_n_s_test;
+static PyObject *__pyx_n_s_utf8;
+static PyObject *__pyx_tuple_;
+static PyObject *__pyx_tuple__2;
 
-/* "pyobject.pyx":5
- * from libcpp.map cimport map
+/* "pyobject.pyx":6
+ * from libcpp cimport bool
  * 
  * cdef extern object py_new_bool(int b):             # <<<<<<<<<<<<<<
  *     if b:
@@ -921,7 +934,7 @@ PyObject *py_new_bool(int __pyx_v_b) {
   int __pyx_t_1;
   __Pyx_RefNannySetupContext("py_new_bool", 0);
 
-  /* "pyobject.pyx":6
+  /* "pyobject.pyx":7
  * 
  * cdef extern object py_new_bool(int b):
  *     if b:             # <<<<<<<<<<<<<<
@@ -931,7 +944,7 @@ PyObject *py_new_bool(int __pyx_v_b) {
   __pyx_t_1 = (__pyx_v_b != 0);
   if (__pyx_t_1) {
 
-    /* "pyobject.pyx":7
+    /* "pyobject.pyx":8
  * cdef extern object py_new_bool(int b):
  *     if b:
  *         return True             # <<<<<<<<<<<<<<
@@ -943,7 +956,7 @@ PyObject *py_new_bool(int __pyx_v_b) {
     __pyx_r = Py_True;
     goto __pyx_L0;
 
-    /* "pyobject.pyx":6
+    /* "pyobject.pyx":7
  * 
  * cdef extern object py_new_bool(int b):
  *     if b:             # <<<<<<<<<<<<<<
@@ -952,7 +965,7 @@ PyObject *py_new_bool(int __pyx_v_b) {
  */
   }
 
-  /* "pyobject.pyx":8
+  /* "pyobject.pyx":9
  *     if b:
  *         return True
  *     return False             # <<<<<<<<<<<<<<
@@ -964,8 +977,8 @@ PyObject *py_new_bool(int __pyx_v_b) {
   __pyx_r = Py_False;
   goto __pyx_L0;
 
-  /* "pyobject.pyx":5
- * from libcpp.map cimport map
+  /* "pyobject.pyx":6
+ * from libcpp cimport bool
  * 
  * cdef extern object py_new_bool(int b):             # <<<<<<<<<<<<<<
  *     if b:
@@ -979,7 +992,7 @@ PyObject *py_new_bool(int __pyx_v_b) {
   return __pyx_r;
 }
 
-/* "pyobject.pyx":10
+/* "pyobject.pyx":11
  *     return False
  * 
  * cdef extern object py_new_none():             # <<<<<<<<<<<<<<
@@ -992,7 +1005,7 @@ PyObject *py_new_none(void) {
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("py_new_none", 0);
 
-  /* "pyobject.pyx":11
+  /* "pyobject.pyx":12
  * 
  * cdef extern object py_new_none():
  *     return None             # <<<<<<<<<<<<<<
@@ -1004,7 +1017,7 @@ PyObject *py_new_none(void) {
   __pyx_r = Py_None;
   goto __pyx_L0;
 
-  /* "pyobject.pyx":10
+  /* "pyobject.pyx":11
  *     return False
  * 
  * cdef extern object py_new_none():             # <<<<<<<<<<<<<<
@@ -1019,7 +1032,7 @@ PyObject *py_new_none(void) {
   return __pyx_r;
 }
 
-/* "pyobject.pyx":13
+/* "pyobject.pyx":14
  *     return None
  * 
  * cdef extern object py_new_string(string s):             # <<<<<<<<<<<<<<
@@ -1034,7 +1047,7 @@ PyObject *py_new_string(std::string __pyx_v_s) {
   PyObject *__pyx_t_1 = NULL;
   __Pyx_RefNannySetupContext("py_new_string", 0);
 
-  /* "pyobject.pyx":14
+  /* "pyobject.pyx":15
  * 
  * cdef extern object py_new_string(string s):
  *     ss = s             # <<<<<<<<<<<<<<
@@ -1043,7 +1056,7 @@ PyObject *py_new_string(std::string __pyx_v_s) {
  */
   __pyx_v_ss = __pyx_v_s;
 
-  /* "pyobject.pyx":15
+  /* "pyobject.pyx":16
  * cdef extern object py_new_string(string s):
  *     ss = s
  *     return ss.decode('utf8')             # <<<<<<<<<<<<<<
@@ -1051,13 +1064,13 @@ PyObject *py_new_string(std::string __pyx_v_s) {
  * cdef extern object py_new_int(int n):
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __Pyx_decode_cpp_string(__pyx_v_ss, 0, PY_SSIZE_T_MAX, NULL, NULL, PyUnicode_DecodeUTF8); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 15, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_decode_cpp_string(__pyx_v_ss, 0, PY_SSIZE_T_MAX, NULL, NULL, PyUnicode_DecodeUTF8); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 16, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "pyobject.pyx":13
+  /* "pyobject.pyx":14
  *     return None
  * 
  * cdef extern object py_new_string(string s):             # <<<<<<<<<<<<<<
@@ -1076,7 +1089,7 @@ PyObject *py_new_string(std::string __pyx_v_s) {
   return __pyx_r;
 }
 
-/* "pyobject.pyx":17
+/* "pyobject.pyx":18
  *     return ss.decode('utf8')
  * 
  * cdef extern object py_new_int(int n):             # <<<<<<<<<<<<<<
@@ -1090,7 +1103,7 @@ PyObject *py_new_int(int __pyx_v_n) {
   PyObject *__pyx_t_1 = NULL;
   __Pyx_RefNannySetupContext("py_new_int", 0);
 
-  /* "pyobject.pyx":18
+  /* "pyobject.pyx":19
  * 
  * cdef extern object py_new_int(int n):
  *     return n             # <<<<<<<<<<<<<<
@@ -1098,13 +1111,13 @@ PyObject *py_new_int(int __pyx_v_n) {
  * cdef extern object py_new_int64(long long n):
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __Pyx_PyInt_From_int(__pyx_v_n); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 18, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyInt_From_int(__pyx_v_n); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 19, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "pyobject.pyx":17
+  /* "pyobject.pyx":18
  *     return ss.decode('utf8')
  * 
  * cdef extern object py_new_int(int n):             # <<<<<<<<<<<<<<
@@ -1123,7 +1136,7 @@ PyObject *py_new_int(int __pyx_v_n) {
   return __pyx_r;
 }
 
-/* "pyobject.pyx":20
+/* "pyobject.pyx":21
  *     return n
  * 
  * cdef extern object py_new_int64(long long n):             # <<<<<<<<<<<<<<
@@ -1137,7 +1150,7 @@ PyObject *py_new_int64(PY_LONG_LONG __pyx_v_n) {
   PyObject *__pyx_t_1 = NULL;
   __Pyx_RefNannySetupContext("py_new_int64", 0);
 
-  /* "pyobject.pyx":21
+  /* "pyobject.pyx":22
  * 
  * cdef extern object py_new_int64(long long n):
  *     return n             # <<<<<<<<<<<<<<
@@ -1145,13 +1158,13 @@ PyObject *py_new_int64(PY_LONG_LONG __pyx_v_n) {
  * cdef extern object py_new_uint64(unsigned long long n):
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __Pyx_PyInt_From_PY_LONG_LONG(__pyx_v_n); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 21, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyInt_From_PY_LONG_LONG(__pyx_v_n); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 22, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "pyobject.pyx":20
+  /* "pyobject.pyx":21
  *     return n
  * 
  * cdef extern object py_new_int64(long long n):             # <<<<<<<<<<<<<<
@@ -1170,7 +1183,7 @@ PyObject *py_new_int64(PY_LONG_LONG __pyx_v_n) {
   return __pyx_r;
 }
 
-/* "pyobject.pyx":23
+/* "pyobject.pyx":24
  *     return n
  * 
  * cdef extern object py_new_uint64(unsigned long long n):             # <<<<<<<<<<<<<<
@@ -1184,7 +1197,7 @@ PyObject *py_new_uint64(unsigned PY_LONG_LONG __pyx_v_n) {
   PyObject *__pyx_t_1 = NULL;
   __Pyx_RefNannySetupContext("py_new_uint64", 0);
 
-  /* "pyobject.pyx":24
+  /* "pyobject.pyx":25
  * 
  * cdef extern object py_new_uint64(unsigned long long n):
  *     return n             # <<<<<<<<<<<<<<
@@ -1192,13 +1205,13 @@ PyObject *py_new_uint64(unsigned PY_LONG_LONG __pyx_v_n) {
  * cdef extern object py_new_float(double n):
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __Pyx_PyInt_From_unsigned_PY_LONG_LONG(__pyx_v_n); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 24, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyInt_From_unsigned_PY_LONG_LONG(__pyx_v_n); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 25, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "pyobject.pyx":23
+  /* "pyobject.pyx":24
  *     return n
  * 
  * cdef extern object py_new_uint64(unsigned long long n):             # <<<<<<<<<<<<<<
@@ -1217,7 +1230,7 @@ PyObject *py_new_uint64(unsigned PY_LONG_LONG __pyx_v_n) {
   return __pyx_r;
 }
 
-/* "pyobject.pyx":26
+/* "pyobject.pyx":27
  *     return n
  * 
  * cdef extern object py_new_float(double n):             # <<<<<<<<<<<<<<
@@ -1231,7 +1244,7 @@ PyObject *py_new_float(double __pyx_v_n) {
   PyObject *__pyx_t_1 = NULL;
   __Pyx_RefNannySetupContext("py_new_float", 0);
 
-  /* "pyobject.pyx":27
+  /* "pyobject.pyx":28
  * 
  * cdef extern object py_new_float(double n):
  *     return float(n)             # <<<<<<<<<<<<<<
@@ -1239,13 +1252,13 @@ PyObject *py_new_float(double __pyx_v_n) {
  * cdef extern object array_create():
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = PyFloat_FromDouble(__pyx_v_n); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 27, __pyx_L1_error)
+  __pyx_t_1 = PyFloat_FromDouble(__pyx_v_n); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 28, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "pyobject.pyx":26
+  /* "pyobject.pyx":27
  *     return n
  * 
  * cdef extern object py_new_float(double n):             # <<<<<<<<<<<<<<
@@ -1264,7 +1277,7 @@ PyObject *py_new_float(double __pyx_v_n) {
   return __pyx_r;
 }
 
-/* "pyobject.pyx":29
+/* "pyobject.pyx":30
  *     return float(n)
  * 
  * cdef extern object array_create():             # <<<<<<<<<<<<<<
@@ -1278,7 +1291,7 @@ PyObject *array_create(void) {
   PyObject *__pyx_t_1 = NULL;
   __Pyx_RefNannySetupContext("array_create", 0);
 
-  /* "pyobject.pyx":30
+  /* "pyobject.pyx":31
  * 
  * cdef extern object array_create():
  *     return []             # <<<<<<<<<<<<<<
@@ -1286,13 +1299,13 @@ PyObject *array_create(void) {
  * cdef extern int array_size(object arr):
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = PyList_New(0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 30, __pyx_L1_error)
+  __pyx_t_1 = PyList_New(0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 31, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "pyobject.pyx":29
+  /* "pyobject.pyx":30
  *     return float(n)
  * 
  * cdef extern object array_create():             # <<<<<<<<<<<<<<
@@ -1311,7 +1324,7 @@ PyObject *array_create(void) {
   return __pyx_r;
 }
 
-/* "pyobject.pyx":32
+/* "pyobject.pyx":33
  *     return []
  * 
  * cdef extern int array_size(object arr):             # <<<<<<<<<<<<<<
@@ -1325,18 +1338,18 @@ int array_size(PyObject *__pyx_v_arr) {
   Py_ssize_t __pyx_t_1;
   __Pyx_RefNannySetupContext("array_size", 0);
 
-  /* "pyobject.pyx":33
+  /* "pyobject.pyx":34
  * 
  * cdef extern int array_size(object arr):
  *     return len(arr)             # <<<<<<<<<<<<<<
  * 
  * cdef extern void array_append(object arr, object v):
  */
-  __pyx_t_1 = PyObject_Length(__pyx_v_arr); if (unlikely(__pyx_t_1 == -1)) __PYX_ERR(0, 33, __pyx_L1_error)
+  __pyx_t_1 = PyObject_Length(__pyx_v_arr); if (unlikely(__pyx_t_1 == -1)) __PYX_ERR(0, 34, __pyx_L1_error)
   __pyx_r = __pyx_t_1;
   goto __pyx_L0;
 
-  /* "pyobject.pyx":32
+  /* "pyobject.pyx":33
  *     return []
  * 
  * cdef extern int array_size(object arr):             # <<<<<<<<<<<<<<
@@ -1353,7 +1366,7 @@ int array_size(PyObject *__pyx_v_arr) {
   return __pyx_r;
 }
 
-/* "pyobject.pyx":35
+/* "pyobject.pyx":36
  *     return len(arr)
  * 
  * cdef extern void array_append(object arr, object v):             # <<<<<<<<<<<<<<
@@ -1366,16 +1379,16 @@ void array_append(PyObject *__pyx_v_arr, PyObject *__pyx_v_v) {
   int __pyx_t_1;
   __Pyx_RefNannySetupContext("array_append", 0);
 
-  /* "pyobject.pyx":36
+  /* "pyobject.pyx":37
  * 
  * cdef extern void array_append(object arr, object v):
  *     arr.append(v)             # <<<<<<<<<<<<<<
  * 
  * cdef extern void array_append_string(object arr, string& s):
  */
-  __pyx_t_1 = __Pyx_PyObject_Append(__pyx_v_arr, __pyx_v_v); if (unlikely(__pyx_t_1 == -1)) __PYX_ERR(0, 36, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_Append(__pyx_v_arr, __pyx_v_v); if (unlikely(__pyx_t_1 == -1)) __PYX_ERR(0, 37, __pyx_L1_error)
 
-  /* "pyobject.pyx":35
+  /* "pyobject.pyx":36
  *     return len(arr)
  * 
  * cdef extern void array_append(object arr, object v):             # <<<<<<<<<<<<<<
@@ -1391,7 +1404,7 @@ void array_append(PyObject *__pyx_v_arr, PyObject *__pyx_v_v) {
   __Pyx_RefNannyFinishContext();
 }
 
-/* "pyobject.pyx":38
+/* "pyobject.pyx":39
  *     arr.append(v)
  * 
  * cdef extern void array_append_string(object arr, string& s):             # <<<<<<<<<<<<<<
@@ -1405,19 +1418,19 @@ void array_append_string(PyObject *__pyx_v_arr, std::string &__pyx_v_s) {
   int __pyx_t_2;
   __Pyx_RefNannySetupContext("array_append_string", 0);
 
-  /* "pyobject.pyx":39
+  /* "pyobject.pyx":40
  * 
  * cdef extern void array_append_string(object arr, string& s):
  *     arr.append(s)             # <<<<<<<<<<<<<<
  * 
  * cdef extern void array_append_int(object arr, int n):
  */
-  __pyx_t_1 = __pyx_convert_PyBytes_string_to_py_std__in_string(__pyx_v_s); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 39, __pyx_L1_error)
+  __pyx_t_1 = __pyx_convert_PyBytes_string_to_py_std__in_string(__pyx_v_s); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 40, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = __Pyx_PyObject_Append(__pyx_v_arr, __pyx_t_1); if (unlikely(__pyx_t_2 == -1)) __PYX_ERR(0, 39, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_Append(__pyx_v_arr, __pyx_t_1); if (unlikely(__pyx_t_2 == -1)) __PYX_ERR(0, 40, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "pyobject.pyx":38
+  /* "pyobject.pyx":39
  *     arr.append(v)
  * 
  * cdef extern void array_append_string(object arr, string& s):             # <<<<<<<<<<<<<<
@@ -1434,7 +1447,7 @@ void array_append_string(PyObject *__pyx_v_arr, std::string &__pyx_v_s) {
   __Pyx_RefNannyFinishContext();
 }
 
-/* "pyobject.pyx":41
+/* "pyobject.pyx":42
  *     arr.append(s)
  * 
  * cdef extern void array_append_int(object arr, int n):             # <<<<<<<<<<<<<<
@@ -1448,19 +1461,19 @@ void array_append_int(PyObject *__pyx_v_arr, int __pyx_v_n) {
   int __pyx_t_2;
   __Pyx_RefNannySetupContext("array_append_int", 0);
 
-  /* "pyobject.pyx":42
+  /* "pyobject.pyx":43
  * 
  * cdef extern void array_append_int(object arr, int n):
  *     arr.append(n)             # <<<<<<<<<<<<<<
  * 
  * cdef extern void array_append_double(object arr, double n):
  */
-  __pyx_t_1 = __Pyx_PyInt_From_int(__pyx_v_n); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 42, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyInt_From_int(__pyx_v_n); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 43, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = __Pyx_PyObject_Append(__pyx_v_arr, __pyx_t_1); if (unlikely(__pyx_t_2 == -1)) __PYX_ERR(0, 42, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_Append(__pyx_v_arr, __pyx_t_1); if (unlikely(__pyx_t_2 == -1)) __PYX_ERR(0, 43, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "pyobject.pyx":41
+  /* "pyobject.pyx":42
  *     arr.append(s)
  * 
  * cdef extern void array_append_int(object arr, int n):             # <<<<<<<<<<<<<<
@@ -1477,7 +1490,7 @@ void array_append_int(PyObject *__pyx_v_arr, int __pyx_v_n) {
   __Pyx_RefNannyFinishContext();
 }
 
-/* "pyobject.pyx":44
+/* "pyobject.pyx":45
  *     arr.append(n)
  * 
  * cdef extern void array_append_double(object arr, double n):             # <<<<<<<<<<<<<<
@@ -1491,19 +1504,19 @@ void array_append_double(PyObject *__pyx_v_arr, double __pyx_v_n) {
   int __pyx_t_2;
   __Pyx_RefNannySetupContext("array_append_double", 0);
 
-  /* "pyobject.pyx":45
+  /* "pyobject.pyx":46
  * 
  * cdef extern void array_append_double(object arr, double n):
  *     arr.append(n)             # <<<<<<<<<<<<<<
  * 
  * cdef extern void array_append_uint64(object arr, unsigned long long n):
  */
-  __pyx_t_1 = PyFloat_FromDouble(__pyx_v_n); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 45, __pyx_L1_error)
+  __pyx_t_1 = PyFloat_FromDouble(__pyx_v_n); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 46, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = __Pyx_PyObject_Append(__pyx_v_arr, __pyx_t_1); if (unlikely(__pyx_t_2 == -1)) __PYX_ERR(0, 45, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_Append(__pyx_v_arr, __pyx_t_1); if (unlikely(__pyx_t_2 == -1)) __PYX_ERR(0, 46, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "pyobject.pyx":44
+  /* "pyobject.pyx":45
  *     arr.append(n)
  * 
  * cdef extern void array_append_double(object arr, double n):             # <<<<<<<<<<<<<<
@@ -1520,7 +1533,7 @@ void array_append_double(PyObject *__pyx_v_arr, double __pyx_v_n) {
   __Pyx_RefNannyFinishContext();
 }
 
-/* "pyobject.pyx":47
+/* "pyobject.pyx":48
  *     arr.append(n)
  * 
  * cdef extern void array_append_uint64(object arr, unsigned long long n):             # <<<<<<<<<<<<<<
@@ -1534,19 +1547,19 @@ void array_append_uint64(PyObject *__pyx_v_arr, unsigned PY_LONG_LONG __pyx_v_n)
   int __pyx_t_2;
   __Pyx_RefNannySetupContext("array_append_uint64", 0);
 
-  /* "pyobject.pyx":48
+  /* "pyobject.pyx":49
  * 
  * cdef extern void array_append_uint64(object arr, unsigned long long n):
  *     arr.append(n)             # <<<<<<<<<<<<<<
  * 
  * cdef extern object dict_create():
  */
-  __pyx_t_1 = __Pyx_PyInt_From_unsigned_PY_LONG_LONG(__pyx_v_n); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 48, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyInt_From_unsigned_PY_LONG_LONG(__pyx_v_n); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 49, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = __Pyx_PyObject_Append(__pyx_v_arr, __pyx_t_1); if (unlikely(__pyx_t_2 == -1)) __PYX_ERR(0, 48, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_Append(__pyx_v_arr, __pyx_t_1); if (unlikely(__pyx_t_2 == -1)) __PYX_ERR(0, 49, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "pyobject.pyx":47
+  /* "pyobject.pyx":48
  *     arr.append(n)
  * 
  * cdef extern void array_append_uint64(object arr, unsigned long long n):             # <<<<<<<<<<<<<<
@@ -1563,7 +1576,7 @@ void array_append_uint64(PyObject *__pyx_v_arr, unsigned PY_LONG_LONG __pyx_v_n)
   __Pyx_RefNannyFinishContext();
 }
 
-/* "pyobject.pyx":50
+/* "pyobject.pyx":51
  *     arr.append(n)
  * 
  * cdef extern object dict_create():             # <<<<<<<<<<<<<<
@@ -1577,7 +1590,7 @@ PyObject *dict_create(void) {
   PyObject *__pyx_t_1 = NULL;
   __Pyx_RefNannySetupContext("dict_create", 0);
 
-  /* "pyobject.pyx":51
+  /* "pyobject.pyx":52
  * 
  * cdef extern object dict_create():
  *     return {}             # <<<<<<<<<<<<<<
@@ -1585,13 +1598,13 @@ PyObject *dict_create(void) {
  * cdef extern void dict_add(object d, object key, object value):
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = PyDict_New(); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 51, __pyx_L1_error)
+  __pyx_t_1 = PyDict_New(); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 52, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "pyobject.pyx":50
+  /* "pyobject.pyx":51
  *     arr.append(n)
  * 
  * cdef extern object dict_create():             # <<<<<<<<<<<<<<
@@ -1610,7 +1623,7 @@ PyObject *dict_create(void) {
   return __pyx_r;
 }
 
-/* "pyobject.pyx":53
+/* "pyobject.pyx":54
  *     return {}
  * 
  * cdef extern void dict_add(object d, object key, object value):             # <<<<<<<<<<<<<<
@@ -1622,16 +1635,16 @@ void dict_add(PyObject *__pyx_v_d, PyObject *__pyx_v_key, PyObject *__pyx_v_valu
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("dict_add", 0);
 
-  /* "pyobject.pyx":54
+  /* "pyobject.pyx":55
  * 
  * cdef extern void dict_add(object d, object key, object value):
  *     d[key] = value             # <<<<<<<<<<<<<<
  * 
- * cdef extern object py_new_exception(const char* error):
+ * cdef extern bool dict_get_value(object d, const char* key, string& value):
  */
-  if (unlikely(PyObject_SetItem(__pyx_v_d, __pyx_v_key, __pyx_v_value) < 0)) __PYX_ERR(0, 54, __pyx_L1_error)
+  if (unlikely(PyObject_SetItem(__pyx_v_d, __pyx_v_key, __pyx_v_value) < 0)) __PYX_ERR(0, 55, __pyx_L1_error)
 
-  /* "pyobject.pyx":53
+  /* "pyobject.pyx":54
  *     return {}
  * 
  * cdef extern void dict_add(object d, object key, object value):             # <<<<<<<<<<<<<<
@@ -1647,8 +1660,222 @@ void dict_add(PyObject *__pyx_v_d, PyObject *__pyx_v_key, PyObject *__pyx_v_valu
   __Pyx_RefNannyFinishContext();
 }
 
-/* "pyobject.pyx":56
+/* "pyobject.pyx":57
  *     d[key] = value
+ * 
+ * cdef extern bool dict_get_value(object d, const char* key, string& value):             # <<<<<<<<<<<<<<
+ *     _key = key
+ *     _key = _key.decode('utf8')
+ */
+
+bool dict_get_value(PyObject *__pyx_v_d, char const *__pyx_v_key, std::string &__pyx_v_value) {
+  PyObject *__pyx_v__key = NULL;
+  PyObject *__pyx_v__value = NULL;
+  bool __pyx_r;
+  __Pyx_RefNannyDeclarations
+  PyObject *__pyx_t_1 = NULL;
+  PyObject *__pyx_t_2 = NULL;
+  PyObject *__pyx_t_3 = NULL;
+  PyObject *__pyx_t_4 = NULL;
+  int __pyx_t_5;
+  int __pyx_t_6;
+  std::string __pyx_t_7;
+  __Pyx_RefNannySetupContext("dict_get_value", 0);
+
+  /* "pyobject.pyx":58
+ * 
+ * cdef extern bool dict_get_value(object d, const char* key, string& value):
+ *     _key = key             # <<<<<<<<<<<<<<
+ *     _key = _key.decode('utf8')
+ *     if d.get(_key):
+ */
+  __pyx_t_1 = __Pyx_PyBytes_FromString(__pyx_v_key); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 58, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_v__key = __pyx_t_1;
+  __pyx_t_1 = 0;
+
+  /* "pyobject.pyx":59
+ * cdef extern bool dict_get_value(object d, const char* key, string& value):
+ *     _key = key
+ *     _key = _key.decode('utf8')             # <<<<<<<<<<<<<<
+ *     if d.get(_key):
+ *         _value = d[_key]
+ */
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v__key, __pyx_n_s_decode); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 59, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_1, __pyx_tuple_, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 59, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  __Pyx_DECREF_SET(__pyx_v__key, __pyx_t_2);
+  __pyx_t_2 = 0;
+
+  /* "pyobject.pyx":60
+ *     _key = key
+ *     _key = _key.decode('utf8')
+ *     if d.get(_key):             # <<<<<<<<<<<<<<
+ *         _value = d[_key]
+ *         if isinstance(_value, str):
+ */
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_d, __pyx_n_s_get); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 60, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_t_3 = NULL;
+  if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_1))) {
+    __pyx_t_3 = PyMethod_GET_SELF(__pyx_t_1);
+    if (likely(__pyx_t_3)) {
+      PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_1);
+      __Pyx_INCREF(__pyx_t_3);
+      __Pyx_INCREF(function);
+      __Pyx_DECREF_SET(__pyx_t_1, function);
+    }
+  }
+  if (!__pyx_t_3) {
+    __pyx_t_2 = __Pyx_PyObject_CallOneArg(__pyx_t_1, __pyx_v__key); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 60, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_2);
+  } else {
+    #if CYTHON_FAST_PYCALL
+    if (PyFunction_Check(__pyx_t_1)) {
+      PyObject *__pyx_temp[2] = {__pyx_t_3, __pyx_v__key};
+      __pyx_t_2 = __Pyx_PyFunction_FastCall(__pyx_t_1, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 60, __pyx_L1_error)
+      __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
+      __Pyx_GOTREF(__pyx_t_2);
+    } else
+    #endif
+    #if CYTHON_FAST_PYCCALL
+    if (__Pyx_PyFastCFunction_Check(__pyx_t_1)) {
+      PyObject *__pyx_temp[2] = {__pyx_t_3, __pyx_v__key};
+      __pyx_t_2 = __Pyx_PyCFunction_FastCall(__pyx_t_1, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 60, __pyx_L1_error)
+      __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
+      __Pyx_GOTREF(__pyx_t_2);
+    } else
+    #endif
+    {
+      __pyx_t_4 = PyTuple_New(1+1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 60, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_4);
+      __Pyx_GIVEREF(__pyx_t_3); PyTuple_SET_ITEM(__pyx_t_4, 0, __pyx_t_3); __pyx_t_3 = NULL;
+      __Pyx_INCREF(__pyx_v__key);
+      __Pyx_GIVEREF(__pyx_v__key);
+      PyTuple_SET_ITEM(__pyx_t_4, 0+1, __pyx_v__key);
+      __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_1, __pyx_t_4, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 60, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_2);
+      __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+    }
+  }
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  __pyx_t_5 = __Pyx_PyObject_IsTrue(__pyx_t_2); if (unlikely(__pyx_t_5 < 0)) __PYX_ERR(0, 60, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+  if (__pyx_t_5) {
+
+    /* "pyobject.pyx":61
+ *     _key = _key.decode('utf8')
+ *     if d.get(_key):
+ *         _value = d[_key]             # <<<<<<<<<<<<<<
+ *         if isinstance(_value, str):
+ *             _value = _value.encode('utf8')
+ */
+    __pyx_t_2 = PyObject_GetItem(__pyx_v_d, __pyx_v__key); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 61, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_2);
+    __pyx_v__value = __pyx_t_2;
+    __pyx_t_2 = 0;
+
+    /* "pyobject.pyx":62
+ *     if d.get(_key):
+ *         _value = d[_key]
+ *         if isinstance(_value, str):             # <<<<<<<<<<<<<<
+ *             _value = _value.encode('utf8')
+ *         (&value)[0] = _value
+ */
+    __pyx_t_5 = PyString_Check(__pyx_v__value); 
+    __pyx_t_6 = (__pyx_t_5 != 0);
+    if (__pyx_t_6) {
+
+      /* "pyobject.pyx":63
+ *         _value = d[_key]
+ *         if isinstance(_value, str):
+ *             _value = _value.encode('utf8')             # <<<<<<<<<<<<<<
+ *         (&value)[0] = _value
+ *         return 1
+ */
+      __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v__value, __pyx_n_s_encode); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 63, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_2);
+      __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_tuple__2, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 63, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_1);
+      __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+      __Pyx_DECREF_SET(__pyx_v__value, __pyx_t_1);
+      __pyx_t_1 = 0;
+
+      /* "pyobject.pyx":62
+ *     if d.get(_key):
+ *         _value = d[_key]
+ *         if isinstance(_value, str):             # <<<<<<<<<<<<<<
+ *             _value = _value.encode('utf8')
+ *         (&value)[0] = _value
+ */
+    }
+
+    /* "pyobject.pyx":64
+ *         if isinstance(_value, str):
+ *             _value = _value.encode('utf8')
+ *         (&value)[0] = _value             # <<<<<<<<<<<<<<
+ *         return 1
+ *     return 0
+ */
+    __pyx_t_7 = __pyx_convert_string_from_py_std__in_string(__pyx_v__value); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 64, __pyx_L1_error)
+    ((&__pyx_v_value)[0]) = __pyx_t_7;
+
+    /* "pyobject.pyx":65
+ *             _value = _value.encode('utf8')
+ *         (&value)[0] = _value
+ *         return 1             # <<<<<<<<<<<<<<
+ *     return 0
+ * 
+ */
+    __pyx_r = 1;
+    goto __pyx_L0;
+
+    /* "pyobject.pyx":60
+ *     _key = key
+ *     _key = _key.decode('utf8')
+ *     if d.get(_key):             # <<<<<<<<<<<<<<
+ *         _value = d[_key]
+ *         if isinstance(_value, str):
+ */
+  }
+
+  /* "pyobject.pyx":66
+ *         (&value)[0] = _value
+ *         return 1
+ *     return 0             # <<<<<<<<<<<<<<
+ * 
+ * cdef extern object py_new_exception(const char* error):
+ */
+  __pyx_r = 0;
+  goto __pyx_L0;
+
+  /* "pyobject.pyx":57
+ *     d[key] = value
+ * 
+ * cdef extern bool dict_get_value(object d, const char* key, string& value):             # <<<<<<<<<<<<<<
+ *     _key = key
+ *     _key = _key.decode('utf8')
+ */
+
+  /* function exit code */
+  __pyx_L1_error:;
+  __Pyx_XDECREF(__pyx_t_1);
+  __Pyx_XDECREF(__pyx_t_2);
+  __Pyx_XDECREF(__pyx_t_3);
+  __Pyx_XDECREF(__pyx_t_4);
+  __Pyx_WriteUnraisable("pyobject.dict_get_value", __pyx_clineno, __pyx_lineno, __pyx_filename, 0, 0);
+  __pyx_r = 0;
+  __pyx_L0:;
+  __Pyx_XDECREF(__pyx_v__key);
+  __Pyx_XDECREF(__pyx_v__value);
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* "pyobject.pyx":68
+ *     return 0
  * 
  * cdef extern object py_new_exception(const char* error):             # <<<<<<<<<<<<<<
  *     return Exception(error)
@@ -1662,29 +1889,29 @@ PyObject *py_new_exception(char const *__pyx_v_error) {
   PyObject *__pyx_t_2 = NULL;
   __Pyx_RefNannySetupContext("py_new_exception", 0);
 
-  /* "pyobject.pyx":57
+  /* "pyobject.pyx":69
  * 
  * cdef extern object py_new_exception(const char* error):
  *     return Exception(error)             # <<<<<<<<<<<<<<
  * 
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __Pyx_PyBytes_FromString(__pyx_v_error); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 57, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyBytes_FromString(__pyx_v_error); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 69, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = PyTuple_New(1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 57, __pyx_L1_error)
+  __pyx_t_2 = PyTuple_New(1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 69, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_GIVEREF(__pyx_t_1);
   PyTuple_SET_ITEM(__pyx_t_2, 0, __pyx_t_1);
   __pyx_t_1 = 0;
-  __pyx_t_1 = __Pyx_PyObject_Call(((PyObject *)(&((PyTypeObject*)PyExc_Exception)[0])), __pyx_t_2, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 57, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_Call(((PyObject *)(&((PyTypeObject*)PyExc_Exception)[0])), __pyx_t_2, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 69, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "pyobject.pyx":56
- *     d[key] = value
+  /* "pyobject.pyx":68
+ *     return 0
  * 
  * cdef extern object py_new_exception(const char* error):             # <<<<<<<<<<<<<<
  *     return Exception(error)
@@ -1937,6 +2164,58 @@ static CYTHON_INLINE PyObject *__pyx_convert_PyByteArray_string_to_py_std__in_st
   return __pyx_r;
 }
 
+/* "string.from_py":13
+ * 
+ * @cname("__pyx_convert_string_from_py_std__in_string")
+ * cdef string __pyx_convert_string_from_py_std__in_string(object o) except *:             # <<<<<<<<<<<<<<
+ *     cdef Py_ssize_t length
+ *     cdef char* data = __Pyx_PyObject_AsStringAndSize(o, &length)
+ */
+
+static std::string __pyx_convert_string_from_py_std__in_string(PyObject *__pyx_v_o) {
+  Py_ssize_t __pyx_v_length;
+  char *__pyx_v_data;
+  std::string __pyx_r;
+  __Pyx_RefNannyDeclarations
+  char *__pyx_t_1;
+  __Pyx_RefNannySetupContext("__pyx_convert_string_from_py_std__in_string", 0);
+
+  /* "string.from_py":15
+ * cdef string __pyx_convert_string_from_py_std__in_string(object o) except *:
+ *     cdef Py_ssize_t length
+ *     cdef char* data = __Pyx_PyObject_AsStringAndSize(o, &length)             # <<<<<<<<<<<<<<
+ *     return string(data, length)
+ * 
+ */
+  __pyx_t_1 = __Pyx_PyObject_AsStringAndSize(__pyx_v_o, (&__pyx_v_length)); if (unlikely(__pyx_t_1 == NULL)) __PYX_ERR(1, 15, __pyx_L1_error)
+  __pyx_v_data = __pyx_t_1;
+
+  /* "string.from_py":16
+ *     cdef Py_ssize_t length
+ *     cdef char* data = __Pyx_PyObject_AsStringAndSize(o, &length)
+ *     return string(data, length)             # <<<<<<<<<<<<<<
+ * 
+ * 
+ */
+  __pyx_r = std::string(__pyx_v_data, __pyx_v_length);
+  goto __pyx_L0;
+
+  /* "string.from_py":13
+ * 
+ * @cname("__pyx_convert_string_from_py_std__in_string")
+ * cdef string __pyx_convert_string_from_py_std__in_string(object o) except *:             # <<<<<<<<<<<<<<
+ *     cdef Py_ssize_t length
+ *     cdef char* data = __Pyx_PyObject_AsStringAndSize(o, &length)
+ */
+
+  /* function exit code */
+  __pyx_L1_error:;
+  __Pyx_AddTraceback("string.from_py.__pyx_convert_string_from_py_std__in_string", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_L0:;
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
 static PyMethodDef __pyx_methods[] = {
   {0, 0, 0, 0}
 };
@@ -1961,8 +2240,12 @@ static struct PyModuleDef __pyx_moduledef = {
 
 static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_n_s_append, __pyx_k_append, sizeof(__pyx_k_append), 0, 0, 1, 1},
+  {&__pyx_n_s_decode, __pyx_k_decode, sizeof(__pyx_k_decode), 0, 0, 1, 1},
+  {&__pyx_n_s_encode, __pyx_k_encode, sizeof(__pyx_k_encode), 0, 0, 1, 1},
+  {&__pyx_n_s_get, __pyx_k_get, sizeof(__pyx_k_get), 0, 0, 1, 1},
   {&__pyx_n_s_main, __pyx_k_main, sizeof(__pyx_k_main), 0, 0, 1, 1},
   {&__pyx_n_s_test, __pyx_k_test, sizeof(__pyx_k_test), 0, 0, 1, 1},
+  {&__pyx_n_s_utf8, __pyx_k_utf8, sizeof(__pyx_k_utf8), 0, 0, 1, 1},
   {0, 0, 0, 0, 0, 0, 0}
 };
 static int __Pyx_InitCachedBuiltins(void) {
@@ -1972,8 +2255,33 @@ static int __Pyx_InitCachedBuiltins(void) {
 static int __Pyx_InitCachedConstants(void) {
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__Pyx_InitCachedConstants", 0);
+
+  /* "pyobject.pyx":59
+ * cdef extern bool dict_get_value(object d, const char* key, string& value):
+ *     _key = key
+ *     _key = _key.decode('utf8')             # <<<<<<<<<<<<<<
+ *     if d.get(_key):
+ *         _value = d[_key]
+ */
+  __pyx_tuple_ = PyTuple_Pack(1, __pyx_n_s_utf8); if (unlikely(!__pyx_tuple_)) __PYX_ERR(0, 59, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple_);
+  __Pyx_GIVEREF(__pyx_tuple_);
+
+  /* "pyobject.pyx":63
+ *         _value = d[_key]
+ *         if isinstance(_value, str):
+ *             _value = _value.encode('utf8')             # <<<<<<<<<<<<<<
+ *         (&value)[0] = _value
+ *         return 1
+ */
+  __pyx_tuple__2 = PyTuple_Pack(1, __pyx_n_s_utf8); if (unlikely(!__pyx_tuple__2)) __PYX_ERR(0, 63, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__2);
+  __Pyx_GIVEREF(__pyx_tuple__2);
   __Pyx_RefNannyFinishContext();
   return 0;
+  __pyx_L1_error:;
+  __Pyx_RefNannyFinishContext();
+  return -1;
 }
 
 static int __Pyx_InitGlobals(void) {
@@ -2085,12 +2393,12 @@ PyMODINIT_FUNC PyInit_pyobject(void)
   if (PyDict_SetItem(__pyx_d, __pyx_n_s_test, __pyx_t_1) < 0) __PYX_ERR(0, 1, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "string.to_py":55
+  /* "string.from_py":13
  * 
- * @cname("__pyx_convert_PyByteArray_string_to_py_std__in_string")
- * cdef inline object __pyx_convert_PyByteArray_string_to_py_std__in_string(const string& s):             # <<<<<<<<<<<<<<
- *     return __Pyx_PyByteArray_FromStringAndSize(s.data(), s.size())
- * 
+ * @cname("__pyx_convert_string_from_py_std__in_string")
+ * cdef string __pyx_convert_string_from_py_std__in_string(object o) except *:             # <<<<<<<<<<<<<<
+ *     cdef Py_ssize_t length
+ *     cdef char* data = __Pyx_PyObject_AsStringAndSize(o, &length)
  */
 
   /*--- Wrapped vars code ---*/

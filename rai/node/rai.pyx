@@ -39,11 +39,27 @@ cdef extern from "rai_.hpp" namespace "python":
         object delegators (string account_text)
         object delegators_count (string account_text)
         object deterministic_key (string seed_text, uint64_t index)
-        object frontiers (string account_text, uint64_t count);
+        object frontiers (string account_text, uint64_t count)
         object frontier_count ()
+        object history (string hash_text, uint64_t count)
+        object mrai_from_raw (string amount_text)
+        object mrai_to_raw (string amount_text)
+        object krai_from_raw (string amount_text)
 
-        object genesis_account();
+        object keepalive (string address_text, string port_text)
+        object key_create ()
+        object key_expand (string key_text)
 
+        object ledger (string account_text, uint64_t count, bool sorting, bool representative, bool weight, bool pending)
+
+        object block_create (object dict)
+        object payment_begin (string id_text)
+
+        object password_change (string wallet_text, string password_text)
+        object password_enter (string wallet_text, string password_text)
+        object password_valid (string wallet_text, bool wallet_locked)
+
+        object genesis_account()
         object block_count_type ()
 
     pyrai* get_pyrai()
@@ -197,6 +213,55 @@ def frontiers (string account_text, uint64_t count):
 
 def frontier_count ():
     return _rai.frontier_count ()
+
+def history (string hash_text, uint64_t count):
+    ret = []
+    result = _rai.history (hash_text, count)
+    for r in result:
+        ret.append(JsonStruct(r))
+    return ret
+
+def mrai_from_raw (string amount_text):
+    return _rai.mrai_from_raw (amount_text)
+
+def mrai_to_raw (string amount_text):
+    return _rai.mrai_to_raw (amount_text)
+
+def krai_from_raw (string amount_text):
+    return _rai.krai_from_raw (amount_text)
+
+def keepalive (string address_text, string port_text):
+    return _rai.keepalive (address_text, port_text)
+
+def key_create ():
+    ret = _rai.key_create ()
+    return JsonStruct(ret)
+
+def key_expand (string key_text):
+    ret = _rai.key_expand (key_text)
+    if ret:
+        return JsonStruct(ret)
+
+def ledger (string account_text, uint64_t count, sorting = False, representative = False, weight = False, pending = False):
+    return _rai.ledger (account_text, count, sorting, representative, weight, pending)
+
+def block_create (d):
+    ret = _rai.block_create (d)
+    if ret:
+        ret['block'] = JsonStruct(json.loads(ret['block']))
+    return ret
+
+def payment_begin (string id_text):
+    return _rai.payment_begin(id_text)
+
+def password_change (string wallet_text, string password_text):
+    return _rai.password_change (wallet_text, password_text)
+
+def password_enter (string wallet_text, string password_text):
+    return _rai.password_enter (wallet_text, password_text)
+
+def password_valid (string wallet_text, wallet_locked = False):
+    return _rai.password_valid (wallet_text, wallet_locked);
 
 def send (string wallet_text, string source_text, string destination_text, string amount_text, uint64_t work):
     return _rai.send (wallet_text, source_text, destination_text, amount_text, work)

@@ -59,6 +59,25 @@ public:
    PyObject* deterministic_key (string seed_text, uint64_t index_a);
    PyObject* frontiers (string account_text, uint64_t count);
    PyObject* frontier_count ();
+   PyObject* history (string hash_text, uint64_t count);
+
+   PyObject* mrai_from_raw (string amount_text);
+   PyObject* mrai_to_raw (string amount_text);
+   PyObject* krai_from_raw (string amount_text);
+   PyObject* krai_to_raw (string amount_text);
+
+   PyObject* keepalive (string address_text, string port_text);
+   PyObject* key_create ();
+   PyObject* key_expand (string key_text);
+
+   PyObject* ledger (string account_text, uint64_t count, bool sorting, bool representative, bool weight, bool pending);
+
+   PyObject* block_create (PyObject *dict);
+   PyObject* payment_begin (string id_text);
+
+   PyObject* password_change (string wallet_text, string password_text);
+   PyObject* password_enter (string wallet_text, string password_text);
+   PyObject* password_valid (string wallet_text, bool wallet_locked = false);
 
    PyObject* genesis_account();
    PyObject* send (string wallet_text, string source_text, string destination_text, string amount_text, uint64_t work);
