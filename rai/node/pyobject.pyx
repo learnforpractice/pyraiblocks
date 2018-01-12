@@ -10,8 +10,9 @@ cdef extern object py_new_bool(int b):
 cdef extern object py_new_none():
     return None
 
-cdef extern object py_new_string(string& s):
-    return s
+cdef extern object py_new_string(string s):
+    ss = s
+    return ss.decode('utf8')
 
 cdef extern object py_new_int(int n):
     return n

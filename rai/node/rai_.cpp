@@ -92,31 +92,20 @@ string pyrai::wallet_create ()
    return wallet_id.pub.to_string ();
 }
 
-
-PyObject* pyrai::block_count ()
+PyObject* pyrai::account_balance (string& account_text)
 {
    PyDict dict;
-   rai::transaction transaction (node.store.environment, nullptr, false);
-   dict.add ("count", to_string (node.store.block_count (transaction).sum ()));
-   dict.add ("unchecked", to_string (node.store.unchecked_count (transaction)));
-   return dict.get();
-}
-
-int pyrai::account_balance (string& account_text, string& _balance, string& _pending)
-{
    rai::uint256_union account;
    auto error (account.decode_account (account_text));
    if (!error)
    {
       auto balance (node.balance_pending (account));
-      _balance = balance.first.convert_to<string> ();
-      _pending = balance.second.convert_to<string> ();
-      return 1;
+      string _balance = balance.first.convert_to<string> ();
+      string _pending = balance.second.convert_to<string> ();
+      dict.add("balance", _balance);
+      dict.add("pending", _pending);
    }
-   else
-   {
-      return 0;
-   }
+   return dict.get();
 }
 int pyrai::account_block_count (string& account_text)
 {
@@ -602,6 +591,230 @@ PyObject* pyrai::accounts_frontiers (vector<string> accounts)
    return dict.get();
 }
 
+#define error_response(a, b) return set_last_error(b);
+
+PyObject* pyrai::accounts_pending (vector<string> accounts, uint64_t count, string threshold_text, bool source)
+{
+   PyDict result;
+   rai::uint128_union threshold (0);
+
+   auto error_threshold (threshold.decode_dec (threshold_text));
+   if (error_threshold)
+   {
+      error_response (response, "Bad threshold number");
+   }
+
+   rai::transaction transaction (node.store.environment, nullptr, false);
+   for (auto & account_text : accounts)
+   {
+      rai::uint256_union account;
+      if (!account.decode_account (account_text))
+      {
+         PyDict dict;
+         rai::account end (account.number () + 1);
+         for (auto i (node.store.pending_begin (transaction, rai::pending_key (account, 0))), n (node.store.pending_begin (transaction, rai::pending_key (end, 0))); i != n && dict.size () < count; ++i)
+         {
+            rai::pending_key key (i->first);
+            if (threshold.is_zero () && !source)
+            {
+               dict.add("hash", key.hash.to_string ());
+            }
+            else
+            {
+               rai::pending_info info (i->second);
+               if (info.amount.number () >= threshold.number ())
+               {
+                  if (source)
+                  {
+                     PyDict subdict;
+                     subdict.add ("amount", info.amount.number ().convert_to<std::string> ());
+                     subdict.add ("source", info.source.to_account ());
+                     dict.add (key.hash.to_string (), subdict.get());
+                  }
+                  else
+                  {
+                     dict.add (key.hash.to_string (), info.amount.number ().convert_to<std::string> ());
+                  }
+               }
+            }
+         }
+         result.add (account.to_account (), dict.get());
+      }
+      else
+      {
+         error_response (response, "Bad account number");
+      }
+   }
+   return result.get();
+}
+
+PyObject* pyrai::genesis_account()
+{
+   auto account = rai::genesis_account.to_account ();
+   return py_new_string (account);
+}
+
+PyObject* pyrai::available_supply ()
+{
+   auto genesis_balance (node.balance (rai::genesis_account)); // Cold storage genesis
+   auto landing_balance (node.balance (rai::account ("059F68AAB29DE0D3A27443625C7EA9CDDB6517A8B76FE37727EF6A4D76832AD5"))); // Active unavailable account
+   auto faucet_balance (node.balance (rai::account ("8E319CE6F3025E5B2DF66DA7AB1467FE48F1679C13DD43BFDB29FA2E9FC40D3B"))); // Faucet account
+   auto burned_balance ((node.balance_pending (rai::account (0))).second); // Burning 0 account
+   auto available (rai::genesis_amount - genesis_balance - landing_balance - faucet_balance - burned_balance);
+   auto _available = available.convert_to<std::string> ();
+   return py_new_string(_available);
+}
+
+PyObject* pyrai::block (string hash_text)
+{
+   PyDict dict;
+   rai::uint256_union hash;
+   auto error (hash.decode_hex (hash_text));
+   if (!error)
+   {
+      rai::transaction transaction (node.store.environment, nullptr, false);
+      auto block (node.store.block_get (transaction, hash));
+      if (block != nullptr)
+      {
+         std::string contents;
+         block->serialize_json (contents);
+         return py_new_string(contents);
+      }
+      else
+      {
+         error_response (response, "Block not found");
+      }
+   }
+   else
+   {
+      error_response (response, "Bad hash number");
+   }
+}
+
+PyObject* pyrai::blocks (vector<string> hashes)
+{
+   PyArray result;
+   rai::transaction transaction (node.store.environment, nullptr, false);
+   for (auto& hash_text : hashes)
+   {
+      rai::uint256_union hash;
+      auto error (hash.decode_hex (hash_text));
+      if (!error)
+      {
+         auto block (node.store.block_get (transaction, hash));
+         if (block != nullptr)
+         {
+            PyDict dict;
+            std::string contents;
+            block->serialize_json (contents);
+            dict.add (hash_text, contents);
+            result.append (dict.get());
+         }
+         else
+         {
+            error_response (response, "Block not found");
+         }
+      }
+      else
+      {
+         error_response (response, "Bad hash number");
+      }
+   }
+   return result.get();
+}
+
+PyObject* pyrai::blocks_info (vector<string> hashes, bool pending, bool source)
+{
+   PyDict result;
+   rai::transaction transaction (node.store.environment, nullptr, false);
+   for (auto& hash_text : hashes)
+   {
+      rai::uint256_union hash;
+      auto error (hash.decode_hex (hash_text));
+      if (!error)
+      {
+         auto block (node.store.block_get (transaction, hash));
+         if (block != nullptr)
+         {
+            PyDict dict;
+            auto account (node.ledger.account (transaction, hash));
+            dict.add ("block_account", account.to_account ());
+            auto amount (node.ledger.amount (transaction, hash));
+            dict.add ("amount", amount.convert_to<std::string> ());
+            std::string contents;
+            block->serialize_json (contents);
+            dict.add ("contents", contents);
+            if (pending)
+            {
+               auto block_l (dynamic_cast<rai::send_block *> (block.get ()));
+               bool exists (false);
+               if (block_l != nullptr)
+               {
+                  auto destination (block_l->hashables.destination);
+                  exists = node.store.pending_exists (transaction, rai::pending_key (destination, hash));
+               }
+               dict.add ("pending", exists ? "1" : "0");
+            }
+            if (source)
+            {
+               rai::block_hash source_hash (block->source ());
+               std::unique_ptr<rai::block> block_a (node.store.block_get (transaction, source_hash));
+               if (block_a != nullptr)
+               {
+                  auto source_account (node.ledger.account (transaction, source_hash));
+                  dict.add ("source_account", source_account.to_account ());
+               }
+               else
+               {
+                  dict.add ("source_account", "0");
+               }
+            }
+            result.add (hash_text, dict.get());
+         }
+         else
+         {
+            error_response (response, "Block not found");
+         }
+      }
+      else
+      {
+         error_response (response, "Bad hash number");
+      }
+   }
+   return result.get();
+}
+
+
+PyObject* pyrai::block_account (string hash_text)
+{
+   rai::block_hash hash;
+   if (!hash.decode_hex (hash_text))
+   {
+      rai::transaction transaction (node.store.environment, nullptr, false);
+      if (node.store.block_exists (transaction, hash))
+      {
+         auto account (node.ledger.account (transaction, hash));
+         return py_new_string(account.to_account ());
+      }
+      else
+      {
+         error_response (response, "Block not found");
+      }
+   }
+   else
+   {
+      error_response (response, "Invalid block hash");
+   }
+}
+
+PyObject* pyrai::block_count ()
+{
+   PyDict dict;
+   rai::transaction transaction (node.store.environment, nullptr, false);
+   dict.add ("count", to_string (node.store.block_count (transaction).sum ()));
+   dict.add ("unchecked", to_string (node.store.unchecked_count (transaction)));
+   return dict.get();
+}
 
 PyObject* pyrai::block_count_type ()
 {
@@ -614,6 +827,270 @@ PyObject* pyrai::block_count_type ()
    dict.add ("change", std::to_string (count.change));
    return dict.get();
 }
+
+
+PyObject* pyrai::bootstrap (string address_text, string port_text)
+{
+   boost::system::error_code ec;
+   auto address (boost::asio::ip::address_v6::from_string (address_text, ec));
+   if (!ec)
+   {
+      uint16_t port;
+      if (!rai::parse_port (port_text, port))
+      {
+         node.bootstrap_initiator.bootstrap (rai::endpoint (address, port));
+         return py_new_bool(true);
+      }
+      else
+      {
+         error_response (response, "Invalid port");
+      }
+   }
+   else
+   {
+      error_response (response, "Invalid address");
+   }
+}
+
+
+PyObject* pyrai::bootstrap_any ()
+{
+   node.bootstrap_initiator.bootstrap ();
+   return py_new_bool(true);
+}
+
+
+PyObject* pyrai::chain (string block_text, uint64_t count)
+{
+   PyArray arr;
+   rai::block_hash block;
+   if (!block.decode_hex (block_text))
+   {
+      rai::transaction transaction (node.store.environment, nullptr, false);
+      while (!block.is_zero () && arr.size () < count)
+      {
+         auto block_l (node.store.block_get (transaction, block));
+         if (block_l != nullptr)
+         {
+            arr.append(block.to_string ());
+            block = block_l->previous ();
+         }
+         else
+         {
+            block.clear ();
+         }
+      }
+      return arr.get();
+   }
+   else
+   {
+      error_response (response, "Invalid block hash");
+   }
+}
+
+PyObject* pyrai::delegators (string account_text)
+{
+   rai::account account;
+   auto error (account.decode_account (account_text));
+   if (!error)
+   {
+      PyDict result;
+      rai::transaction transaction (node.store.environment, nullptr, false);
+      for (auto i (node.store.latest_begin (transaction)), n (node.store.latest_end ()); i != n; ++i)
+      {
+         rai::account_info info (i->second);
+         auto block (node.store.block_get (transaction, info.rep_block));
+         assert (block != nullptr);
+         if (block->representative () == account)
+         {
+            std::string balance;
+            rai::uint128_union (info.balance).encode_dec (balance);
+            result.add (rai::account (i->first.uint256 ()).to_account (), balance);
+         }
+      }
+      return result.get();
+   }
+   else
+   {
+      error_response (response, "Bad account number");
+   }
+}
+
+PyObject* pyrai::delegators_count (string account_text)
+{
+   rai::account account;
+   auto error (account.decode_account (account_text));
+   if (!error)
+   {
+      uint64_t count (0);
+      rai::transaction transaction (node.store.environment, nullptr, false);
+      for (auto i (node.store.latest_begin (transaction)), n (node.store.latest_end ()); i != n; ++i)
+      {
+         rai::account_info info (i->second);
+         auto block (node.store.block_get (transaction, info.rep_block));
+         assert (block != nullptr);
+         if (block->representative () == account)
+         {
+            ++count;
+         }
+      }
+      return py_new_int(count);
+   }
+   else
+   {
+      set_last_error ("Bad account number");
+      return py_new_int(0);
+   }
+}
+
+PyObject* pyrai::deterministic_key (string seed_text, uint64_t index_a)
+{
+   rai::raw_key seed;
+   auto error (seed.data.decode_hex (seed_text));
+   if (!error)
+   {
+      PyDict dict;
+      uint64_t index_a;
+      rai::uint256_union index (index_a);
+      rai::uint256_union prv;
+      blake2b_state hash;
+      blake2b_init (&hash, prv.bytes.size ());
+      blake2b_update (&hash, seed.data.bytes.data (), seed.data.bytes.size ());
+      blake2b_update (&hash, reinterpret_cast<uint8_t *> (&index.dwords[7]), sizeof (uint32_t));
+      blake2b_final (&hash, prv.bytes.data (), prv.bytes.size ());
+      boost::property_tree::ptree response_l;
+      rai::uint256_union pub;
+      ed25519_publickey (prv.bytes.data (), pub.bytes.data ());
+      dict.add ("private", prv.to_string ());
+      dict.add ("public", pub.to_string ());
+      dict.add ("account", pub.to_account ());
+      return dict.get();
+   }
+   else
+   {
+      error_response (response, "Bad seed");
+   }
+}
+
+PyObject* pyrai::frontiers (string account_text, uint64_t count)
+{
+   rai::account start;
+   if (!start.decode_account (account_text))
+   {
+      PyDict frontiers;
+      rai::transaction transaction (node.store.environment, nullptr, false);
+      for (auto i (node.store.latest_begin (transaction, start)), n (node.store.latest_end ()); i != n && frontiers.size () < count; ++i)
+      {
+         frontiers.add (rai::account (i->first.uint256 ()).to_account (), rai::account_info (i->second).head.to_string ());
+      }
+      return frontiers.get();
+   }
+   else
+   {
+      error_response (response, "Invalid starting account");
+   }
+}
+
+PyObject* pyrai::frontier_count ()
+{
+   rai::transaction transaction (node.store.environment, nullptr, false);
+   auto size (node.store.frontier_count (transaction));
+   return py_new_int(size);
+}
+
+PyObject* pyrai::send (string wallet_text, string source_text, string destination_text, string amount_text, uint64_t work)
+{
+   rai::uint256_union wallet;
+   auto error (wallet.decode_hex (wallet_text));
+   if (!error)
+   {
+      auto existing (node.wallets.items.find (wallet));
+      if (existing != node.wallets.items.end ())
+      {
+         rai::account source;
+         auto error (source.decode_account (source_text));
+         if (!error)
+         {
+            rai::account destination;
+            auto error (destination.decode_account (destination_text));
+            if (!error)
+            {
+               rai::amount amount;
+               auto error (amount.decode_dec (amount_text));
+               if (!error)
+               {
+                  rai::uint128_t balance (0);
+                  {
+                     rai::transaction transaction (node.store.environment, nullptr, work != 0); // false if no "work" in request, true if work > 0
+                     rai::account_info info;
+                     if (!node.store.account_get (transaction, source, info))
+                     {
+                        balance = (info.balance).number ();
+                     }
+                     else
+                     {
+                        return set_last_error ("Account not found");
+                     }
+                     if (work)
+                     {
+                        if (!rai::work_validate (info.head, work))
+                        {
+                           existing->second->store.work_put (transaction, source, work);
+                        }
+                        else
+                        {
+                           return set_last_error ("Invalid work");
+                        }
+                     }
+                  }
+                  if (balance >= amount.number ())
+                  {
+                     promise<string> result;
+                     existing->second->send_async (source, destination, amount.number (), [&result](std::shared_ptr<rai::block> block_a) {
+                        rai::uint256_union hash (0);
+                        if (block_a != nullptr)
+                        {
+                           hash = block_a->hash ();
+                        }
+                        result.set_value(hash.to_string ());
+                     },
+                     work == 0);
+                     string _result = result.get_future ().get ();
+                     return py_new_string(_result);
+                  }
+                  else
+                  {
+                     return set_last_error ("Insufficient balance");
+                  }
+               }
+               else
+               {
+                  return set_last_error ("Bad amount format");
+               }
+            }
+            else
+            {
+               return set_last_error ("Bad destination account");
+            }
+         }
+         else
+         {
+            return set_last_error ("Bad source account");
+         }
+      }
+      else
+      {
+         return set_last_error ("Wallet not found");
+      }
+   }
+   else
+   {
+      return set_last_error ("Bad wallet number");
+   }
+}
+
+
+
 
 
 

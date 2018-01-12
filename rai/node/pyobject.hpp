@@ -13,7 +13,7 @@
 #include <vector>
 PyObject* py_new_none();
 PyObject* py_new_bool(int b);
-PyObject* py_new_string(std::string& s);
+PyObject* py_new_string(std::string s);
 PyObject* py_new_int(int n);
 PyObject* py_new_int64(long long n);
 PyObject* py_new_uint64(unsigned long long n);
@@ -38,6 +38,7 @@ using namespace std;
 class PyArray {
   public:
    PyArray();
+   ~PyArray();
    void append(PyObject* obj);
    void append(std::string s);
    void append(int n);
@@ -45,11 +46,7 @@ class PyArray {
    void append(uint64_t n);
    void append(double n);
    PyObject* get();
-   int size()
-   {
-      return array_size(arr);
-   }
-
+   int size();
   private:
    PyObject* arr;
 };
@@ -61,13 +58,13 @@ class PyDict {
    PyDict(PyObject* dictObj);
    void add(PyObject* key, PyObject* value);
    void add(std::string key, PyObject* value);
-   void add(std::string& key, PyObject* value);
+//   void add(std::string& key, PyObject* value);
    void add(const char* key, std::string value);
 //   void add(std::string& key, std::string& value);
    void add(std::string key, std::string value);
    void add(std::string& key, long long n);
    PyObject* get();
-
+   int size();
   private:
    PyObject* pydict;
 };

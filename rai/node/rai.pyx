@@ -1,7 +1,6 @@
 from libcpp.string cimport string
 from libcpp.vector cimport vector
 from libcpp cimport bool
-
 import json
 
 cdef extern from *:
@@ -11,7 +10,7 @@ cdef extern from "rai_.hpp" namespace "python":
     cppclass pyrai:
         int account_block_count (string& account_text)
         string wallet_create ()
-        int account_balance (string& account_text, string& balance, string& pending)
+        object account_balance (string& account_text)
         object account_info (string& account_text, bool representative, bool weight, bool pending)
         object block_count ()
         object account_create (string& wallet_text, bool generate_work)
@@ -27,6 +26,23 @@ cdef extern from "rai_.hpp" namespace "python":
         object accounts_balances (vector[string] accounts)
         object accounts_create (string wallet_text, uint64_t count, bool generate_work)
         object accounts_frontiers (vector[string] accounts)
+        object send (string wallet_text, string source_text, string destination_text, string amount_text, uint64_t work)
+        object accounts_pending (vector[string] accounts, uint64_t count, string threshold_text, bool source)
+        object available_supply ();
+        object block (string hash_text);
+        object blocks (vector[string] hashes);
+        object blocks_info (vector[string] hashes, bool pending, bool source)
+        object block_account (string hash_text)
+        object bootstrap (string address_text, string port_text)
+        object bootstrap_any ()
+        object chain (string block_text, uint64_t count)
+        object delegators (string account_text)
+        object delegators_count (string account_text)
+        object deterministic_key (string seed_text, uint64_t index)
+        object frontiers (string account_text, uint64_t count);
+        object frontier_count ()
+
+        object genesis_account();
 
         object block_count_type ()
 
@@ -69,14 +85,12 @@ def block_count ():
 def get_last_error():
     return get_last_error_()
 
-
 def account_balance (string account_text):
     cdef string balance
     cdef string pending
 
-    if _rai.account_balance (account_text, balance, pending):
-        return (int(balance), int(pending))
-    return None
+    ret = _rai.account_balance (account_text)
+    return JsonStruct(ret)
 
 def account_block_count (account):
     return _rai.account_block_count (account)
@@ -85,7 +99,7 @@ def account_info (account_text, representative=True, weight=True, pending=True):
     info = _rai.account_info (account_text, representative, weight, pending)
     return JsonStruct(info)
 
-def account_create (wallet_text, generate_work):
+def account_create (wallet_text, generate_work=True):
     return _rai.account_create (wallet_text, generate_work)
 
 def account_get (string key_text):
@@ -138,6 +152,57 @@ def accounts_create (string wallet_text, int count, generate_work = True):
 
 def accounts_frontiers (vector[string] accounts):
     return _rai.accounts_frontiers (accounts)
+
+def accounts_pending (vector[string] accounts, uint64_t count, string threshold_text, bool source):
+    return _rai.accounts_pending (accounts, count, threshold_text, source)
+
+def available_supply():
+    return _rai.available_supply ()
+
+def block (string hash_text):
+    ret = _rai.block (hash_text);
+    if ret:
+        ret = json.loads(ret)
+        return JsonStruct(ret)
+
+def blocks (vector[string] hashes):
+    return _rai.blocks (hashes);
+
+def blocks_info (vector[string] hashes, pending = False, source = False):
+    return _rai.blocks_info (hashes, pending, source)
+
+def block_account (string hash_text):
+    return _rai.block_account (hash_text)
+
+def bootstrap (string address_text, string port_text):
+    return _rai.bootstrap (address_text, port_text)
+
+def bootstrap_any ():
+    return _rai.bootstrap_any ()
+
+def chain (string block_text, uint64_t count):
+    return _rai.chain (block_text, count)
+
+def delegators (string account_text):
+    return _rai.delegators (account_text)
+
+def delegators_count (string account_text):
+    return _rai.delegators_count (account_text)
+
+def deterministic_key (string seed_text, uint64_t index):
+    return _rai.deterministic_key (seed_text, index)
+
+def frontiers (string account_text, uint64_t count):
+    return _rai.frontiers (account_text, count)
+
+def frontier_count ():
+    return _rai.frontier_count ()
+
+def send (string wallet_text, string source_text, string destination_text, string amount_text, uint64_t work):
+    return _rai.send (wallet_text, source_text, destination_text, amount_text, work)
+
+def genesis_account():
+    return _rai.genesis_account()
 
 def block_count_type ():
     return _rai.block_count_type ()

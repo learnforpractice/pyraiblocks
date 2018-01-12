@@ -138,7 +138,6 @@ void rai_daemon::daemon::run (boost::filesystem::path const & data_path)
 			if (!init.error ())
 			{
 				node->start ();
-		      printf("hello, worlddddddd\n");
 		      set_node(node.get());
 		      auto thread_ = boost::thread(interactive_console);
 

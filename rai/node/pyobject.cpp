@@ -6,7 +6,13 @@
  */
 #include "pyobject.hpp"
 
-PyArray::PyArray() { arr = array_create(); }
+PyArray::PyArray() {
+   arr = array_create();
+}
+
+PyArray::~PyArray() {
+   Py_XDECREF(arr);
+}
 
 void PyArray::append(PyObject* obj) { array_append(arr, obj); }
 
@@ -20,7 +26,16 @@ void PyArray::append(uint64_t n) { array_append_uint64(arr, n); }
 
 void PyArray::append(double n) { array_append_double(arr, n); }
 
-PyObject* PyArray::get() { return arr; }
+PyObject* PyArray::get() {
+   Py_XINCREF(arr);
+   return arr;
+}
+
+int PyArray::size()
+{
+   return array_size(arr);
+}
+
 
 PyDict::PyDict() {
    pydict = dict_create();
@@ -43,6 +58,7 @@ void PyDict::add(std::string key, PyObject* value) {
    dict_add(pydict, pykey, value);
 }
 
+#if 0
 void PyDict::add(std::string& key, PyObject* value) {
    if (key.size() == 0 || value == NULL) {
       return;
@@ -50,6 +66,7 @@ void PyDict::add(std::string& key, PyObject* value) {
    PyObject* pykey = py_new_string(key);
    dict_add(pydict, pykey, value);
 }
+#endif
 
 void PyDict::add(const char* key, std::string value)
 {
@@ -77,6 +94,11 @@ void PyDict::add(std::string& key, long long n) {
    PyObject* pykey = py_new_string(key);
    PyObject* pyvalue = py_new_int64(n);
    dict_add(pydict, pykey, pyvalue);
+}
+
+int PyDict::size()
+{
+   return array_size(pydict);
 }
 
 PyObject* PyDict::get() {

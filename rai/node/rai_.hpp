@@ -28,7 +28,7 @@ public:
    pyrai(rai::node *_node):node(*_node)
    {
    }
-   int account_balance (string& account_text, string& _balance, string& _pending);
+   PyObject* account_balance (string& account_text);
    int account_block_count (string& account_text);
    PyObject* account_info (string& account_text, bool representative, bool weight, bool pending);
    PyObject* account_create (string& wallet_text, bool generate_work);
@@ -45,6 +45,24 @@ public:
    PyObject* accounts_balances (vector<string> accounts);
    PyObject* accounts_create (string wallet_text, uint64_t count, bool generate_work);
    PyObject* accounts_frontiers (vector<string> accounts);
+   PyObject* accounts_pending (vector<string> accounts, uint64_t count, string threshold_text, bool source);
+   PyObject* available_supply ();
+   PyObject* block (string hash_text);
+   PyObject* blocks (vector<string> hashes);
+   PyObject* blocks_info (vector<string> hashes, bool pending, bool source);
+   PyObject* block_account (string hash_text);
+   PyObject* bootstrap (string address_text, string port_text);
+   PyObject* bootstrap_any ();
+   PyObject* chain (string block_text, uint64_t count);
+   PyObject* delegators (string account_text);
+   PyObject* delegators_count (string account_text);
+   PyObject* deterministic_key (string seed_text, uint64_t index_a);
+   PyObject* frontiers (string account_text, uint64_t count);
+   PyObject* frontier_count ();
+
+   PyObject* genesis_account();
+   PyObject* send (string wallet_text, string source_text, string destination_text, string amount_text, uint64_t work);
+
    PyObject* block_count_type ();
 
 
