@@ -90,6 +90,10 @@ public:
    PyObject* wallet_republish (string wallet_text, uint64_t count);
 
    PyObject* search_pending (string wallet_text);
+   PyObject* search_pending_all ();
+
+   PyObject* validate_account_number (string account_text);
+   PyObject* successors (string block_text, uint64_t count);
 
    PyObject* password_change (string wallet_text, string password_text);
    PyObject* password_enter (string wallet_text, string password_text);

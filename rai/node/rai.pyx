@@ -71,6 +71,10 @@ cdef extern from "rai_.hpp" namespace "python":
         object wallet_republish (string wallet_text, uint64_t count)
 
         object search_pending (string wallet_text);
+        object search_pending_all ();
+
+        object validate_account_number (string account_text);
+        object successors (string block_text, uint64_t count);
 
         object password_change (string wallet_text, string password_text)
         object password_enter (string wallet_text, string password_text)
@@ -306,6 +310,15 @@ def wallet_republish (string wallet_text, uint64_t count):
 
 def search_pending (string wallet_text):
     return _rai.search_pending (wallet_text)
+
+def search_pending_all ():
+    return _rai.search_pending_all ()
+
+def validate_account_number (string account_text):
+    return _rai.validate_account_number (account_text)
+
+def successors (string block_text, uint64_t count):
+    return _rai.successors (block_text, count)
 
 def password_change (string wallet_text, string password_text):
     return _rai.password_change (wallet_text, password_text)

@@ -2133,6 +2133,41 @@ PyObject* pyrai::search_pending (string wallet_text)
    return py_new_bool (false);
 }
 
+PyObject* pyrai::search_pending_all ()
+{
+   node.wallets.search_pending_all ();
+   return py_new_bool (true);
+}
+
+PyObject* pyrai::validate_account_number (string account_text)
+{
+   rai::uint256_union account;
+   auto error (account.decode_account (account_text));
+   return py_new_bool (error ? 0 : 1);
+}
+
+PyObject* pyrai::successors (string block_text, uint64_t count)
+{
+   PyArray blocks;
+   rai::block_hash block;
+   rai::transaction transaction (node.store.environment, nullptr, false);
+   while (!block.is_zero () && blocks.size () < count)
+   {
+      auto block_l (node.store.block_get (transaction, block));
+      if (block_l != nullptr)
+      {
+         boost::property_tree::ptree entry;
+         entry.put ("", block.to_string ());
+         blocks.append (block.to_string ());
+         block = node.store.block_successor (transaction, block);
+      }
+      else
+      {
+         block.clear ();
+      }
+   }
+   return blocks.get();
+}
 
 PyObject* pyrai::password_valid (string wallet_text, bool wallet_locked)
 {
