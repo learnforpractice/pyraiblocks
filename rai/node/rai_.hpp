@@ -74,6 +74,18 @@ public:
 
    PyObject* block_create (PyObject *dict);
    PyObject* payment_begin (string id_text);
+   PyObject* payment_init (string id_text);
+   PyObject* payment_end (string id_text, string account_text);
+   PyObject* payment_wait (string account_text, string amount_text, uint64_t timeout);
+
+   PyObject* process (string block_text);
+   PyObject* receive (string wallet_text, string account_text, string hash_text, uint64_t work);
+   PyObject* receive_minimum ();
+
+   PyObject* receive_minimum_set (string amount_text);
+   PyObject* representatives (uint64_t count, bool sorting);
+
+   PyObject* wallet_representative (string wallet_text);
 
    PyObject* password_change (string wallet_text, string password_text);
    PyObject* password_enter (string wallet_text, string password_text);

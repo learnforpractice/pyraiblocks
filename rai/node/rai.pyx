@@ -53,7 +53,20 @@ cdef extern from "rai_.hpp" namespace "python":
         object ledger (string account_text, uint64_t count, bool sorting, bool representative, bool weight, bool pending)
 
         object block_create (object dict)
+
         object payment_begin (string id_text)
+        object payment_init (string id_text)
+        object payment_end (string id_text, string account_text)
+        object payment_wait (string account_text, string amount_text, uint64_t timeout)
+
+        object process (string block_text);
+
+        object receive (string wallet_text, string account_text, string hash_text, uint64_t work);
+        object receive_minimum ();
+
+        object receive_minimum_set (string amount_text)
+        object representatives (uint64_t count, bool sorting)
+        object wallet_representative (string wallet_text)
 
         object password_change (string wallet_text, string password_text)
         object password_enter (string wallet_text, string password_text)
@@ -253,6 +266,33 @@ def block_create (d):
 
 def payment_begin (string id_text):
     return _rai.payment_begin(id_text)
+
+def payment_init (string id_text):
+    return _rai.payment_init (id_text)
+
+def payment_end (string id_text, string account_text):
+    return _rai.payment_end (id_text, account_text)
+
+def payment_wait (string account_text, string amount_text, uint64_t timeout):
+    return _rai.payment_wait (account_text, amount_text, timeout)
+
+def process (string block_text):
+    return _rai.process (block_text)
+
+def receive (string wallet_text, string account_text, string hash_text, uint64_t work):
+    return _rai.receive (wallet_text, account_text, hash_text, work)
+
+def receive_minimum ():
+    return _rai.receive_minimum ();
+
+def receive_minimum_set (string amount_text):
+    return _rai.receive_minimum_set (amount_text)
+
+def representatives (uint64_t count, bool sorting):
+    return _rai.representatives (count, sorting)
+
+def wallet_representative (string wallet_text):
+    return _rai.wallet_representative (wallet_text)
 
 def password_change (string wallet_text, string password_text):
     return _rai.password_change (wallet_text, password_text)
