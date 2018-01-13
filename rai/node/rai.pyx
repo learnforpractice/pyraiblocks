@@ -72,9 +72,18 @@ cdef extern from "rai_.hpp" namespace "python":
 
         object search_pending (string wallet_text);
         object search_pending_all ();
+        object pending_exists (string hash_text)
 
         object validate_account_number (string account_text);
         object successors (string block_text, uint64_t count);
+
+        object version ()
+        object peers ()
+        object pending (string account_text, uint64_t count, string threshold_text, bool source)
+        object unchecked (uint64_t count)
+        object unchecked_clear ()
+        object unchecked_get (string hash_text)
+        object unchecked_keys (uint64_t count, string hash_text)
 
         object password_change (string wallet_text, string password_text)
         object password_enter (string wallet_text, string password_text)
@@ -319,6 +328,30 @@ def validate_account_number (string account_text):
 
 def successors (string block_text, uint64_t count):
     return _rai.successors (block_text, count)
+
+def version ():
+    return _rai.version ()
+
+def peers ():
+    return _rai.peers ();
+
+def pending (string account_text, uint64_t count, string threshold_text, bool source):
+    return _rai.pending (account_text, count, threshold_text, source)
+
+def pending_exists (string hash_text):
+    return _rai.pending_exists (hash_text)
+
+def unchecked (uint64_t count):
+    return _rai.unchecked (count)
+
+def unchecked_clear ():
+    return _rai.unchecked_clear ()
+
+def unchecked_get (string hash_text):
+    return _rai.unchecked_get (hash_text)
+
+def unchecked_keys (uint64_t count, string hash_text):
+    return _rai.unchecked_keys (count, hash_text)
 
 def password_change (string wallet_text, string password_text):
     return _rai.password_change (wallet_text, password_text)

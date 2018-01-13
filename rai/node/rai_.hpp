@@ -94,6 +94,14 @@ public:
 
    PyObject* validate_account_number (string account_text);
    PyObject* successors (string block_text, uint64_t count);
+   PyObject* version ();
+   PyObject* peers ();
+   PyObject* pending (string account_text, uint64_t count, string threshold_text, bool source);
+   PyObject* pending_exists (string hash_text);
+   PyObject* unchecked (uint64_t count);
+   PyObject* unchecked_clear ();
+   PyObject* unchecked_get (string hash_text);
+   PyObject* unchecked_keys (uint64_t count, string hash_text);
 
    PyObject* password_change (string wallet_text, string password_text);
    PyObject* password_enter (string wallet_text, string password_text);

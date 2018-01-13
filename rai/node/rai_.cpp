@@ -2169,6 +2169,189 @@ PyObject* pyrai::successors (string block_text, uint64_t count)
    return blocks.get();
 }
 
+PyObject* pyrai::version ()
+{
+   PyDict result;
+   result.add ("rpc_version", "1");
+   result.add ("store_version", std::to_string (node.store_version ()));
+   result.add ("node_vendor", boost::str (boost::format ("RaiBlocks %1%.%2%") % RAIBLOCKS_VERSION_MAJOR % RAIBLOCKS_VERSION_MINOR));
+   return result.get();
+}
+
+PyObject* pyrai::peers ()
+{
+   PyDict result;
+   auto peers_list (node.peers.list_version ());
+   for (auto i (peers_list.begin ()), n (peers_list.end ()); i != n; ++i)
+   {
+      std::stringstream text;
+      text << i->first;
+      result.add (text.str (), std::to_string (i->second));
+   }
+   return result.get();
+}
+
+PyObject* pyrai::pending (string account_text, uint64_t count, string threshold_text, bool source)
+{
+   rai::account account;
+   if (!account.decode_account (account_text))
+   {
+      rai::uint128_union threshold (0);
+      auto error_threshold (threshold.decode_dec (threshold_text));
+      if (error_threshold)
+      {
+         error_response (response, "Bad threshold number");
+      }
+      PyDict peers_l;
+      {
+         rai::transaction transaction (node.store.environment, nullptr, false);
+         rai::account end (account.number () + 1);
+         for (auto i (node.store.pending_begin (transaction, rai::pending_key (account, 0))), n (node.store.pending_begin (transaction, rai::pending_key (end, 0))); i != n && peers_l.size () < count; ++i)
+         {
+            rai::pending_key key (i->first);
+            if (threshold.is_zero () && !source)
+            {
+               peers_l.add("hash", key.hash.to_string ());
+            }
+            else
+            {
+               rai::pending_info info (i->second);
+               if (info.amount.number () >= threshold.number ())
+               {
+                  if (source)
+                  {
+                     boost::property_tree::ptree pending_tree;
+                     PyDict dict;
+                     dict.add ("amount", info.amount.number ().convert_to<std::string> ());
+                     dict.add ("source", info.source.to_account ());
+                     peers_l.add (key.hash.to_string (), dict.get());
+                  }
+                  else
+                  {
+                     peers_l.add (key.hash.to_string (), info.amount.number ().convert_to<std::string> ());
+                  }
+               }
+            }
+         }
+      }
+      return peers_l.get();
+   }
+   else
+   {
+      error_response (response, "Bad account number");
+   }
+}
+
+
+PyObject* pyrai::pending_exists (string hash_text)
+{
+   rai::uint256_union hash;
+   auto error (hash.decode_hex (hash_text));
+   if (!error)
+   {
+      rai::transaction transaction (node.store.environment, nullptr, false);
+      auto block (node.store.block_get (transaction, hash));
+      if (block != nullptr)
+      {
+         auto block_l (dynamic_cast<rai::send_block *> (block.get ()));
+         auto exists (false);
+         if (block_l != nullptr)
+         {
+            auto account (block_l->hashables.destination);
+            exists = node.store.pending_exists (transaction, rai::pending_key (account, hash));
+         }
+         return py_new_bool (exists ? 1 : 0);
+      }
+      else
+      {
+         error_response_false (response, "Block not found");
+      }
+   }
+   else
+   {
+      error_response_false (response, "Bad hash number");
+   }
+}
+
+PyObject* pyrai::unchecked (uint64_t count)
+{
+   PyDict unchecked;
+   rai::transaction transaction (node.store.environment, nullptr, false);
+   for (auto i (node.store.unchecked_begin (transaction)), n (node.store.unchecked_end ()); i != n && unchecked.size () < count; ++i)
+   {
+      rai::bufferstream stream (reinterpret_cast<uint8_t const *> (i->second.data ()), i->second.size ());
+      auto block (rai::deserialize_block (stream));
+      std::string contents;
+      block->serialize_json (contents);
+      unchecked.add (block->hash ().to_string (), contents);
+   }
+   return unchecked.get ();
+}
+
+PyObject* pyrai::unchecked_clear ()
+{
+   rai::transaction transaction (node.store.environment, nullptr, true);
+   node.store.unchecked_clear (transaction);
+   return py_new_bool (true);
+}
+
+
+PyObject* pyrai::unchecked_get (string hash_text)
+{
+   rai::uint256_union hash;
+   auto error (hash.decode_hex (hash_text));
+   if (!error)
+   {
+      rai::transaction transaction (node.store.environment, nullptr, false);
+      for (auto i (node.store.unchecked_begin (transaction)), n (node.store.unchecked_end ()); i != n; ++i)
+      {
+         rai::bufferstream stream (reinterpret_cast<uint8_t const *> (i->second.data ()), i->second.size ());
+         auto block (rai::deserialize_block (stream));
+         if (block->hash () == hash)
+         {
+            std::string contents;
+            block->serialize_json (contents);
+            return py_new_string (contents);
+            break;
+         }
+      }
+   }
+   else
+   {
+      error_response (response, "Bad hash number");
+   }
+   return py_new_none();
+}
+
+
+PyObject* pyrai::unchecked_keys (uint64_t count, string hash_text)
+{
+   rai::uint256_union key (0);
+   auto error_hash (key.decode_hex (hash_text));
+   if (error_hash)
+   {
+      error_response (response, "Bad key hash number");
+   }
+   PyArray unchecked;
+
+   rai::transaction transaction (node.store.environment, nullptr, false);
+   for (auto i (node.store.unchecked_begin (transaction, key)), n (node.store.unchecked_end ()); i != n && unchecked.size () < count; ++i)
+   {
+      boost::property_tree::ptree entry;
+      rai::bufferstream stream (reinterpret_cast<uint8_t const *> (i->second.data ()), i->second.size ());
+      auto block (rai::deserialize_block (stream));
+      std::string contents;
+      block->serialize_json (contents);
+      PyDict dict;
+      dict.add ("key", rai::block_hash (i->first.uint256 ()).to_string ());
+      dict.add ("hash", block->hash ().to_string ());
+      dict.add ("contents", contents);
+      unchecked.append (dict.get ());
+   }
+   return unchecked.get ();
+}
+
+
 PyObject* pyrai::password_valid (string wallet_text, bool wallet_locked)
 {
    rai::uint256_union wallet;
