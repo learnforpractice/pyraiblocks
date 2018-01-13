@@ -67,6 +67,10 @@ cdef extern from "rai_.hpp" namespace "python":
         object receive_minimum_set (string amount_text)
         object representatives (uint64_t count, bool sorting)
         object wallet_representative (string wallet_text)
+        object wallet_representative_set (string wallet_text, string representative_text)
+        object wallet_republish (string wallet_text, uint64_t count)
+
+        object search_pending (string wallet_text);
 
         object password_change (string wallet_text, string password_text)
         object password_enter (string wallet_text, string password_text)
@@ -293,6 +297,15 @@ def representatives (uint64_t count, bool sorting):
 
 def wallet_representative (string wallet_text):
     return _rai.wallet_representative (wallet_text)
+
+def wallet_representative_set (string wallet_text, string representative_text):
+    return _rai.wallet_representative_set (wallet_text, representative_text)
+
+def wallet_republish (string wallet_text, uint64_t count):
+    return _rai.wallet_republish (wallet_text, count)
+
+def search_pending (string wallet_text):
+    return _rai.search_pending (wallet_text)
 
 def password_change (string wallet_text, string password_text):
     return _rai.password_change (wallet_text, password_text)

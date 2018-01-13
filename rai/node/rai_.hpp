@@ -86,6 +86,10 @@ public:
    PyObject* representatives (uint64_t count, bool sorting);
 
    PyObject* wallet_representative (string wallet_text);
+   PyObject* wallet_representative_set (string wallet_text, string representative_text);
+   PyObject* wallet_republish (string wallet_text, uint64_t count);
+
+   PyObject* search_pending (string wallet_text);
 
    PyObject* password_change (string wallet_text, string password_text);
    PyObject* password_enter (string wallet_text, string password_text);
