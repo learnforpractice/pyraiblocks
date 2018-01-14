@@ -9,7 +9,6 @@ cdef extern from *:
 cdef extern from "rai_.hpp" namespace "python":
     cppclass pyrai:
         int account_block_count (string& account_text)
-        string wallet_create ()
         object account_balance (string& account_text)
         object account_info (string& account_text, bool representative, bool weight, bool pending)
         object block_count ()
@@ -68,8 +67,7 @@ cdef extern from "rai_.hpp" namespace "python":
         object representatives (uint64_t count, bool sorting)
         object wallet_representative (string wallet_text)
         object wallet_representative_set (string wallet_text, string representative_text)
-        object wallet_republish (string wallet_text, uint64_t count)
-
+   
         object search_pending (string wallet_text);
         object search_pending_all ();
         object pending_exists (string hash_text)
@@ -85,9 +83,27 @@ cdef extern from "rai_.hpp" namespace "python":
         object unchecked_get (string hash_text)
         object unchecked_keys (uint64_t count, string hash_text)
 
+        object wallet_add (string key_text, string wallet_text, bool generate_work)
+        object wallet_balance_total (string wallet_text)
+        object wallet_balances (string wallet_text, string threshold_text)
+        object wallet_change_seed (string seed_text, string wallet_text)
+        object wallet_contains (string account_text, string wallet_text)
+        string wallet_create ()
+        object wallet_destroy (string wallet_text)
+
+        object wallet_export (string wallet_text);
+        object wallet_frontiers (string wallet_text);
+        object wallet_pending (string wallet_text, uint64_t count, string threshold_text, bool source)
+        object wallet_republish (string wallet_text, uint64_t count)
+        object wallet_work_get (string wallet_text, uint64_t work)
+
         object password_change (string wallet_text, string password_text)
         object password_enter (string wallet_text, string password_text)
         object password_valid (string wallet_text, bool wallet_locked)
+        object work_cancel (string hash_text)
+        object work_generate (string hash_text)
+        object work_get (string wallet_text, string account_text)
+        object work_set (string wallet_text, string account_text, string work_text)
 
         object genesis_account()
         object block_count_type ()
@@ -121,9 +137,6 @@ class JsonStruct(object):
 #        return json.dumps(self, default=lambda x: x.__dict__,sort_keys=False,indent=4, separators=(',', ': '))
     def __repr__(self):
         return json.dumps(self, default=lambda x: x.__dict__, sort_keys=False, indent=4, separators=(',', ': '))
-
-def wallet_create ():
-    return _rai.wallet_create()
 
 def block_count ():
     return _rai.block_count()
@@ -314,9 +327,6 @@ def wallet_representative (string wallet_text):
 def wallet_representative_set (string wallet_text, string representative_text):
     return _rai.wallet_representative_set (wallet_text, representative_text)
 
-def wallet_republish (string wallet_text, uint64_t count):
-    return _rai.wallet_republish (wallet_text, count)
-
 def search_pending (string wallet_text):
     return _rai.search_pending (wallet_text)
 
@@ -353,6 +363,45 @@ def unchecked_get (string hash_text):
 def unchecked_keys (uint64_t count, string hash_text):
     return _rai.unchecked_keys (count, hash_text)
 
+def wallet_add (string key_text, string wallet_text, generate_work=True):
+    return _rai.wallet_add (key_text, wallet_text, generate_work)
+
+def wallet_balance_total (string wallet_text):
+    return _rai.wallet_balance_total (wallet_text)
+
+def wallet_balances (string wallet_text, string threshold_text):
+    return _rai.wallet_balances (wallet_text, threshold_text)
+
+def wallet_change_seed (string seed_text, string wallet_text):
+    return _rai.wallet_change_seed (seed_text, wallet_text)
+
+def wallet_contains (string account_text, string wallet_text):
+    return _rai.wallet_contains (account_text, wallet_text)
+
+def wallet_create ():
+    return _rai.wallet_create()
+
+def wallet_destroy (string wallet_text):
+    return _rai.wallet_destroy (wallet_text)
+
+def wallet_export (string wallet_text):
+    return _rai.wallet_export (wallet_text)
+
+def wallet_frontiers (string wallet_text):
+    return _rai.wallet_frontiers (wallet_text)
+
+def wallet_pending (string wallet_text, uint64_t count, string threshold_text, bool source):
+    return _rai.wallet_pending (wallet_text, count, threshold_text, source)
+
+def wallet_republish (string wallet_text, uint64_t count):
+    return _rai.wallet_republish (wallet_text, count)
+
+def wallet_pending (string wallet_text, uint64_t count, string threshold_text, bool source):
+    return _rai.wallet_pending (wallet_text, count, threshold_text, source)
+
+def wallet_work_get (string wallet_text, uint64_t work):
+    return _rai.wallet_work_get (wallet_text, work)
+
 def password_change (string wallet_text, string password_text):
     return _rai.password_change (wallet_text, password_text)
 
@@ -361,6 +410,21 @@ def password_enter (string wallet_text, string password_text):
 
 def password_valid (string wallet_text, wallet_locked = False):
     return _rai.password_valid (wallet_text, wallet_locked);
+
+def wallet_locked(string wallet_text):
+    return password_valid(wallet_text, True)
+
+def work_cancel (string hash_text):
+    return _rai.work_cancel (hash_text)
+
+def work_generate (string hash_text):
+    return _rai.work_generate (hash_text)
+
+def work_get (string wallet_text, string account_text):
+    return _rai.work_get (wallet_text, account_text)
+
+def work_set (string wallet_text, string account_text, string work_text):
+    return _rai.work_set (wallet_text, account_text, work_text);
 
 def send (string wallet_text, string source_text, string destination_text, string amount_text, uint64_t work):
     return _rai.send (wallet_text, source_text, destination_text, amount_text, work)

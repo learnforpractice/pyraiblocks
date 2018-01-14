@@ -144,12 +144,6 @@ public:
    rai::node& node;
 };
 
-string pyrai::wallet_create ()
-{
-   rai::keypair wallet_id;
-   auto wallet (node.wallets.create (wallet_id.pub));
-   return wallet_id.pub.to_string ();
-}
 
 PyObject* pyrai::account_balance (string& account_text)
 {
@@ -1297,29 +1291,6 @@ PyObject* pyrai::ledger (string account_text, uint64_t count, bool sorting, bool
 }
 
 
-PyObject* pyrai::password_change (string wallet_text, string password_text)
-{
-   rai::uint256_union wallet;
-   auto error (wallet.decode_hex (wallet_text));
-   if (!error)
-   {
-      auto existing (node.wallets.items.find (wallet));
-      if (existing != node.wallets.items.end ())
-      {
-         rai::transaction transaction (node.store.environment, nullptr, true);
-         auto error (existing->second->store.rekey (transaction, password_text));
-         return py_new_bool(error ? 0 : 1);
-      }
-      else
-      {
-         error_response_false (response, "Wallet not found");
-      }
-   }
-   else
-   {
-      error_response_false (response, "Bad wallet number");
-   }
-}
 
 PyObject* pyrai::block_create (PyObject* dict)
 {
@@ -1934,29 +1905,6 @@ PyObject* pyrai::receive (string wallet_text, string account_text, string hash_t
    return py_new_none();
 }
 
-PyObject* pyrai::password_enter (string wallet_text, string password_text)
-{
-   rai::uint256_union wallet;
-   auto error (wallet.decode_hex (wallet_text));
-   if (!error)
-   {
-      auto existing (node.wallets.items.find (wallet));
-      if (existing != node.wallets.items.end ())
-      {
-         auto error (existing->second->enter_password (password_text));
-         return py_new_bool(error ? 0 : 1);
-      }
-      else
-      {
-         error_response_false (response, "Wallet not found");
-      }
-   }
-   else
-   {
-      error_response_false (response, "Bad wallet number");
-   }
-}
-
 PyObject* pyrai::receive_minimum ()
 {
    return py_new_string (node.config.receive_minimum.to_string_dec ());
@@ -2351,6 +2299,134 @@ PyObject* pyrai::unchecked_keys (uint64_t count, string hash_text)
    return unchecked.get ();
 }
 
+PyObject* pyrai::wallet_add (string key_text, string wallet_text, bool generate_work)
+{
+   rai::raw_key key;
+   auto error (key.data.decode_hex (key_text));
+   if (!error)
+   {
+      rai::uint256_union wallet;
+      auto error (wallet.decode_hex (wallet_text));
+      if (!error)
+      {
+         auto existing (node.wallets.items.find (wallet));
+         if (existing != node.wallets.items.end ())
+         {
+            auto pub (existing->second->insert_adhoc (key, generate_work));
+            if (!pub.is_zero ())
+            {
+               return py_new_string (pub.to_account ());
+            }
+            else
+            {
+               error_response (response, "Wallet locked");
+            }
+         }
+         else
+         {
+            error_response (response, "Wallet not found");
+         }
+      }
+      else
+      {
+         error_response (response, "Bad wallet number");
+      }
+   }
+   else
+   {
+      error_response (response, "Bad private key");
+   }
+   return py_new_none();
+}
+
+
+PyObject* pyrai::wallet_balance_total (string wallet_text)
+{
+   rai::uint256_union wallet;
+   auto error (wallet.decode_hex (wallet_text));
+   if (!error)
+   {
+      auto existing (node.wallets.items.find (wallet));
+      if (existing != node.wallets.items.end ())
+      {
+         rai::uint128_t balance (0);
+         rai::uint128_t pending (0);
+         rai::transaction transaction (node.store.environment, nullptr, false);
+         for (auto i (existing->second->store.begin (transaction)), n (existing->second->store.end ()); i != n; ++i)
+         {
+            rai::account account (i->first.uint256 ());
+            balance = balance + node.ledger.account_balance (transaction, account);
+            pending = pending + node.ledger.account_pending (transaction, account);
+         }
+         PyDict dict;
+         dict.add ("balance", balance.convert_to<std::string> ());
+         dict.add ("pending", pending.convert_to<std::string> ());
+         return dict.get ();
+      }
+      else
+      {
+         error_response (response, "Wallet not found");
+      }
+   }
+   else
+   {
+      error_response (response, "Bad wallet number");
+   }
+}
+
+PyObject* pyrai::wallet_balances (string wallet_text, string threshold_text)
+{
+   rai::uint256_union wallet;
+   auto error (wallet.decode_hex (wallet_text));
+   if (!error)
+   {
+      rai::uint128_union threshold (0);
+      auto error_threshold (threshold.decode_dec (threshold_text));
+      if (error_threshold)
+      {
+         error_response (response, "Bad threshold number");
+      }
+      auto existing (node.wallets.items.find (wallet));
+      if (existing != node.wallets.items.end ())
+      {
+         PyDict balances;
+         rai::transaction transaction (node.store.environment, nullptr, false);
+         for (auto i (existing->second->store.begin (transaction)), n (existing->second->store.end ()); i != n; ++i)
+         {
+            rai::account account (i->first.uint256 ());
+            rai::uint128_t balance = node.ledger.account_balance (transaction, account);
+            if (threshold.is_zero ())
+            {
+               PyDict entry;
+               rai::uint128_t pending = node.ledger.account_pending (transaction, account);
+               entry.add ("balance", balance.convert_to<std::string> ());
+               entry.add ("pending", pending.convert_to<std::string> ());
+               balances.add (account.to_account (), entry.get ());
+            }
+            else
+            {
+               if (balance >= threshold.number ())
+               {
+                  PyDict entry;
+                  rai::uint128_t pending = node.ledger.account_pending (transaction, account);
+                  entry.add ("balance", balance.convert_to<std::string> ());
+                  entry.add ("pending", pending.convert_to<std::string> ());
+                  balances.add (account.to_account (), entry.get ());
+               }
+            }
+         }
+         return balances.get ();
+      }
+      else
+      {
+         error_response (response, "Wallet not found");
+      }
+   }
+   else
+   {
+      error_response (response, "Bad wallet number");
+   }
+}
 
 PyObject* pyrai::password_valid (string wallet_text, bool wallet_locked)
 {
@@ -2383,6 +2459,449 @@ PyObject* pyrai::password_valid (string wallet_text, bool wallet_locked)
    }
 }
 
+
+PyObject* pyrai::wallet_change_seed (string seed_text, string wallet_text)
+{
+   rai::raw_key seed;
+   auto error (seed.data.decode_hex (seed_text));
+   if (!error)
+   {
+      rai::uint256_union wallet;
+      auto error (wallet.decode_hex (wallet_text));
+      if (!error)
+      {
+         auto existing (node.wallets.items.find (wallet));
+         if (existing != node.wallets.items.end ())
+         {
+            rai::transaction transaction (node.store.environment, nullptr, true);
+            if (existing->second->store.valid_password (transaction))
+            {
+               return py_new_bool (true);
+            }
+            else
+            {
+               error_response (response, "Wallet locked");
+            }
+         }
+         else
+         {
+            error_response (response, "Wallet not found");
+         }
+      }
+      else
+      {
+         error_response (response, "Bad wallet number");
+      }
+   }
+   else
+   {
+      error_response (response, "Bad seed");
+   }
+
+}
+
+
+
+
+PyObject* pyrai::wallet_contains (string account_text, string wallet_text)
+{
+   rai::uint256_union account;
+   auto error (account.decode_account (account_text));
+   if (!error)
+   {
+      rai::uint256_union wallet;
+      auto error (wallet.decode_hex (wallet_text));
+      if (!error)
+      {
+         auto existing (node.wallets.items.find (wallet));
+         if (existing != node.wallets.items.end ())
+         {
+            rai::transaction transaction (node.store.environment, nullptr, false);
+            auto exists (existing->second->store.find (transaction, account) != existing->second->store.end ());
+            return py_new_bool (exists ? 1 : 0);
+         }
+         else
+         {
+            error_response (response, "Wallet not found");
+         }
+      }
+      else
+      {
+         error_response (response, "Bad wallet number");
+      }
+   }
+   else
+   {
+      error_response (response, "Bad account number");
+   }
+}
+
+string pyrai::wallet_create ()
+{
+   rai::keypair wallet_id;
+   auto wallet (node.wallets.create (wallet_id.pub));
+   return wallet_id.pub.to_string ();
+}
+
+
+PyObject* pyrai::wallet_destroy (string wallet_text)
+{
+   rai::uint256_union wallet;
+   auto error (wallet.decode_hex (wallet_text));
+   if (!error)
+   {
+      auto existing (node.wallets.items.find (wallet));
+      if (existing != node.wallets.items.end ())
+      {
+         node.wallets.destroy (wallet);
+         return py_new_bool (true);
+      }
+      else
+      {
+         error_response_false (response, "Wallet not found");
+      }
+   }
+   else
+   {
+      error_response_false (response, "Bad wallet number");
+   }
+
+}
+
+PyObject* pyrai::wallet_export (string wallet_text)
+{
+   rai::uint256_union wallet;
+   auto error (wallet.decode_hex (wallet_text));
+   if (!error)
+   {
+      auto existing (node.wallets.items.find (wallet));
+      if (existing != node.wallets.items.end ())
+      {
+         rai::transaction transaction (node.store.environment, nullptr, false);
+         std::string json;
+         existing->second->store.serialize_json (transaction, json);
+         return py_new_string (json);
+      }
+      else
+      {
+         error_response (response, "Wallet not found");
+      }
+   }
+   else
+   {
+      error_response (response, "Bad account number");
+   }
+}
+
+PyObject* pyrai::wallet_frontiers (string wallet_text)
+{
+   rai::uint256_union wallet;
+   auto error (wallet.decode_hex (wallet_text));
+   if (!error)
+   {
+      auto existing (node.wallets.items.find (wallet));
+      if (existing != node.wallets.items.end ())
+      {
+         PyDict frontiers;
+         rai::transaction transaction (node.store.environment, nullptr, false);
+         for (auto i (existing->second->store.begin (transaction)), n (existing->second->store.end ()); i != n; ++i)
+         {
+            rai::account account (i->first.uint256 ());
+            auto latest (node.ledger.latest (transaction, account));
+            if (!latest.is_zero ())
+            {
+               frontiers.add (account.to_account (), latest.to_string ());
+            }
+         }
+         return frontiers.get ();
+      }
+      else
+      {
+         error_response (response, "Wallet not found");
+      }
+   }
+   else
+   {
+      error_response (response, "Bad wallet number");
+   }
+}
+
+PyObject* pyrai::wallet_pending (string wallet_text, uint64_t count, string threshold_text, bool source)
+{
+   rai::uint256_union wallet;
+   auto error (wallet.decode_hex (wallet_text));
+   if (!error)
+   {
+      auto existing (node.wallets.items.find (wallet));
+      if (existing != node.wallets.items.end ())
+      {
+         rai::uint128_union threshold (0);
+
+         auto error_threshold (threshold.decode_dec (threshold_text));
+         if (error_threshold)
+         {
+            error_response (response, "Bad threshold number");
+         }
+         PyDict peers_l;
+         rai::transaction transaction (node.store.environment, nullptr, false);
+         for (auto i (existing->second->store.begin (transaction)), n (existing->second->store.end ()); i != n; ++i)
+         {
+            rai::account account (i->first.uint256 ());
+            boost::property_tree::ptree peers_l;
+            rai::account end (account.number () + 1);
+            for (auto ii (node.store.pending_begin (transaction, rai::pending_key (account, 0))), nn (node.store.pending_begin (transaction, rai::pending_key (end, 0))); ii != nn && peers_l.size () < count; ++ii)
+            {
+               rai::pending_key key (ii->first);
+               if (threshold.is_zero () && !source)
+               {
+                  peers_l.add ("hash", key.hash.to_string ());
+               }
+               else
+               {
+                  rai::pending_info info (ii->second);
+                  if (info.amount.number () >= threshold.number ())
+                  {
+                     if (source)
+                     {
+                        PyDict dict;
+                        dict.add ("amount", info.amount.number ().convert_to<std::string> ());
+                        dict.add ("source", info.source.to_account ());
+                        peers_l.add (key.hash.to_string (), dict.get ());
+                     }
+                     else
+                     {
+                        peers_l.add (key.hash.to_string (), info.amount.number ().convert_to<std::string> ());
+                     }
+                  }
+               }
+            }
+         }
+         return peers_l.get ();
+      }
+      else
+      {
+         error_response (response, "Wallet not found");
+      }
+   }
+   else
+   {
+      error_response (response, "Bad wallet number");
+   }
+}
+
+PyObject* pyrai::wallet_work_get (string wallet_text, uint64_t work)
+{
+   rai::uint256_union wallet;
+   auto error (wallet.decode_hex (wallet_text));
+   if (!error)
+   {
+      auto existing (node.wallets.items.find (wallet));
+      if (existing != node.wallets.items.end ())
+      {
+         PyDict works;
+         rai::transaction transaction (node.store.environment, nullptr, false);
+         for (auto i (existing->second->store.begin (transaction)), n (existing->second->store.end ()); i != n; ++i)
+         {
+            rai::account account (i->first.uint256 ());
+            auto error_work (existing->second->store.work_get (transaction, account, work));
+            works.add (account.to_account (), rai::to_string_hex (work));
+         }
+         return works.get ();
+      }
+      else
+      {
+         error_response (response, "Wallet not found");
+      }
+   }
+   else
+   {
+      error_response (response, "Bad wallet number");
+   }
+}
+
+PyObject* pyrai::password_change (string wallet_text, string password_text)
+{
+   rai::uint256_union wallet;
+   auto error (wallet.decode_hex (wallet_text));
+   if (!error)
+   {
+      auto existing (node.wallets.items.find (wallet));
+      if (existing != node.wallets.items.end ())
+      {
+         rai::transaction transaction (node.store.environment, nullptr, true);
+         auto error (existing->second->store.rekey (transaction, password_text));
+         return py_new_bool (error ? 0 : 1);
+      }
+      else
+      {
+         error_response (response, "Wallet not found");
+      }
+   }
+   else
+   {
+      error_response (response, "Bad wallet number");
+   }
+}
+
+
+PyObject* pyrai::password_enter (string wallet_text, string password_text)
+{
+   rai::uint256_union wallet;
+   auto error (wallet.decode_hex (wallet_text));
+   if (!error)
+   {
+      auto existing (node.wallets.items.find (wallet));
+      if (existing != node.wallets.items.end ())
+      {
+         auto error (existing->second->enter_password (password_text));
+         return py_new_bool(error ? 0 : 1);
+      }
+      else
+      {
+         error_response_false (response, "Wallet not found");
+      }
+   }
+   else
+   {
+      error_response_false (response, "Bad wallet number");
+   }
+}
+
+
+PyObject* pyrai::work_cancel (string hash_text)
+{
+   rai::block_hash hash;
+   auto error (hash.decode_hex (hash_text));
+   if (!error)
+   {
+      node.work.cancel (hash);
+      return py_new_bool (true);
+   }
+   else
+   {
+      error_response_false (response, "Bad block hash");
+   }
+}
+
+PyObject* pyrai::work_generate (string hash_text)
+{
+   rai::block_hash hash;
+   auto error (hash.decode_hex (hash_text));
+   if (!error)
+   {
+      promise<string> result;
+      node.work.generate (hash, [&result](boost::optional<uint64_t> const & work_a) {
+         if (work_a)
+         {
+            result.set_value (rai::to_string_hex (work_a.value ()));
+         }
+         else
+         {
+            result.set_value ("Cancelled");
+         }
+      });
+      string _result = result.get_future ().get ();
+      return py_new_string (_result);
+   }
+   else
+   {
+      error_response (response, "Bad block hash");
+   }
+}
+
+PyObject* pyrai::work_get (string wallet_text, string account_text)
+{
+   rai::uint256_union wallet;
+   auto error (wallet.decode_hex (wallet_text));
+   if (!error)
+   {
+      auto existing (node.wallets.items.find (wallet));
+      if (existing != node.wallets.items.end ())
+      {
+         rai::account account;
+         auto error (account.decode_account (account_text));
+         if (!error)
+         {
+            rai::transaction transaction (node.store.environment, nullptr, false);
+            auto account_check (existing->second->store.find (transaction, account));
+            if (account_check != existing->second->store.end ())
+            {
+               uint64_t work (0);
+               auto error_work (existing->second->store.work_get (transaction, account, work));
+               return py_new_string (rai::to_string_hex (work));
+            }
+            else
+            {
+               error_response (response, "Account not found in wallet");
+            }
+         }
+         else
+         {
+            error_response (response, "Bad account number");
+         }
+      }
+      else
+      {
+         error_response (response, "Wallet not found");
+      }
+   }
+   else
+   {
+      error_response (response, "Bad wallet number");
+   }
+}
+
+
+PyObject* pyrai::work_set (string wallet_text, string account_text, string work_text)
+{
+   rai::uint256_union wallet;
+   auto error (wallet.decode_hex (wallet_text));
+   if (!error)
+   {
+      auto existing (node.wallets.items.find (wallet));
+      if (existing != node.wallets.items.end ())
+      {
+         rai::account account;
+         auto error (account.decode_account (account_text));
+         if (!error)
+         {
+            rai::transaction transaction (node.store.environment, nullptr, true);
+            auto account_check (existing->second->store.find (transaction, account));
+            if (account_check != existing->second->store.end ())
+            {
+               uint64_t work;
+               auto work_error (rai::from_string_hex (work_text, work));
+               if (!work_error)
+               {
+                  existing->second->store.work_put (transaction, account, work);
+                  return py_new_bool (true);
+               }
+               else
+               {
+                  error_response_false (response, "Bad work");
+               }
+            }
+            else
+            {
+               error_response_false (response, "Account not found in wallet");
+            }
+         }
+         else
+         {
+            error_response_false (response, "Bad account number");
+         }
+      }
+      else
+      {
+         error_response_false (response, "Wallet not found");
+      }
+   }
+   else
+   {
+      error_response_false (response, "Bad wallet number");
+   }
+
+}
 
 PyObject* pyrai::send (string wallet_text, string source_text, string destination_text, string amount_text, uint64_t work)
 {

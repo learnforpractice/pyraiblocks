@@ -87,7 +87,6 @@ public:
 
    PyObject* wallet_representative (string wallet_text);
    PyObject* wallet_representative_set (string wallet_text, string representative_text);
-   PyObject* wallet_republish (string wallet_text, uint64_t count);
 
    PyObject* search_pending (string wallet_text);
    PyObject* search_pending_all ();
@@ -103,9 +102,28 @@ public:
    PyObject* unchecked_get (string hash_text);
    PyObject* unchecked_keys (uint64_t count, string hash_text);
 
+   PyObject* wallet_add (string key_text, string wallet_text, bool generate_work);
+
+   PyObject* wallet_balance_total (string wallet_text);
+   PyObject* wallet_balances (string wallet_text, string threshold_text);
+   PyObject* wallet_change_seed (string seed_text, string wallet_text);
+   PyObject* wallet_contains (string account_text, string wallet_text);
+   PyObject* wallet_destroy (string wallet_text);
+
+   PyObject* wallet_export (string wallet_text);
+   PyObject* wallet_frontiers (string wallet_text);
+   PyObject* wallet_pending (string wallet_text, uint64_t count, string threshold_text, bool source);
+   PyObject* wallet_republish (string wallet_text, uint64_t count);
+   PyObject* wallet_work_get (string wallet_text, uint64_t work);
+
    PyObject* password_change (string wallet_text, string password_text);
    PyObject* password_enter (string wallet_text, string password_text);
    PyObject* password_valid (string wallet_text, bool wallet_locked = false);
+
+   PyObject* work_cancel (string hash_text);
+   PyObject* work_generate (string hash_text);
+   PyObject* work_get (string wallet_text, string account_text);
+   PyObject* work_set (string wallet_text, string account_text, string work_text);
 
    PyObject* genesis_account();
    PyObject* send (string wallet_text, string source_text, string destination_text, string amount_text, uint64_t work);
