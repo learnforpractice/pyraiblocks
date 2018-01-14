@@ -1070,6 +1070,7 @@ static const char __pyx_k_key_expand[] = "key_expand";
 static const char __pyx_k_separators[] = "separators";
 static const char __pyx_k_successors[] = "successors";
 static const char __pyx_k_wallet_add[] = "wallet_add";
+static const char __pyx_k_work_peers[] = "work_peers";
 static const char __pyx_k_account_get[] = "account_get";
 static const char __pyx_k_account_key[] = "account_key";
 static const char __pyx_k_amount_text[] = "amount_text";
@@ -1101,6 +1102,7 @@ static const char __pyx_k_wallet_create[] = "wallet_create";
 static const char __pyx_k_wallet_export[] = "wallet_export";
 static const char __pyx_k_wallet_locked[] = "wallet_locked";
 static const char __pyx_k_work_generate[] = "work_generate";
+static const char __pyx_k_work_peer_add[] = "work_peer_add";
 static const char __pyx_k_account_create[] = "account_create";
 static const char __pyx_k_account_remove[] = "account_remove";
 static const char __pyx_k_account_weight[] = "account_weight";
@@ -1134,6 +1136,7 @@ static const char __pyx_k_delegators_count[] = "delegators_count";
 static const char __pyx_k_destination_text[] = "destination_text";
 static const char __pyx_k_wallet_frontiers[] = "wallet_frontiers";
 static const char __pyx_k_wallet_republish[] = "wallet_republish";
+static const char __pyx_k_work_peers_clear[] = "work_peers_clear";
 static const char __pyx_k_JsonStruct___init[] = "JsonStruct.__init__";
 static const char __pyx_k_JsonStruct___repr[] = "JsonStruct.__repr__";
 static const char __pyx_k_accounts_balances[] = "accounts_balances";
@@ -1310,6 +1313,9 @@ static PyObject *__pyx_n_s_work;
 static PyObject *__pyx_n_s_work_cancel;
 static PyObject *__pyx_n_s_work_generate;
 static PyObject *__pyx_n_s_work_get;
+static PyObject *__pyx_n_s_work_peer_add;
+static PyObject *__pyx_n_s_work_peers;
+static PyObject *__pyx_n_s_work_peers_clear;
 static PyObject *__pyx_n_s_work_set;
 static PyObject *__pyx_n_s_work_text;
 static PyObject *__pyx_pf_3rai_10JsonStruct___init__(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_self, PyObject *__pyx_v_js); /* proto */
@@ -1401,9 +1407,13 @@ static PyObject *__pyx_pf_3rai_162work_cancel(CYTHON_UNUSED PyObject *__pyx_self
 static PyObject *__pyx_pf_3rai_164work_generate(CYTHON_UNUSED PyObject *__pyx_self, std::string __pyx_v_hash_text); /* proto */
 static PyObject *__pyx_pf_3rai_166work_get(CYTHON_UNUSED PyObject *__pyx_self, std::string __pyx_v_wallet_text, std::string __pyx_v_account_text); /* proto */
 static PyObject *__pyx_pf_3rai_168work_set(CYTHON_UNUSED PyObject *__pyx_self, std::string __pyx_v_wallet_text, std::string __pyx_v_account_text, std::string __pyx_v_work_text); /* proto */
-static PyObject *__pyx_pf_3rai_170send(CYTHON_UNUSED PyObject *__pyx_self, std::string __pyx_v_wallet_text, std::string __pyx_v_source_text, std::string __pyx_v_destination_text, std::string __pyx_v_amount_text, uint64_t __pyx_v_work); /* proto */
-static PyObject *__pyx_pf_3rai_172genesis_account(CYTHON_UNUSED PyObject *__pyx_self); /* proto */
-static PyObject *__pyx_pf_3rai_174block_count_type(CYTHON_UNUSED PyObject *__pyx_self); /* proto */
+static PyObject *__pyx_pf_3rai_170work_peer_add(CYTHON_UNUSED PyObject *__pyx_self, std::string __pyx_v_address_text, std::string __pyx_v_port_text); /* proto */
+static PyObject *__pyx_pf_3rai_172work_peer_add(CYTHON_UNUSED PyObject *__pyx_self, std::string __pyx_v_address_text, std::string __pyx_v_port_text); /* proto */
+static PyObject *__pyx_pf_3rai_174work_peers(CYTHON_UNUSED PyObject *__pyx_self); /* proto */
+static PyObject *__pyx_pf_3rai_176work_peers_clear(CYTHON_UNUSED PyObject *__pyx_self); /* proto */
+static PyObject *__pyx_pf_3rai_178send(CYTHON_UNUSED PyObject *__pyx_self, std::string __pyx_v_wallet_text, std::string __pyx_v_source_text, std::string __pyx_v_destination_text, std::string __pyx_v_amount_text, uint64_t __pyx_v_work); /* proto */
+static PyObject *__pyx_pf_3rai_180genesis_account(CYTHON_UNUSED PyObject *__pyx_self); /* proto */
+static PyObject *__pyx_pf_3rai_182block_count_type(CYTHON_UNUSED PyObject *__pyx_self); /* proto */
 static PyObject *__pyx_int_4;
 static PyObject *__pyx_tuple_;
 static PyObject *__pyx_tuple__4;
@@ -1487,6 +1497,8 @@ static PyObject *__pyx_tuple__164;
 static PyObject *__pyx_tuple__166;
 static PyObject *__pyx_tuple__168;
 static PyObject *__pyx_tuple__170;
+static PyObject *__pyx_tuple__172;
+static PyObject *__pyx_tuple__176;
 static PyObject *__pyx_codeobj__10;
 static PyObject *__pyx_codeobj__11;
 static PyObject *__pyx_codeobj__12;
@@ -1574,10 +1586,14 @@ static PyObject *__pyx_codeobj__165;
 static PyObject *__pyx_codeobj__167;
 static PyObject *__pyx_codeobj__169;
 static PyObject *__pyx_codeobj__171;
-static PyObject *__pyx_codeobj__172;
 static PyObject *__pyx_codeobj__173;
+static PyObject *__pyx_codeobj__174;
+static PyObject *__pyx_codeobj__175;
+static PyObject *__pyx_codeobj__177;
+static PyObject *__pyx_codeobj__178;
+static PyObject *__pyx_codeobj__179;
 
-/* "rai.pyx":117
+/* "rai.pyx":120
  * 
  * class JsonStruct(object):
  *     def __init__(self, js):             # <<<<<<<<<<<<<<
@@ -1614,11 +1630,11 @@ static PyObject *__pyx_pw_3rai_10JsonStruct_1__init__(PyObject *__pyx_self, PyOb
         case  1:
         if (likely((values[1] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_js)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("__init__", 1, 2, 2, 1); __PYX_ERR(0, 117, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("__init__", 1, 2, 2, 1); __PYX_ERR(0, 120, __pyx_L3_error)
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "__init__") < 0)) __PYX_ERR(0, 117, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "__init__") < 0)) __PYX_ERR(0, 120, __pyx_L3_error)
       }
     } else if (PyTuple_GET_SIZE(__pyx_args) != 2) {
       goto __pyx_L5_argtuple_error;
@@ -1631,7 +1647,7 @@ static PyObject *__pyx_pw_3rai_10JsonStruct_1__init__(PyObject *__pyx_self, PyOb
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("__init__", 1, 2, 2, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 117, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("__init__", 1, 2, 2, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 120, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("rai.JsonStruct.__init__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
@@ -1665,7 +1681,7 @@ static PyObject *__pyx_pf_3rai_10JsonStruct___init__(CYTHON_UNUSED PyObject *__p
   __Pyx_RefNannySetupContext("__init__", 0);
   __Pyx_INCREF(__pyx_v_js);
 
-  /* "rai.pyx":118
+  /* "rai.pyx":121
  * class JsonStruct(object):
  *     def __init__(self, js):
  *         if isinstance(js, bytes):             # <<<<<<<<<<<<<<
@@ -1676,31 +1692,31 @@ static PyObject *__pyx_pf_3rai_10JsonStruct___init__(CYTHON_UNUSED PyObject *__p
   __pyx_t_2 = (__pyx_t_1 != 0);
   if (__pyx_t_2) {
 
-    /* "rai.pyx":119
+    /* "rai.pyx":122
  *     def __init__(self, js):
  *         if isinstance(js, bytes):
  *             js = js.decode('utf8')             # <<<<<<<<<<<<<<
  *             js = json.loads(js)
  *             if isinstance(js, str):
  */
-    __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_js, __pyx_n_s_decode); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 119, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_js, __pyx_n_s_decode); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 122, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
-    __pyx_t_4 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_tuple_, NULL); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 119, __pyx_L1_error)
+    __pyx_t_4 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_tuple_, NULL); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 122, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
     __Pyx_DECREF_SET(__pyx_v_js, __pyx_t_4);
     __pyx_t_4 = 0;
 
-    /* "rai.pyx":120
+    /* "rai.pyx":123
  *         if isinstance(js, bytes):
  *             js = js.decode('utf8')
  *             js = json.loads(js)             # <<<<<<<<<<<<<<
  *             if isinstance(js, str):
  *                 js = json.loads(js)
  */
-    __pyx_t_3 = __Pyx_GetModuleGlobalName(__pyx_n_s_json); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 120, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_GetModuleGlobalName(__pyx_n_s_json); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 123, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
-    __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_loads); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 120, __pyx_L1_error)
+    __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_loads); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 123, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
     __pyx_t_3 = NULL;
@@ -1714,13 +1730,13 @@ static PyObject *__pyx_pf_3rai_10JsonStruct___init__(CYTHON_UNUSED PyObject *__p
       }
     }
     if (!__pyx_t_3) {
-      __pyx_t_4 = __Pyx_PyObject_CallOneArg(__pyx_t_5, __pyx_v_js); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 120, __pyx_L1_error)
+      __pyx_t_4 = __Pyx_PyObject_CallOneArg(__pyx_t_5, __pyx_v_js); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 123, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_4);
     } else {
       #if CYTHON_FAST_PYCALL
       if (PyFunction_Check(__pyx_t_5)) {
         PyObject *__pyx_temp[2] = {__pyx_t_3, __pyx_v_js};
-        __pyx_t_4 = __Pyx_PyFunction_FastCall(__pyx_t_5, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 120, __pyx_L1_error)
+        __pyx_t_4 = __Pyx_PyFunction_FastCall(__pyx_t_5, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 123, __pyx_L1_error)
         __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
         __Pyx_GOTREF(__pyx_t_4);
       } else
@@ -1728,19 +1744,19 @@ static PyObject *__pyx_pf_3rai_10JsonStruct___init__(CYTHON_UNUSED PyObject *__p
       #if CYTHON_FAST_PYCCALL
       if (__Pyx_PyFastCFunction_Check(__pyx_t_5)) {
         PyObject *__pyx_temp[2] = {__pyx_t_3, __pyx_v_js};
-        __pyx_t_4 = __Pyx_PyCFunction_FastCall(__pyx_t_5, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 120, __pyx_L1_error)
+        __pyx_t_4 = __Pyx_PyCFunction_FastCall(__pyx_t_5, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 123, __pyx_L1_error)
         __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
         __Pyx_GOTREF(__pyx_t_4);
       } else
       #endif
       {
-        __pyx_t_6 = PyTuple_New(1+1); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 120, __pyx_L1_error)
+        __pyx_t_6 = PyTuple_New(1+1); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 123, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_6);
         __Pyx_GIVEREF(__pyx_t_3); PyTuple_SET_ITEM(__pyx_t_6, 0, __pyx_t_3); __pyx_t_3 = NULL;
         __Pyx_INCREF(__pyx_v_js);
         __Pyx_GIVEREF(__pyx_v_js);
         PyTuple_SET_ITEM(__pyx_t_6, 0+1, __pyx_v_js);
-        __pyx_t_4 = __Pyx_PyObject_Call(__pyx_t_5, __pyx_t_6, NULL); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 120, __pyx_L1_error)
+        __pyx_t_4 = __Pyx_PyObject_Call(__pyx_t_5, __pyx_t_6, NULL); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 123, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_4);
         __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
       }
@@ -1749,7 +1765,7 @@ static PyObject *__pyx_pf_3rai_10JsonStruct___init__(CYTHON_UNUSED PyObject *__p
     __Pyx_DECREF_SET(__pyx_v_js, __pyx_t_4);
     __pyx_t_4 = 0;
 
-    /* "rai.pyx":121
+    /* "rai.pyx":124
  *             js = js.decode('utf8')
  *             js = json.loads(js)
  *             if isinstance(js, str):             # <<<<<<<<<<<<<<
@@ -1760,16 +1776,16 @@ static PyObject *__pyx_pf_3rai_10JsonStruct___init__(CYTHON_UNUSED PyObject *__p
     __pyx_t_1 = (__pyx_t_2 != 0);
     if (__pyx_t_1) {
 
-      /* "rai.pyx":122
+      /* "rai.pyx":125
  *             js = json.loads(js)
  *             if isinstance(js, str):
  *                 js = json.loads(js)             # <<<<<<<<<<<<<<
  *         for key in js:
  *             value = js[key]
  */
-      __pyx_t_5 = __Pyx_GetModuleGlobalName(__pyx_n_s_json); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 122, __pyx_L1_error)
+      __pyx_t_5 = __Pyx_GetModuleGlobalName(__pyx_n_s_json); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 125, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_5);
-      __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_t_5, __pyx_n_s_loads); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 122, __pyx_L1_error)
+      __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_t_5, __pyx_n_s_loads); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 125, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_6);
       __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
       __pyx_t_5 = NULL;
@@ -1783,13 +1799,13 @@ static PyObject *__pyx_pf_3rai_10JsonStruct___init__(CYTHON_UNUSED PyObject *__p
         }
       }
       if (!__pyx_t_5) {
-        __pyx_t_4 = __Pyx_PyObject_CallOneArg(__pyx_t_6, __pyx_v_js); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 122, __pyx_L1_error)
+        __pyx_t_4 = __Pyx_PyObject_CallOneArg(__pyx_t_6, __pyx_v_js); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 125, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_4);
       } else {
         #if CYTHON_FAST_PYCALL
         if (PyFunction_Check(__pyx_t_6)) {
           PyObject *__pyx_temp[2] = {__pyx_t_5, __pyx_v_js};
-          __pyx_t_4 = __Pyx_PyFunction_FastCall(__pyx_t_6, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 122, __pyx_L1_error)
+          __pyx_t_4 = __Pyx_PyFunction_FastCall(__pyx_t_6, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 125, __pyx_L1_error)
           __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
           __Pyx_GOTREF(__pyx_t_4);
         } else
@@ -1797,19 +1813,19 @@ static PyObject *__pyx_pf_3rai_10JsonStruct___init__(CYTHON_UNUSED PyObject *__p
         #if CYTHON_FAST_PYCCALL
         if (__Pyx_PyFastCFunction_Check(__pyx_t_6)) {
           PyObject *__pyx_temp[2] = {__pyx_t_5, __pyx_v_js};
-          __pyx_t_4 = __Pyx_PyCFunction_FastCall(__pyx_t_6, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 122, __pyx_L1_error)
+          __pyx_t_4 = __Pyx_PyCFunction_FastCall(__pyx_t_6, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 125, __pyx_L1_error)
           __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
           __Pyx_GOTREF(__pyx_t_4);
         } else
         #endif
         {
-          __pyx_t_3 = PyTuple_New(1+1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 122, __pyx_L1_error)
+          __pyx_t_3 = PyTuple_New(1+1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 125, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_3);
           __Pyx_GIVEREF(__pyx_t_5); PyTuple_SET_ITEM(__pyx_t_3, 0, __pyx_t_5); __pyx_t_5 = NULL;
           __Pyx_INCREF(__pyx_v_js);
           __Pyx_GIVEREF(__pyx_v_js);
           PyTuple_SET_ITEM(__pyx_t_3, 0+1, __pyx_v_js);
-          __pyx_t_4 = __Pyx_PyObject_Call(__pyx_t_6, __pyx_t_3, NULL); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 122, __pyx_L1_error)
+          __pyx_t_4 = __Pyx_PyObject_Call(__pyx_t_6, __pyx_t_3, NULL); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 125, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_4);
           __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
         }
@@ -1818,7 +1834,7 @@ static PyObject *__pyx_pf_3rai_10JsonStruct___init__(CYTHON_UNUSED PyObject *__p
       __Pyx_DECREF_SET(__pyx_v_js, __pyx_t_4);
       __pyx_t_4 = 0;
 
-      /* "rai.pyx":121
+      /* "rai.pyx":124
  *             js = js.decode('utf8')
  *             js = json.loads(js)
  *             if isinstance(js, str):             # <<<<<<<<<<<<<<
@@ -1827,7 +1843,7 @@ static PyObject *__pyx_pf_3rai_10JsonStruct___init__(CYTHON_UNUSED PyObject *__p
  */
     }
 
-    /* "rai.pyx":118
+    /* "rai.pyx":121
  * class JsonStruct(object):
  *     def __init__(self, js):
  *         if isinstance(js, bytes):             # <<<<<<<<<<<<<<
@@ -1836,7 +1852,7 @@ static PyObject *__pyx_pf_3rai_10JsonStruct___init__(CYTHON_UNUSED PyObject *__p
  */
   }
 
-  /* "rai.pyx":123
+  /* "rai.pyx":126
  *             if isinstance(js, str):
  *                 js = json.loads(js)
  *         for key in js:             # <<<<<<<<<<<<<<
@@ -1847,26 +1863,26 @@ static PyObject *__pyx_pf_3rai_10JsonStruct___init__(CYTHON_UNUSED PyObject *__p
     __pyx_t_4 = __pyx_v_js; __Pyx_INCREF(__pyx_t_4); __pyx_t_7 = 0;
     __pyx_t_8 = NULL;
   } else {
-    __pyx_t_7 = -1; __pyx_t_4 = PyObject_GetIter(__pyx_v_js); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 123, __pyx_L1_error)
+    __pyx_t_7 = -1; __pyx_t_4 = PyObject_GetIter(__pyx_v_js); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 126, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
-    __pyx_t_8 = Py_TYPE(__pyx_t_4)->tp_iternext; if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 123, __pyx_L1_error)
+    __pyx_t_8 = Py_TYPE(__pyx_t_4)->tp_iternext; if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 126, __pyx_L1_error)
   }
   for (;;) {
     if (likely(!__pyx_t_8)) {
       if (likely(PyList_CheckExact(__pyx_t_4))) {
         if (__pyx_t_7 >= PyList_GET_SIZE(__pyx_t_4)) break;
         #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-        __pyx_t_6 = PyList_GET_ITEM(__pyx_t_4, __pyx_t_7); __Pyx_INCREF(__pyx_t_6); __pyx_t_7++; if (unlikely(0 < 0)) __PYX_ERR(0, 123, __pyx_L1_error)
+        __pyx_t_6 = PyList_GET_ITEM(__pyx_t_4, __pyx_t_7); __Pyx_INCREF(__pyx_t_6); __pyx_t_7++; if (unlikely(0 < 0)) __PYX_ERR(0, 126, __pyx_L1_error)
         #else
-        __pyx_t_6 = PySequence_ITEM(__pyx_t_4, __pyx_t_7); __pyx_t_7++; if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 123, __pyx_L1_error)
+        __pyx_t_6 = PySequence_ITEM(__pyx_t_4, __pyx_t_7); __pyx_t_7++; if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 126, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_6);
         #endif
       } else {
         if (__pyx_t_7 >= PyTuple_GET_SIZE(__pyx_t_4)) break;
         #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-        __pyx_t_6 = PyTuple_GET_ITEM(__pyx_t_4, __pyx_t_7); __Pyx_INCREF(__pyx_t_6); __pyx_t_7++; if (unlikely(0 < 0)) __PYX_ERR(0, 123, __pyx_L1_error)
+        __pyx_t_6 = PyTuple_GET_ITEM(__pyx_t_4, __pyx_t_7); __Pyx_INCREF(__pyx_t_6); __pyx_t_7++; if (unlikely(0 < 0)) __PYX_ERR(0, 126, __pyx_L1_error)
         #else
-        __pyx_t_6 = PySequence_ITEM(__pyx_t_4, __pyx_t_7); __pyx_t_7++; if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 123, __pyx_L1_error)
+        __pyx_t_6 = PySequence_ITEM(__pyx_t_4, __pyx_t_7); __pyx_t_7++; if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 126, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_6);
         #endif
       }
@@ -1876,7 +1892,7 @@ static PyObject *__pyx_pf_3rai_10JsonStruct___init__(CYTHON_UNUSED PyObject *__p
         PyObject* exc_type = PyErr_Occurred();
         if (exc_type) {
           if (likely(exc_type == PyExc_StopIteration || PyErr_GivenExceptionMatches(exc_type, PyExc_StopIteration))) PyErr_Clear();
-          else __PYX_ERR(0, 123, __pyx_L1_error)
+          else __PYX_ERR(0, 126, __pyx_L1_error)
         }
         break;
       }
@@ -1885,19 +1901,19 @@ static PyObject *__pyx_pf_3rai_10JsonStruct___init__(CYTHON_UNUSED PyObject *__p
     __Pyx_XDECREF_SET(__pyx_v_key, __pyx_t_6);
     __pyx_t_6 = 0;
 
-    /* "rai.pyx":124
+    /* "rai.pyx":127
  *                 js = json.loads(js)
  *         for key in js:
  *             value = js[key]             # <<<<<<<<<<<<<<
  *             if isinstance(value, dict):
  *                 self.__dict__[key] = JsonStruct(value)
  */
-    __pyx_t_6 = PyObject_GetItem(__pyx_v_js, __pyx_v_key); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 124, __pyx_L1_error)
+    __pyx_t_6 = PyObject_GetItem(__pyx_v_js, __pyx_v_key); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 127, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_6);
     __Pyx_XDECREF_SET(__pyx_v_value, __pyx_t_6);
     __pyx_t_6 = 0;
 
-    /* "rai.pyx":125
+    /* "rai.pyx":128
  *         for key in js:
  *             value = js[key]
  *             if isinstance(value, dict):             # <<<<<<<<<<<<<<
@@ -1908,14 +1924,14 @@ static PyObject *__pyx_pf_3rai_10JsonStruct___init__(CYTHON_UNUSED PyObject *__p
     __pyx_t_2 = (__pyx_t_1 != 0);
     if (__pyx_t_2) {
 
-      /* "rai.pyx":126
+      /* "rai.pyx":129
  *             value = js[key]
  *             if isinstance(value, dict):
  *                 self.__dict__[key] = JsonStruct(value)             # <<<<<<<<<<<<<<
  *             elif isinstance(value, list):
  *                 for i in range(len(value)):
  */
-      __pyx_t_3 = __Pyx_GetModuleGlobalName(__pyx_n_s_JsonStruct); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 126, __pyx_L1_error)
+      __pyx_t_3 = __Pyx_GetModuleGlobalName(__pyx_n_s_JsonStruct); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 129, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_3);
       __pyx_t_5 = NULL;
       if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_3))) {
@@ -1928,13 +1944,13 @@ static PyObject *__pyx_pf_3rai_10JsonStruct___init__(CYTHON_UNUSED PyObject *__p
         }
       }
       if (!__pyx_t_5) {
-        __pyx_t_6 = __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_v_value); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 126, __pyx_L1_error)
+        __pyx_t_6 = __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_v_value); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 129, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_6);
       } else {
         #if CYTHON_FAST_PYCALL
         if (PyFunction_Check(__pyx_t_3)) {
           PyObject *__pyx_temp[2] = {__pyx_t_5, __pyx_v_value};
-          __pyx_t_6 = __Pyx_PyFunction_FastCall(__pyx_t_3, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 126, __pyx_L1_error)
+          __pyx_t_6 = __Pyx_PyFunction_FastCall(__pyx_t_3, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 129, __pyx_L1_error)
           __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
           __Pyx_GOTREF(__pyx_t_6);
         } else
@@ -1942,31 +1958,31 @@ static PyObject *__pyx_pf_3rai_10JsonStruct___init__(CYTHON_UNUSED PyObject *__p
         #if CYTHON_FAST_PYCCALL
         if (__Pyx_PyFastCFunction_Check(__pyx_t_3)) {
           PyObject *__pyx_temp[2] = {__pyx_t_5, __pyx_v_value};
-          __pyx_t_6 = __Pyx_PyCFunction_FastCall(__pyx_t_3, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 126, __pyx_L1_error)
+          __pyx_t_6 = __Pyx_PyCFunction_FastCall(__pyx_t_3, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 129, __pyx_L1_error)
           __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
           __Pyx_GOTREF(__pyx_t_6);
         } else
         #endif
         {
-          __pyx_t_9 = PyTuple_New(1+1); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 126, __pyx_L1_error)
+          __pyx_t_9 = PyTuple_New(1+1); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 129, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_9);
           __Pyx_GIVEREF(__pyx_t_5); PyTuple_SET_ITEM(__pyx_t_9, 0, __pyx_t_5); __pyx_t_5 = NULL;
           __Pyx_INCREF(__pyx_v_value);
           __Pyx_GIVEREF(__pyx_v_value);
           PyTuple_SET_ITEM(__pyx_t_9, 0+1, __pyx_v_value);
-          __pyx_t_6 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_9, NULL); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 126, __pyx_L1_error)
+          __pyx_t_6 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_9, NULL); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 129, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_6);
           __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
         }
       }
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-      __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_dict); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 126, __pyx_L1_error)
+      __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_dict); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 129, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_3);
-      if (unlikely(PyObject_SetItem(__pyx_t_3, __pyx_v_key, __pyx_t_6) < 0)) __PYX_ERR(0, 126, __pyx_L1_error)
+      if (unlikely(PyObject_SetItem(__pyx_t_3, __pyx_v_key, __pyx_t_6) < 0)) __PYX_ERR(0, 129, __pyx_L1_error)
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
       __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
 
-      /* "rai.pyx":125
+      /* "rai.pyx":128
  *         for key in js:
  *             value = js[key]
  *             if isinstance(value, dict):             # <<<<<<<<<<<<<<
@@ -1976,7 +1992,7 @@ static PyObject *__pyx_pf_3rai_10JsonStruct___init__(CYTHON_UNUSED PyObject *__p
       goto __pyx_L7;
     }
 
-    /* "rai.pyx":127
+    /* "rai.pyx":130
  *             if isinstance(value, dict):
  *                 self.__dict__[key] = JsonStruct(value)
  *             elif isinstance(value, list):             # <<<<<<<<<<<<<<
@@ -1987,30 +2003,30 @@ static PyObject *__pyx_pf_3rai_10JsonStruct___init__(CYTHON_UNUSED PyObject *__p
     __pyx_t_1 = (__pyx_t_2 != 0);
     if (__pyx_t_1) {
 
-      /* "rai.pyx":128
+      /* "rai.pyx":131
  *                 self.__dict__[key] = JsonStruct(value)
  *             elif isinstance(value, list):
  *                 for i in range(len(value)):             # <<<<<<<<<<<<<<
  *                     v = value[i]
  *                     if isinstance(v, dict):
  */
-      __pyx_t_10 = PyObject_Length(__pyx_v_value); if (unlikely(__pyx_t_10 == -1)) __PYX_ERR(0, 128, __pyx_L1_error)
+      __pyx_t_10 = PyObject_Length(__pyx_v_value); if (unlikely(__pyx_t_10 == -1)) __PYX_ERR(0, 131, __pyx_L1_error)
       for (__pyx_t_11 = 0; __pyx_t_11 < __pyx_t_10; __pyx_t_11+=1) {
         __pyx_v_i = __pyx_t_11;
 
-        /* "rai.pyx":129
+        /* "rai.pyx":132
  *             elif isinstance(value, list):
  *                 for i in range(len(value)):
  *                     v = value[i]             # <<<<<<<<<<<<<<
  *                     if isinstance(v, dict):
  *                         value[i] = JsonStruct(v)
  */
-        __pyx_t_6 = __Pyx_GetItemInt(__pyx_v_value, __pyx_v_i, Py_ssize_t, 1, PyInt_FromSsize_t, 0, 1, 1); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 129, __pyx_L1_error)
+        __pyx_t_6 = __Pyx_GetItemInt(__pyx_v_value, __pyx_v_i, Py_ssize_t, 1, PyInt_FromSsize_t, 0, 1, 1); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 132, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_6);
         __Pyx_XDECREF_SET(__pyx_v_v, __pyx_t_6);
         __pyx_t_6 = 0;
 
-        /* "rai.pyx":130
+        /* "rai.pyx":133
  *                 for i in range(len(value)):
  *                     v = value[i]
  *                     if isinstance(v, dict):             # <<<<<<<<<<<<<<
@@ -2021,14 +2037,14 @@ static PyObject *__pyx_pf_3rai_10JsonStruct___init__(CYTHON_UNUSED PyObject *__p
         __pyx_t_2 = (__pyx_t_1 != 0);
         if (__pyx_t_2) {
 
-          /* "rai.pyx":131
+          /* "rai.pyx":134
  *                     v = value[i]
  *                     if isinstance(v, dict):
  *                         value[i] = JsonStruct(v)             # <<<<<<<<<<<<<<
  *                 self.__dict__[key] = value
  *             else:
  */
-          __pyx_t_3 = __Pyx_GetModuleGlobalName(__pyx_n_s_JsonStruct); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 131, __pyx_L1_error)
+          __pyx_t_3 = __Pyx_GetModuleGlobalName(__pyx_n_s_JsonStruct); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 134, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_3);
           __pyx_t_9 = NULL;
           if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_3))) {
@@ -2041,13 +2057,13 @@ static PyObject *__pyx_pf_3rai_10JsonStruct___init__(CYTHON_UNUSED PyObject *__p
             }
           }
           if (!__pyx_t_9) {
-            __pyx_t_6 = __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_v_v); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 131, __pyx_L1_error)
+            __pyx_t_6 = __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_v_v); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 134, __pyx_L1_error)
             __Pyx_GOTREF(__pyx_t_6);
           } else {
             #if CYTHON_FAST_PYCALL
             if (PyFunction_Check(__pyx_t_3)) {
               PyObject *__pyx_temp[2] = {__pyx_t_9, __pyx_v_v};
-              __pyx_t_6 = __Pyx_PyFunction_FastCall(__pyx_t_3, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 131, __pyx_L1_error)
+              __pyx_t_6 = __Pyx_PyFunction_FastCall(__pyx_t_3, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 134, __pyx_L1_error)
               __Pyx_XDECREF(__pyx_t_9); __pyx_t_9 = 0;
               __Pyx_GOTREF(__pyx_t_6);
             } else
@@ -2055,28 +2071,28 @@ static PyObject *__pyx_pf_3rai_10JsonStruct___init__(CYTHON_UNUSED PyObject *__p
             #if CYTHON_FAST_PYCCALL
             if (__Pyx_PyFastCFunction_Check(__pyx_t_3)) {
               PyObject *__pyx_temp[2] = {__pyx_t_9, __pyx_v_v};
-              __pyx_t_6 = __Pyx_PyCFunction_FastCall(__pyx_t_3, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 131, __pyx_L1_error)
+              __pyx_t_6 = __Pyx_PyCFunction_FastCall(__pyx_t_3, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 134, __pyx_L1_error)
               __Pyx_XDECREF(__pyx_t_9); __pyx_t_9 = 0;
               __Pyx_GOTREF(__pyx_t_6);
             } else
             #endif
             {
-              __pyx_t_5 = PyTuple_New(1+1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 131, __pyx_L1_error)
+              __pyx_t_5 = PyTuple_New(1+1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 134, __pyx_L1_error)
               __Pyx_GOTREF(__pyx_t_5);
               __Pyx_GIVEREF(__pyx_t_9); PyTuple_SET_ITEM(__pyx_t_5, 0, __pyx_t_9); __pyx_t_9 = NULL;
               __Pyx_INCREF(__pyx_v_v);
               __Pyx_GIVEREF(__pyx_v_v);
               PyTuple_SET_ITEM(__pyx_t_5, 0+1, __pyx_v_v);
-              __pyx_t_6 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_5, NULL); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 131, __pyx_L1_error)
+              __pyx_t_6 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_5, NULL); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 134, __pyx_L1_error)
               __Pyx_GOTREF(__pyx_t_6);
               __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
             }
           }
           __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-          if (unlikely(__Pyx_SetItemInt(__pyx_v_value, __pyx_v_i, __pyx_t_6, Py_ssize_t, 1, PyInt_FromSsize_t, 0, 1, 1) < 0)) __PYX_ERR(0, 131, __pyx_L1_error)
+          if (unlikely(__Pyx_SetItemInt(__pyx_v_value, __pyx_v_i, __pyx_t_6, Py_ssize_t, 1, PyInt_FromSsize_t, 0, 1, 1) < 0)) __PYX_ERR(0, 134, __pyx_L1_error)
           __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
 
-          /* "rai.pyx":130
+          /* "rai.pyx":133
  *                 for i in range(len(value)):
  *                     v = value[i]
  *                     if isinstance(v, dict):             # <<<<<<<<<<<<<<
@@ -2086,19 +2102,19 @@ static PyObject *__pyx_pf_3rai_10JsonStruct___init__(CYTHON_UNUSED PyObject *__p
         }
       }
 
-      /* "rai.pyx":132
+      /* "rai.pyx":135
  *                     if isinstance(v, dict):
  *                         value[i] = JsonStruct(v)
  *                 self.__dict__[key] = value             # <<<<<<<<<<<<<<
  *             else:
  *                 self.__dict__[key] = value
  */
-      __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_dict); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 132, __pyx_L1_error)
+      __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_dict); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 135, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_6);
-      if (unlikely(PyObject_SetItem(__pyx_t_6, __pyx_v_key, __pyx_v_value) < 0)) __PYX_ERR(0, 132, __pyx_L1_error)
+      if (unlikely(PyObject_SetItem(__pyx_t_6, __pyx_v_key, __pyx_v_value) < 0)) __PYX_ERR(0, 135, __pyx_L1_error)
       __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
 
-      /* "rai.pyx":127
+      /* "rai.pyx":130
  *             if isinstance(value, dict):
  *                 self.__dict__[key] = JsonStruct(value)
  *             elif isinstance(value, list):             # <<<<<<<<<<<<<<
@@ -2108,7 +2124,7 @@ static PyObject *__pyx_pf_3rai_10JsonStruct___init__(CYTHON_UNUSED PyObject *__p
       goto __pyx_L7;
     }
 
-    /* "rai.pyx":134
+    /* "rai.pyx":137
  *                 self.__dict__[key] = value
  *             else:
  *                 self.__dict__[key] = value             # <<<<<<<<<<<<<<
@@ -2116,14 +2132,14 @@ static PyObject *__pyx_pf_3rai_10JsonStruct___init__(CYTHON_UNUSED PyObject *__p
  *         return str(self.__dict__)
  */
     /*else*/ {
-      __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_dict); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 134, __pyx_L1_error)
+      __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_dict); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 137, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_6);
-      if (unlikely(PyObject_SetItem(__pyx_t_6, __pyx_v_key, __pyx_v_value) < 0)) __PYX_ERR(0, 134, __pyx_L1_error)
+      if (unlikely(PyObject_SetItem(__pyx_t_6, __pyx_v_key, __pyx_v_value) < 0)) __PYX_ERR(0, 137, __pyx_L1_error)
       __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
     }
     __pyx_L7:;
 
-    /* "rai.pyx":123
+    /* "rai.pyx":126
  *             if isinstance(js, str):
  *                 js = json.loads(js)
  *         for key in js:             # <<<<<<<<<<<<<<
@@ -2133,7 +2149,7 @@ static PyObject *__pyx_pf_3rai_10JsonStruct___init__(CYTHON_UNUSED PyObject *__p
   }
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
 
-  /* "rai.pyx":117
+  /* "rai.pyx":120
  * 
  * class JsonStruct(object):
  *     def __init__(self, js):             # <<<<<<<<<<<<<<
@@ -2162,7 +2178,7 @@ static PyObject *__pyx_pf_3rai_10JsonStruct___init__(CYTHON_UNUSED PyObject *__p
   return __pyx_r;
 }
 
-/* "rai.pyx":135
+/* "rai.pyx":138
  *             else:
  *                 self.__dict__[key] = value
  *     def __str__(self):             # <<<<<<<<<<<<<<
@@ -2191,7 +2207,7 @@ static PyObject *__pyx_pf_3rai_10JsonStruct_2__str__(CYTHON_UNUSED PyObject *__p
   PyObject *__pyx_t_2 = NULL;
   __Pyx_RefNannySetupContext("__str__", 0);
 
-  /* "rai.pyx":136
+  /* "rai.pyx":139
  *                 self.__dict__[key] = value
  *     def __str__(self):
  *         return str(self.__dict__)             # <<<<<<<<<<<<<<
@@ -2199,21 +2215,21 @@ static PyObject *__pyx_pf_3rai_10JsonStruct_2__str__(CYTHON_UNUSED PyObject *__p
  *     def __repr__(self):
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_dict); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 136, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_dict); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 139, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = PyTuple_New(1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 136, __pyx_L1_error)
+  __pyx_t_2 = PyTuple_New(1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 139, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_GIVEREF(__pyx_t_1);
   PyTuple_SET_ITEM(__pyx_t_2, 0, __pyx_t_1);
   __pyx_t_1 = 0;
-  __pyx_t_1 = __Pyx_PyObject_Call(((PyObject *)(&PyString_Type)), __pyx_t_2, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 136, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_Call(((PyObject *)(&PyString_Type)), __pyx_t_2, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 139, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "rai.pyx":135
+  /* "rai.pyx":138
  *             else:
  *                 self.__dict__[key] = value
  *     def __str__(self):             # <<<<<<<<<<<<<<
@@ -2233,7 +2249,7 @@ static PyObject *__pyx_pf_3rai_10JsonStruct_2__str__(CYTHON_UNUSED PyObject *__p
   return __pyx_r;
 }
 
-/* "rai.pyx":138
+/* "rai.pyx":141
  *         return str(self.__dict__)
  * #        return json.dumps(self, default=lambda x: x.__dict__,sort_keys=False,indent=4, separators=(',', ': '))
  *     def __repr__(self):             # <<<<<<<<<<<<<<
@@ -2255,7 +2271,7 @@ static PyObject *__pyx_pw_3rai_10JsonStruct_5__repr__(PyObject *__pyx_self, PyOb
   return __pyx_r;
 }
 
-/* "rai.pyx":139
+/* "rai.pyx":142
  * #        return json.dumps(self, default=lambda x: x.__dict__,sort_keys=False,indent=4, separators=(',', ': '))
  *     def __repr__(self):
  *         return json.dumps(self, default=lambda x: x.__dict__, sort_keys=False, indent=4, separators=(',', ': '))             # <<<<<<<<<<<<<<
@@ -2283,7 +2299,7 @@ static PyObject *__pyx_lambda_funcdef_lambda(CYTHON_UNUSED PyObject *__pyx_self,
   PyObject *__pyx_t_1 = NULL;
   __Pyx_RefNannySetupContext("lambda", 0);
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_x, __pyx_n_s_dict); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 139, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_x, __pyx_n_s_dict); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 142, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -2300,7 +2316,7 @@ static PyObject *__pyx_lambda_funcdef_lambda(CYTHON_UNUSED PyObject *__pyx_self,
   return __pyx_r;
 }
 
-/* "rai.pyx":138
+/* "rai.pyx":141
  *         return str(self.__dict__)
  * #        return json.dumps(self, default=lambda x: x.__dict__,sort_keys=False,indent=4, separators=(',', ': '))
  *     def __repr__(self):             # <<<<<<<<<<<<<<
@@ -2317,7 +2333,7 @@ static PyObject *__pyx_pf_3rai_10JsonStruct_4__repr__(CYTHON_UNUSED PyObject *__
   PyObject *__pyx_t_4 = NULL;
   __Pyx_RefNannySetupContext("__repr__", 0);
 
-  /* "rai.pyx":139
+  /* "rai.pyx":142
  * #        return json.dumps(self, default=lambda x: x.__dict__,sort_keys=False,indent=4, separators=(',', ': '))
  *     def __repr__(self):
  *         return json.dumps(self, default=lambda x: x.__dict__, sort_keys=False, indent=4, separators=(',', ': '))             # <<<<<<<<<<<<<<
@@ -2325,26 +2341,26 @@ static PyObject *__pyx_pf_3rai_10JsonStruct_4__repr__(CYTHON_UNUSED PyObject *__
  * def block_count ():
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __Pyx_GetModuleGlobalName(__pyx_n_s_json); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 139, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_GetModuleGlobalName(__pyx_n_s_json); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 142, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_dumps); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 139, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_dumps); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 142, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_1 = PyTuple_New(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 139, __pyx_L1_error)
+  __pyx_t_1 = PyTuple_New(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 142, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_INCREF(__pyx_v_self);
   __Pyx_GIVEREF(__pyx_v_self);
   PyTuple_SET_ITEM(__pyx_t_1, 0, __pyx_v_self);
-  __pyx_t_3 = PyDict_New(); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 139, __pyx_L1_error)
+  __pyx_t_3 = PyDict_New(); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 142, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_4 = __Pyx_CyFunction_NewEx(&__pyx_mdef_3rai_10JsonStruct_8__repr___lambda, 0, __pyx_n_s_JsonStruct___repr___locals_lambd, NULL, __pyx_n_s_rai, __pyx_d, NULL); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 139, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_CyFunction_NewEx(&__pyx_mdef_3rai_10JsonStruct_8__repr___lambda, 0, __pyx_n_s_JsonStruct___repr___locals_lambd, NULL, __pyx_n_s_rai, __pyx_d, NULL); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 142, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
-  if (PyDict_SetItem(__pyx_t_3, __pyx_n_s_default, __pyx_t_4) < 0) __PYX_ERR(0, 139, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_3, __pyx_n_s_default, __pyx_t_4) < 0) __PYX_ERR(0, 142, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-  if (PyDict_SetItem(__pyx_t_3, __pyx_n_s_sort_keys, Py_False) < 0) __PYX_ERR(0, 139, __pyx_L1_error)
-  if (PyDict_SetItem(__pyx_t_3, __pyx_n_s_indent, __pyx_int_4) < 0) __PYX_ERR(0, 139, __pyx_L1_error)
-  if (PyDict_SetItem(__pyx_t_3, __pyx_n_s_separators, __pyx_tuple__4) < 0) __PYX_ERR(0, 139, __pyx_L1_error)
-  __pyx_t_4 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_1, __pyx_t_3); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 139, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_3, __pyx_n_s_sort_keys, Py_False) < 0) __PYX_ERR(0, 142, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_3, __pyx_n_s_indent, __pyx_int_4) < 0) __PYX_ERR(0, 142, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_3, __pyx_n_s_separators, __pyx_tuple__4) < 0) __PYX_ERR(0, 142, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_1, __pyx_t_3); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 142, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
@@ -2353,7 +2369,7 @@ static PyObject *__pyx_pf_3rai_10JsonStruct_4__repr__(CYTHON_UNUSED PyObject *__
   __pyx_t_4 = 0;
   goto __pyx_L0;
 
-  /* "rai.pyx":138
+  /* "rai.pyx":141
  *         return str(self.__dict__)
  * #        return json.dumps(self, default=lambda x: x.__dict__,sort_keys=False,indent=4, separators=(',', ': '))
  *     def __repr__(self):             # <<<<<<<<<<<<<<
@@ -2375,7 +2391,7 @@ static PyObject *__pyx_pf_3rai_10JsonStruct_4__repr__(CYTHON_UNUSED PyObject *__
   return __pyx_r;
 }
 
-/* "rai.pyx":141
+/* "rai.pyx":144
  *         return json.dumps(self, default=lambda x: x.__dict__, sort_keys=False, indent=4, separators=(',', ': '))
  * 
  * def block_count ():             # <<<<<<<<<<<<<<
@@ -2403,7 +2419,7 @@ static PyObject *__pyx_pf_3rai_block_count(CYTHON_UNUSED PyObject *__pyx_self) {
   PyObject *__pyx_t_1 = NULL;
   __Pyx_RefNannySetupContext("block_count", 0);
 
-  /* "rai.pyx":142
+  /* "rai.pyx":145
  * 
  * def block_count ():
  *     return _rai.block_count()             # <<<<<<<<<<<<<<
@@ -2411,13 +2427,13 @@ static PyObject *__pyx_pf_3rai_block_count(CYTHON_UNUSED PyObject *__pyx_self) {
  * def get_last_error():
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __pyx_v_3rai__rai->block_count(); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 142, __pyx_L1_error)
+  __pyx_t_1 = __pyx_v_3rai__rai->block_count(); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 145, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "rai.pyx":141
+  /* "rai.pyx":144
  *         return json.dumps(self, default=lambda x: x.__dict__, sort_keys=False, indent=4, separators=(',', ': '))
  * 
  * def block_count ():             # <<<<<<<<<<<<<<
@@ -2436,7 +2452,7 @@ static PyObject *__pyx_pf_3rai_block_count(CYTHON_UNUSED PyObject *__pyx_self) {
   return __pyx_r;
 }
 
-/* "rai.pyx":144
+/* "rai.pyx":147
  *     return _rai.block_count()
  * 
  * def get_last_error():             # <<<<<<<<<<<<<<
@@ -2464,7 +2480,7 @@ static PyObject *__pyx_pf_3rai_2get_last_error(CYTHON_UNUSED PyObject *__pyx_sel
   PyObject *__pyx_t_1 = NULL;
   __Pyx_RefNannySetupContext("get_last_error", 0);
 
-  /* "rai.pyx":145
+  /* "rai.pyx":148
  * 
  * def get_last_error():
  *     return get_last_error_()             # <<<<<<<<<<<<<<
@@ -2472,13 +2488,13 @@ static PyObject *__pyx_pf_3rai_2get_last_error(CYTHON_UNUSED PyObject *__pyx_sel
  * def account_balance (string account_text):
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __Pyx_PyBytes_FromString(python::get_last_error_()); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 145, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyBytes_FromString(python::get_last_error_()); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 148, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "rai.pyx":144
+  /* "rai.pyx":147
  *     return _rai.block_count()
  * 
  * def get_last_error():             # <<<<<<<<<<<<<<
@@ -2497,7 +2513,7 @@ static PyObject *__pyx_pf_3rai_2get_last_error(CYTHON_UNUSED PyObject *__pyx_sel
   return __pyx_r;
 }
 
-/* "rai.pyx":147
+/* "rai.pyx":150
  *     return get_last_error_()
  * 
  * def account_balance (string account_text):             # <<<<<<<<<<<<<<
@@ -2514,7 +2530,7 @@ static PyObject *__pyx_pw_3rai_5account_balance(PyObject *__pyx_self, PyObject *
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("account_balance (wrapper)", 0);
   assert(__pyx_arg_account_text); {
-    __pyx_v_account_text = __pyx_convert_string_from_py_std__in_string(__pyx_arg_account_text); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 147, __pyx_L3_error)
+    __pyx_v_account_text = __pyx_convert_string_from_py_std__in_string(__pyx_arg_account_text); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 150, __pyx_L3_error)
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L3_error:;
@@ -2539,19 +2555,19 @@ static PyObject *__pyx_pf_3rai_4account_balance(CYTHON_UNUSED PyObject *__pyx_se
   PyObject *__pyx_t_4 = NULL;
   __Pyx_RefNannySetupContext("account_balance", 0);
 
-  /* "rai.pyx":151
+  /* "rai.pyx":154
  *     cdef string pending
  * 
  *     ret = _rai.account_balance (account_text)             # <<<<<<<<<<<<<<
  *     return JsonStruct(ret)
  * 
  */
-  __pyx_t_1 = __pyx_v_3rai__rai->account_balance(__pyx_v_account_text); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 151, __pyx_L1_error)
+  __pyx_t_1 = __pyx_v_3rai__rai->account_balance(__pyx_v_account_text); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 154, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_v_ret = __pyx_t_1;
   __pyx_t_1 = 0;
 
-  /* "rai.pyx":152
+  /* "rai.pyx":155
  * 
  *     ret = _rai.account_balance (account_text)
  *     return JsonStruct(ret)             # <<<<<<<<<<<<<<
@@ -2559,7 +2575,7 @@ static PyObject *__pyx_pf_3rai_4account_balance(CYTHON_UNUSED PyObject *__pyx_se
  * def account_block_count (account):
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_2 = __Pyx_GetModuleGlobalName(__pyx_n_s_JsonStruct); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 152, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_GetModuleGlobalName(__pyx_n_s_JsonStruct); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 155, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __pyx_t_3 = NULL;
   if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_2))) {
@@ -2572,13 +2588,13 @@ static PyObject *__pyx_pf_3rai_4account_balance(CYTHON_UNUSED PyObject *__pyx_se
     }
   }
   if (!__pyx_t_3) {
-    __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_t_2, __pyx_v_ret); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 152, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_t_2, __pyx_v_ret); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 155, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
   } else {
     #if CYTHON_FAST_PYCALL
     if (PyFunction_Check(__pyx_t_2)) {
       PyObject *__pyx_temp[2] = {__pyx_t_3, __pyx_v_ret};
-      __pyx_t_1 = __Pyx_PyFunction_FastCall(__pyx_t_2, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 152, __pyx_L1_error)
+      __pyx_t_1 = __Pyx_PyFunction_FastCall(__pyx_t_2, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 155, __pyx_L1_error)
       __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
       __Pyx_GOTREF(__pyx_t_1);
     } else
@@ -2586,19 +2602,19 @@ static PyObject *__pyx_pf_3rai_4account_balance(CYTHON_UNUSED PyObject *__pyx_se
     #if CYTHON_FAST_PYCCALL
     if (__Pyx_PyFastCFunction_Check(__pyx_t_2)) {
       PyObject *__pyx_temp[2] = {__pyx_t_3, __pyx_v_ret};
-      __pyx_t_1 = __Pyx_PyCFunction_FastCall(__pyx_t_2, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 152, __pyx_L1_error)
+      __pyx_t_1 = __Pyx_PyCFunction_FastCall(__pyx_t_2, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 155, __pyx_L1_error)
       __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
       __Pyx_GOTREF(__pyx_t_1);
     } else
     #endif
     {
-      __pyx_t_4 = PyTuple_New(1+1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 152, __pyx_L1_error)
+      __pyx_t_4 = PyTuple_New(1+1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 155, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_4);
       __Pyx_GIVEREF(__pyx_t_3); PyTuple_SET_ITEM(__pyx_t_4, 0, __pyx_t_3); __pyx_t_3 = NULL;
       __Pyx_INCREF(__pyx_v_ret);
       __Pyx_GIVEREF(__pyx_v_ret);
       PyTuple_SET_ITEM(__pyx_t_4, 0+1, __pyx_v_ret);
-      __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_4, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 152, __pyx_L1_error)
+      __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_4, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 155, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_1);
       __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
     }
@@ -2608,7 +2624,7 @@ static PyObject *__pyx_pf_3rai_4account_balance(CYTHON_UNUSED PyObject *__pyx_se
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "rai.pyx":147
+  /* "rai.pyx":150
  *     return get_last_error_()
  * 
  * def account_balance (string account_text):             # <<<<<<<<<<<<<<
@@ -2631,7 +2647,7 @@ static PyObject *__pyx_pf_3rai_4account_balance(CYTHON_UNUSED PyObject *__pyx_se
   return __pyx_r;
 }
 
-/* "rai.pyx":154
+/* "rai.pyx":157
  *     return JsonStruct(ret)
  * 
  * def account_block_count (account):             # <<<<<<<<<<<<<<
@@ -2660,7 +2676,7 @@ static PyObject *__pyx_pf_3rai_6account_block_count(CYTHON_UNUSED PyObject *__py
   PyObject *__pyx_t_2 = NULL;
   __Pyx_RefNannySetupContext("account_block_count", 0);
 
-  /* "rai.pyx":155
+  /* "rai.pyx":158
  * 
  * def account_block_count (account):
  *     return _rai.account_block_count (account)             # <<<<<<<<<<<<<<
@@ -2668,14 +2684,14 @@ static PyObject *__pyx_pf_3rai_6account_block_count(CYTHON_UNUSED PyObject *__py
  * def account_info (account_text, representative=True, weight=True, pending=True):
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __pyx_convert_string_from_py_std__in_string(__pyx_v_account); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 155, __pyx_L1_error)
-  __pyx_t_2 = __Pyx_PyInt_From_int(__pyx_v_3rai__rai->account_block_count(__pyx_t_1)); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 155, __pyx_L1_error)
+  __pyx_t_1 = __pyx_convert_string_from_py_std__in_string(__pyx_v_account); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 158, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyInt_From_int(__pyx_v_3rai__rai->account_block_count(__pyx_t_1)); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 158, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __pyx_r = __pyx_t_2;
   __pyx_t_2 = 0;
   goto __pyx_L0;
 
-  /* "rai.pyx":154
+  /* "rai.pyx":157
  *     return JsonStruct(ret)
  * 
  * def account_block_count (account):             # <<<<<<<<<<<<<<
@@ -2694,7 +2710,7 @@ static PyObject *__pyx_pf_3rai_6account_block_count(CYTHON_UNUSED PyObject *__py
   return __pyx_r;
 }
 
-/* "rai.pyx":157
+/* "rai.pyx":160
  *     return _rai.account_block_count (account)
  * 
  * def account_info (account_text, representative=True, weight=True, pending=True):             # <<<<<<<<<<<<<<
@@ -2752,7 +2768,7 @@ static PyObject *__pyx_pw_3rai_9account_info(PyObject *__pyx_self, PyObject *__p
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "account_info") < 0)) __PYX_ERR(0, 157, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "account_info") < 0)) __PYX_ERR(0, 160, __pyx_L3_error)
       }
     } else {
       switch (PyTuple_GET_SIZE(__pyx_args)) {
@@ -2771,7 +2787,7 @@ static PyObject *__pyx_pw_3rai_9account_info(PyObject *__pyx_self, PyObject *__p
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("account_info", 0, 1, 4, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 157, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("account_info", 0, 1, 4, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 160, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("rai.account_info", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
@@ -2798,23 +2814,23 @@ static PyObject *__pyx_pf_3rai_8account_info(CYTHON_UNUSED PyObject *__pyx_self,
   PyObject *__pyx_t_8 = NULL;
   __Pyx_RefNannySetupContext("account_info", 0);
 
-  /* "rai.pyx":158
+  /* "rai.pyx":161
  * 
  * def account_info (account_text, representative=True, weight=True, pending=True):
  *     info = _rai.account_info (account_text, representative, weight, pending)             # <<<<<<<<<<<<<<
  *     return JsonStruct(info)
  * 
  */
-  __pyx_t_1 = __pyx_convert_string_from_py_std__in_string(__pyx_v_account_text); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 158, __pyx_L1_error)
-  __pyx_t_2 = __Pyx_PyObject_IsTrue(__pyx_v_representative); if (unlikely((__pyx_t_2 == ((bool)-1)) && PyErr_Occurred())) __PYX_ERR(0, 158, __pyx_L1_error)
-  __pyx_t_3 = __Pyx_PyObject_IsTrue(__pyx_v_weight); if (unlikely((__pyx_t_3 == ((bool)-1)) && PyErr_Occurred())) __PYX_ERR(0, 158, __pyx_L1_error)
-  __pyx_t_4 = __Pyx_PyObject_IsTrue(__pyx_v_pending); if (unlikely((__pyx_t_4 == ((bool)-1)) && PyErr_Occurred())) __PYX_ERR(0, 158, __pyx_L1_error)
-  __pyx_t_5 = __pyx_v_3rai__rai->account_info(__pyx_t_1, __pyx_t_2, __pyx_t_3, __pyx_t_4); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 158, __pyx_L1_error)
+  __pyx_t_1 = __pyx_convert_string_from_py_std__in_string(__pyx_v_account_text); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 161, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_IsTrue(__pyx_v_representative); if (unlikely((__pyx_t_2 == ((bool)-1)) && PyErr_Occurred())) __PYX_ERR(0, 161, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyObject_IsTrue(__pyx_v_weight); if (unlikely((__pyx_t_3 == ((bool)-1)) && PyErr_Occurred())) __PYX_ERR(0, 161, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_PyObject_IsTrue(__pyx_v_pending); if (unlikely((__pyx_t_4 == ((bool)-1)) && PyErr_Occurred())) __PYX_ERR(0, 161, __pyx_L1_error)
+  __pyx_t_5 = __pyx_v_3rai__rai->account_info(__pyx_t_1, __pyx_t_2, __pyx_t_3, __pyx_t_4); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 161, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
   __pyx_v_info = __pyx_t_5;
   __pyx_t_5 = 0;
 
-  /* "rai.pyx":159
+  /* "rai.pyx":162
  * def account_info (account_text, representative=True, weight=True, pending=True):
  *     info = _rai.account_info (account_text, representative, weight, pending)
  *     return JsonStruct(info)             # <<<<<<<<<<<<<<
@@ -2822,7 +2838,7 @@ static PyObject *__pyx_pf_3rai_8account_info(CYTHON_UNUSED PyObject *__pyx_self,
  * def account_create (wallet_text, generate_work=True):
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_6 = __Pyx_GetModuleGlobalName(__pyx_n_s_JsonStruct); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 159, __pyx_L1_error)
+  __pyx_t_6 = __Pyx_GetModuleGlobalName(__pyx_n_s_JsonStruct); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 162, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_6);
   __pyx_t_7 = NULL;
   if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_6))) {
@@ -2835,13 +2851,13 @@ static PyObject *__pyx_pf_3rai_8account_info(CYTHON_UNUSED PyObject *__pyx_self,
     }
   }
   if (!__pyx_t_7) {
-    __pyx_t_5 = __Pyx_PyObject_CallOneArg(__pyx_t_6, __pyx_v_info); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 159, __pyx_L1_error)
+    __pyx_t_5 = __Pyx_PyObject_CallOneArg(__pyx_t_6, __pyx_v_info); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 162, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
   } else {
     #if CYTHON_FAST_PYCALL
     if (PyFunction_Check(__pyx_t_6)) {
       PyObject *__pyx_temp[2] = {__pyx_t_7, __pyx_v_info};
-      __pyx_t_5 = __Pyx_PyFunction_FastCall(__pyx_t_6, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 159, __pyx_L1_error)
+      __pyx_t_5 = __Pyx_PyFunction_FastCall(__pyx_t_6, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 162, __pyx_L1_error)
       __Pyx_XDECREF(__pyx_t_7); __pyx_t_7 = 0;
       __Pyx_GOTREF(__pyx_t_5);
     } else
@@ -2849,19 +2865,19 @@ static PyObject *__pyx_pf_3rai_8account_info(CYTHON_UNUSED PyObject *__pyx_self,
     #if CYTHON_FAST_PYCCALL
     if (__Pyx_PyFastCFunction_Check(__pyx_t_6)) {
       PyObject *__pyx_temp[2] = {__pyx_t_7, __pyx_v_info};
-      __pyx_t_5 = __Pyx_PyCFunction_FastCall(__pyx_t_6, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 159, __pyx_L1_error)
+      __pyx_t_5 = __Pyx_PyCFunction_FastCall(__pyx_t_6, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 162, __pyx_L1_error)
       __Pyx_XDECREF(__pyx_t_7); __pyx_t_7 = 0;
       __Pyx_GOTREF(__pyx_t_5);
     } else
     #endif
     {
-      __pyx_t_8 = PyTuple_New(1+1); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 159, __pyx_L1_error)
+      __pyx_t_8 = PyTuple_New(1+1); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 162, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_8);
       __Pyx_GIVEREF(__pyx_t_7); PyTuple_SET_ITEM(__pyx_t_8, 0, __pyx_t_7); __pyx_t_7 = NULL;
       __Pyx_INCREF(__pyx_v_info);
       __Pyx_GIVEREF(__pyx_v_info);
       PyTuple_SET_ITEM(__pyx_t_8, 0+1, __pyx_v_info);
-      __pyx_t_5 = __Pyx_PyObject_Call(__pyx_t_6, __pyx_t_8, NULL); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 159, __pyx_L1_error)
+      __pyx_t_5 = __Pyx_PyObject_Call(__pyx_t_6, __pyx_t_8, NULL); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 162, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_5);
       __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
     }
@@ -2871,7 +2887,7 @@ static PyObject *__pyx_pf_3rai_8account_info(CYTHON_UNUSED PyObject *__pyx_self,
   __pyx_t_5 = 0;
   goto __pyx_L0;
 
-  /* "rai.pyx":157
+  /* "rai.pyx":160
  *     return _rai.account_block_count (account)
  * 
  * def account_info (account_text, representative=True, weight=True, pending=True):             # <<<<<<<<<<<<<<
@@ -2894,7 +2910,7 @@ static PyObject *__pyx_pf_3rai_8account_info(CYTHON_UNUSED PyObject *__pyx_self,
   return __pyx_r;
 }
 
-/* "rai.pyx":161
+/* "rai.pyx":164
  *     return JsonStruct(info)
  * 
  * def account_create (wallet_text, generate_work=True):             # <<<<<<<<<<<<<<
@@ -2936,7 +2952,7 @@ static PyObject *__pyx_pw_3rai_11account_create(PyObject *__pyx_self, PyObject *
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "account_create") < 0)) __PYX_ERR(0, 161, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "account_create") < 0)) __PYX_ERR(0, 164, __pyx_L3_error)
       }
     } else {
       switch (PyTuple_GET_SIZE(__pyx_args)) {
@@ -2951,7 +2967,7 @@ static PyObject *__pyx_pw_3rai_11account_create(PyObject *__pyx_self, PyObject *
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("account_create", 0, 1, 2, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 161, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("account_create", 0, 1, 2, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 164, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("rai.account_create", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
@@ -2972,7 +2988,7 @@ static PyObject *__pyx_pf_3rai_10account_create(CYTHON_UNUSED PyObject *__pyx_se
   PyObject *__pyx_t_3 = NULL;
   __Pyx_RefNannySetupContext("account_create", 0);
 
-  /* "rai.pyx":162
+  /* "rai.pyx":165
  * 
  * def account_create (wallet_text, generate_work=True):
  *     return _rai.account_create (wallet_text, generate_work)             # <<<<<<<<<<<<<<
@@ -2980,15 +2996,15 @@ static PyObject *__pyx_pf_3rai_10account_create(CYTHON_UNUSED PyObject *__pyx_se
  * def account_get (string key_text):
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __pyx_convert_string_from_py_std__in_string(__pyx_v_wallet_text); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 162, __pyx_L1_error)
-  __pyx_t_2 = __Pyx_PyObject_IsTrue(__pyx_v_generate_work); if (unlikely((__pyx_t_2 == ((bool)-1)) && PyErr_Occurred())) __PYX_ERR(0, 162, __pyx_L1_error)
-  __pyx_t_3 = __pyx_v_3rai__rai->account_create(__pyx_t_1, __pyx_t_2); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 162, __pyx_L1_error)
+  __pyx_t_1 = __pyx_convert_string_from_py_std__in_string(__pyx_v_wallet_text); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 165, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_IsTrue(__pyx_v_generate_work); if (unlikely((__pyx_t_2 == ((bool)-1)) && PyErr_Occurred())) __PYX_ERR(0, 165, __pyx_L1_error)
+  __pyx_t_3 = __pyx_v_3rai__rai->account_create(__pyx_t_1, __pyx_t_2); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 165, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __pyx_r = __pyx_t_3;
   __pyx_t_3 = 0;
   goto __pyx_L0;
 
-  /* "rai.pyx":161
+  /* "rai.pyx":164
  *     return JsonStruct(info)
  * 
  * def account_create (wallet_text, generate_work=True):             # <<<<<<<<<<<<<<
@@ -3007,7 +3023,7 @@ static PyObject *__pyx_pf_3rai_10account_create(CYTHON_UNUSED PyObject *__pyx_se
   return __pyx_r;
 }
 
-/* "rai.pyx":164
+/* "rai.pyx":167
  *     return _rai.account_create (wallet_text, generate_work)
  * 
  * def account_get (string key_text):             # <<<<<<<<<<<<<<
@@ -3024,7 +3040,7 @@ static PyObject *__pyx_pw_3rai_13account_get(PyObject *__pyx_self, PyObject *__p
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("account_get (wrapper)", 0);
   assert(__pyx_arg_key_text); {
-    __pyx_v_key_text = __pyx_convert_string_from_py_std__in_string(__pyx_arg_key_text); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 164, __pyx_L3_error)
+    __pyx_v_key_text = __pyx_convert_string_from_py_std__in_string(__pyx_arg_key_text); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 167, __pyx_L3_error)
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L3_error:;
@@ -3045,7 +3061,7 @@ static PyObject *__pyx_pf_3rai_12account_get(CYTHON_UNUSED PyObject *__pyx_self,
   PyObject *__pyx_t_1 = NULL;
   __Pyx_RefNannySetupContext("account_get", 0);
 
-  /* "rai.pyx":165
+  /* "rai.pyx":168
  * 
  * def account_get (string key_text):
  *     return _rai.account_get (key_text)             # <<<<<<<<<<<<<<
@@ -3053,13 +3069,13 @@ static PyObject *__pyx_pf_3rai_12account_get(CYTHON_UNUSED PyObject *__pyx_self,
  * def account_history (account_text, count):
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __pyx_v_3rai__rai->account_get(__pyx_v_key_text); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 165, __pyx_L1_error)
+  __pyx_t_1 = __pyx_v_3rai__rai->account_get(__pyx_v_key_text); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 168, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "rai.pyx":164
+  /* "rai.pyx":167
  *     return _rai.account_create (wallet_text, generate_work)
  * 
  * def account_get (string key_text):             # <<<<<<<<<<<<<<
@@ -3078,7 +3094,7 @@ static PyObject *__pyx_pf_3rai_12account_get(CYTHON_UNUSED PyObject *__pyx_self,
   return __pyx_r;
 }
 
-/* "rai.pyx":167
+/* "rai.pyx":170
  *     return _rai.account_get (key_text)
  * 
  * def account_history (account_text, count):             # <<<<<<<<<<<<<<
@@ -3115,11 +3131,11 @@ static PyObject *__pyx_pw_3rai_15account_history(PyObject *__pyx_self, PyObject 
         case  1:
         if (likely((values[1] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_count)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("account_history", 1, 2, 2, 1); __PYX_ERR(0, 167, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("account_history", 1, 2, 2, 1); __PYX_ERR(0, 170, __pyx_L3_error)
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "account_history") < 0)) __PYX_ERR(0, 167, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "account_history") < 0)) __PYX_ERR(0, 170, __pyx_L3_error)
       }
     } else if (PyTuple_GET_SIZE(__pyx_args) != 2) {
       goto __pyx_L5_argtuple_error;
@@ -3132,7 +3148,7 @@ static PyObject *__pyx_pw_3rai_15account_history(PyObject *__pyx_self, PyObject 
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("account_history", 1, 2, 2, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 167, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("account_history", 1, 2, 2, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 170, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("rai.account_history", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
@@ -3156,21 +3172,21 @@ static PyObject *__pyx_pf_3rai_14account_history(CYTHON_UNUSED PyObject *__pyx_s
   int __pyx_t_5;
   __Pyx_RefNannySetupContext("account_history", 0);
 
-  /* "rai.pyx":168
+  /* "rai.pyx":171
  * 
  * def account_history (account_text, count):
  *     ret = _rai.account_history (account_text, count)             # <<<<<<<<<<<<<<
  *     if isinstance(ret, Exception):
  *         raise ret
  */
-  __pyx_t_1 = __pyx_convert_string_from_py_std__in_string(__pyx_v_account_text); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 168, __pyx_L1_error)
-  __pyx_t_2 = __Pyx_PyInt_As_int(__pyx_v_count); if (unlikely((__pyx_t_2 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 168, __pyx_L1_error)
-  __pyx_t_3 = __pyx_v_3rai__rai->account_history(__pyx_t_1, __pyx_t_2); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 168, __pyx_L1_error)
+  __pyx_t_1 = __pyx_convert_string_from_py_std__in_string(__pyx_v_account_text); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 171, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyInt_As_int(__pyx_v_count); if (unlikely((__pyx_t_2 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 171, __pyx_L1_error)
+  __pyx_t_3 = __pyx_v_3rai__rai->account_history(__pyx_t_1, __pyx_t_2); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 171, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __pyx_v_ret = __pyx_t_3;
   __pyx_t_3 = 0;
 
-  /* "rai.pyx":169
+  /* "rai.pyx":172
  * def account_history (account_text, count):
  *     ret = _rai.account_history (account_text, count)
  *     if isinstance(ret, Exception):             # <<<<<<<<<<<<<<
@@ -3181,7 +3197,7 @@ static PyObject *__pyx_pf_3rai_14account_history(CYTHON_UNUSED PyObject *__pyx_s
   __pyx_t_5 = (__pyx_t_4 != 0);
   if (__pyx_t_5) {
 
-    /* "rai.pyx":170
+    /* "rai.pyx":173
  *     ret = _rai.account_history (account_text, count)
  *     if isinstance(ret, Exception):
  *         raise ret             # <<<<<<<<<<<<<<
@@ -3189,9 +3205,9 @@ static PyObject *__pyx_pf_3rai_14account_history(CYTHON_UNUSED PyObject *__pyx_s
  * 
  */
     __Pyx_Raise(__pyx_v_ret, 0, 0, 0);
-    __PYX_ERR(0, 170, __pyx_L1_error)
+    __PYX_ERR(0, 173, __pyx_L1_error)
 
-    /* "rai.pyx":169
+    /* "rai.pyx":172
  * def account_history (account_text, count):
  *     ret = _rai.account_history (account_text, count)
  *     if isinstance(ret, Exception):             # <<<<<<<<<<<<<<
@@ -3200,7 +3216,7 @@ static PyObject *__pyx_pf_3rai_14account_history(CYTHON_UNUSED PyObject *__pyx_s
  */
   }
 
-  /* "rai.pyx":171
+  /* "rai.pyx":174
  *     if isinstance(ret, Exception):
  *         raise ret
  *     return ret             # <<<<<<<<<<<<<<
@@ -3212,7 +3228,7 @@ static PyObject *__pyx_pf_3rai_14account_history(CYTHON_UNUSED PyObject *__pyx_s
   __pyx_r = __pyx_v_ret;
   goto __pyx_L0;
 
-  /* "rai.pyx":167
+  /* "rai.pyx":170
  *     return _rai.account_get (key_text)
  * 
  * def account_history (account_text, count):             # <<<<<<<<<<<<<<
@@ -3232,7 +3248,7 @@ static PyObject *__pyx_pf_3rai_14account_history(CYTHON_UNUSED PyObject *__pyx_s
   return __pyx_r;
 }
 
-/* "rai.pyx":173
+/* "rai.pyx":176
  *     return ret
  * 
  * def account_list (string wallet_text):             # <<<<<<<<<<<<<<
@@ -3249,7 +3265,7 @@ static PyObject *__pyx_pw_3rai_17account_list(PyObject *__pyx_self, PyObject *__
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("account_list (wrapper)", 0);
   assert(__pyx_arg_wallet_text); {
-    __pyx_v_wallet_text = __pyx_convert_string_from_py_std__in_string(__pyx_arg_wallet_text); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 173, __pyx_L3_error)
+    __pyx_v_wallet_text = __pyx_convert_string_from_py_std__in_string(__pyx_arg_wallet_text); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 176, __pyx_L3_error)
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L3_error:;
@@ -3273,19 +3289,19 @@ static PyObject *__pyx_pf_3rai_16account_list(CYTHON_UNUSED PyObject *__pyx_self
   int __pyx_t_3;
   __Pyx_RefNannySetupContext("account_list", 0);
 
-  /* "rai.pyx":174
+  /* "rai.pyx":177
  * 
  * def account_list (string wallet_text):
  *     ret = _rai.account_list (wallet_text)             # <<<<<<<<<<<<<<
  *     if isinstance(ret, Exception):
  *         raise ret
  */
-  __pyx_t_1 = __pyx_v_3rai__rai->account_list(__pyx_v_wallet_text); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 174, __pyx_L1_error)
+  __pyx_t_1 = __pyx_v_3rai__rai->account_list(__pyx_v_wallet_text); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 177, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_v_ret = __pyx_t_1;
   __pyx_t_1 = 0;
 
-  /* "rai.pyx":175
+  /* "rai.pyx":178
  * def account_list (string wallet_text):
  *     ret = _rai.account_list (wallet_text)
  *     if isinstance(ret, Exception):             # <<<<<<<<<<<<<<
@@ -3296,7 +3312,7 @@ static PyObject *__pyx_pf_3rai_16account_list(CYTHON_UNUSED PyObject *__pyx_self
   __pyx_t_3 = (__pyx_t_2 != 0);
   if (__pyx_t_3) {
 
-    /* "rai.pyx":176
+    /* "rai.pyx":179
  *     ret = _rai.account_list (wallet_text)
  *     if isinstance(ret, Exception):
  *         raise ret             # <<<<<<<<<<<<<<
@@ -3304,9 +3320,9 @@ static PyObject *__pyx_pf_3rai_16account_list(CYTHON_UNUSED PyObject *__pyx_self
  * 
  */
     __Pyx_Raise(__pyx_v_ret, 0, 0, 0);
-    __PYX_ERR(0, 176, __pyx_L1_error)
+    __PYX_ERR(0, 179, __pyx_L1_error)
 
-    /* "rai.pyx":175
+    /* "rai.pyx":178
  * def account_list (string wallet_text):
  *     ret = _rai.account_list (wallet_text)
  *     if isinstance(ret, Exception):             # <<<<<<<<<<<<<<
@@ -3315,7 +3331,7 @@ static PyObject *__pyx_pf_3rai_16account_list(CYTHON_UNUSED PyObject *__pyx_self
  */
   }
 
-  /* "rai.pyx":177
+  /* "rai.pyx":180
  *     if isinstance(ret, Exception):
  *         raise ret
  *     return ret             # <<<<<<<<<<<<<<
@@ -3327,7 +3343,7 @@ static PyObject *__pyx_pf_3rai_16account_list(CYTHON_UNUSED PyObject *__pyx_self
   __pyx_r = __pyx_v_ret;
   goto __pyx_L0;
 
-  /* "rai.pyx":173
+  /* "rai.pyx":176
  *     return ret
  * 
  * def account_list (string wallet_text):             # <<<<<<<<<<<<<<
@@ -3347,7 +3363,7 @@ static PyObject *__pyx_pf_3rai_16account_list(CYTHON_UNUSED PyObject *__pyx_self
   return __pyx_r;
 }
 
-/* "rai.pyx":179
+/* "rai.pyx":182
  *     return ret
  * 
  * def account_move (string wallet_text, string source_text, vector[string] accounts_text):             # <<<<<<<<<<<<<<
@@ -3386,16 +3402,16 @@ static PyObject *__pyx_pw_3rai_19account_move(PyObject *__pyx_self, PyObject *__
         case  1:
         if (likely((values[1] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_source_text)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("account_move", 1, 3, 3, 1); __PYX_ERR(0, 179, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("account_move", 1, 3, 3, 1); __PYX_ERR(0, 182, __pyx_L3_error)
         }
         case  2:
         if (likely((values[2] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_accounts_text)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("account_move", 1, 3, 3, 2); __PYX_ERR(0, 179, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("account_move", 1, 3, 3, 2); __PYX_ERR(0, 182, __pyx_L3_error)
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "account_move") < 0)) __PYX_ERR(0, 179, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "account_move") < 0)) __PYX_ERR(0, 182, __pyx_L3_error)
       }
     } else if (PyTuple_GET_SIZE(__pyx_args) != 3) {
       goto __pyx_L5_argtuple_error;
@@ -3404,13 +3420,13 @@ static PyObject *__pyx_pw_3rai_19account_move(PyObject *__pyx_self, PyObject *__
       values[1] = PyTuple_GET_ITEM(__pyx_args, 1);
       values[2] = PyTuple_GET_ITEM(__pyx_args, 2);
     }
-    __pyx_v_wallet_text = __pyx_convert_string_from_py_std__in_string(values[0]); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 179, __pyx_L3_error)
-    __pyx_v_source_text = __pyx_convert_string_from_py_std__in_string(values[1]); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 179, __pyx_L3_error)
-    __pyx_v_accounts_text = __pyx_convert_vector_from_py_std_3a__3a_string(values[2]); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 179, __pyx_L3_error)
+    __pyx_v_wallet_text = __pyx_convert_string_from_py_std__in_string(values[0]); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 182, __pyx_L3_error)
+    __pyx_v_source_text = __pyx_convert_string_from_py_std__in_string(values[1]); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 182, __pyx_L3_error)
+    __pyx_v_accounts_text = __pyx_convert_vector_from_py_std_3a__3a_string(values[2]); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 182, __pyx_L3_error)
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("account_move", 1, 3, 3, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 179, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("account_move", 1, 3, 3, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 182, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("rai.account_move", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
@@ -3432,19 +3448,19 @@ static PyObject *__pyx_pf_3rai_18account_move(CYTHON_UNUSED PyObject *__pyx_self
   int __pyx_t_3;
   __Pyx_RefNannySetupContext("account_move", 0);
 
-  /* "rai.pyx":180
+  /* "rai.pyx":183
  * 
  * def account_move (string wallet_text, string source_text, vector[string] accounts_text):
  *     ret = _rai.account_move (wallet_text, source_text, accounts_text);             # <<<<<<<<<<<<<<
  *     if isinstance(ret, Exception):
  *         raise ret
  */
-  __pyx_t_1 = __pyx_v_3rai__rai->account_move(__pyx_v_wallet_text, __pyx_v_source_text, __pyx_v_accounts_text); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 180, __pyx_L1_error)
+  __pyx_t_1 = __pyx_v_3rai__rai->account_move(__pyx_v_wallet_text, __pyx_v_source_text, __pyx_v_accounts_text); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 183, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_v_ret = __pyx_t_1;
   __pyx_t_1 = 0;
 
-  /* "rai.pyx":181
+  /* "rai.pyx":184
  * def account_move (string wallet_text, string source_text, vector[string] accounts_text):
  *     ret = _rai.account_move (wallet_text, source_text, accounts_text);
  *     if isinstance(ret, Exception):             # <<<<<<<<<<<<<<
@@ -3455,7 +3471,7 @@ static PyObject *__pyx_pf_3rai_18account_move(CYTHON_UNUSED PyObject *__pyx_self
   __pyx_t_3 = (__pyx_t_2 != 0);
   if (__pyx_t_3) {
 
-    /* "rai.pyx":182
+    /* "rai.pyx":185
  *     ret = _rai.account_move (wallet_text, source_text, accounts_text);
  *     if isinstance(ret, Exception):
  *         raise ret             # <<<<<<<<<<<<<<
@@ -3463,9 +3479,9 @@ static PyObject *__pyx_pf_3rai_18account_move(CYTHON_UNUSED PyObject *__pyx_self
  * 
  */
     __Pyx_Raise(__pyx_v_ret, 0, 0, 0);
-    __PYX_ERR(0, 182, __pyx_L1_error)
+    __PYX_ERR(0, 185, __pyx_L1_error)
 
-    /* "rai.pyx":181
+    /* "rai.pyx":184
  * def account_move (string wallet_text, string source_text, vector[string] accounts_text):
  *     ret = _rai.account_move (wallet_text, source_text, accounts_text);
  *     if isinstance(ret, Exception):             # <<<<<<<<<<<<<<
@@ -3474,7 +3490,7 @@ static PyObject *__pyx_pf_3rai_18account_move(CYTHON_UNUSED PyObject *__pyx_self
  */
   }
 
-  /* "rai.pyx":183
+  /* "rai.pyx":186
  *     if isinstance(ret, Exception):
  *         raise ret
  *     return ret             # <<<<<<<<<<<<<<
@@ -3486,7 +3502,7 @@ static PyObject *__pyx_pf_3rai_18account_move(CYTHON_UNUSED PyObject *__pyx_self
   __pyx_r = __pyx_v_ret;
   goto __pyx_L0;
 
-  /* "rai.pyx":179
+  /* "rai.pyx":182
  *     return ret
  * 
  * def account_move (string wallet_text, string source_text, vector[string] accounts_text):             # <<<<<<<<<<<<<<
@@ -3506,7 +3522,7 @@ static PyObject *__pyx_pf_3rai_18account_move(CYTHON_UNUSED PyObject *__pyx_self
   return __pyx_r;
 }
 
-/* "rai.pyx":185
+/* "rai.pyx":188
  *     return ret
  * 
  * def account_key (string account_text):             # <<<<<<<<<<<<<<
@@ -3523,7 +3539,7 @@ static PyObject *__pyx_pw_3rai_21account_key(PyObject *__pyx_self, PyObject *__p
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("account_key (wrapper)", 0);
   assert(__pyx_arg_account_text); {
-    __pyx_v_account_text = __pyx_convert_string_from_py_std__in_string(__pyx_arg_account_text); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 185, __pyx_L3_error)
+    __pyx_v_account_text = __pyx_convert_string_from_py_std__in_string(__pyx_arg_account_text); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 188, __pyx_L3_error)
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L3_error:;
@@ -3547,19 +3563,19 @@ static PyObject *__pyx_pf_3rai_20account_key(CYTHON_UNUSED PyObject *__pyx_self,
   int __pyx_t_3;
   __Pyx_RefNannySetupContext("account_key", 0);
 
-  /* "rai.pyx":186
+  /* "rai.pyx":189
  * 
  * def account_key (string account_text):
  *     ret = _rai.account_key (account_text);             # <<<<<<<<<<<<<<
  *     if isinstance(ret, Exception):
  *         raise ret
  */
-  __pyx_t_1 = __pyx_v_3rai__rai->account_key(__pyx_v_account_text); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 186, __pyx_L1_error)
+  __pyx_t_1 = __pyx_v_3rai__rai->account_key(__pyx_v_account_text); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 189, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_v_ret = __pyx_t_1;
   __pyx_t_1 = 0;
 
-  /* "rai.pyx":187
+  /* "rai.pyx":190
  * def account_key (string account_text):
  *     ret = _rai.account_key (account_text);
  *     if isinstance(ret, Exception):             # <<<<<<<<<<<<<<
@@ -3570,7 +3586,7 @@ static PyObject *__pyx_pf_3rai_20account_key(CYTHON_UNUSED PyObject *__pyx_self,
   __pyx_t_3 = (__pyx_t_2 != 0);
   if (__pyx_t_3) {
 
-    /* "rai.pyx":188
+    /* "rai.pyx":191
  *     ret = _rai.account_key (account_text);
  *     if isinstance(ret, Exception):
  *         raise ret             # <<<<<<<<<<<<<<
@@ -3578,9 +3594,9 @@ static PyObject *__pyx_pf_3rai_20account_key(CYTHON_UNUSED PyObject *__pyx_self,
  * 
  */
     __Pyx_Raise(__pyx_v_ret, 0, 0, 0);
-    __PYX_ERR(0, 188, __pyx_L1_error)
+    __PYX_ERR(0, 191, __pyx_L1_error)
 
-    /* "rai.pyx":187
+    /* "rai.pyx":190
  * def account_key (string account_text):
  *     ret = _rai.account_key (account_text);
  *     if isinstance(ret, Exception):             # <<<<<<<<<<<<<<
@@ -3589,7 +3605,7 @@ static PyObject *__pyx_pf_3rai_20account_key(CYTHON_UNUSED PyObject *__pyx_self,
  */
   }
 
-  /* "rai.pyx":189
+  /* "rai.pyx":192
  *     if isinstance(ret, Exception):
  *         raise ret
  *     return ret             # <<<<<<<<<<<<<<
@@ -3601,7 +3617,7 @@ static PyObject *__pyx_pf_3rai_20account_key(CYTHON_UNUSED PyObject *__pyx_self,
   __pyx_r = __pyx_v_ret;
   goto __pyx_L0;
 
-  /* "rai.pyx":185
+  /* "rai.pyx":188
  *     return ret
  * 
  * def account_key (string account_text):             # <<<<<<<<<<<<<<
@@ -3621,7 +3637,7 @@ static PyObject *__pyx_pf_3rai_20account_key(CYTHON_UNUSED PyObject *__pyx_self,
   return __pyx_r;
 }
 
-/* "rai.pyx":191
+/* "rai.pyx":194
  *     return ret
  * 
  * def account_remove (string wallet_text, string account_text):             # <<<<<<<<<<<<<<
@@ -3658,11 +3674,11 @@ static PyObject *__pyx_pw_3rai_23account_remove(PyObject *__pyx_self, PyObject *
         case  1:
         if (likely((values[1] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_account_text)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("account_remove", 1, 2, 2, 1); __PYX_ERR(0, 191, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("account_remove", 1, 2, 2, 1); __PYX_ERR(0, 194, __pyx_L3_error)
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "account_remove") < 0)) __PYX_ERR(0, 191, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "account_remove") < 0)) __PYX_ERR(0, 194, __pyx_L3_error)
       }
     } else if (PyTuple_GET_SIZE(__pyx_args) != 2) {
       goto __pyx_L5_argtuple_error;
@@ -3670,12 +3686,12 @@ static PyObject *__pyx_pw_3rai_23account_remove(PyObject *__pyx_self, PyObject *
       values[0] = PyTuple_GET_ITEM(__pyx_args, 0);
       values[1] = PyTuple_GET_ITEM(__pyx_args, 1);
     }
-    __pyx_v_wallet_text = __pyx_convert_string_from_py_std__in_string(values[0]); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 191, __pyx_L3_error)
-    __pyx_v_account_text = __pyx_convert_string_from_py_std__in_string(values[1]); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 191, __pyx_L3_error)
+    __pyx_v_wallet_text = __pyx_convert_string_from_py_std__in_string(values[0]); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 194, __pyx_L3_error)
+    __pyx_v_account_text = __pyx_convert_string_from_py_std__in_string(values[1]); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 194, __pyx_L3_error)
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("account_remove", 1, 2, 2, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 191, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("account_remove", 1, 2, 2, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 194, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("rai.account_remove", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
@@ -3697,19 +3713,19 @@ static PyObject *__pyx_pf_3rai_22account_remove(CYTHON_UNUSED PyObject *__pyx_se
   int __pyx_t_3;
   __Pyx_RefNannySetupContext("account_remove", 0);
 
-  /* "rai.pyx":192
+  /* "rai.pyx":195
  * 
  * def account_remove (string wallet_text, string account_text):
  *     ret = _rai.account_remove (wallet_text, account_text)             # <<<<<<<<<<<<<<
  *     if isinstance(ret, Exception):
  *         raise ret
  */
-  __pyx_t_1 = __pyx_v_3rai__rai->account_remove(__pyx_v_wallet_text, __pyx_v_account_text); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 192, __pyx_L1_error)
+  __pyx_t_1 = __pyx_v_3rai__rai->account_remove(__pyx_v_wallet_text, __pyx_v_account_text); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 195, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_v_ret = __pyx_t_1;
   __pyx_t_1 = 0;
 
-  /* "rai.pyx":193
+  /* "rai.pyx":196
  * def account_remove (string wallet_text, string account_text):
  *     ret = _rai.account_remove (wallet_text, account_text)
  *     if isinstance(ret, Exception):             # <<<<<<<<<<<<<<
@@ -3720,7 +3736,7 @@ static PyObject *__pyx_pf_3rai_22account_remove(CYTHON_UNUSED PyObject *__pyx_se
   __pyx_t_3 = (__pyx_t_2 != 0);
   if (__pyx_t_3) {
 
-    /* "rai.pyx":194
+    /* "rai.pyx":197
  *     ret = _rai.account_remove (wallet_text, account_text)
  *     if isinstance(ret, Exception):
  *         raise ret             # <<<<<<<<<<<<<<
@@ -3728,9 +3744,9 @@ static PyObject *__pyx_pf_3rai_22account_remove(CYTHON_UNUSED PyObject *__pyx_se
  * 
  */
     __Pyx_Raise(__pyx_v_ret, 0, 0, 0);
-    __PYX_ERR(0, 194, __pyx_L1_error)
+    __PYX_ERR(0, 197, __pyx_L1_error)
 
-    /* "rai.pyx":193
+    /* "rai.pyx":196
  * def account_remove (string wallet_text, string account_text):
  *     ret = _rai.account_remove (wallet_text, account_text)
  *     if isinstance(ret, Exception):             # <<<<<<<<<<<<<<
@@ -3739,7 +3755,7 @@ static PyObject *__pyx_pf_3rai_22account_remove(CYTHON_UNUSED PyObject *__pyx_se
  */
   }
 
-  /* "rai.pyx":195
+  /* "rai.pyx":198
  *     if isinstance(ret, Exception):
  *         raise ret
  *     return ret             # <<<<<<<<<<<<<<
@@ -3751,7 +3767,7 @@ static PyObject *__pyx_pf_3rai_22account_remove(CYTHON_UNUSED PyObject *__pyx_se
   __pyx_r = __pyx_v_ret;
   goto __pyx_L0;
 
-  /* "rai.pyx":191
+  /* "rai.pyx":194
  *     return ret
  * 
  * def account_remove (string wallet_text, string account_text):             # <<<<<<<<<<<<<<
@@ -3771,7 +3787,7 @@ static PyObject *__pyx_pf_3rai_22account_remove(CYTHON_UNUSED PyObject *__pyx_se
   return __pyx_r;
 }
 
-/* "rai.pyx":197
+/* "rai.pyx":200
  *     return ret
  * 
  * def account_representative (string account_text):             # <<<<<<<<<<<<<<
@@ -3788,7 +3804,7 @@ static PyObject *__pyx_pw_3rai_25account_representative(PyObject *__pyx_self, Py
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("account_representative (wrapper)", 0);
   assert(__pyx_arg_account_text); {
-    __pyx_v_account_text = __pyx_convert_string_from_py_std__in_string(__pyx_arg_account_text); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 197, __pyx_L3_error)
+    __pyx_v_account_text = __pyx_convert_string_from_py_std__in_string(__pyx_arg_account_text); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 200, __pyx_L3_error)
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L3_error:;
@@ -3809,7 +3825,7 @@ static PyObject *__pyx_pf_3rai_24account_representative(CYTHON_UNUSED PyObject *
   PyObject *__pyx_t_1 = NULL;
   __Pyx_RefNannySetupContext("account_representative", 0);
 
-  /* "rai.pyx":198
+  /* "rai.pyx":201
  * 
  * def account_representative (string account_text):
  *     return _rai.account_representative (account_text)             # <<<<<<<<<<<<<<
@@ -3817,13 +3833,13 @@ static PyObject *__pyx_pf_3rai_24account_representative(CYTHON_UNUSED PyObject *
  * def account_representative_set (string wallet_text, string account_text, string representative_text, uint64_t work):
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __pyx_v_3rai__rai->account_representative(__pyx_v_account_text); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 198, __pyx_L1_error)
+  __pyx_t_1 = __pyx_v_3rai__rai->account_representative(__pyx_v_account_text); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 201, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "rai.pyx":197
+  /* "rai.pyx":200
  *     return ret
  * 
  * def account_representative (string account_text):             # <<<<<<<<<<<<<<
@@ -3842,7 +3858,7 @@ static PyObject *__pyx_pf_3rai_24account_representative(CYTHON_UNUSED PyObject *
   return __pyx_r;
 }
 
-/* "rai.pyx":200
+/* "rai.pyx":203
  *     return _rai.account_representative (account_text)
  * 
  * def account_representative_set (string wallet_text, string account_text, string representative_text, uint64_t work):             # <<<<<<<<<<<<<<
@@ -3883,21 +3899,21 @@ static PyObject *__pyx_pw_3rai_27account_representative_set(PyObject *__pyx_self
         case  1:
         if (likely((values[1] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_account_text)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("account_representative_set", 1, 4, 4, 1); __PYX_ERR(0, 200, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("account_representative_set", 1, 4, 4, 1); __PYX_ERR(0, 203, __pyx_L3_error)
         }
         case  2:
         if (likely((values[2] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_representative_text)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("account_representative_set", 1, 4, 4, 2); __PYX_ERR(0, 200, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("account_representative_set", 1, 4, 4, 2); __PYX_ERR(0, 203, __pyx_L3_error)
         }
         case  3:
         if (likely((values[3] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_work)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("account_representative_set", 1, 4, 4, 3); __PYX_ERR(0, 200, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("account_representative_set", 1, 4, 4, 3); __PYX_ERR(0, 203, __pyx_L3_error)
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "account_representative_set") < 0)) __PYX_ERR(0, 200, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "account_representative_set") < 0)) __PYX_ERR(0, 203, __pyx_L3_error)
       }
     } else if (PyTuple_GET_SIZE(__pyx_args) != 4) {
       goto __pyx_L5_argtuple_error;
@@ -3907,14 +3923,14 @@ static PyObject *__pyx_pw_3rai_27account_representative_set(PyObject *__pyx_self
       values[2] = PyTuple_GET_ITEM(__pyx_args, 2);
       values[3] = PyTuple_GET_ITEM(__pyx_args, 3);
     }
-    __pyx_v_wallet_text = __pyx_convert_string_from_py_std__in_string(values[0]); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 200, __pyx_L3_error)
-    __pyx_v_account_text = __pyx_convert_string_from_py_std__in_string(values[1]); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 200, __pyx_L3_error)
-    __pyx_v_representative_text = __pyx_convert_string_from_py_std__in_string(values[2]); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 200, __pyx_L3_error)
-    __pyx_v_work = __Pyx_PyInt_As_uint64_t(values[3]); if (unlikely((__pyx_v_work == ((uint64_t)-1)) && PyErr_Occurred())) __PYX_ERR(0, 200, __pyx_L3_error)
+    __pyx_v_wallet_text = __pyx_convert_string_from_py_std__in_string(values[0]); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 203, __pyx_L3_error)
+    __pyx_v_account_text = __pyx_convert_string_from_py_std__in_string(values[1]); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 203, __pyx_L3_error)
+    __pyx_v_representative_text = __pyx_convert_string_from_py_std__in_string(values[2]); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 203, __pyx_L3_error)
+    __pyx_v_work = __Pyx_PyInt_As_uint64_t(values[3]); if (unlikely((__pyx_v_work == ((uint64_t)-1)) && PyErr_Occurred())) __PYX_ERR(0, 203, __pyx_L3_error)
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("account_representative_set", 1, 4, 4, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 200, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("account_representative_set", 1, 4, 4, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 203, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("rai.account_representative_set", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
@@ -3933,7 +3949,7 @@ static PyObject *__pyx_pf_3rai_26account_representative_set(CYTHON_UNUSED PyObje
   PyObject *__pyx_t_1 = NULL;
   __Pyx_RefNannySetupContext("account_representative_set", 0);
 
-  /* "rai.pyx":201
+  /* "rai.pyx":204
  * 
  * def account_representative_set (string wallet_text, string account_text, string representative_text, uint64_t work):
  *     return _rai.account_representative_set (wallet_text, account_text, representative_text, work)             # <<<<<<<<<<<<<<
@@ -3941,13 +3957,13 @@ static PyObject *__pyx_pf_3rai_26account_representative_set(CYTHON_UNUSED PyObje
  * def account_weight (string account_text):
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __pyx_v_3rai__rai->account_representative_set(__pyx_v_wallet_text, __pyx_v_account_text, __pyx_v_representative_text, __pyx_v_work); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 201, __pyx_L1_error)
+  __pyx_t_1 = __pyx_v_3rai__rai->account_representative_set(__pyx_v_wallet_text, __pyx_v_account_text, __pyx_v_representative_text, __pyx_v_work); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 204, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "rai.pyx":200
+  /* "rai.pyx":203
  *     return _rai.account_representative (account_text)
  * 
  * def account_representative_set (string wallet_text, string account_text, string representative_text, uint64_t work):             # <<<<<<<<<<<<<<
@@ -3966,7 +3982,7 @@ static PyObject *__pyx_pf_3rai_26account_representative_set(CYTHON_UNUSED PyObje
   return __pyx_r;
 }
 
-/* "rai.pyx":203
+/* "rai.pyx":206
  *     return _rai.account_representative_set (wallet_text, account_text, representative_text, work)
  * 
  * def account_weight (string account_text):             # <<<<<<<<<<<<<<
@@ -3983,7 +3999,7 @@ static PyObject *__pyx_pw_3rai_29account_weight(PyObject *__pyx_self, PyObject *
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("account_weight (wrapper)", 0);
   assert(__pyx_arg_account_text); {
-    __pyx_v_account_text = __pyx_convert_string_from_py_std__in_string(__pyx_arg_account_text); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 203, __pyx_L3_error)
+    __pyx_v_account_text = __pyx_convert_string_from_py_std__in_string(__pyx_arg_account_text); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 206, __pyx_L3_error)
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L3_error:;
@@ -4004,7 +4020,7 @@ static PyObject *__pyx_pf_3rai_28account_weight(CYTHON_UNUSED PyObject *__pyx_se
   PyObject *__pyx_t_1 = NULL;
   __Pyx_RefNannySetupContext("account_weight", 0);
 
-  /* "rai.pyx":204
+  /* "rai.pyx":207
  * 
  * def account_weight (string account_text):
  *     return  _rai.account_weight (account_text)             # <<<<<<<<<<<<<<
@@ -4012,13 +4028,13 @@ static PyObject *__pyx_pf_3rai_28account_weight(CYTHON_UNUSED PyObject *__pyx_se
  * def accounts_balances (vector[string] accounts):
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __pyx_v_3rai__rai->account_weight(__pyx_v_account_text); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 204, __pyx_L1_error)
+  __pyx_t_1 = __pyx_v_3rai__rai->account_weight(__pyx_v_account_text); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 207, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "rai.pyx":203
+  /* "rai.pyx":206
  *     return _rai.account_representative_set (wallet_text, account_text, representative_text, work)
  * 
  * def account_weight (string account_text):             # <<<<<<<<<<<<<<
@@ -4037,7 +4053,7 @@ static PyObject *__pyx_pf_3rai_28account_weight(CYTHON_UNUSED PyObject *__pyx_se
   return __pyx_r;
 }
 
-/* "rai.pyx":206
+/* "rai.pyx":209
  *     return  _rai.account_weight (account_text)
  * 
  * def accounts_balances (vector[string] accounts):             # <<<<<<<<<<<<<<
@@ -4054,7 +4070,7 @@ static PyObject *__pyx_pw_3rai_31accounts_balances(PyObject *__pyx_self, PyObjec
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("accounts_balances (wrapper)", 0);
   assert(__pyx_arg_accounts); {
-    __pyx_v_accounts = __pyx_convert_vector_from_py_std_3a__3a_string(__pyx_arg_accounts); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 206, __pyx_L3_error)
+    __pyx_v_accounts = __pyx_convert_vector_from_py_std_3a__3a_string(__pyx_arg_accounts); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 209, __pyx_L3_error)
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L3_error:;
@@ -4075,7 +4091,7 @@ static PyObject *__pyx_pf_3rai_30accounts_balances(CYTHON_UNUSED PyObject *__pyx
   PyObject *__pyx_t_1 = NULL;
   __Pyx_RefNannySetupContext("accounts_balances", 0);
 
-  /* "rai.pyx":207
+  /* "rai.pyx":210
  * 
  * def accounts_balances (vector[string] accounts):
  *     return _rai.accounts_balances (accounts)             # <<<<<<<<<<<<<<
@@ -4083,13 +4099,13 @@ static PyObject *__pyx_pf_3rai_30accounts_balances(CYTHON_UNUSED PyObject *__pyx
  * def accounts_create (string wallet_text, int count, generate_work = True):
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __pyx_v_3rai__rai->accounts_balances(__pyx_v_accounts); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 207, __pyx_L1_error)
+  __pyx_t_1 = __pyx_v_3rai__rai->accounts_balances(__pyx_v_accounts); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 210, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "rai.pyx":206
+  /* "rai.pyx":209
  *     return  _rai.account_weight (account_text)
  * 
  * def accounts_balances (vector[string] accounts):             # <<<<<<<<<<<<<<
@@ -4108,7 +4124,7 @@ static PyObject *__pyx_pf_3rai_30accounts_balances(CYTHON_UNUSED PyObject *__pyx
   return __pyx_r;
 }
 
-/* "rai.pyx":209
+/* "rai.pyx":212
  *     return _rai.accounts_balances (accounts)
  * 
  * def accounts_create (string wallet_text, int count, generate_work = True):             # <<<<<<<<<<<<<<
@@ -4148,7 +4164,7 @@ static PyObject *__pyx_pw_3rai_33accounts_create(PyObject *__pyx_self, PyObject 
         case  1:
         if (likely((values[1] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_count)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("accounts_create", 0, 2, 3, 1); __PYX_ERR(0, 209, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("accounts_create", 0, 2, 3, 1); __PYX_ERR(0, 212, __pyx_L3_error)
         }
         case  2:
         if (kw_args > 0) {
@@ -4157,7 +4173,7 @@ static PyObject *__pyx_pw_3rai_33accounts_create(PyObject *__pyx_self, PyObject 
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "accounts_create") < 0)) __PYX_ERR(0, 209, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "accounts_create") < 0)) __PYX_ERR(0, 212, __pyx_L3_error)
       }
     } else {
       switch (PyTuple_GET_SIZE(__pyx_args)) {
@@ -4168,13 +4184,13 @@ static PyObject *__pyx_pw_3rai_33accounts_create(PyObject *__pyx_self, PyObject 
         default: goto __pyx_L5_argtuple_error;
       }
     }
-    __pyx_v_wallet_text = __pyx_convert_string_from_py_std__in_string(values[0]); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 209, __pyx_L3_error)
-    __pyx_v_count = __Pyx_PyInt_As_int(values[1]); if (unlikely((__pyx_v_count == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 209, __pyx_L3_error)
+    __pyx_v_wallet_text = __pyx_convert_string_from_py_std__in_string(values[0]); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 212, __pyx_L3_error)
+    __pyx_v_count = __Pyx_PyInt_As_int(values[1]); if (unlikely((__pyx_v_count == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 212, __pyx_L3_error)
     __pyx_v_generate_work = values[2];
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("accounts_create", 0, 2, 3, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 209, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("accounts_create", 0, 2, 3, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 212, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("rai.accounts_create", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
@@ -4194,7 +4210,7 @@ static PyObject *__pyx_pf_3rai_32accounts_create(CYTHON_UNUSED PyObject *__pyx_s
   PyObject *__pyx_t_2 = NULL;
   __Pyx_RefNannySetupContext("accounts_create", 0);
 
-  /* "rai.pyx":210
+  /* "rai.pyx":213
  * 
  * def accounts_create (string wallet_text, int count, generate_work = True):
  *     return _rai.accounts_create (wallet_text, count, generate_work)             # <<<<<<<<<<<<<<
@@ -4202,14 +4218,14 @@ static PyObject *__pyx_pf_3rai_32accounts_create(CYTHON_UNUSED PyObject *__pyx_s
  * def accounts_frontiers (vector[string] accounts):
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __Pyx_PyObject_IsTrue(__pyx_v_generate_work); if (unlikely((__pyx_t_1 == ((bool)-1)) && PyErr_Occurred())) __PYX_ERR(0, 210, __pyx_L1_error)
-  __pyx_t_2 = __pyx_v_3rai__rai->accounts_create(__pyx_v_wallet_text, __pyx_v_count, __pyx_t_1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 210, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_IsTrue(__pyx_v_generate_work); if (unlikely((__pyx_t_1 == ((bool)-1)) && PyErr_Occurred())) __PYX_ERR(0, 213, __pyx_L1_error)
+  __pyx_t_2 = __pyx_v_3rai__rai->accounts_create(__pyx_v_wallet_text, __pyx_v_count, __pyx_t_1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 213, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __pyx_r = __pyx_t_2;
   __pyx_t_2 = 0;
   goto __pyx_L0;
 
-  /* "rai.pyx":209
+  /* "rai.pyx":212
  *     return _rai.accounts_balances (accounts)
  * 
  * def accounts_create (string wallet_text, int count, generate_work = True):             # <<<<<<<<<<<<<<
@@ -4228,7 +4244,7 @@ static PyObject *__pyx_pf_3rai_32accounts_create(CYTHON_UNUSED PyObject *__pyx_s
   return __pyx_r;
 }
 
-/* "rai.pyx":212
+/* "rai.pyx":215
  *     return _rai.accounts_create (wallet_text, count, generate_work)
  * 
  * def accounts_frontiers (vector[string] accounts):             # <<<<<<<<<<<<<<
@@ -4245,7 +4261,7 @@ static PyObject *__pyx_pw_3rai_35accounts_frontiers(PyObject *__pyx_self, PyObje
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("accounts_frontiers (wrapper)", 0);
   assert(__pyx_arg_accounts); {
-    __pyx_v_accounts = __pyx_convert_vector_from_py_std_3a__3a_string(__pyx_arg_accounts); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 212, __pyx_L3_error)
+    __pyx_v_accounts = __pyx_convert_vector_from_py_std_3a__3a_string(__pyx_arg_accounts); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 215, __pyx_L3_error)
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L3_error:;
@@ -4266,7 +4282,7 @@ static PyObject *__pyx_pf_3rai_34accounts_frontiers(CYTHON_UNUSED PyObject *__py
   PyObject *__pyx_t_1 = NULL;
   __Pyx_RefNannySetupContext("accounts_frontiers", 0);
 
-  /* "rai.pyx":213
+  /* "rai.pyx":216
  * 
  * def accounts_frontiers (vector[string] accounts):
  *     return _rai.accounts_frontiers (accounts)             # <<<<<<<<<<<<<<
@@ -4274,13 +4290,13 @@ static PyObject *__pyx_pf_3rai_34accounts_frontiers(CYTHON_UNUSED PyObject *__py
  * def accounts_pending (vector[string] accounts, uint64_t count, string threshold_text, bool source):
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __pyx_v_3rai__rai->accounts_frontiers(__pyx_v_accounts); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 213, __pyx_L1_error)
+  __pyx_t_1 = __pyx_v_3rai__rai->accounts_frontiers(__pyx_v_accounts); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 216, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "rai.pyx":212
+  /* "rai.pyx":215
  *     return _rai.accounts_create (wallet_text, count, generate_work)
  * 
  * def accounts_frontiers (vector[string] accounts):             # <<<<<<<<<<<<<<
@@ -4299,7 +4315,7 @@ static PyObject *__pyx_pf_3rai_34accounts_frontiers(CYTHON_UNUSED PyObject *__py
   return __pyx_r;
 }
 
-/* "rai.pyx":215
+/* "rai.pyx":218
  *     return _rai.accounts_frontiers (accounts)
  * 
  * def accounts_pending (vector[string] accounts, uint64_t count, string threshold_text, bool source):             # <<<<<<<<<<<<<<
@@ -4340,21 +4356,21 @@ static PyObject *__pyx_pw_3rai_37accounts_pending(PyObject *__pyx_self, PyObject
         case  1:
         if (likely((values[1] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_count)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("accounts_pending", 1, 4, 4, 1); __PYX_ERR(0, 215, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("accounts_pending", 1, 4, 4, 1); __PYX_ERR(0, 218, __pyx_L3_error)
         }
         case  2:
         if (likely((values[2] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_threshold_text)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("accounts_pending", 1, 4, 4, 2); __PYX_ERR(0, 215, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("accounts_pending", 1, 4, 4, 2); __PYX_ERR(0, 218, __pyx_L3_error)
         }
         case  3:
         if (likely((values[3] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_source)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("accounts_pending", 1, 4, 4, 3); __PYX_ERR(0, 215, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("accounts_pending", 1, 4, 4, 3); __PYX_ERR(0, 218, __pyx_L3_error)
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "accounts_pending") < 0)) __PYX_ERR(0, 215, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "accounts_pending") < 0)) __PYX_ERR(0, 218, __pyx_L3_error)
       }
     } else if (PyTuple_GET_SIZE(__pyx_args) != 4) {
       goto __pyx_L5_argtuple_error;
@@ -4364,14 +4380,14 @@ static PyObject *__pyx_pw_3rai_37accounts_pending(PyObject *__pyx_self, PyObject
       values[2] = PyTuple_GET_ITEM(__pyx_args, 2);
       values[3] = PyTuple_GET_ITEM(__pyx_args, 3);
     }
-    __pyx_v_accounts = __pyx_convert_vector_from_py_std_3a__3a_string(values[0]); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 215, __pyx_L3_error)
-    __pyx_v_count = __Pyx_PyInt_As_uint64_t(values[1]); if (unlikely((__pyx_v_count == ((uint64_t)-1)) && PyErr_Occurred())) __PYX_ERR(0, 215, __pyx_L3_error)
-    __pyx_v_threshold_text = __pyx_convert_string_from_py_std__in_string(values[2]); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 215, __pyx_L3_error)
-    __pyx_v_source = __Pyx_PyObject_IsTrue(values[3]); if (unlikely((__pyx_v_source == ((bool)-1)) && PyErr_Occurred())) __PYX_ERR(0, 215, __pyx_L3_error)
+    __pyx_v_accounts = __pyx_convert_vector_from_py_std_3a__3a_string(values[0]); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 218, __pyx_L3_error)
+    __pyx_v_count = __Pyx_PyInt_As_uint64_t(values[1]); if (unlikely((__pyx_v_count == ((uint64_t)-1)) && PyErr_Occurred())) __PYX_ERR(0, 218, __pyx_L3_error)
+    __pyx_v_threshold_text = __pyx_convert_string_from_py_std__in_string(values[2]); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 218, __pyx_L3_error)
+    __pyx_v_source = __Pyx_PyObject_IsTrue(values[3]); if (unlikely((__pyx_v_source == ((bool)-1)) && PyErr_Occurred())) __PYX_ERR(0, 218, __pyx_L3_error)
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("accounts_pending", 1, 4, 4, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 215, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("accounts_pending", 1, 4, 4, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 218, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("rai.accounts_pending", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
@@ -4390,7 +4406,7 @@ static PyObject *__pyx_pf_3rai_36accounts_pending(CYTHON_UNUSED PyObject *__pyx_
   PyObject *__pyx_t_1 = NULL;
   __Pyx_RefNannySetupContext("accounts_pending", 0);
 
-  /* "rai.pyx":216
+  /* "rai.pyx":219
  * 
  * def accounts_pending (vector[string] accounts, uint64_t count, string threshold_text, bool source):
  *     return _rai.accounts_pending (accounts, count, threshold_text, source)             # <<<<<<<<<<<<<<
@@ -4398,13 +4414,13 @@ static PyObject *__pyx_pf_3rai_36accounts_pending(CYTHON_UNUSED PyObject *__pyx_
  * def available_supply():
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __pyx_v_3rai__rai->accounts_pending(__pyx_v_accounts, __pyx_v_count, __pyx_v_threshold_text, __pyx_v_source); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 216, __pyx_L1_error)
+  __pyx_t_1 = __pyx_v_3rai__rai->accounts_pending(__pyx_v_accounts, __pyx_v_count, __pyx_v_threshold_text, __pyx_v_source); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 219, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "rai.pyx":215
+  /* "rai.pyx":218
  *     return _rai.accounts_frontiers (accounts)
  * 
  * def accounts_pending (vector[string] accounts, uint64_t count, string threshold_text, bool source):             # <<<<<<<<<<<<<<
@@ -4423,7 +4439,7 @@ static PyObject *__pyx_pf_3rai_36accounts_pending(CYTHON_UNUSED PyObject *__pyx_
   return __pyx_r;
 }
 
-/* "rai.pyx":218
+/* "rai.pyx":221
  *     return _rai.accounts_pending (accounts, count, threshold_text, source)
  * 
  * def available_supply():             # <<<<<<<<<<<<<<
@@ -4451,7 +4467,7 @@ static PyObject *__pyx_pf_3rai_38available_supply(CYTHON_UNUSED PyObject *__pyx_
   PyObject *__pyx_t_1 = NULL;
   __Pyx_RefNannySetupContext("available_supply", 0);
 
-  /* "rai.pyx":219
+  /* "rai.pyx":222
  * 
  * def available_supply():
  *     return _rai.available_supply ()             # <<<<<<<<<<<<<<
@@ -4459,13 +4475,13 @@ static PyObject *__pyx_pf_3rai_38available_supply(CYTHON_UNUSED PyObject *__pyx_
  * def block (string hash_text):
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __pyx_v_3rai__rai->available_supply(); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 219, __pyx_L1_error)
+  __pyx_t_1 = __pyx_v_3rai__rai->available_supply(); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 222, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "rai.pyx":218
+  /* "rai.pyx":221
  *     return _rai.accounts_pending (accounts, count, threshold_text, source)
  * 
  * def available_supply():             # <<<<<<<<<<<<<<
@@ -4484,7 +4500,7 @@ static PyObject *__pyx_pf_3rai_38available_supply(CYTHON_UNUSED PyObject *__pyx_
   return __pyx_r;
 }
 
-/* "rai.pyx":221
+/* "rai.pyx":224
  *     return _rai.available_supply ()
  * 
  * def block (string hash_text):             # <<<<<<<<<<<<<<
@@ -4501,7 +4517,7 @@ static PyObject *__pyx_pw_3rai_41block(PyObject *__pyx_self, PyObject *__pyx_arg
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("block (wrapper)", 0);
   assert(__pyx_arg_hash_text); {
-    __pyx_v_hash_text = __pyx_convert_string_from_py_std__in_string(__pyx_arg_hash_text); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 221, __pyx_L3_error)
+    __pyx_v_hash_text = __pyx_convert_string_from_py_std__in_string(__pyx_arg_hash_text); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 224, __pyx_L3_error)
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L3_error:;
@@ -4527,38 +4543,38 @@ static PyObject *__pyx_pf_3rai_40block(CYTHON_UNUSED PyObject *__pyx_self, std::
   PyObject *__pyx_t_5 = NULL;
   __Pyx_RefNannySetupContext("block", 0);
 
-  /* "rai.pyx":222
+  /* "rai.pyx":225
  * 
  * def block (string hash_text):
  *     ret = _rai.block (hash_text);             # <<<<<<<<<<<<<<
  *     if ret:
  *         ret = json.loads(ret)
  */
-  __pyx_t_1 = __pyx_v_3rai__rai->block(__pyx_v_hash_text); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 222, __pyx_L1_error)
+  __pyx_t_1 = __pyx_v_3rai__rai->block(__pyx_v_hash_text); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 225, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_v_ret = __pyx_t_1;
   __pyx_t_1 = 0;
 
-  /* "rai.pyx":223
+  /* "rai.pyx":226
  * def block (string hash_text):
  *     ret = _rai.block (hash_text);
  *     if ret:             # <<<<<<<<<<<<<<
  *         ret = json.loads(ret)
  *         return JsonStruct(ret)
  */
-  __pyx_t_2 = __Pyx_PyObject_IsTrue(__pyx_v_ret); if (unlikely(__pyx_t_2 < 0)) __PYX_ERR(0, 223, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_IsTrue(__pyx_v_ret); if (unlikely(__pyx_t_2 < 0)) __PYX_ERR(0, 226, __pyx_L1_error)
   if (__pyx_t_2) {
 
-    /* "rai.pyx":224
+    /* "rai.pyx":227
  *     ret = _rai.block (hash_text);
  *     if ret:
  *         ret = json.loads(ret)             # <<<<<<<<<<<<<<
  *         return JsonStruct(ret)
  * 
  */
-    __pyx_t_3 = __Pyx_GetModuleGlobalName(__pyx_n_s_json); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 224, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_GetModuleGlobalName(__pyx_n_s_json); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 227, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
-    __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_loads); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 224, __pyx_L1_error)
+    __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_loads); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 227, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
     __pyx_t_3 = NULL;
@@ -4572,13 +4588,13 @@ static PyObject *__pyx_pf_3rai_40block(CYTHON_UNUSED PyObject *__pyx_self, std::
       }
     }
     if (!__pyx_t_3) {
-      __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_t_4, __pyx_v_ret); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 224, __pyx_L1_error)
+      __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_t_4, __pyx_v_ret); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 227, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_1);
     } else {
       #if CYTHON_FAST_PYCALL
       if (PyFunction_Check(__pyx_t_4)) {
         PyObject *__pyx_temp[2] = {__pyx_t_3, __pyx_v_ret};
-        __pyx_t_1 = __Pyx_PyFunction_FastCall(__pyx_t_4, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 224, __pyx_L1_error)
+        __pyx_t_1 = __Pyx_PyFunction_FastCall(__pyx_t_4, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 227, __pyx_L1_error)
         __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
         __Pyx_GOTREF(__pyx_t_1);
       } else
@@ -4586,19 +4602,19 @@ static PyObject *__pyx_pf_3rai_40block(CYTHON_UNUSED PyObject *__pyx_self, std::
       #if CYTHON_FAST_PYCCALL
       if (__Pyx_PyFastCFunction_Check(__pyx_t_4)) {
         PyObject *__pyx_temp[2] = {__pyx_t_3, __pyx_v_ret};
-        __pyx_t_1 = __Pyx_PyCFunction_FastCall(__pyx_t_4, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 224, __pyx_L1_error)
+        __pyx_t_1 = __Pyx_PyCFunction_FastCall(__pyx_t_4, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 227, __pyx_L1_error)
         __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
         __Pyx_GOTREF(__pyx_t_1);
       } else
       #endif
       {
-        __pyx_t_5 = PyTuple_New(1+1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 224, __pyx_L1_error)
+        __pyx_t_5 = PyTuple_New(1+1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 227, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_5);
         __Pyx_GIVEREF(__pyx_t_3); PyTuple_SET_ITEM(__pyx_t_5, 0, __pyx_t_3); __pyx_t_3 = NULL;
         __Pyx_INCREF(__pyx_v_ret);
         __Pyx_GIVEREF(__pyx_v_ret);
         PyTuple_SET_ITEM(__pyx_t_5, 0+1, __pyx_v_ret);
-        __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_4, __pyx_t_5, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 224, __pyx_L1_error)
+        __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_4, __pyx_t_5, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 227, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_1);
         __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
       }
@@ -4607,7 +4623,7 @@ static PyObject *__pyx_pf_3rai_40block(CYTHON_UNUSED PyObject *__pyx_self, std::
     __Pyx_DECREF_SET(__pyx_v_ret, __pyx_t_1);
     __pyx_t_1 = 0;
 
-    /* "rai.pyx":225
+    /* "rai.pyx":228
  *     if ret:
  *         ret = json.loads(ret)
  *         return JsonStruct(ret)             # <<<<<<<<<<<<<<
@@ -4615,7 +4631,7 @@ static PyObject *__pyx_pf_3rai_40block(CYTHON_UNUSED PyObject *__pyx_self, std::
  * def blocks (vector[string] hashes):
  */
     __Pyx_XDECREF(__pyx_r);
-    __pyx_t_4 = __Pyx_GetModuleGlobalName(__pyx_n_s_JsonStruct); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 225, __pyx_L1_error)
+    __pyx_t_4 = __Pyx_GetModuleGlobalName(__pyx_n_s_JsonStruct); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 228, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
     __pyx_t_5 = NULL;
     if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_4))) {
@@ -4628,13 +4644,13 @@ static PyObject *__pyx_pf_3rai_40block(CYTHON_UNUSED PyObject *__pyx_self, std::
       }
     }
     if (!__pyx_t_5) {
-      __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_t_4, __pyx_v_ret); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 225, __pyx_L1_error)
+      __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_t_4, __pyx_v_ret); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 228, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_1);
     } else {
       #if CYTHON_FAST_PYCALL
       if (PyFunction_Check(__pyx_t_4)) {
         PyObject *__pyx_temp[2] = {__pyx_t_5, __pyx_v_ret};
-        __pyx_t_1 = __Pyx_PyFunction_FastCall(__pyx_t_4, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 225, __pyx_L1_error)
+        __pyx_t_1 = __Pyx_PyFunction_FastCall(__pyx_t_4, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 228, __pyx_L1_error)
         __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
         __Pyx_GOTREF(__pyx_t_1);
       } else
@@ -4642,19 +4658,19 @@ static PyObject *__pyx_pf_3rai_40block(CYTHON_UNUSED PyObject *__pyx_self, std::
       #if CYTHON_FAST_PYCCALL
       if (__Pyx_PyFastCFunction_Check(__pyx_t_4)) {
         PyObject *__pyx_temp[2] = {__pyx_t_5, __pyx_v_ret};
-        __pyx_t_1 = __Pyx_PyCFunction_FastCall(__pyx_t_4, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 225, __pyx_L1_error)
+        __pyx_t_1 = __Pyx_PyCFunction_FastCall(__pyx_t_4, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 228, __pyx_L1_error)
         __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
         __Pyx_GOTREF(__pyx_t_1);
       } else
       #endif
       {
-        __pyx_t_3 = PyTuple_New(1+1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 225, __pyx_L1_error)
+        __pyx_t_3 = PyTuple_New(1+1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 228, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_3);
         __Pyx_GIVEREF(__pyx_t_5); PyTuple_SET_ITEM(__pyx_t_3, 0, __pyx_t_5); __pyx_t_5 = NULL;
         __Pyx_INCREF(__pyx_v_ret);
         __Pyx_GIVEREF(__pyx_v_ret);
         PyTuple_SET_ITEM(__pyx_t_3, 0+1, __pyx_v_ret);
-        __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_4, __pyx_t_3, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 225, __pyx_L1_error)
+        __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_4, __pyx_t_3, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 228, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_1);
         __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
       }
@@ -4664,7 +4680,7 @@ static PyObject *__pyx_pf_3rai_40block(CYTHON_UNUSED PyObject *__pyx_self, std::
     __pyx_t_1 = 0;
     goto __pyx_L0;
 
-    /* "rai.pyx":223
+    /* "rai.pyx":226
  * def block (string hash_text):
  *     ret = _rai.block (hash_text);
  *     if ret:             # <<<<<<<<<<<<<<
@@ -4673,7 +4689,7 @@ static PyObject *__pyx_pf_3rai_40block(CYTHON_UNUSED PyObject *__pyx_self, std::
  */
   }
 
-  /* "rai.pyx":221
+  /* "rai.pyx":224
  *     return _rai.available_supply ()
  * 
  * def block (string hash_text):             # <<<<<<<<<<<<<<
@@ -4698,7 +4714,7 @@ static PyObject *__pyx_pf_3rai_40block(CYTHON_UNUSED PyObject *__pyx_self, std::
   return __pyx_r;
 }
 
-/* "rai.pyx":227
+/* "rai.pyx":230
  *         return JsonStruct(ret)
  * 
  * def blocks (vector[string] hashes):             # <<<<<<<<<<<<<<
@@ -4715,7 +4731,7 @@ static PyObject *__pyx_pw_3rai_43blocks(PyObject *__pyx_self, PyObject *__pyx_ar
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("blocks (wrapper)", 0);
   assert(__pyx_arg_hashes); {
-    __pyx_v_hashes = __pyx_convert_vector_from_py_std_3a__3a_string(__pyx_arg_hashes); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 227, __pyx_L3_error)
+    __pyx_v_hashes = __pyx_convert_vector_from_py_std_3a__3a_string(__pyx_arg_hashes); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 230, __pyx_L3_error)
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L3_error:;
@@ -4736,7 +4752,7 @@ static PyObject *__pyx_pf_3rai_42blocks(CYTHON_UNUSED PyObject *__pyx_self, std:
   PyObject *__pyx_t_1 = NULL;
   __Pyx_RefNannySetupContext("blocks", 0);
 
-  /* "rai.pyx":228
+  /* "rai.pyx":231
  * 
  * def blocks (vector[string] hashes):
  *     return _rai.blocks (hashes);             # <<<<<<<<<<<<<<
@@ -4744,13 +4760,13 @@ static PyObject *__pyx_pf_3rai_42blocks(CYTHON_UNUSED PyObject *__pyx_self, std:
  * def blocks_info (vector[string] hashes, pending = False, source = False):
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __pyx_v_3rai__rai->blocks(__pyx_v_hashes); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 228, __pyx_L1_error)
+  __pyx_t_1 = __pyx_v_3rai__rai->blocks(__pyx_v_hashes); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 231, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "rai.pyx":227
+  /* "rai.pyx":230
  *         return JsonStruct(ret)
  * 
  * def blocks (vector[string] hashes):             # <<<<<<<<<<<<<<
@@ -4769,7 +4785,7 @@ static PyObject *__pyx_pf_3rai_42blocks(CYTHON_UNUSED PyObject *__pyx_self, std:
   return __pyx_r;
 }
 
-/* "rai.pyx":230
+/* "rai.pyx":233
  *     return _rai.blocks (hashes);
  * 
  * def blocks_info (vector[string] hashes, pending = False, source = False):             # <<<<<<<<<<<<<<
@@ -4819,7 +4835,7 @@ static PyObject *__pyx_pw_3rai_45blocks_info(PyObject *__pyx_self, PyObject *__p
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "blocks_info") < 0)) __PYX_ERR(0, 230, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "blocks_info") < 0)) __PYX_ERR(0, 233, __pyx_L3_error)
       }
     } else {
       switch (PyTuple_GET_SIZE(__pyx_args)) {
@@ -4830,13 +4846,13 @@ static PyObject *__pyx_pw_3rai_45blocks_info(PyObject *__pyx_self, PyObject *__p
         default: goto __pyx_L5_argtuple_error;
       }
     }
-    __pyx_v_hashes = __pyx_convert_vector_from_py_std_3a__3a_string(values[0]); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 230, __pyx_L3_error)
+    __pyx_v_hashes = __pyx_convert_vector_from_py_std_3a__3a_string(values[0]); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 233, __pyx_L3_error)
     __pyx_v_pending = values[1];
     __pyx_v_source = values[2];
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("blocks_info", 0, 1, 3, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 230, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("blocks_info", 0, 1, 3, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 233, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("rai.blocks_info", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
@@ -4857,7 +4873,7 @@ static PyObject *__pyx_pf_3rai_44blocks_info(CYTHON_UNUSED PyObject *__pyx_self,
   PyObject *__pyx_t_3 = NULL;
   __Pyx_RefNannySetupContext("blocks_info", 0);
 
-  /* "rai.pyx":231
+  /* "rai.pyx":234
  * 
  * def blocks_info (vector[string] hashes, pending = False, source = False):
  *     return _rai.blocks_info (hashes, pending, source)             # <<<<<<<<<<<<<<
@@ -4865,15 +4881,15 @@ static PyObject *__pyx_pf_3rai_44blocks_info(CYTHON_UNUSED PyObject *__pyx_self,
  * def block_account (string hash_text):
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __Pyx_PyObject_IsTrue(__pyx_v_pending); if (unlikely((__pyx_t_1 == ((bool)-1)) && PyErr_Occurred())) __PYX_ERR(0, 231, __pyx_L1_error)
-  __pyx_t_2 = __Pyx_PyObject_IsTrue(__pyx_v_source); if (unlikely((__pyx_t_2 == ((bool)-1)) && PyErr_Occurred())) __PYX_ERR(0, 231, __pyx_L1_error)
-  __pyx_t_3 = __pyx_v_3rai__rai->blocks_info(__pyx_v_hashes, __pyx_t_1, __pyx_t_2); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 231, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_IsTrue(__pyx_v_pending); if (unlikely((__pyx_t_1 == ((bool)-1)) && PyErr_Occurred())) __PYX_ERR(0, 234, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_IsTrue(__pyx_v_source); if (unlikely((__pyx_t_2 == ((bool)-1)) && PyErr_Occurred())) __PYX_ERR(0, 234, __pyx_L1_error)
+  __pyx_t_3 = __pyx_v_3rai__rai->blocks_info(__pyx_v_hashes, __pyx_t_1, __pyx_t_2); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 234, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __pyx_r = __pyx_t_3;
   __pyx_t_3 = 0;
   goto __pyx_L0;
 
-  /* "rai.pyx":230
+  /* "rai.pyx":233
  *     return _rai.blocks (hashes);
  * 
  * def blocks_info (vector[string] hashes, pending = False, source = False):             # <<<<<<<<<<<<<<
@@ -4892,7 +4908,7 @@ static PyObject *__pyx_pf_3rai_44blocks_info(CYTHON_UNUSED PyObject *__pyx_self,
   return __pyx_r;
 }
 
-/* "rai.pyx":233
+/* "rai.pyx":236
  *     return _rai.blocks_info (hashes, pending, source)
  * 
  * def block_account (string hash_text):             # <<<<<<<<<<<<<<
@@ -4909,7 +4925,7 @@ static PyObject *__pyx_pw_3rai_47block_account(PyObject *__pyx_self, PyObject *_
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("block_account (wrapper)", 0);
   assert(__pyx_arg_hash_text); {
-    __pyx_v_hash_text = __pyx_convert_string_from_py_std__in_string(__pyx_arg_hash_text); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 233, __pyx_L3_error)
+    __pyx_v_hash_text = __pyx_convert_string_from_py_std__in_string(__pyx_arg_hash_text); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 236, __pyx_L3_error)
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L3_error:;
@@ -4930,7 +4946,7 @@ static PyObject *__pyx_pf_3rai_46block_account(CYTHON_UNUSED PyObject *__pyx_sel
   PyObject *__pyx_t_1 = NULL;
   __Pyx_RefNannySetupContext("block_account", 0);
 
-  /* "rai.pyx":234
+  /* "rai.pyx":237
  * 
  * def block_account (string hash_text):
  *     return _rai.block_account (hash_text)             # <<<<<<<<<<<<<<
@@ -4938,13 +4954,13 @@ static PyObject *__pyx_pf_3rai_46block_account(CYTHON_UNUSED PyObject *__pyx_sel
  * def bootstrap (string address_text, string port_text):
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __pyx_v_3rai__rai->block_account(__pyx_v_hash_text); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 234, __pyx_L1_error)
+  __pyx_t_1 = __pyx_v_3rai__rai->block_account(__pyx_v_hash_text); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 237, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "rai.pyx":233
+  /* "rai.pyx":236
  *     return _rai.blocks_info (hashes, pending, source)
  * 
  * def block_account (string hash_text):             # <<<<<<<<<<<<<<
@@ -4963,7 +4979,7 @@ static PyObject *__pyx_pf_3rai_46block_account(CYTHON_UNUSED PyObject *__pyx_sel
   return __pyx_r;
 }
 
-/* "rai.pyx":236
+/* "rai.pyx":239
  *     return _rai.block_account (hash_text)
  * 
  * def bootstrap (string address_text, string port_text):             # <<<<<<<<<<<<<<
@@ -5000,11 +5016,11 @@ static PyObject *__pyx_pw_3rai_49bootstrap(PyObject *__pyx_self, PyObject *__pyx
         case  1:
         if (likely((values[1] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_port_text)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("bootstrap", 1, 2, 2, 1); __PYX_ERR(0, 236, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("bootstrap", 1, 2, 2, 1); __PYX_ERR(0, 239, __pyx_L3_error)
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "bootstrap") < 0)) __PYX_ERR(0, 236, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "bootstrap") < 0)) __PYX_ERR(0, 239, __pyx_L3_error)
       }
     } else if (PyTuple_GET_SIZE(__pyx_args) != 2) {
       goto __pyx_L5_argtuple_error;
@@ -5012,12 +5028,12 @@ static PyObject *__pyx_pw_3rai_49bootstrap(PyObject *__pyx_self, PyObject *__pyx
       values[0] = PyTuple_GET_ITEM(__pyx_args, 0);
       values[1] = PyTuple_GET_ITEM(__pyx_args, 1);
     }
-    __pyx_v_address_text = __pyx_convert_string_from_py_std__in_string(values[0]); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 236, __pyx_L3_error)
-    __pyx_v_port_text = __pyx_convert_string_from_py_std__in_string(values[1]); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 236, __pyx_L3_error)
+    __pyx_v_address_text = __pyx_convert_string_from_py_std__in_string(values[0]); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 239, __pyx_L3_error)
+    __pyx_v_port_text = __pyx_convert_string_from_py_std__in_string(values[1]); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 239, __pyx_L3_error)
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("bootstrap", 1, 2, 2, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 236, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("bootstrap", 1, 2, 2, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 239, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("rai.bootstrap", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
@@ -5036,7 +5052,7 @@ static PyObject *__pyx_pf_3rai_48bootstrap(CYTHON_UNUSED PyObject *__pyx_self, s
   PyObject *__pyx_t_1 = NULL;
   __Pyx_RefNannySetupContext("bootstrap", 0);
 
-  /* "rai.pyx":237
+  /* "rai.pyx":240
  * 
  * def bootstrap (string address_text, string port_text):
  *     return _rai.bootstrap (address_text, port_text)             # <<<<<<<<<<<<<<
@@ -5044,13 +5060,13 @@ static PyObject *__pyx_pf_3rai_48bootstrap(CYTHON_UNUSED PyObject *__pyx_self, s
  * def bootstrap_any ():
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __pyx_v_3rai__rai->bootstrap(__pyx_v_address_text, __pyx_v_port_text); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 237, __pyx_L1_error)
+  __pyx_t_1 = __pyx_v_3rai__rai->bootstrap(__pyx_v_address_text, __pyx_v_port_text); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 240, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "rai.pyx":236
+  /* "rai.pyx":239
  *     return _rai.block_account (hash_text)
  * 
  * def bootstrap (string address_text, string port_text):             # <<<<<<<<<<<<<<
@@ -5069,7 +5085,7 @@ static PyObject *__pyx_pf_3rai_48bootstrap(CYTHON_UNUSED PyObject *__pyx_self, s
   return __pyx_r;
 }
 
-/* "rai.pyx":239
+/* "rai.pyx":242
  *     return _rai.bootstrap (address_text, port_text)
  * 
  * def bootstrap_any ():             # <<<<<<<<<<<<<<
@@ -5097,7 +5113,7 @@ static PyObject *__pyx_pf_3rai_50bootstrap_any(CYTHON_UNUSED PyObject *__pyx_sel
   PyObject *__pyx_t_1 = NULL;
   __Pyx_RefNannySetupContext("bootstrap_any", 0);
 
-  /* "rai.pyx":240
+  /* "rai.pyx":243
  * 
  * def bootstrap_any ():
  *     return _rai.bootstrap_any ()             # <<<<<<<<<<<<<<
@@ -5105,13 +5121,13 @@ static PyObject *__pyx_pf_3rai_50bootstrap_any(CYTHON_UNUSED PyObject *__pyx_sel
  * def chain (string block_text, uint64_t count):
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __pyx_v_3rai__rai->bootstrap_any(); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 240, __pyx_L1_error)
+  __pyx_t_1 = __pyx_v_3rai__rai->bootstrap_any(); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 243, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "rai.pyx":239
+  /* "rai.pyx":242
  *     return _rai.bootstrap (address_text, port_text)
  * 
  * def bootstrap_any ():             # <<<<<<<<<<<<<<
@@ -5130,7 +5146,7 @@ static PyObject *__pyx_pf_3rai_50bootstrap_any(CYTHON_UNUSED PyObject *__pyx_sel
   return __pyx_r;
 }
 
-/* "rai.pyx":242
+/* "rai.pyx":245
  *     return _rai.bootstrap_any ()
  * 
  * def chain (string block_text, uint64_t count):             # <<<<<<<<<<<<<<
@@ -5167,11 +5183,11 @@ static PyObject *__pyx_pw_3rai_53chain(PyObject *__pyx_self, PyObject *__pyx_arg
         case  1:
         if (likely((values[1] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_count)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("chain", 1, 2, 2, 1); __PYX_ERR(0, 242, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("chain", 1, 2, 2, 1); __PYX_ERR(0, 245, __pyx_L3_error)
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "chain") < 0)) __PYX_ERR(0, 242, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "chain") < 0)) __PYX_ERR(0, 245, __pyx_L3_error)
       }
     } else if (PyTuple_GET_SIZE(__pyx_args) != 2) {
       goto __pyx_L5_argtuple_error;
@@ -5179,12 +5195,12 @@ static PyObject *__pyx_pw_3rai_53chain(PyObject *__pyx_self, PyObject *__pyx_arg
       values[0] = PyTuple_GET_ITEM(__pyx_args, 0);
       values[1] = PyTuple_GET_ITEM(__pyx_args, 1);
     }
-    __pyx_v_block_text = __pyx_convert_string_from_py_std__in_string(values[0]); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 242, __pyx_L3_error)
-    __pyx_v_count = __Pyx_PyInt_As_uint64_t(values[1]); if (unlikely((__pyx_v_count == ((uint64_t)-1)) && PyErr_Occurred())) __PYX_ERR(0, 242, __pyx_L3_error)
+    __pyx_v_block_text = __pyx_convert_string_from_py_std__in_string(values[0]); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 245, __pyx_L3_error)
+    __pyx_v_count = __Pyx_PyInt_As_uint64_t(values[1]); if (unlikely((__pyx_v_count == ((uint64_t)-1)) && PyErr_Occurred())) __PYX_ERR(0, 245, __pyx_L3_error)
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("chain", 1, 2, 2, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 242, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("chain", 1, 2, 2, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 245, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("rai.chain", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
@@ -5203,7 +5219,7 @@ static PyObject *__pyx_pf_3rai_52chain(CYTHON_UNUSED PyObject *__pyx_self, std::
   PyObject *__pyx_t_1 = NULL;
   __Pyx_RefNannySetupContext("chain", 0);
 
-  /* "rai.pyx":243
+  /* "rai.pyx":246
  * 
  * def chain (string block_text, uint64_t count):
  *     return _rai.chain (block_text, count)             # <<<<<<<<<<<<<<
@@ -5211,13 +5227,13 @@ static PyObject *__pyx_pf_3rai_52chain(CYTHON_UNUSED PyObject *__pyx_self, std::
  * def delegators (string account_text):
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __pyx_v_3rai__rai->chain(__pyx_v_block_text, __pyx_v_count); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 243, __pyx_L1_error)
+  __pyx_t_1 = __pyx_v_3rai__rai->chain(__pyx_v_block_text, __pyx_v_count); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 246, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "rai.pyx":242
+  /* "rai.pyx":245
  *     return _rai.bootstrap_any ()
  * 
  * def chain (string block_text, uint64_t count):             # <<<<<<<<<<<<<<
@@ -5236,7 +5252,7 @@ static PyObject *__pyx_pf_3rai_52chain(CYTHON_UNUSED PyObject *__pyx_self, std::
   return __pyx_r;
 }
 
-/* "rai.pyx":245
+/* "rai.pyx":248
  *     return _rai.chain (block_text, count)
  * 
  * def delegators (string account_text):             # <<<<<<<<<<<<<<
@@ -5253,7 +5269,7 @@ static PyObject *__pyx_pw_3rai_55delegators(PyObject *__pyx_self, PyObject *__py
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("delegators (wrapper)", 0);
   assert(__pyx_arg_account_text); {
-    __pyx_v_account_text = __pyx_convert_string_from_py_std__in_string(__pyx_arg_account_text); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 245, __pyx_L3_error)
+    __pyx_v_account_text = __pyx_convert_string_from_py_std__in_string(__pyx_arg_account_text); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 248, __pyx_L3_error)
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L3_error:;
@@ -5274,7 +5290,7 @@ static PyObject *__pyx_pf_3rai_54delegators(CYTHON_UNUSED PyObject *__pyx_self, 
   PyObject *__pyx_t_1 = NULL;
   __Pyx_RefNannySetupContext("delegators", 0);
 
-  /* "rai.pyx":246
+  /* "rai.pyx":249
  * 
  * def delegators (string account_text):
  *     return _rai.delegators (account_text)             # <<<<<<<<<<<<<<
@@ -5282,13 +5298,13 @@ static PyObject *__pyx_pf_3rai_54delegators(CYTHON_UNUSED PyObject *__pyx_self, 
  * def delegators_count (string account_text):
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __pyx_v_3rai__rai->delegators(__pyx_v_account_text); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 246, __pyx_L1_error)
+  __pyx_t_1 = __pyx_v_3rai__rai->delegators(__pyx_v_account_text); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 249, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "rai.pyx":245
+  /* "rai.pyx":248
  *     return _rai.chain (block_text, count)
  * 
  * def delegators (string account_text):             # <<<<<<<<<<<<<<
@@ -5307,7 +5323,7 @@ static PyObject *__pyx_pf_3rai_54delegators(CYTHON_UNUSED PyObject *__pyx_self, 
   return __pyx_r;
 }
 
-/* "rai.pyx":248
+/* "rai.pyx":251
  *     return _rai.delegators (account_text)
  * 
  * def delegators_count (string account_text):             # <<<<<<<<<<<<<<
@@ -5324,7 +5340,7 @@ static PyObject *__pyx_pw_3rai_57delegators_count(PyObject *__pyx_self, PyObject
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("delegators_count (wrapper)", 0);
   assert(__pyx_arg_account_text); {
-    __pyx_v_account_text = __pyx_convert_string_from_py_std__in_string(__pyx_arg_account_text); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 248, __pyx_L3_error)
+    __pyx_v_account_text = __pyx_convert_string_from_py_std__in_string(__pyx_arg_account_text); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 251, __pyx_L3_error)
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L3_error:;
@@ -5345,7 +5361,7 @@ static PyObject *__pyx_pf_3rai_56delegators_count(CYTHON_UNUSED PyObject *__pyx_
   PyObject *__pyx_t_1 = NULL;
   __Pyx_RefNannySetupContext("delegators_count", 0);
 
-  /* "rai.pyx":249
+  /* "rai.pyx":252
  * 
  * def delegators_count (string account_text):
  *     return _rai.delegators_count (account_text)             # <<<<<<<<<<<<<<
@@ -5353,13 +5369,13 @@ static PyObject *__pyx_pf_3rai_56delegators_count(CYTHON_UNUSED PyObject *__pyx_
  * def deterministic_key (string seed_text, uint64_t index):
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __pyx_v_3rai__rai->delegators_count(__pyx_v_account_text); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 249, __pyx_L1_error)
+  __pyx_t_1 = __pyx_v_3rai__rai->delegators_count(__pyx_v_account_text); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 252, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "rai.pyx":248
+  /* "rai.pyx":251
  *     return _rai.delegators (account_text)
  * 
  * def delegators_count (string account_text):             # <<<<<<<<<<<<<<
@@ -5378,7 +5394,7 @@ static PyObject *__pyx_pf_3rai_56delegators_count(CYTHON_UNUSED PyObject *__pyx_
   return __pyx_r;
 }
 
-/* "rai.pyx":251
+/* "rai.pyx":254
  *     return _rai.delegators_count (account_text)
  * 
  * def deterministic_key (string seed_text, uint64_t index):             # <<<<<<<<<<<<<<
@@ -5415,11 +5431,11 @@ static PyObject *__pyx_pw_3rai_59deterministic_key(PyObject *__pyx_self, PyObjec
         case  1:
         if (likely((values[1] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_index)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("deterministic_key", 1, 2, 2, 1); __PYX_ERR(0, 251, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("deterministic_key", 1, 2, 2, 1); __PYX_ERR(0, 254, __pyx_L3_error)
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "deterministic_key") < 0)) __PYX_ERR(0, 251, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "deterministic_key") < 0)) __PYX_ERR(0, 254, __pyx_L3_error)
       }
     } else if (PyTuple_GET_SIZE(__pyx_args) != 2) {
       goto __pyx_L5_argtuple_error;
@@ -5427,12 +5443,12 @@ static PyObject *__pyx_pw_3rai_59deterministic_key(PyObject *__pyx_self, PyObjec
       values[0] = PyTuple_GET_ITEM(__pyx_args, 0);
       values[1] = PyTuple_GET_ITEM(__pyx_args, 1);
     }
-    __pyx_v_seed_text = __pyx_convert_string_from_py_std__in_string(values[0]); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 251, __pyx_L3_error)
-    __pyx_v_index = __Pyx_PyInt_As_uint64_t(values[1]); if (unlikely((__pyx_v_index == ((uint64_t)-1)) && PyErr_Occurred())) __PYX_ERR(0, 251, __pyx_L3_error)
+    __pyx_v_seed_text = __pyx_convert_string_from_py_std__in_string(values[0]); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 254, __pyx_L3_error)
+    __pyx_v_index = __Pyx_PyInt_As_uint64_t(values[1]); if (unlikely((__pyx_v_index == ((uint64_t)-1)) && PyErr_Occurred())) __PYX_ERR(0, 254, __pyx_L3_error)
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("deterministic_key", 1, 2, 2, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 251, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("deterministic_key", 1, 2, 2, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 254, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("rai.deterministic_key", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
@@ -5451,7 +5467,7 @@ static PyObject *__pyx_pf_3rai_58deterministic_key(CYTHON_UNUSED PyObject *__pyx
   PyObject *__pyx_t_1 = NULL;
   __Pyx_RefNannySetupContext("deterministic_key", 0);
 
-  /* "rai.pyx":252
+  /* "rai.pyx":255
  * 
  * def deterministic_key (string seed_text, uint64_t index):
  *     return _rai.deterministic_key (seed_text, index)             # <<<<<<<<<<<<<<
@@ -5459,13 +5475,13 @@ static PyObject *__pyx_pf_3rai_58deterministic_key(CYTHON_UNUSED PyObject *__pyx
  * def frontiers (string account_text, uint64_t count):
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __pyx_v_3rai__rai->deterministic_key(__pyx_v_seed_text, __pyx_v_index); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 252, __pyx_L1_error)
+  __pyx_t_1 = __pyx_v_3rai__rai->deterministic_key(__pyx_v_seed_text, __pyx_v_index); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 255, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "rai.pyx":251
+  /* "rai.pyx":254
  *     return _rai.delegators_count (account_text)
  * 
  * def deterministic_key (string seed_text, uint64_t index):             # <<<<<<<<<<<<<<
@@ -5484,7 +5500,7 @@ static PyObject *__pyx_pf_3rai_58deterministic_key(CYTHON_UNUSED PyObject *__pyx
   return __pyx_r;
 }
 
-/* "rai.pyx":254
+/* "rai.pyx":257
  *     return _rai.deterministic_key (seed_text, index)
  * 
  * def frontiers (string account_text, uint64_t count):             # <<<<<<<<<<<<<<
@@ -5521,11 +5537,11 @@ static PyObject *__pyx_pw_3rai_61frontiers(PyObject *__pyx_self, PyObject *__pyx
         case  1:
         if (likely((values[1] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_count)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("frontiers", 1, 2, 2, 1); __PYX_ERR(0, 254, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("frontiers", 1, 2, 2, 1); __PYX_ERR(0, 257, __pyx_L3_error)
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "frontiers") < 0)) __PYX_ERR(0, 254, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "frontiers") < 0)) __PYX_ERR(0, 257, __pyx_L3_error)
       }
     } else if (PyTuple_GET_SIZE(__pyx_args) != 2) {
       goto __pyx_L5_argtuple_error;
@@ -5533,12 +5549,12 @@ static PyObject *__pyx_pw_3rai_61frontiers(PyObject *__pyx_self, PyObject *__pyx
       values[0] = PyTuple_GET_ITEM(__pyx_args, 0);
       values[1] = PyTuple_GET_ITEM(__pyx_args, 1);
     }
-    __pyx_v_account_text = __pyx_convert_string_from_py_std__in_string(values[0]); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 254, __pyx_L3_error)
-    __pyx_v_count = __Pyx_PyInt_As_uint64_t(values[1]); if (unlikely((__pyx_v_count == ((uint64_t)-1)) && PyErr_Occurred())) __PYX_ERR(0, 254, __pyx_L3_error)
+    __pyx_v_account_text = __pyx_convert_string_from_py_std__in_string(values[0]); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 257, __pyx_L3_error)
+    __pyx_v_count = __Pyx_PyInt_As_uint64_t(values[1]); if (unlikely((__pyx_v_count == ((uint64_t)-1)) && PyErr_Occurred())) __PYX_ERR(0, 257, __pyx_L3_error)
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("frontiers", 1, 2, 2, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 254, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("frontiers", 1, 2, 2, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 257, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("rai.frontiers", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
@@ -5557,7 +5573,7 @@ static PyObject *__pyx_pf_3rai_60frontiers(CYTHON_UNUSED PyObject *__pyx_self, s
   PyObject *__pyx_t_1 = NULL;
   __Pyx_RefNannySetupContext("frontiers", 0);
 
-  /* "rai.pyx":255
+  /* "rai.pyx":258
  * 
  * def frontiers (string account_text, uint64_t count):
  *     return _rai.frontiers (account_text, count)             # <<<<<<<<<<<<<<
@@ -5565,13 +5581,13 @@ static PyObject *__pyx_pf_3rai_60frontiers(CYTHON_UNUSED PyObject *__pyx_self, s
  * def frontier_count ():
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __pyx_v_3rai__rai->frontiers(__pyx_v_account_text, __pyx_v_count); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 255, __pyx_L1_error)
+  __pyx_t_1 = __pyx_v_3rai__rai->frontiers(__pyx_v_account_text, __pyx_v_count); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 258, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "rai.pyx":254
+  /* "rai.pyx":257
  *     return _rai.deterministic_key (seed_text, index)
  * 
  * def frontiers (string account_text, uint64_t count):             # <<<<<<<<<<<<<<
@@ -5590,7 +5606,7 @@ static PyObject *__pyx_pf_3rai_60frontiers(CYTHON_UNUSED PyObject *__pyx_self, s
   return __pyx_r;
 }
 
-/* "rai.pyx":257
+/* "rai.pyx":260
  *     return _rai.frontiers (account_text, count)
  * 
  * def frontier_count ():             # <<<<<<<<<<<<<<
@@ -5618,7 +5634,7 @@ static PyObject *__pyx_pf_3rai_62frontier_count(CYTHON_UNUSED PyObject *__pyx_se
   PyObject *__pyx_t_1 = NULL;
   __Pyx_RefNannySetupContext("frontier_count", 0);
 
-  /* "rai.pyx":258
+  /* "rai.pyx":261
  * 
  * def frontier_count ():
  *     return _rai.frontier_count ()             # <<<<<<<<<<<<<<
@@ -5626,13 +5642,13 @@ static PyObject *__pyx_pf_3rai_62frontier_count(CYTHON_UNUSED PyObject *__pyx_se
  * def history (string hash_text, uint64_t count):
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __pyx_v_3rai__rai->frontier_count(); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 258, __pyx_L1_error)
+  __pyx_t_1 = __pyx_v_3rai__rai->frontier_count(); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 261, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "rai.pyx":257
+  /* "rai.pyx":260
  *     return _rai.frontiers (account_text, count)
  * 
  * def frontier_count ():             # <<<<<<<<<<<<<<
@@ -5651,7 +5667,7 @@ static PyObject *__pyx_pf_3rai_62frontier_count(CYTHON_UNUSED PyObject *__pyx_se
   return __pyx_r;
 }
 
-/* "rai.pyx":260
+/* "rai.pyx":263
  *     return _rai.frontier_count ()
  * 
  * def history (string hash_text, uint64_t count):             # <<<<<<<<<<<<<<
@@ -5688,11 +5704,11 @@ static PyObject *__pyx_pw_3rai_65history(PyObject *__pyx_self, PyObject *__pyx_a
         case  1:
         if (likely((values[1] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_count)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("history", 1, 2, 2, 1); __PYX_ERR(0, 260, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("history", 1, 2, 2, 1); __PYX_ERR(0, 263, __pyx_L3_error)
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "history") < 0)) __PYX_ERR(0, 260, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "history") < 0)) __PYX_ERR(0, 263, __pyx_L3_error)
       }
     } else if (PyTuple_GET_SIZE(__pyx_args) != 2) {
       goto __pyx_L5_argtuple_error;
@@ -5700,12 +5716,12 @@ static PyObject *__pyx_pw_3rai_65history(PyObject *__pyx_self, PyObject *__pyx_a
       values[0] = PyTuple_GET_ITEM(__pyx_args, 0);
       values[1] = PyTuple_GET_ITEM(__pyx_args, 1);
     }
-    __pyx_v_hash_text = __pyx_convert_string_from_py_std__in_string(values[0]); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 260, __pyx_L3_error)
-    __pyx_v_count = __Pyx_PyInt_As_uint64_t(values[1]); if (unlikely((__pyx_v_count == ((uint64_t)-1)) && PyErr_Occurred())) __PYX_ERR(0, 260, __pyx_L3_error)
+    __pyx_v_hash_text = __pyx_convert_string_from_py_std__in_string(values[0]); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 263, __pyx_L3_error)
+    __pyx_v_count = __Pyx_PyInt_As_uint64_t(values[1]); if (unlikely((__pyx_v_count == ((uint64_t)-1)) && PyErr_Occurred())) __PYX_ERR(0, 263, __pyx_L3_error)
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("history", 1, 2, 2, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 260, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("history", 1, 2, 2, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 263, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("rai.history", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
@@ -5734,31 +5750,31 @@ static PyObject *__pyx_pf_3rai_64history(CYTHON_UNUSED PyObject *__pyx_self, std
   int __pyx_t_8;
   __Pyx_RefNannySetupContext("history", 0);
 
-  /* "rai.pyx":261
+  /* "rai.pyx":264
  * 
  * def history (string hash_text, uint64_t count):
  *     ret = []             # <<<<<<<<<<<<<<
  *     result = _rai.history (hash_text, count)
  *     for r in result:
  */
-  __pyx_t_1 = PyList_New(0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 261, __pyx_L1_error)
+  __pyx_t_1 = PyList_New(0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 264, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_v_ret = ((PyObject*)__pyx_t_1);
   __pyx_t_1 = 0;
 
-  /* "rai.pyx":262
+  /* "rai.pyx":265
  * def history (string hash_text, uint64_t count):
  *     ret = []
  *     result = _rai.history (hash_text, count)             # <<<<<<<<<<<<<<
  *     for r in result:
  *         ret.append(JsonStruct(r))
  */
-  __pyx_t_1 = __pyx_v_3rai__rai->history(__pyx_v_hash_text, __pyx_v_count); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 262, __pyx_L1_error)
+  __pyx_t_1 = __pyx_v_3rai__rai->history(__pyx_v_hash_text, __pyx_v_count); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 265, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_v_result = __pyx_t_1;
   __pyx_t_1 = 0;
 
-  /* "rai.pyx":263
+  /* "rai.pyx":266
  *     ret = []
  *     result = _rai.history (hash_text, count)
  *     for r in result:             # <<<<<<<<<<<<<<
@@ -5769,26 +5785,26 @@ static PyObject *__pyx_pf_3rai_64history(CYTHON_UNUSED PyObject *__pyx_self, std
     __pyx_t_1 = __pyx_v_result; __Pyx_INCREF(__pyx_t_1); __pyx_t_2 = 0;
     __pyx_t_3 = NULL;
   } else {
-    __pyx_t_2 = -1; __pyx_t_1 = PyObject_GetIter(__pyx_v_result); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 263, __pyx_L1_error)
+    __pyx_t_2 = -1; __pyx_t_1 = PyObject_GetIter(__pyx_v_result); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 266, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
-    __pyx_t_3 = Py_TYPE(__pyx_t_1)->tp_iternext; if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 263, __pyx_L1_error)
+    __pyx_t_3 = Py_TYPE(__pyx_t_1)->tp_iternext; if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 266, __pyx_L1_error)
   }
   for (;;) {
     if (likely(!__pyx_t_3)) {
       if (likely(PyList_CheckExact(__pyx_t_1))) {
         if (__pyx_t_2 >= PyList_GET_SIZE(__pyx_t_1)) break;
         #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-        __pyx_t_4 = PyList_GET_ITEM(__pyx_t_1, __pyx_t_2); __Pyx_INCREF(__pyx_t_4); __pyx_t_2++; if (unlikely(0 < 0)) __PYX_ERR(0, 263, __pyx_L1_error)
+        __pyx_t_4 = PyList_GET_ITEM(__pyx_t_1, __pyx_t_2); __Pyx_INCREF(__pyx_t_4); __pyx_t_2++; if (unlikely(0 < 0)) __PYX_ERR(0, 266, __pyx_L1_error)
         #else
-        __pyx_t_4 = PySequence_ITEM(__pyx_t_1, __pyx_t_2); __pyx_t_2++; if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 263, __pyx_L1_error)
+        __pyx_t_4 = PySequence_ITEM(__pyx_t_1, __pyx_t_2); __pyx_t_2++; if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 266, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_4);
         #endif
       } else {
         if (__pyx_t_2 >= PyTuple_GET_SIZE(__pyx_t_1)) break;
         #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-        __pyx_t_4 = PyTuple_GET_ITEM(__pyx_t_1, __pyx_t_2); __Pyx_INCREF(__pyx_t_4); __pyx_t_2++; if (unlikely(0 < 0)) __PYX_ERR(0, 263, __pyx_L1_error)
+        __pyx_t_4 = PyTuple_GET_ITEM(__pyx_t_1, __pyx_t_2); __Pyx_INCREF(__pyx_t_4); __pyx_t_2++; if (unlikely(0 < 0)) __PYX_ERR(0, 266, __pyx_L1_error)
         #else
-        __pyx_t_4 = PySequence_ITEM(__pyx_t_1, __pyx_t_2); __pyx_t_2++; if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 263, __pyx_L1_error)
+        __pyx_t_4 = PySequence_ITEM(__pyx_t_1, __pyx_t_2); __pyx_t_2++; if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 266, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_4);
         #endif
       }
@@ -5798,7 +5814,7 @@ static PyObject *__pyx_pf_3rai_64history(CYTHON_UNUSED PyObject *__pyx_self, std
         PyObject* exc_type = PyErr_Occurred();
         if (exc_type) {
           if (likely(exc_type == PyExc_StopIteration || PyErr_GivenExceptionMatches(exc_type, PyExc_StopIteration))) PyErr_Clear();
-          else __PYX_ERR(0, 263, __pyx_L1_error)
+          else __PYX_ERR(0, 266, __pyx_L1_error)
         }
         break;
       }
@@ -5807,14 +5823,14 @@ static PyObject *__pyx_pf_3rai_64history(CYTHON_UNUSED PyObject *__pyx_self, std
     __Pyx_XDECREF_SET(__pyx_v_r, __pyx_t_4);
     __pyx_t_4 = 0;
 
-    /* "rai.pyx":264
+    /* "rai.pyx":267
  *     result = _rai.history (hash_text, count)
  *     for r in result:
  *         ret.append(JsonStruct(r))             # <<<<<<<<<<<<<<
  *     return ret
  * 
  */
-    __pyx_t_5 = __Pyx_GetModuleGlobalName(__pyx_n_s_JsonStruct); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 264, __pyx_L1_error)
+    __pyx_t_5 = __Pyx_GetModuleGlobalName(__pyx_n_s_JsonStruct); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 267, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
     __pyx_t_6 = NULL;
     if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_5))) {
@@ -5827,13 +5843,13 @@ static PyObject *__pyx_pf_3rai_64history(CYTHON_UNUSED PyObject *__pyx_self, std
       }
     }
     if (!__pyx_t_6) {
-      __pyx_t_4 = __Pyx_PyObject_CallOneArg(__pyx_t_5, __pyx_v_r); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 264, __pyx_L1_error)
+      __pyx_t_4 = __Pyx_PyObject_CallOneArg(__pyx_t_5, __pyx_v_r); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 267, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_4);
     } else {
       #if CYTHON_FAST_PYCALL
       if (PyFunction_Check(__pyx_t_5)) {
         PyObject *__pyx_temp[2] = {__pyx_t_6, __pyx_v_r};
-        __pyx_t_4 = __Pyx_PyFunction_FastCall(__pyx_t_5, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 264, __pyx_L1_error)
+        __pyx_t_4 = __Pyx_PyFunction_FastCall(__pyx_t_5, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 267, __pyx_L1_error)
         __Pyx_XDECREF(__pyx_t_6); __pyx_t_6 = 0;
         __Pyx_GOTREF(__pyx_t_4);
       } else
@@ -5841,28 +5857,28 @@ static PyObject *__pyx_pf_3rai_64history(CYTHON_UNUSED PyObject *__pyx_self, std
       #if CYTHON_FAST_PYCCALL
       if (__Pyx_PyFastCFunction_Check(__pyx_t_5)) {
         PyObject *__pyx_temp[2] = {__pyx_t_6, __pyx_v_r};
-        __pyx_t_4 = __Pyx_PyCFunction_FastCall(__pyx_t_5, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 264, __pyx_L1_error)
+        __pyx_t_4 = __Pyx_PyCFunction_FastCall(__pyx_t_5, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 267, __pyx_L1_error)
         __Pyx_XDECREF(__pyx_t_6); __pyx_t_6 = 0;
         __Pyx_GOTREF(__pyx_t_4);
       } else
       #endif
       {
-        __pyx_t_7 = PyTuple_New(1+1); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 264, __pyx_L1_error)
+        __pyx_t_7 = PyTuple_New(1+1); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 267, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_7);
         __Pyx_GIVEREF(__pyx_t_6); PyTuple_SET_ITEM(__pyx_t_7, 0, __pyx_t_6); __pyx_t_6 = NULL;
         __Pyx_INCREF(__pyx_v_r);
         __Pyx_GIVEREF(__pyx_v_r);
         PyTuple_SET_ITEM(__pyx_t_7, 0+1, __pyx_v_r);
-        __pyx_t_4 = __Pyx_PyObject_Call(__pyx_t_5, __pyx_t_7, NULL); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 264, __pyx_L1_error)
+        __pyx_t_4 = __Pyx_PyObject_Call(__pyx_t_5, __pyx_t_7, NULL); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 267, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_4);
         __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
       }
     }
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-    __pyx_t_8 = __Pyx_PyList_Append(__pyx_v_ret, __pyx_t_4); if (unlikely(__pyx_t_8 == -1)) __PYX_ERR(0, 264, __pyx_L1_error)
+    __pyx_t_8 = __Pyx_PyList_Append(__pyx_v_ret, __pyx_t_4); if (unlikely(__pyx_t_8 == -1)) __PYX_ERR(0, 267, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
 
-    /* "rai.pyx":263
+    /* "rai.pyx":266
  *     ret = []
  *     result = _rai.history (hash_text, count)
  *     for r in result:             # <<<<<<<<<<<<<<
@@ -5872,7 +5888,7 @@ static PyObject *__pyx_pf_3rai_64history(CYTHON_UNUSED PyObject *__pyx_self, std
   }
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "rai.pyx":265
+  /* "rai.pyx":268
  *     for r in result:
  *         ret.append(JsonStruct(r))
  *     return ret             # <<<<<<<<<<<<<<
@@ -5884,7 +5900,7 @@ static PyObject *__pyx_pf_3rai_64history(CYTHON_UNUSED PyObject *__pyx_self, std
   __pyx_r = __pyx_v_ret;
   goto __pyx_L0;
 
-  /* "rai.pyx":260
+  /* "rai.pyx":263
  *     return _rai.frontier_count ()
  * 
  * def history (string hash_text, uint64_t count):             # <<<<<<<<<<<<<<
@@ -5910,7 +5926,7 @@ static PyObject *__pyx_pf_3rai_64history(CYTHON_UNUSED PyObject *__pyx_self, std
   return __pyx_r;
 }
 
-/* "rai.pyx":267
+/* "rai.pyx":270
  *     return ret
  * 
  * def mrai_from_raw (string amount_text):             # <<<<<<<<<<<<<<
@@ -5927,7 +5943,7 @@ static PyObject *__pyx_pw_3rai_67mrai_from_raw(PyObject *__pyx_self, PyObject *_
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("mrai_from_raw (wrapper)", 0);
   assert(__pyx_arg_amount_text); {
-    __pyx_v_amount_text = __pyx_convert_string_from_py_std__in_string(__pyx_arg_amount_text); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 267, __pyx_L3_error)
+    __pyx_v_amount_text = __pyx_convert_string_from_py_std__in_string(__pyx_arg_amount_text); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 270, __pyx_L3_error)
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L3_error:;
@@ -5948,7 +5964,7 @@ static PyObject *__pyx_pf_3rai_66mrai_from_raw(CYTHON_UNUSED PyObject *__pyx_sel
   PyObject *__pyx_t_1 = NULL;
   __Pyx_RefNannySetupContext("mrai_from_raw", 0);
 
-  /* "rai.pyx":268
+  /* "rai.pyx":271
  * 
  * def mrai_from_raw (string amount_text):
  *     return _rai.mrai_from_raw (amount_text)             # <<<<<<<<<<<<<<
@@ -5956,13 +5972,13 @@ static PyObject *__pyx_pf_3rai_66mrai_from_raw(CYTHON_UNUSED PyObject *__pyx_sel
  * def mrai_to_raw (string amount_text):
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __pyx_v_3rai__rai->mrai_from_raw(__pyx_v_amount_text); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 268, __pyx_L1_error)
+  __pyx_t_1 = __pyx_v_3rai__rai->mrai_from_raw(__pyx_v_amount_text); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 271, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "rai.pyx":267
+  /* "rai.pyx":270
  *     return ret
  * 
  * def mrai_from_raw (string amount_text):             # <<<<<<<<<<<<<<
@@ -5981,7 +5997,7 @@ static PyObject *__pyx_pf_3rai_66mrai_from_raw(CYTHON_UNUSED PyObject *__pyx_sel
   return __pyx_r;
 }
 
-/* "rai.pyx":270
+/* "rai.pyx":273
  *     return _rai.mrai_from_raw (amount_text)
  * 
  * def mrai_to_raw (string amount_text):             # <<<<<<<<<<<<<<
@@ -5998,7 +6014,7 @@ static PyObject *__pyx_pw_3rai_69mrai_to_raw(PyObject *__pyx_self, PyObject *__p
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("mrai_to_raw (wrapper)", 0);
   assert(__pyx_arg_amount_text); {
-    __pyx_v_amount_text = __pyx_convert_string_from_py_std__in_string(__pyx_arg_amount_text); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 270, __pyx_L3_error)
+    __pyx_v_amount_text = __pyx_convert_string_from_py_std__in_string(__pyx_arg_amount_text); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 273, __pyx_L3_error)
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L3_error:;
@@ -6019,7 +6035,7 @@ static PyObject *__pyx_pf_3rai_68mrai_to_raw(CYTHON_UNUSED PyObject *__pyx_self,
   PyObject *__pyx_t_1 = NULL;
   __Pyx_RefNannySetupContext("mrai_to_raw", 0);
 
-  /* "rai.pyx":271
+  /* "rai.pyx":274
  * 
  * def mrai_to_raw (string amount_text):
  *     return _rai.mrai_to_raw (amount_text)             # <<<<<<<<<<<<<<
@@ -6027,13 +6043,13 @@ static PyObject *__pyx_pf_3rai_68mrai_to_raw(CYTHON_UNUSED PyObject *__pyx_self,
  * def krai_from_raw (string amount_text):
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __pyx_v_3rai__rai->mrai_to_raw(__pyx_v_amount_text); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 271, __pyx_L1_error)
+  __pyx_t_1 = __pyx_v_3rai__rai->mrai_to_raw(__pyx_v_amount_text); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 274, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "rai.pyx":270
+  /* "rai.pyx":273
  *     return _rai.mrai_from_raw (amount_text)
  * 
  * def mrai_to_raw (string amount_text):             # <<<<<<<<<<<<<<
@@ -6052,7 +6068,7 @@ static PyObject *__pyx_pf_3rai_68mrai_to_raw(CYTHON_UNUSED PyObject *__pyx_self,
   return __pyx_r;
 }
 
-/* "rai.pyx":273
+/* "rai.pyx":276
  *     return _rai.mrai_to_raw (amount_text)
  * 
  * def krai_from_raw (string amount_text):             # <<<<<<<<<<<<<<
@@ -6069,7 +6085,7 @@ static PyObject *__pyx_pw_3rai_71krai_from_raw(PyObject *__pyx_self, PyObject *_
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("krai_from_raw (wrapper)", 0);
   assert(__pyx_arg_amount_text); {
-    __pyx_v_amount_text = __pyx_convert_string_from_py_std__in_string(__pyx_arg_amount_text); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 273, __pyx_L3_error)
+    __pyx_v_amount_text = __pyx_convert_string_from_py_std__in_string(__pyx_arg_amount_text); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 276, __pyx_L3_error)
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L3_error:;
@@ -6090,7 +6106,7 @@ static PyObject *__pyx_pf_3rai_70krai_from_raw(CYTHON_UNUSED PyObject *__pyx_sel
   PyObject *__pyx_t_1 = NULL;
   __Pyx_RefNannySetupContext("krai_from_raw", 0);
 
-  /* "rai.pyx":274
+  /* "rai.pyx":277
  * 
  * def krai_from_raw (string amount_text):
  *     return _rai.krai_from_raw (amount_text)             # <<<<<<<<<<<<<<
@@ -6098,13 +6114,13 @@ static PyObject *__pyx_pf_3rai_70krai_from_raw(CYTHON_UNUSED PyObject *__pyx_sel
  * def keepalive (string address_text, string port_text):
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __pyx_v_3rai__rai->krai_from_raw(__pyx_v_amount_text); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 274, __pyx_L1_error)
+  __pyx_t_1 = __pyx_v_3rai__rai->krai_from_raw(__pyx_v_amount_text); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 277, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "rai.pyx":273
+  /* "rai.pyx":276
  *     return _rai.mrai_to_raw (amount_text)
  * 
  * def krai_from_raw (string amount_text):             # <<<<<<<<<<<<<<
@@ -6123,7 +6139,7 @@ static PyObject *__pyx_pf_3rai_70krai_from_raw(CYTHON_UNUSED PyObject *__pyx_sel
   return __pyx_r;
 }
 
-/* "rai.pyx":276
+/* "rai.pyx":279
  *     return _rai.krai_from_raw (amount_text)
  * 
  * def keepalive (string address_text, string port_text):             # <<<<<<<<<<<<<<
@@ -6160,11 +6176,11 @@ static PyObject *__pyx_pw_3rai_73keepalive(PyObject *__pyx_self, PyObject *__pyx
         case  1:
         if (likely((values[1] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_port_text)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("keepalive", 1, 2, 2, 1); __PYX_ERR(0, 276, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("keepalive", 1, 2, 2, 1); __PYX_ERR(0, 279, __pyx_L3_error)
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "keepalive") < 0)) __PYX_ERR(0, 276, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "keepalive") < 0)) __PYX_ERR(0, 279, __pyx_L3_error)
       }
     } else if (PyTuple_GET_SIZE(__pyx_args) != 2) {
       goto __pyx_L5_argtuple_error;
@@ -6172,12 +6188,12 @@ static PyObject *__pyx_pw_3rai_73keepalive(PyObject *__pyx_self, PyObject *__pyx
       values[0] = PyTuple_GET_ITEM(__pyx_args, 0);
       values[1] = PyTuple_GET_ITEM(__pyx_args, 1);
     }
-    __pyx_v_address_text = __pyx_convert_string_from_py_std__in_string(values[0]); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 276, __pyx_L3_error)
-    __pyx_v_port_text = __pyx_convert_string_from_py_std__in_string(values[1]); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 276, __pyx_L3_error)
+    __pyx_v_address_text = __pyx_convert_string_from_py_std__in_string(values[0]); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 279, __pyx_L3_error)
+    __pyx_v_port_text = __pyx_convert_string_from_py_std__in_string(values[1]); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 279, __pyx_L3_error)
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("keepalive", 1, 2, 2, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 276, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("keepalive", 1, 2, 2, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 279, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("rai.keepalive", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
@@ -6196,7 +6212,7 @@ static PyObject *__pyx_pf_3rai_72keepalive(CYTHON_UNUSED PyObject *__pyx_self, s
   PyObject *__pyx_t_1 = NULL;
   __Pyx_RefNannySetupContext("keepalive", 0);
 
-  /* "rai.pyx":277
+  /* "rai.pyx":280
  * 
  * def keepalive (string address_text, string port_text):
  *     return _rai.keepalive (address_text, port_text)             # <<<<<<<<<<<<<<
@@ -6204,13 +6220,13 @@ static PyObject *__pyx_pf_3rai_72keepalive(CYTHON_UNUSED PyObject *__pyx_self, s
  * def key_create ():
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __pyx_v_3rai__rai->keepalive(__pyx_v_address_text, __pyx_v_port_text); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 277, __pyx_L1_error)
+  __pyx_t_1 = __pyx_v_3rai__rai->keepalive(__pyx_v_address_text, __pyx_v_port_text); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 280, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "rai.pyx":276
+  /* "rai.pyx":279
  *     return _rai.krai_from_raw (amount_text)
  * 
  * def keepalive (string address_text, string port_text):             # <<<<<<<<<<<<<<
@@ -6229,7 +6245,7 @@ static PyObject *__pyx_pf_3rai_72keepalive(CYTHON_UNUSED PyObject *__pyx_self, s
   return __pyx_r;
 }
 
-/* "rai.pyx":279
+/* "rai.pyx":282
  *     return _rai.keepalive (address_text, port_text)
  * 
  * def key_create ():             # <<<<<<<<<<<<<<
@@ -6261,19 +6277,19 @@ static PyObject *__pyx_pf_3rai_74key_create(CYTHON_UNUSED PyObject *__pyx_self) 
   PyObject *__pyx_t_4 = NULL;
   __Pyx_RefNannySetupContext("key_create", 0);
 
-  /* "rai.pyx":280
+  /* "rai.pyx":283
  * 
  * def key_create ():
  *     ret = _rai.key_create ()             # <<<<<<<<<<<<<<
  *     return JsonStruct(ret)
  * 
  */
-  __pyx_t_1 = __pyx_v_3rai__rai->key_create(); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 280, __pyx_L1_error)
+  __pyx_t_1 = __pyx_v_3rai__rai->key_create(); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 283, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_v_ret = __pyx_t_1;
   __pyx_t_1 = 0;
 
-  /* "rai.pyx":281
+  /* "rai.pyx":284
  * def key_create ():
  *     ret = _rai.key_create ()
  *     return JsonStruct(ret)             # <<<<<<<<<<<<<<
@@ -6281,7 +6297,7 @@ static PyObject *__pyx_pf_3rai_74key_create(CYTHON_UNUSED PyObject *__pyx_self) 
  * def key_expand (string key_text):
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_2 = __Pyx_GetModuleGlobalName(__pyx_n_s_JsonStruct); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 281, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_GetModuleGlobalName(__pyx_n_s_JsonStruct); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 284, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __pyx_t_3 = NULL;
   if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_2))) {
@@ -6294,13 +6310,13 @@ static PyObject *__pyx_pf_3rai_74key_create(CYTHON_UNUSED PyObject *__pyx_self) 
     }
   }
   if (!__pyx_t_3) {
-    __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_t_2, __pyx_v_ret); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 281, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_t_2, __pyx_v_ret); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 284, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
   } else {
     #if CYTHON_FAST_PYCALL
     if (PyFunction_Check(__pyx_t_2)) {
       PyObject *__pyx_temp[2] = {__pyx_t_3, __pyx_v_ret};
-      __pyx_t_1 = __Pyx_PyFunction_FastCall(__pyx_t_2, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 281, __pyx_L1_error)
+      __pyx_t_1 = __Pyx_PyFunction_FastCall(__pyx_t_2, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 284, __pyx_L1_error)
       __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
       __Pyx_GOTREF(__pyx_t_1);
     } else
@@ -6308,19 +6324,19 @@ static PyObject *__pyx_pf_3rai_74key_create(CYTHON_UNUSED PyObject *__pyx_self) 
     #if CYTHON_FAST_PYCCALL
     if (__Pyx_PyFastCFunction_Check(__pyx_t_2)) {
       PyObject *__pyx_temp[2] = {__pyx_t_3, __pyx_v_ret};
-      __pyx_t_1 = __Pyx_PyCFunction_FastCall(__pyx_t_2, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 281, __pyx_L1_error)
+      __pyx_t_1 = __Pyx_PyCFunction_FastCall(__pyx_t_2, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 284, __pyx_L1_error)
       __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
       __Pyx_GOTREF(__pyx_t_1);
     } else
     #endif
     {
-      __pyx_t_4 = PyTuple_New(1+1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 281, __pyx_L1_error)
+      __pyx_t_4 = PyTuple_New(1+1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 284, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_4);
       __Pyx_GIVEREF(__pyx_t_3); PyTuple_SET_ITEM(__pyx_t_4, 0, __pyx_t_3); __pyx_t_3 = NULL;
       __Pyx_INCREF(__pyx_v_ret);
       __Pyx_GIVEREF(__pyx_v_ret);
       PyTuple_SET_ITEM(__pyx_t_4, 0+1, __pyx_v_ret);
-      __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_4, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 281, __pyx_L1_error)
+      __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_4, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 284, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_1);
       __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
     }
@@ -6330,7 +6346,7 @@ static PyObject *__pyx_pf_3rai_74key_create(CYTHON_UNUSED PyObject *__pyx_self) 
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "rai.pyx":279
+  /* "rai.pyx":282
  *     return _rai.keepalive (address_text, port_text)
  * 
  * def key_create ():             # <<<<<<<<<<<<<<
@@ -6353,7 +6369,7 @@ static PyObject *__pyx_pf_3rai_74key_create(CYTHON_UNUSED PyObject *__pyx_self) 
   return __pyx_r;
 }
 
-/* "rai.pyx":283
+/* "rai.pyx":286
  *     return JsonStruct(ret)
  * 
  * def key_expand (string key_text):             # <<<<<<<<<<<<<<
@@ -6370,7 +6386,7 @@ static PyObject *__pyx_pw_3rai_77key_expand(PyObject *__pyx_self, PyObject *__py
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("key_expand (wrapper)", 0);
   assert(__pyx_arg_key_text); {
-    __pyx_v_key_text = __pyx_convert_string_from_py_std__in_string(__pyx_arg_key_text); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 283, __pyx_L3_error)
+    __pyx_v_key_text = __pyx_convert_string_from_py_std__in_string(__pyx_arg_key_text); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 286, __pyx_L3_error)
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L3_error:;
@@ -6396,29 +6412,29 @@ static PyObject *__pyx_pf_3rai_76key_expand(CYTHON_UNUSED PyObject *__pyx_self, 
   PyObject *__pyx_t_5 = NULL;
   __Pyx_RefNannySetupContext("key_expand", 0);
 
-  /* "rai.pyx":284
+  /* "rai.pyx":287
  * 
  * def key_expand (string key_text):
  *     ret = _rai.key_expand (key_text)             # <<<<<<<<<<<<<<
  *     if ret:
  *         return JsonStruct(ret)
  */
-  __pyx_t_1 = __pyx_v_3rai__rai->key_expand(__pyx_v_key_text); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 284, __pyx_L1_error)
+  __pyx_t_1 = __pyx_v_3rai__rai->key_expand(__pyx_v_key_text); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 287, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_v_ret = __pyx_t_1;
   __pyx_t_1 = 0;
 
-  /* "rai.pyx":285
+  /* "rai.pyx":288
  * def key_expand (string key_text):
  *     ret = _rai.key_expand (key_text)
  *     if ret:             # <<<<<<<<<<<<<<
  *         return JsonStruct(ret)
  * 
  */
-  __pyx_t_2 = __Pyx_PyObject_IsTrue(__pyx_v_ret); if (unlikely(__pyx_t_2 < 0)) __PYX_ERR(0, 285, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_IsTrue(__pyx_v_ret); if (unlikely(__pyx_t_2 < 0)) __PYX_ERR(0, 288, __pyx_L1_error)
   if (__pyx_t_2) {
 
-    /* "rai.pyx":286
+    /* "rai.pyx":289
  *     ret = _rai.key_expand (key_text)
  *     if ret:
  *         return JsonStruct(ret)             # <<<<<<<<<<<<<<
@@ -6426,7 +6442,7 @@ static PyObject *__pyx_pf_3rai_76key_expand(CYTHON_UNUSED PyObject *__pyx_self, 
  * def ledger (string account_text, uint64_t count, sorting = False, representative = False, weight = False, pending = False):
  */
     __Pyx_XDECREF(__pyx_r);
-    __pyx_t_3 = __Pyx_GetModuleGlobalName(__pyx_n_s_JsonStruct); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 286, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_GetModuleGlobalName(__pyx_n_s_JsonStruct); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 289, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
     __pyx_t_4 = NULL;
     if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_3))) {
@@ -6439,13 +6455,13 @@ static PyObject *__pyx_pf_3rai_76key_expand(CYTHON_UNUSED PyObject *__pyx_self, 
       }
     }
     if (!__pyx_t_4) {
-      __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_v_ret); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 286, __pyx_L1_error)
+      __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_v_ret); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 289, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_1);
     } else {
       #if CYTHON_FAST_PYCALL
       if (PyFunction_Check(__pyx_t_3)) {
         PyObject *__pyx_temp[2] = {__pyx_t_4, __pyx_v_ret};
-        __pyx_t_1 = __Pyx_PyFunction_FastCall(__pyx_t_3, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 286, __pyx_L1_error)
+        __pyx_t_1 = __Pyx_PyFunction_FastCall(__pyx_t_3, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 289, __pyx_L1_error)
         __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
         __Pyx_GOTREF(__pyx_t_1);
       } else
@@ -6453,19 +6469,19 @@ static PyObject *__pyx_pf_3rai_76key_expand(CYTHON_UNUSED PyObject *__pyx_self, 
       #if CYTHON_FAST_PYCCALL
       if (__Pyx_PyFastCFunction_Check(__pyx_t_3)) {
         PyObject *__pyx_temp[2] = {__pyx_t_4, __pyx_v_ret};
-        __pyx_t_1 = __Pyx_PyCFunction_FastCall(__pyx_t_3, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 286, __pyx_L1_error)
+        __pyx_t_1 = __Pyx_PyCFunction_FastCall(__pyx_t_3, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 289, __pyx_L1_error)
         __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
         __Pyx_GOTREF(__pyx_t_1);
       } else
       #endif
       {
-        __pyx_t_5 = PyTuple_New(1+1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 286, __pyx_L1_error)
+        __pyx_t_5 = PyTuple_New(1+1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 289, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_5);
         __Pyx_GIVEREF(__pyx_t_4); PyTuple_SET_ITEM(__pyx_t_5, 0, __pyx_t_4); __pyx_t_4 = NULL;
         __Pyx_INCREF(__pyx_v_ret);
         __Pyx_GIVEREF(__pyx_v_ret);
         PyTuple_SET_ITEM(__pyx_t_5, 0+1, __pyx_v_ret);
-        __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_5, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 286, __pyx_L1_error)
+        __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_5, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 289, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_1);
         __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
       }
@@ -6475,7 +6491,7 @@ static PyObject *__pyx_pf_3rai_76key_expand(CYTHON_UNUSED PyObject *__pyx_self, 
     __pyx_t_1 = 0;
     goto __pyx_L0;
 
-    /* "rai.pyx":285
+    /* "rai.pyx":288
  * def key_expand (string key_text):
  *     ret = _rai.key_expand (key_text)
  *     if ret:             # <<<<<<<<<<<<<<
@@ -6484,7 +6500,7 @@ static PyObject *__pyx_pf_3rai_76key_expand(CYTHON_UNUSED PyObject *__pyx_self, 
  */
   }
 
-  /* "rai.pyx":283
+  /* "rai.pyx":286
  *     return JsonStruct(ret)
  * 
  * def key_expand (string key_text):             # <<<<<<<<<<<<<<
@@ -6509,7 +6525,7 @@ static PyObject *__pyx_pf_3rai_76key_expand(CYTHON_UNUSED PyObject *__pyx_self, 
   return __pyx_r;
 }
 
-/* "rai.pyx":288
+/* "rai.pyx":291
  *         return JsonStruct(ret)
  * 
  * def ledger (string account_text, uint64_t count, sorting = False, representative = False, weight = False, pending = False):             # <<<<<<<<<<<<<<
@@ -6558,7 +6574,7 @@ static PyObject *__pyx_pw_3rai_79ledger(PyObject *__pyx_self, PyObject *__pyx_ar
         case  1:
         if (likely((values[1] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_count)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("ledger", 0, 2, 6, 1); __PYX_ERR(0, 288, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("ledger", 0, 2, 6, 1); __PYX_ERR(0, 291, __pyx_L3_error)
         }
         case  2:
         if (kw_args > 0) {
@@ -6582,7 +6598,7 @@ static PyObject *__pyx_pw_3rai_79ledger(PyObject *__pyx_self, PyObject *__pyx_ar
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "ledger") < 0)) __PYX_ERR(0, 288, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "ledger") < 0)) __PYX_ERR(0, 291, __pyx_L3_error)
       }
     } else {
       switch (PyTuple_GET_SIZE(__pyx_args)) {
@@ -6596,8 +6612,8 @@ static PyObject *__pyx_pw_3rai_79ledger(PyObject *__pyx_self, PyObject *__pyx_ar
         default: goto __pyx_L5_argtuple_error;
       }
     }
-    __pyx_v_account_text = __pyx_convert_string_from_py_std__in_string(values[0]); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 288, __pyx_L3_error)
-    __pyx_v_count = __Pyx_PyInt_As_uint64_t(values[1]); if (unlikely((__pyx_v_count == ((uint64_t)-1)) && PyErr_Occurred())) __PYX_ERR(0, 288, __pyx_L3_error)
+    __pyx_v_account_text = __pyx_convert_string_from_py_std__in_string(values[0]); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 291, __pyx_L3_error)
+    __pyx_v_count = __Pyx_PyInt_As_uint64_t(values[1]); if (unlikely((__pyx_v_count == ((uint64_t)-1)) && PyErr_Occurred())) __PYX_ERR(0, 291, __pyx_L3_error)
     __pyx_v_sorting = values[2];
     __pyx_v_representative = values[3];
     __pyx_v_weight = values[4];
@@ -6605,7 +6621,7 @@ static PyObject *__pyx_pw_3rai_79ledger(PyObject *__pyx_self, PyObject *__pyx_ar
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("ledger", 0, 2, 6, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 288, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("ledger", 0, 2, 6, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 291, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("rai.ledger", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
@@ -6628,7 +6644,7 @@ static PyObject *__pyx_pf_3rai_78ledger(CYTHON_UNUSED PyObject *__pyx_self, std:
   PyObject *__pyx_t_5 = NULL;
   __Pyx_RefNannySetupContext("ledger", 0);
 
-  /* "rai.pyx":289
+  /* "rai.pyx":292
  * 
  * def ledger (string account_text, uint64_t count, sorting = False, representative = False, weight = False, pending = False):
  *     return _rai.ledger (account_text, count, sorting, representative, weight, pending)             # <<<<<<<<<<<<<<
@@ -6636,17 +6652,17 @@ static PyObject *__pyx_pf_3rai_78ledger(CYTHON_UNUSED PyObject *__pyx_self, std:
  * def block_create (d):
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __Pyx_PyObject_IsTrue(__pyx_v_sorting); if (unlikely((__pyx_t_1 == ((bool)-1)) && PyErr_Occurred())) __PYX_ERR(0, 289, __pyx_L1_error)
-  __pyx_t_2 = __Pyx_PyObject_IsTrue(__pyx_v_representative); if (unlikely((__pyx_t_2 == ((bool)-1)) && PyErr_Occurred())) __PYX_ERR(0, 289, __pyx_L1_error)
-  __pyx_t_3 = __Pyx_PyObject_IsTrue(__pyx_v_weight); if (unlikely((__pyx_t_3 == ((bool)-1)) && PyErr_Occurred())) __PYX_ERR(0, 289, __pyx_L1_error)
-  __pyx_t_4 = __Pyx_PyObject_IsTrue(__pyx_v_pending); if (unlikely((__pyx_t_4 == ((bool)-1)) && PyErr_Occurred())) __PYX_ERR(0, 289, __pyx_L1_error)
-  __pyx_t_5 = __pyx_v_3rai__rai->ledger(__pyx_v_account_text, __pyx_v_count, __pyx_t_1, __pyx_t_2, __pyx_t_3, __pyx_t_4); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 289, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_IsTrue(__pyx_v_sorting); if (unlikely((__pyx_t_1 == ((bool)-1)) && PyErr_Occurred())) __PYX_ERR(0, 292, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_IsTrue(__pyx_v_representative); if (unlikely((__pyx_t_2 == ((bool)-1)) && PyErr_Occurred())) __PYX_ERR(0, 292, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyObject_IsTrue(__pyx_v_weight); if (unlikely((__pyx_t_3 == ((bool)-1)) && PyErr_Occurred())) __PYX_ERR(0, 292, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_PyObject_IsTrue(__pyx_v_pending); if (unlikely((__pyx_t_4 == ((bool)-1)) && PyErr_Occurred())) __PYX_ERR(0, 292, __pyx_L1_error)
+  __pyx_t_5 = __pyx_v_3rai__rai->ledger(__pyx_v_account_text, __pyx_v_count, __pyx_t_1, __pyx_t_2, __pyx_t_3, __pyx_t_4); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 292, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
   __pyx_r = __pyx_t_5;
   __pyx_t_5 = 0;
   goto __pyx_L0;
 
-  /* "rai.pyx":288
+  /* "rai.pyx":291
  *         return JsonStruct(ret)
  * 
  * def ledger (string account_text, uint64_t count, sorting = False, representative = False, weight = False, pending = False):             # <<<<<<<<<<<<<<
@@ -6665,7 +6681,7 @@ static PyObject *__pyx_pf_3rai_78ledger(CYTHON_UNUSED PyObject *__pyx_self, std:
   return __pyx_r;
 }
 
-/* "rai.pyx":291
+/* "rai.pyx":294
  *     return _rai.ledger (account_text, count, sorting, representative, weight, pending)
  * 
  * def block_create (d):             # <<<<<<<<<<<<<<
@@ -6701,43 +6717,43 @@ static PyObject *__pyx_pf_3rai_80block_create(CYTHON_UNUSED PyObject *__pyx_self
   PyObject *__pyx_t_8 = NULL;
   __Pyx_RefNannySetupContext("block_create", 0);
 
-  /* "rai.pyx":292
+  /* "rai.pyx":295
  * 
  * def block_create (d):
  *     ret = _rai.block_create (d)             # <<<<<<<<<<<<<<
  *     if ret:
  *         ret['block'] = JsonStruct(json.loads(ret['block']))
  */
-  __pyx_t_1 = __pyx_v_3rai__rai->block_create(__pyx_v_d); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 292, __pyx_L1_error)
+  __pyx_t_1 = __pyx_v_3rai__rai->block_create(__pyx_v_d); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 295, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_v_ret = __pyx_t_1;
   __pyx_t_1 = 0;
 
-  /* "rai.pyx":293
+  /* "rai.pyx":296
  * def block_create (d):
  *     ret = _rai.block_create (d)
  *     if ret:             # <<<<<<<<<<<<<<
  *         ret['block'] = JsonStruct(json.loads(ret['block']))
  *     return ret
  */
-  __pyx_t_2 = __Pyx_PyObject_IsTrue(__pyx_v_ret); if (unlikely(__pyx_t_2 < 0)) __PYX_ERR(0, 293, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_IsTrue(__pyx_v_ret); if (unlikely(__pyx_t_2 < 0)) __PYX_ERR(0, 296, __pyx_L1_error)
   if (__pyx_t_2) {
 
-    /* "rai.pyx":294
+    /* "rai.pyx":297
  *     ret = _rai.block_create (d)
  *     if ret:
  *         ret['block'] = JsonStruct(json.loads(ret['block']))             # <<<<<<<<<<<<<<
  *     return ret
  * 
  */
-    __pyx_t_3 = __Pyx_GetModuleGlobalName(__pyx_n_s_JsonStruct); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 294, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_GetModuleGlobalName(__pyx_n_s_JsonStruct); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 297, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
-    __pyx_t_5 = __Pyx_GetModuleGlobalName(__pyx_n_s_json); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 294, __pyx_L1_error)
+    __pyx_t_5 = __Pyx_GetModuleGlobalName(__pyx_n_s_json); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 297, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
-    __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_t_5, __pyx_n_s_loads); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 294, __pyx_L1_error)
+    __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_t_5, __pyx_n_s_loads); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 297, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_6);
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-    __pyx_t_5 = PyObject_GetItem(__pyx_v_ret, __pyx_n_s_block); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 294, __pyx_L1_error)
+    __pyx_t_5 = PyObject_GetItem(__pyx_v_ret, __pyx_n_s_block); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 297, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
     __pyx_t_7 = NULL;
     if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_6))) {
@@ -6750,14 +6766,14 @@ static PyObject *__pyx_pf_3rai_80block_create(CYTHON_UNUSED PyObject *__pyx_self
       }
     }
     if (!__pyx_t_7) {
-      __pyx_t_4 = __Pyx_PyObject_CallOneArg(__pyx_t_6, __pyx_t_5); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 294, __pyx_L1_error)
+      __pyx_t_4 = __Pyx_PyObject_CallOneArg(__pyx_t_6, __pyx_t_5); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 297, __pyx_L1_error)
       __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
       __Pyx_GOTREF(__pyx_t_4);
     } else {
       #if CYTHON_FAST_PYCALL
       if (PyFunction_Check(__pyx_t_6)) {
         PyObject *__pyx_temp[2] = {__pyx_t_7, __pyx_t_5};
-        __pyx_t_4 = __Pyx_PyFunction_FastCall(__pyx_t_6, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 294, __pyx_L1_error)
+        __pyx_t_4 = __Pyx_PyFunction_FastCall(__pyx_t_6, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 297, __pyx_L1_error)
         __Pyx_XDECREF(__pyx_t_7); __pyx_t_7 = 0;
         __Pyx_GOTREF(__pyx_t_4);
         __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
@@ -6766,20 +6782,20 @@ static PyObject *__pyx_pf_3rai_80block_create(CYTHON_UNUSED PyObject *__pyx_self
       #if CYTHON_FAST_PYCCALL
       if (__Pyx_PyFastCFunction_Check(__pyx_t_6)) {
         PyObject *__pyx_temp[2] = {__pyx_t_7, __pyx_t_5};
-        __pyx_t_4 = __Pyx_PyCFunction_FastCall(__pyx_t_6, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 294, __pyx_L1_error)
+        __pyx_t_4 = __Pyx_PyCFunction_FastCall(__pyx_t_6, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 297, __pyx_L1_error)
         __Pyx_XDECREF(__pyx_t_7); __pyx_t_7 = 0;
         __Pyx_GOTREF(__pyx_t_4);
         __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
       } else
       #endif
       {
-        __pyx_t_8 = PyTuple_New(1+1); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 294, __pyx_L1_error)
+        __pyx_t_8 = PyTuple_New(1+1); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 297, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_8);
         __Pyx_GIVEREF(__pyx_t_7); PyTuple_SET_ITEM(__pyx_t_8, 0, __pyx_t_7); __pyx_t_7 = NULL;
         __Pyx_GIVEREF(__pyx_t_5);
         PyTuple_SET_ITEM(__pyx_t_8, 0+1, __pyx_t_5);
         __pyx_t_5 = 0;
-        __pyx_t_4 = __Pyx_PyObject_Call(__pyx_t_6, __pyx_t_8, NULL); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 294, __pyx_L1_error)
+        __pyx_t_4 = __Pyx_PyObject_Call(__pyx_t_6, __pyx_t_8, NULL); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 297, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_4);
         __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
       }
@@ -6796,14 +6812,14 @@ static PyObject *__pyx_pf_3rai_80block_create(CYTHON_UNUSED PyObject *__pyx_self
       }
     }
     if (!__pyx_t_6) {
-      __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_t_4); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 294, __pyx_L1_error)
+      __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_t_4); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 297, __pyx_L1_error)
       __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
       __Pyx_GOTREF(__pyx_t_1);
     } else {
       #if CYTHON_FAST_PYCALL
       if (PyFunction_Check(__pyx_t_3)) {
         PyObject *__pyx_temp[2] = {__pyx_t_6, __pyx_t_4};
-        __pyx_t_1 = __Pyx_PyFunction_FastCall(__pyx_t_3, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 294, __pyx_L1_error)
+        __pyx_t_1 = __Pyx_PyFunction_FastCall(__pyx_t_3, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 297, __pyx_L1_error)
         __Pyx_XDECREF(__pyx_t_6); __pyx_t_6 = 0;
         __Pyx_GOTREF(__pyx_t_1);
         __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
@@ -6812,29 +6828,29 @@ static PyObject *__pyx_pf_3rai_80block_create(CYTHON_UNUSED PyObject *__pyx_self
       #if CYTHON_FAST_PYCCALL
       if (__Pyx_PyFastCFunction_Check(__pyx_t_3)) {
         PyObject *__pyx_temp[2] = {__pyx_t_6, __pyx_t_4};
-        __pyx_t_1 = __Pyx_PyCFunction_FastCall(__pyx_t_3, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 294, __pyx_L1_error)
+        __pyx_t_1 = __Pyx_PyCFunction_FastCall(__pyx_t_3, __pyx_temp+1-1, 1+1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 297, __pyx_L1_error)
         __Pyx_XDECREF(__pyx_t_6); __pyx_t_6 = 0;
         __Pyx_GOTREF(__pyx_t_1);
         __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
       } else
       #endif
       {
-        __pyx_t_8 = PyTuple_New(1+1); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 294, __pyx_L1_error)
+        __pyx_t_8 = PyTuple_New(1+1); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 297, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_8);
         __Pyx_GIVEREF(__pyx_t_6); PyTuple_SET_ITEM(__pyx_t_8, 0, __pyx_t_6); __pyx_t_6 = NULL;
         __Pyx_GIVEREF(__pyx_t_4);
         PyTuple_SET_ITEM(__pyx_t_8, 0+1, __pyx_t_4);
         __pyx_t_4 = 0;
-        __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_8, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 294, __pyx_L1_error)
+        __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_8, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 297, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_1);
         __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
       }
     }
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-    if (unlikely(PyObject_SetItem(__pyx_v_ret, __pyx_n_s_block, __pyx_t_1) < 0)) __PYX_ERR(0, 294, __pyx_L1_error)
+    if (unlikely(PyObject_SetItem(__pyx_v_ret, __pyx_n_s_block, __pyx_t_1) < 0)) __PYX_ERR(0, 297, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-    /* "rai.pyx":293
+    /* "rai.pyx":296
  * def block_create (d):
  *     ret = _rai.block_create (d)
  *     if ret:             # <<<<<<<<<<<<<<
@@ -6843,7 +6859,7 @@ static PyObject *__pyx_pf_3rai_80block_create(CYTHON_UNUSED PyObject *__pyx_self
  */
   }
 
-  /* "rai.pyx":295
+  /* "rai.pyx":298
  *     if ret:
  *         ret['block'] = JsonStruct(json.loads(ret['block']))
  *     return ret             # <<<<<<<<<<<<<<
@@ -6855,7 +6871,7 @@ static PyObject *__pyx_pf_3rai_80block_create(CYTHON_UNUSED PyObject *__pyx_self
   __pyx_r = __pyx_v_ret;
   goto __pyx_L0;
 
-  /* "rai.pyx":291
+  /* "rai.pyx":294
  *     return _rai.ledger (account_text, count, sorting, representative, weight, pending)
  * 
  * def block_create (d):             # <<<<<<<<<<<<<<
@@ -6881,7 +6897,7 @@ static PyObject *__pyx_pf_3rai_80block_create(CYTHON_UNUSED PyObject *__pyx_self
   return __pyx_r;
 }
 
-/* "rai.pyx":297
+/* "rai.pyx":300
  *     return ret
  * 
  * def payment_begin (string id_text):             # <<<<<<<<<<<<<<
@@ -6898,7 +6914,7 @@ static PyObject *__pyx_pw_3rai_83payment_begin(PyObject *__pyx_self, PyObject *_
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("payment_begin (wrapper)", 0);
   assert(__pyx_arg_id_text); {
-    __pyx_v_id_text = __pyx_convert_string_from_py_std__in_string(__pyx_arg_id_text); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 297, __pyx_L3_error)
+    __pyx_v_id_text = __pyx_convert_string_from_py_std__in_string(__pyx_arg_id_text); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 300, __pyx_L3_error)
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L3_error:;
@@ -6919,7 +6935,7 @@ static PyObject *__pyx_pf_3rai_82payment_begin(CYTHON_UNUSED PyObject *__pyx_sel
   PyObject *__pyx_t_1 = NULL;
   __Pyx_RefNannySetupContext("payment_begin", 0);
 
-  /* "rai.pyx":298
+  /* "rai.pyx":301
  * 
  * def payment_begin (string id_text):
  *     return _rai.payment_begin(id_text)             # <<<<<<<<<<<<<<
@@ -6927,13 +6943,13 @@ static PyObject *__pyx_pf_3rai_82payment_begin(CYTHON_UNUSED PyObject *__pyx_sel
  * def payment_init (string id_text):
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __pyx_v_3rai__rai->payment_begin(__pyx_v_id_text); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 298, __pyx_L1_error)
+  __pyx_t_1 = __pyx_v_3rai__rai->payment_begin(__pyx_v_id_text); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 301, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "rai.pyx":297
+  /* "rai.pyx":300
  *     return ret
  * 
  * def payment_begin (string id_text):             # <<<<<<<<<<<<<<
@@ -6952,7 +6968,7 @@ static PyObject *__pyx_pf_3rai_82payment_begin(CYTHON_UNUSED PyObject *__pyx_sel
   return __pyx_r;
 }
 
-/* "rai.pyx":300
+/* "rai.pyx":303
  *     return _rai.payment_begin(id_text)
  * 
  * def payment_init (string id_text):             # <<<<<<<<<<<<<<
@@ -6969,7 +6985,7 @@ static PyObject *__pyx_pw_3rai_85payment_init(PyObject *__pyx_self, PyObject *__
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("payment_init (wrapper)", 0);
   assert(__pyx_arg_id_text); {
-    __pyx_v_id_text = __pyx_convert_string_from_py_std__in_string(__pyx_arg_id_text); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 300, __pyx_L3_error)
+    __pyx_v_id_text = __pyx_convert_string_from_py_std__in_string(__pyx_arg_id_text); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 303, __pyx_L3_error)
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L3_error:;
@@ -6990,7 +7006,7 @@ static PyObject *__pyx_pf_3rai_84payment_init(CYTHON_UNUSED PyObject *__pyx_self
   PyObject *__pyx_t_1 = NULL;
   __Pyx_RefNannySetupContext("payment_init", 0);
 
-  /* "rai.pyx":301
+  /* "rai.pyx":304
  * 
  * def payment_init (string id_text):
  *     return _rai.payment_init (id_text)             # <<<<<<<<<<<<<<
@@ -6998,13 +7014,13 @@ static PyObject *__pyx_pf_3rai_84payment_init(CYTHON_UNUSED PyObject *__pyx_self
  * def payment_end (string id_text, string account_text):
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __pyx_v_3rai__rai->payment_init(__pyx_v_id_text); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 301, __pyx_L1_error)
+  __pyx_t_1 = __pyx_v_3rai__rai->payment_init(__pyx_v_id_text); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 304, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "rai.pyx":300
+  /* "rai.pyx":303
  *     return _rai.payment_begin(id_text)
  * 
  * def payment_init (string id_text):             # <<<<<<<<<<<<<<
@@ -7023,7 +7039,7 @@ static PyObject *__pyx_pf_3rai_84payment_init(CYTHON_UNUSED PyObject *__pyx_self
   return __pyx_r;
 }
 
-/* "rai.pyx":303
+/* "rai.pyx":306
  *     return _rai.payment_init (id_text)
  * 
  * def payment_end (string id_text, string account_text):             # <<<<<<<<<<<<<<
@@ -7060,11 +7076,11 @@ static PyObject *__pyx_pw_3rai_87payment_end(PyObject *__pyx_self, PyObject *__p
         case  1:
         if (likely((values[1] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_account_text)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("payment_end", 1, 2, 2, 1); __PYX_ERR(0, 303, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("payment_end", 1, 2, 2, 1); __PYX_ERR(0, 306, __pyx_L3_error)
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "payment_end") < 0)) __PYX_ERR(0, 303, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "payment_end") < 0)) __PYX_ERR(0, 306, __pyx_L3_error)
       }
     } else if (PyTuple_GET_SIZE(__pyx_args) != 2) {
       goto __pyx_L5_argtuple_error;
@@ -7072,12 +7088,12 @@ static PyObject *__pyx_pw_3rai_87payment_end(PyObject *__pyx_self, PyObject *__p
       values[0] = PyTuple_GET_ITEM(__pyx_args, 0);
       values[1] = PyTuple_GET_ITEM(__pyx_args, 1);
     }
-    __pyx_v_id_text = __pyx_convert_string_from_py_std__in_string(values[0]); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 303, __pyx_L3_error)
-    __pyx_v_account_text = __pyx_convert_string_from_py_std__in_string(values[1]); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 303, __pyx_L3_error)
+    __pyx_v_id_text = __pyx_convert_string_from_py_std__in_string(values[0]); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 306, __pyx_L3_error)
+    __pyx_v_account_text = __pyx_convert_string_from_py_std__in_string(values[1]); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 306, __pyx_L3_error)
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("payment_end", 1, 2, 2, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 303, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("payment_end", 1, 2, 2, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 306, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("rai.payment_end", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
@@ -7096,7 +7112,7 @@ static PyObject *__pyx_pf_3rai_86payment_end(CYTHON_UNUSED PyObject *__pyx_self,
   PyObject *__pyx_t_1 = NULL;
   __Pyx_RefNannySetupContext("payment_end", 0);
 
-  /* "rai.pyx":304
+  /* "rai.pyx":307
  * 
  * def payment_end (string id_text, string account_text):
  *     return _rai.payment_end (id_text, account_text)             # <<<<<<<<<<<<<<
@@ -7104,13 +7120,13 @@ static PyObject *__pyx_pf_3rai_86payment_end(CYTHON_UNUSED PyObject *__pyx_self,
  * def payment_wait (string account_text, string amount_text, uint64_t timeout):
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __pyx_v_3rai__rai->payment_end(__pyx_v_id_text, __pyx_v_account_text); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 304, __pyx_L1_error)
+  __pyx_t_1 = __pyx_v_3rai__rai->payment_end(__pyx_v_id_text, __pyx_v_account_text); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 307, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "rai.pyx":303
+  /* "rai.pyx":306
  *     return _rai.payment_init (id_text)
  * 
  * def payment_end (string id_text, string account_text):             # <<<<<<<<<<<<<<
@@ -7129,7 +7145,7 @@ static PyObject *__pyx_pf_3rai_86payment_end(CYTHON_UNUSED PyObject *__pyx_self,
   return __pyx_r;
 }
 
-/* "rai.pyx":306
+/* "rai.pyx":309
  *     return _rai.payment_end (id_text, account_text)
  * 
  * def payment_wait (string account_text, string amount_text, uint64_t timeout):             # <<<<<<<<<<<<<<
@@ -7168,16 +7184,16 @@ static PyObject *__pyx_pw_3rai_89payment_wait(PyObject *__pyx_self, PyObject *__
         case  1:
         if (likely((values[1] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_amount_text)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("payment_wait", 1, 3, 3, 1); __PYX_ERR(0, 306, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("payment_wait", 1, 3, 3, 1); __PYX_ERR(0, 309, __pyx_L3_error)
         }
         case  2:
         if (likely((values[2] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_timeout)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("payment_wait", 1, 3, 3, 2); __PYX_ERR(0, 306, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("payment_wait", 1, 3, 3, 2); __PYX_ERR(0, 309, __pyx_L3_error)
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "payment_wait") < 0)) __PYX_ERR(0, 306, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "payment_wait") < 0)) __PYX_ERR(0, 309, __pyx_L3_error)
       }
     } else if (PyTuple_GET_SIZE(__pyx_args) != 3) {
       goto __pyx_L5_argtuple_error;
@@ -7186,13 +7202,13 @@ static PyObject *__pyx_pw_3rai_89payment_wait(PyObject *__pyx_self, PyObject *__
       values[1] = PyTuple_GET_ITEM(__pyx_args, 1);
       values[2] = PyTuple_GET_ITEM(__pyx_args, 2);
     }
-    __pyx_v_account_text = __pyx_convert_string_from_py_std__in_string(values[0]); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 306, __pyx_L3_error)
-    __pyx_v_amount_text = __pyx_convert_string_from_py_std__in_string(values[1]); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 306, __pyx_L3_error)
-    __pyx_v_timeout = __Pyx_PyInt_As_uint64_t(values[2]); if (unlikely((__pyx_v_timeout == ((uint64_t)-1)) && PyErr_Occurred())) __PYX_ERR(0, 306, __pyx_L3_error)
+    __pyx_v_account_text = __pyx_convert_string_from_py_std__in_string(values[0]); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 309, __pyx_L3_error)
+    __pyx_v_amount_text = __pyx_convert_string_from_py_std__in_string(values[1]); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 309, __pyx_L3_error)
+    __pyx_v_timeout = __Pyx_PyInt_As_uint64_t(values[2]); if (unlikely((__pyx_v_timeout == ((uint64_t)-1)) && PyErr_Occurred())) __PYX_ERR(0, 309, __pyx_L3_error)
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("payment_wait", 1, 3, 3, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 306, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("payment_wait", 1, 3, 3, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 309, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("rai.payment_wait", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
@@ -7211,7 +7227,7 @@ static PyObject *__pyx_pf_3rai_88payment_wait(CYTHON_UNUSED PyObject *__pyx_self
   PyObject *__pyx_t_1 = NULL;
   __Pyx_RefNannySetupContext("payment_wait", 0);
 
-  /* "rai.pyx":307
+  /* "rai.pyx":310
  * 
  * def payment_wait (string account_text, string amount_text, uint64_t timeout):
  *     return _rai.payment_wait (account_text, amount_text, timeout)             # <<<<<<<<<<<<<<
@@ -7219,13 +7235,13 @@ static PyObject *__pyx_pf_3rai_88payment_wait(CYTHON_UNUSED PyObject *__pyx_self
  * def process (string block_text):
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __pyx_v_3rai__rai->payment_wait(__pyx_v_account_text, __pyx_v_amount_text, __pyx_v_timeout); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 307, __pyx_L1_error)
+  __pyx_t_1 = __pyx_v_3rai__rai->payment_wait(__pyx_v_account_text, __pyx_v_amount_text, __pyx_v_timeout); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 310, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "rai.pyx":306
+  /* "rai.pyx":309
  *     return _rai.payment_end (id_text, account_text)
  * 
  * def payment_wait (string account_text, string amount_text, uint64_t timeout):             # <<<<<<<<<<<<<<
@@ -7244,7 +7260,7 @@ static PyObject *__pyx_pf_3rai_88payment_wait(CYTHON_UNUSED PyObject *__pyx_self
   return __pyx_r;
 }
 
-/* "rai.pyx":309
+/* "rai.pyx":312
  *     return _rai.payment_wait (account_text, amount_text, timeout)
  * 
  * def process (string block_text):             # <<<<<<<<<<<<<<
@@ -7261,7 +7277,7 @@ static PyObject *__pyx_pw_3rai_91process(PyObject *__pyx_self, PyObject *__pyx_a
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("process (wrapper)", 0);
   assert(__pyx_arg_block_text); {
-    __pyx_v_block_text = __pyx_convert_string_from_py_std__in_string(__pyx_arg_block_text); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 309, __pyx_L3_error)
+    __pyx_v_block_text = __pyx_convert_string_from_py_std__in_string(__pyx_arg_block_text); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 312, __pyx_L3_error)
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L3_error:;
@@ -7282,7 +7298,7 @@ static PyObject *__pyx_pf_3rai_90process(CYTHON_UNUSED PyObject *__pyx_self, std
   PyObject *__pyx_t_1 = NULL;
   __Pyx_RefNannySetupContext("process", 0);
 
-  /* "rai.pyx":310
+  /* "rai.pyx":313
  * 
  * def process (string block_text):
  *     return _rai.process (block_text)             # <<<<<<<<<<<<<<
@@ -7290,13 +7306,13 @@ static PyObject *__pyx_pf_3rai_90process(CYTHON_UNUSED PyObject *__pyx_self, std
  * def receive (string wallet_text, string account_text, string hash_text, uint64_t work):
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __pyx_v_3rai__rai->process(__pyx_v_block_text); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 310, __pyx_L1_error)
+  __pyx_t_1 = __pyx_v_3rai__rai->process(__pyx_v_block_text); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 313, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "rai.pyx":309
+  /* "rai.pyx":312
  *     return _rai.payment_wait (account_text, amount_text, timeout)
  * 
  * def process (string block_text):             # <<<<<<<<<<<<<<
@@ -7315,7 +7331,7 @@ static PyObject *__pyx_pf_3rai_90process(CYTHON_UNUSED PyObject *__pyx_self, std
   return __pyx_r;
 }
 
-/* "rai.pyx":312
+/* "rai.pyx":315
  *     return _rai.process (block_text)
  * 
  * def receive (string wallet_text, string account_text, string hash_text, uint64_t work):             # <<<<<<<<<<<<<<
@@ -7356,21 +7372,21 @@ static PyObject *__pyx_pw_3rai_93receive(PyObject *__pyx_self, PyObject *__pyx_a
         case  1:
         if (likely((values[1] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_account_text)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("receive", 1, 4, 4, 1); __PYX_ERR(0, 312, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("receive", 1, 4, 4, 1); __PYX_ERR(0, 315, __pyx_L3_error)
         }
         case  2:
         if (likely((values[2] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_hash_text)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("receive", 1, 4, 4, 2); __PYX_ERR(0, 312, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("receive", 1, 4, 4, 2); __PYX_ERR(0, 315, __pyx_L3_error)
         }
         case  3:
         if (likely((values[3] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_work)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("receive", 1, 4, 4, 3); __PYX_ERR(0, 312, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("receive", 1, 4, 4, 3); __PYX_ERR(0, 315, __pyx_L3_error)
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "receive") < 0)) __PYX_ERR(0, 312, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "receive") < 0)) __PYX_ERR(0, 315, __pyx_L3_error)
       }
     } else if (PyTuple_GET_SIZE(__pyx_args) != 4) {
       goto __pyx_L5_argtuple_error;
@@ -7380,14 +7396,14 @@ static PyObject *__pyx_pw_3rai_93receive(PyObject *__pyx_self, PyObject *__pyx_a
       values[2] = PyTuple_GET_ITEM(__pyx_args, 2);
       values[3] = PyTuple_GET_ITEM(__pyx_args, 3);
     }
-    __pyx_v_wallet_text = __pyx_convert_string_from_py_std__in_string(values[0]); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 312, __pyx_L3_error)
-    __pyx_v_account_text = __pyx_convert_string_from_py_std__in_string(values[1]); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 312, __pyx_L3_error)
-    __pyx_v_hash_text = __pyx_convert_string_from_py_std__in_string(values[2]); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 312, __pyx_L3_error)
-    __pyx_v_work = __Pyx_PyInt_As_uint64_t(values[3]); if (unlikely((__pyx_v_work == ((uint64_t)-1)) && PyErr_Occurred())) __PYX_ERR(0, 312, __pyx_L3_error)
+    __pyx_v_wallet_text = __pyx_convert_string_from_py_std__in_string(values[0]); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 315, __pyx_L3_error)
+    __pyx_v_account_text = __pyx_convert_string_from_py_std__in_string(values[1]); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 315, __pyx_L3_error)
+    __pyx_v_hash_text = __pyx_convert_string_from_py_std__in_string(values[2]); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 315, __pyx_L3_error)
+    __pyx_v_work = __Pyx_PyInt_As_uint64_t(values[3]); if (unlikely((__pyx_v_work == ((uint64_t)-1)) && PyErr_Occurred())) __PYX_ERR(0, 315, __pyx_L3_error)
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("receive", 1, 4, 4, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 312, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("receive", 1, 4, 4, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 315, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("rai.receive", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
@@ -7406,7 +7422,7 @@ static PyObject *__pyx_pf_3rai_92receive(CYTHON_UNUSED PyObject *__pyx_self, std
   PyObject *__pyx_t_1 = NULL;
   __Pyx_RefNannySetupContext("receive", 0);
 
-  /* "rai.pyx":313
+  /* "rai.pyx":316
  * 
  * def receive (string wallet_text, string account_text, string hash_text, uint64_t work):
  *     return _rai.receive (wallet_text, account_text, hash_text, work)             # <<<<<<<<<<<<<<
@@ -7414,13 +7430,13 @@ static PyObject *__pyx_pf_3rai_92receive(CYTHON_UNUSED PyObject *__pyx_self, std
  * def receive_minimum ():
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __pyx_v_3rai__rai->receive(__pyx_v_wallet_text, __pyx_v_account_text, __pyx_v_hash_text, __pyx_v_work); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 313, __pyx_L1_error)
+  __pyx_t_1 = __pyx_v_3rai__rai->receive(__pyx_v_wallet_text, __pyx_v_account_text, __pyx_v_hash_text, __pyx_v_work); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 316, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "rai.pyx":312
+  /* "rai.pyx":315
  *     return _rai.process (block_text)
  * 
  * def receive (string wallet_text, string account_text, string hash_text, uint64_t work):             # <<<<<<<<<<<<<<
@@ -7439,7 +7455,7 @@ static PyObject *__pyx_pf_3rai_92receive(CYTHON_UNUSED PyObject *__pyx_self, std
   return __pyx_r;
 }
 
-/* "rai.pyx":315
+/* "rai.pyx":318
  *     return _rai.receive (wallet_text, account_text, hash_text, work)
  * 
  * def receive_minimum ():             # <<<<<<<<<<<<<<
@@ -7467,7 +7483,7 @@ static PyObject *__pyx_pf_3rai_94receive_minimum(CYTHON_UNUSED PyObject *__pyx_s
   PyObject *__pyx_t_1 = NULL;
   __Pyx_RefNannySetupContext("receive_minimum", 0);
 
-  /* "rai.pyx":316
+  /* "rai.pyx":319
  * 
  * def receive_minimum ():
  *     return _rai.receive_minimum ();             # <<<<<<<<<<<<<<
@@ -7475,13 +7491,13 @@ static PyObject *__pyx_pf_3rai_94receive_minimum(CYTHON_UNUSED PyObject *__pyx_s
  * def receive_minimum_set (string amount_text):
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __pyx_v_3rai__rai->receive_minimum(); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 316, __pyx_L1_error)
+  __pyx_t_1 = __pyx_v_3rai__rai->receive_minimum(); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 319, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "rai.pyx":315
+  /* "rai.pyx":318
  *     return _rai.receive (wallet_text, account_text, hash_text, work)
  * 
  * def receive_minimum ():             # <<<<<<<<<<<<<<
@@ -7500,7 +7516,7 @@ static PyObject *__pyx_pf_3rai_94receive_minimum(CYTHON_UNUSED PyObject *__pyx_s
   return __pyx_r;
 }
 
-/* "rai.pyx":318
+/* "rai.pyx":321
  *     return _rai.receive_minimum ();
  * 
  * def receive_minimum_set (string amount_text):             # <<<<<<<<<<<<<<
@@ -7517,7 +7533,7 @@ static PyObject *__pyx_pw_3rai_97receive_minimum_set(PyObject *__pyx_self, PyObj
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("receive_minimum_set (wrapper)", 0);
   assert(__pyx_arg_amount_text); {
-    __pyx_v_amount_text = __pyx_convert_string_from_py_std__in_string(__pyx_arg_amount_text); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 318, __pyx_L3_error)
+    __pyx_v_amount_text = __pyx_convert_string_from_py_std__in_string(__pyx_arg_amount_text); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 321, __pyx_L3_error)
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L3_error:;
@@ -7538,7 +7554,7 @@ static PyObject *__pyx_pf_3rai_96receive_minimum_set(CYTHON_UNUSED PyObject *__p
   PyObject *__pyx_t_1 = NULL;
   __Pyx_RefNannySetupContext("receive_minimum_set", 0);
 
-  /* "rai.pyx":319
+  /* "rai.pyx":322
  * 
  * def receive_minimum_set (string amount_text):
  *     return _rai.receive_minimum_set (amount_text)             # <<<<<<<<<<<<<<
@@ -7546,13 +7562,13 @@ static PyObject *__pyx_pf_3rai_96receive_minimum_set(CYTHON_UNUSED PyObject *__p
  * def representatives (uint64_t count, bool sorting):
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __pyx_v_3rai__rai->receive_minimum_set(__pyx_v_amount_text); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 319, __pyx_L1_error)
+  __pyx_t_1 = __pyx_v_3rai__rai->receive_minimum_set(__pyx_v_amount_text); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 322, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "rai.pyx":318
+  /* "rai.pyx":321
  *     return _rai.receive_minimum ();
  * 
  * def receive_minimum_set (string amount_text):             # <<<<<<<<<<<<<<
@@ -7571,7 +7587,7 @@ static PyObject *__pyx_pf_3rai_96receive_minimum_set(CYTHON_UNUSED PyObject *__p
   return __pyx_r;
 }
 
-/* "rai.pyx":321
+/* "rai.pyx":324
  *     return _rai.receive_minimum_set (amount_text)
  * 
  * def representatives (uint64_t count, bool sorting):             # <<<<<<<<<<<<<<
@@ -7608,11 +7624,11 @@ static PyObject *__pyx_pw_3rai_99representatives(PyObject *__pyx_self, PyObject 
         case  1:
         if (likely((values[1] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_sorting)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("representatives", 1, 2, 2, 1); __PYX_ERR(0, 321, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("representatives", 1, 2, 2, 1); __PYX_ERR(0, 324, __pyx_L3_error)
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "representatives") < 0)) __PYX_ERR(0, 321, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "representatives") < 0)) __PYX_ERR(0, 324, __pyx_L3_error)
       }
     } else if (PyTuple_GET_SIZE(__pyx_args) != 2) {
       goto __pyx_L5_argtuple_error;
@@ -7620,12 +7636,12 @@ static PyObject *__pyx_pw_3rai_99representatives(PyObject *__pyx_self, PyObject 
       values[0] = PyTuple_GET_ITEM(__pyx_args, 0);
       values[1] = PyTuple_GET_ITEM(__pyx_args, 1);
     }
-    __pyx_v_count = __Pyx_PyInt_As_uint64_t(values[0]); if (unlikely((__pyx_v_count == ((uint64_t)-1)) && PyErr_Occurred())) __PYX_ERR(0, 321, __pyx_L3_error)
-    __pyx_v_sorting = __Pyx_PyObject_IsTrue(values[1]); if (unlikely((__pyx_v_sorting == ((bool)-1)) && PyErr_Occurred())) __PYX_ERR(0, 321, __pyx_L3_error)
+    __pyx_v_count = __Pyx_PyInt_As_uint64_t(values[0]); if (unlikely((__pyx_v_count == ((uint64_t)-1)) && PyErr_Occurred())) __PYX_ERR(0, 324, __pyx_L3_error)
+    __pyx_v_sorting = __Pyx_PyObject_IsTrue(values[1]); if (unlikely((__pyx_v_sorting == ((bool)-1)) && PyErr_Occurred())) __PYX_ERR(0, 324, __pyx_L3_error)
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("representatives", 1, 2, 2, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 321, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("representatives", 1, 2, 2, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 324, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("rai.representatives", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
@@ -7644,7 +7660,7 @@ static PyObject *__pyx_pf_3rai_98representatives(CYTHON_UNUSED PyObject *__pyx_s
   PyObject *__pyx_t_1 = NULL;
   __Pyx_RefNannySetupContext("representatives", 0);
 
-  /* "rai.pyx":322
+  /* "rai.pyx":325
  * 
  * def representatives (uint64_t count, bool sorting):
  *     return _rai.representatives (count, sorting)             # <<<<<<<<<<<<<<
@@ -7652,13 +7668,13 @@ static PyObject *__pyx_pf_3rai_98representatives(CYTHON_UNUSED PyObject *__pyx_s
  * def wallet_representative (string wallet_text):
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __pyx_v_3rai__rai->representatives(__pyx_v_count, __pyx_v_sorting); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 322, __pyx_L1_error)
+  __pyx_t_1 = __pyx_v_3rai__rai->representatives(__pyx_v_count, __pyx_v_sorting); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 325, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "rai.pyx":321
+  /* "rai.pyx":324
  *     return _rai.receive_minimum_set (amount_text)
  * 
  * def representatives (uint64_t count, bool sorting):             # <<<<<<<<<<<<<<
@@ -7677,7 +7693,7 @@ static PyObject *__pyx_pf_3rai_98representatives(CYTHON_UNUSED PyObject *__pyx_s
   return __pyx_r;
 }
 
-/* "rai.pyx":324
+/* "rai.pyx":327
  *     return _rai.representatives (count, sorting)
  * 
  * def wallet_representative (string wallet_text):             # <<<<<<<<<<<<<<
@@ -7694,7 +7710,7 @@ static PyObject *__pyx_pw_3rai_101wallet_representative(PyObject *__pyx_self, Py
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("wallet_representative (wrapper)", 0);
   assert(__pyx_arg_wallet_text); {
-    __pyx_v_wallet_text = __pyx_convert_string_from_py_std__in_string(__pyx_arg_wallet_text); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 324, __pyx_L3_error)
+    __pyx_v_wallet_text = __pyx_convert_string_from_py_std__in_string(__pyx_arg_wallet_text); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 327, __pyx_L3_error)
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L3_error:;
@@ -7715,7 +7731,7 @@ static PyObject *__pyx_pf_3rai_100wallet_representative(CYTHON_UNUSED PyObject *
   PyObject *__pyx_t_1 = NULL;
   __Pyx_RefNannySetupContext("wallet_representative", 0);
 
-  /* "rai.pyx":325
+  /* "rai.pyx":328
  * 
  * def wallet_representative (string wallet_text):
  *     return _rai.wallet_representative (wallet_text)             # <<<<<<<<<<<<<<
@@ -7723,13 +7739,13 @@ static PyObject *__pyx_pf_3rai_100wallet_representative(CYTHON_UNUSED PyObject *
  * def wallet_representative_set (string wallet_text, string representative_text):
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __pyx_v_3rai__rai->wallet_representative(__pyx_v_wallet_text); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 325, __pyx_L1_error)
+  __pyx_t_1 = __pyx_v_3rai__rai->wallet_representative(__pyx_v_wallet_text); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 328, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "rai.pyx":324
+  /* "rai.pyx":327
  *     return _rai.representatives (count, sorting)
  * 
  * def wallet_representative (string wallet_text):             # <<<<<<<<<<<<<<
@@ -7748,7 +7764,7 @@ static PyObject *__pyx_pf_3rai_100wallet_representative(CYTHON_UNUSED PyObject *
   return __pyx_r;
 }
 
-/* "rai.pyx":327
+/* "rai.pyx":330
  *     return _rai.wallet_representative (wallet_text)
  * 
  * def wallet_representative_set (string wallet_text, string representative_text):             # <<<<<<<<<<<<<<
@@ -7785,11 +7801,11 @@ static PyObject *__pyx_pw_3rai_103wallet_representative_set(PyObject *__pyx_self
         case  1:
         if (likely((values[1] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_representative_text)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("wallet_representative_set", 1, 2, 2, 1); __PYX_ERR(0, 327, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("wallet_representative_set", 1, 2, 2, 1); __PYX_ERR(0, 330, __pyx_L3_error)
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "wallet_representative_set") < 0)) __PYX_ERR(0, 327, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "wallet_representative_set") < 0)) __PYX_ERR(0, 330, __pyx_L3_error)
       }
     } else if (PyTuple_GET_SIZE(__pyx_args) != 2) {
       goto __pyx_L5_argtuple_error;
@@ -7797,12 +7813,12 @@ static PyObject *__pyx_pw_3rai_103wallet_representative_set(PyObject *__pyx_self
       values[0] = PyTuple_GET_ITEM(__pyx_args, 0);
       values[1] = PyTuple_GET_ITEM(__pyx_args, 1);
     }
-    __pyx_v_wallet_text = __pyx_convert_string_from_py_std__in_string(values[0]); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 327, __pyx_L3_error)
-    __pyx_v_representative_text = __pyx_convert_string_from_py_std__in_string(values[1]); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 327, __pyx_L3_error)
+    __pyx_v_wallet_text = __pyx_convert_string_from_py_std__in_string(values[0]); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 330, __pyx_L3_error)
+    __pyx_v_representative_text = __pyx_convert_string_from_py_std__in_string(values[1]); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 330, __pyx_L3_error)
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("wallet_representative_set", 1, 2, 2, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 327, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("wallet_representative_set", 1, 2, 2, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 330, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("rai.wallet_representative_set", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
@@ -7821,7 +7837,7 @@ static PyObject *__pyx_pf_3rai_102wallet_representative_set(CYTHON_UNUSED PyObje
   PyObject *__pyx_t_1 = NULL;
   __Pyx_RefNannySetupContext("wallet_representative_set", 0);
 
-  /* "rai.pyx":328
+  /* "rai.pyx":331
  * 
  * def wallet_representative_set (string wallet_text, string representative_text):
  *     return _rai.wallet_representative_set (wallet_text, representative_text)             # <<<<<<<<<<<<<<
@@ -7829,13 +7845,13 @@ static PyObject *__pyx_pf_3rai_102wallet_representative_set(CYTHON_UNUSED PyObje
  * def search_pending (string wallet_text):
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __pyx_v_3rai__rai->wallet_representative_set(__pyx_v_wallet_text, __pyx_v_representative_text); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 328, __pyx_L1_error)
+  __pyx_t_1 = __pyx_v_3rai__rai->wallet_representative_set(__pyx_v_wallet_text, __pyx_v_representative_text); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 331, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "rai.pyx":327
+  /* "rai.pyx":330
  *     return _rai.wallet_representative (wallet_text)
  * 
  * def wallet_representative_set (string wallet_text, string representative_text):             # <<<<<<<<<<<<<<
@@ -7854,7 +7870,7 @@ static PyObject *__pyx_pf_3rai_102wallet_representative_set(CYTHON_UNUSED PyObje
   return __pyx_r;
 }
 
-/* "rai.pyx":330
+/* "rai.pyx":333
  *     return _rai.wallet_representative_set (wallet_text, representative_text)
  * 
  * def search_pending (string wallet_text):             # <<<<<<<<<<<<<<
@@ -7871,7 +7887,7 @@ static PyObject *__pyx_pw_3rai_105search_pending(PyObject *__pyx_self, PyObject 
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("search_pending (wrapper)", 0);
   assert(__pyx_arg_wallet_text); {
-    __pyx_v_wallet_text = __pyx_convert_string_from_py_std__in_string(__pyx_arg_wallet_text); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 330, __pyx_L3_error)
+    __pyx_v_wallet_text = __pyx_convert_string_from_py_std__in_string(__pyx_arg_wallet_text); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 333, __pyx_L3_error)
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L3_error:;
@@ -7892,7 +7908,7 @@ static PyObject *__pyx_pf_3rai_104search_pending(CYTHON_UNUSED PyObject *__pyx_s
   PyObject *__pyx_t_1 = NULL;
   __Pyx_RefNannySetupContext("search_pending", 0);
 
-  /* "rai.pyx":331
+  /* "rai.pyx":334
  * 
  * def search_pending (string wallet_text):
  *     return _rai.search_pending (wallet_text)             # <<<<<<<<<<<<<<
@@ -7900,13 +7916,13 @@ static PyObject *__pyx_pf_3rai_104search_pending(CYTHON_UNUSED PyObject *__pyx_s
  * def search_pending_all ():
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __pyx_v_3rai__rai->search_pending(__pyx_v_wallet_text); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 331, __pyx_L1_error)
+  __pyx_t_1 = __pyx_v_3rai__rai->search_pending(__pyx_v_wallet_text); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 334, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "rai.pyx":330
+  /* "rai.pyx":333
  *     return _rai.wallet_representative_set (wallet_text, representative_text)
  * 
  * def search_pending (string wallet_text):             # <<<<<<<<<<<<<<
@@ -7925,7 +7941,7 @@ static PyObject *__pyx_pf_3rai_104search_pending(CYTHON_UNUSED PyObject *__pyx_s
   return __pyx_r;
 }
 
-/* "rai.pyx":333
+/* "rai.pyx":336
  *     return _rai.search_pending (wallet_text)
  * 
  * def search_pending_all ():             # <<<<<<<<<<<<<<
@@ -7953,7 +7969,7 @@ static PyObject *__pyx_pf_3rai_106search_pending_all(CYTHON_UNUSED PyObject *__p
   PyObject *__pyx_t_1 = NULL;
   __Pyx_RefNannySetupContext("search_pending_all", 0);
 
-  /* "rai.pyx":334
+  /* "rai.pyx":337
  * 
  * def search_pending_all ():
  *     return _rai.search_pending_all ()             # <<<<<<<<<<<<<<
@@ -7961,13 +7977,13 @@ static PyObject *__pyx_pf_3rai_106search_pending_all(CYTHON_UNUSED PyObject *__p
  * def validate_account_number (string account_text):
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __pyx_v_3rai__rai->search_pending_all(); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 334, __pyx_L1_error)
+  __pyx_t_1 = __pyx_v_3rai__rai->search_pending_all(); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 337, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "rai.pyx":333
+  /* "rai.pyx":336
  *     return _rai.search_pending (wallet_text)
  * 
  * def search_pending_all ():             # <<<<<<<<<<<<<<
@@ -7986,7 +8002,7 @@ static PyObject *__pyx_pf_3rai_106search_pending_all(CYTHON_UNUSED PyObject *__p
   return __pyx_r;
 }
 
-/* "rai.pyx":336
+/* "rai.pyx":339
  *     return _rai.search_pending_all ()
  * 
  * def validate_account_number (string account_text):             # <<<<<<<<<<<<<<
@@ -8003,7 +8019,7 @@ static PyObject *__pyx_pw_3rai_109validate_account_number(PyObject *__pyx_self, 
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("validate_account_number (wrapper)", 0);
   assert(__pyx_arg_account_text); {
-    __pyx_v_account_text = __pyx_convert_string_from_py_std__in_string(__pyx_arg_account_text); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 336, __pyx_L3_error)
+    __pyx_v_account_text = __pyx_convert_string_from_py_std__in_string(__pyx_arg_account_text); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 339, __pyx_L3_error)
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L3_error:;
@@ -8024,7 +8040,7 @@ static PyObject *__pyx_pf_3rai_108validate_account_number(CYTHON_UNUSED PyObject
   PyObject *__pyx_t_1 = NULL;
   __Pyx_RefNannySetupContext("validate_account_number", 0);
 
-  /* "rai.pyx":337
+  /* "rai.pyx":340
  * 
  * def validate_account_number (string account_text):
  *     return _rai.validate_account_number (account_text)             # <<<<<<<<<<<<<<
@@ -8032,13 +8048,13 @@ static PyObject *__pyx_pf_3rai_108validate_account_number(CYTHON_UNUSED PyObject
  * def successors (string block_text, uint64_t count):
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __pyx_v_3rai__rai->validate_account_number(__pyx_v_account_text); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 337, __pyx_L1_error)
+  __pyx_t_1 = __pyx_v_3rai__rai->validate_account_number(__pyx_v_account_text); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 340, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "rai.pyx":336
+  /* "rai.pyx":339
  *     return _rai.search_pending_all ()
  * 
  * def validate_account_number (string account_text):             # <<<<<<<<<<<<<<
@@ -8057,7 +8073,7 @@ static PyObject *__pyx_pf_3rai_108validate_account_number(CYTHON_UNUSED PyObject
   return __pyx_r;
 }
 
-/* "rai.pyx":339
+/* "rai.pyx":342
  *     return _rai.validate_account_number (account_text)
  * 
  * def successors (string block_text, uint64_t count):             # <<<<<<<<<<<<<<
@@ -8094,11 +8110,11 @@ static PyObject *__pyx_pw_3rai_111successors(PyObject *__pyx_self, PyObject *__p
         case  1:
         if (likely((values[1] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_count)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("successors", 1, 2, 2, 1); __PYX_ERR(0, 339, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("successors", 1, 2, 2, 1); __PYX_ERR(0, 342, __pyx_L3_error)
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "successors") < 0)) __PYX_ERR(0, 339, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "successors") < 0)) __PYX_ERR(0, 342, __pyx_L3_error)
       }
     } else if (PyTuple_GET_SIZE(__pyx_args) != 2) {
       goto __pyx_L5_argtuple_error;
@@ -8106,12 +8122,12 @@ static PyObject *__pyx_pw_3rai_111successors(PyObject *__pyx_self, PyObject *__p
       values[0] = PyTuple_GET_ITEM(__pyx_args, 0);
       values[1] = PyTuple_GET_ITEM(__pyx_args, 1);
     }
-    __pyx_v_block_text = __pyx_convert_string_from_py_std__in_string(values[0]); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 339, __pyx_L3_error)
-    __pyx_v_count = __Pyx_PyInt_As_uint64_t(values[1]); if (unlikely((__pyx_v_count == ((uint64_t)-1)) && PyErr_Occurred())) __PYX_ERR(0, 339, __pyx_L3_error)
+    __pyx_v_block_text = __pyx_convert_string_from_py_std__in_string(values[0]); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 342, __pyx_L3_error)
+    __pyx_v_count = __Pyx_PyInt_As_uint64_t(values[1]); if (unlikely((__pyx_v_count == ((uint64_t)-1)) && PyErr_Occurred())) __PYX_ERR(0, 342, __pyx_L3_error)
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("successors", 1, 2, 2, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 339, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("successors", 1, 2, 2, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 342, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("rai.successors", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
@@ -8130,7 +8146,7 @@ static PyObject *__pyx_pf_3rai_110successors(CYTHON_UNUSED PyObject *__pyx_self,
   PyObject *__pyx_t_1 = NULL;
   __Pyx_RefNannySetupContext("successors", 0);
 
-  /* "rai.pyx":340
+  /* "rai.pyx":343
  * 
  * def successors (string block_text, uint64_t count):
  *     return _rai.successors (block_text, count)             # <<<<<<<<<<<<<<
@@ -8138,13 +8154,13 @@ static PyObject *__pyx_pf_3rai_110successors(CYTHON_UNUSED PyObject *__pyx_self,
  * def version ():
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __pyx_v_3rai__rai->successors(__pyx_v_block_text, __pyx_v_count); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 340, __pyx_L1_error)
+  __pyx_t_1 = __pyx_v_3rai__rai->successors(__pyx_v_block_text, __pyx_v_count); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 343, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "rai.pyx":339
+  /* "rai.pyx":342
  *     return _rai.validate_account_number (account_text)
  * 
  * def successors (string block_text, uint64_t count):             # <<<<<<<<<<<<<<
@@ -8163,7 +8179,7 @@ static PyObject *__pyx_pf_3rai_110successors(CYTHON_UNUSED PyObject *__pyx_self,
   return __pyx_r;
 }
 
-/* "rai.pyx":342
+/* "rai.pyx":345
  *     return _rai.successors (block_text, count)
  * 
  * def version ():             # <<<<<<<<<<<<<<
@@ -8191,7 +8207,7 @@ static PyObject *__pyx_pf_3rai_112version(CYTHON_UNUSED PyObject *__pyx_self) {
   PyObject *__pyx_t_1 = NULL;
   __Pyx_RefNannySetupContext("version", 0);
 
-  /* "rai.pyx":343
+  /* "rai.pyx":346
  * 
  * def version ():
  *     return _rai.version ()             # <<<<<<<<<<<<<<
@@ -8199,13 +8215,13 @@ static PyObject *__pyx_pf_3rai_112version(CYTHON_UNUSED PyObject *__pyx_self) {
  * def peers ():
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __pyx_v_3rai__rai->version(); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 343, __pyx_L1_error)
+  __pyx_t_1 = __pyx_v_3rai__rai->version(); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 346, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "rai.pyx":342
+  /* "rai.pyx":345
  *     return _rai.successors (block_text, count)
  * 
  * def version ():             # <<<<<<<<<<<<<<
@@ -8224,7 +8240,7 @@ static PyObject *__pyx_pf_3rai_112version(CYTHON_UNUSED PyObject *__pyx_self) {
   return __pyx_r;
 }
 
-/* "rai.pyx":345
+/* "rai.pyx":348
  *     return _rai.version ()
  * 
  * def peers ():             # <<<<<<<<<<<<<<
@@ -8252,7 +8268,7 @@ static PyObject *__pyx_pf_3rai_114peers(CYTHON_UNUSED PyObject *__pyx_self) {
   PyObject *__pyx_t_1 = NULL;
   __Pyx_RefNannySetupContext("peers", 0);
 
-  /* "rai.pyx":346
+  /* "rai.pyx":349
  * 
  * def peers ():
  *     return _rai.peers ();             # <<<<<<<<<<<<<<
@@ -8260,13 +8276,13 @@ static PyObject *__pyx_pf_3rai_114peers(CYTHON_UNUSED PyObject *__pyx_self) {
  * def pending (string account_text, uint64_t count, string threshold_text, bool source):
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __pyx_v_3rai__rai->peers(); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 346, __pyx_L1_error)
+  __pyx_t_1 = __pyx_v_3rai__rai->peers(); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 349, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "rai.pyx":345
+  /* "rai.pyx":348
  *     return _rai.version ()
  * 
  * def peers ():             # <<<<<<<<<<<<<<
@@ -8285,7 +8301,7 @@ static PyObject *__pyx_pf_3rai_114peers(CYTHON_UNUSED PyObject *__pyx_self) {
   return __pyx_r;
 }
 
-/* "rai.pyx":348
+/* "rai.pyx":351
  *     return _rai.peers ();
  * 
  * def pending (string account_text, uint64_t count, string threshold_text, bool source):             # <<<<<<<<<<<<<<
@@ -8326,21 +8342,21 @@ static PyObject *__pyx_pw_3rai_117pending(PyObject *__pyx_self, PyObject *__pyx_
         case  1:
         if (likely((values[1] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_count)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("pending", 1, 4, 4, 1); __PYX_ERR(0, 348, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("pending", 1, 4, 4, 1); __PYX_ERR(0, 351, __pyx_L3_error)
         }
         case  2:
         if (likely((values[2] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_threshold_text)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("pending", 1, 4, 4, 2); __PYX_ERR(0, 348, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("pending", 1, 4, 4, 2); __PYX_ERR(0, 351, __pyx_L3_error)
         }
         case  3:
         if (likely((values[3] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_source)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("pending", 1, 4, 4, 3); __PYX_ERR(0, 348, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("pending", 1, 4, 4, 3); __PYX_ERR(0, 351, __pyx_L3_error)
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "pending") < 0)) __PYX_ERR(0, 348, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "pending") < 0)) __PYX_ERR(0, 351, __pyx_L3_error)
       }
     } else if (PyTuple_GET_SIZE(__pyx_args) != 4) {
       goto __pyx_L5_argtuple_error;
@@ -8350,14 +8366,14 @@ static PyObject *__pyx_pw_3rai_117pending(PyObject *__pyx_self, PyObject *__pyx_
       values[2] = PyTuple_GET_ITEM(__pyx_args, 2);
       values[3] = PyTuple_GET_ITEM(__pyx_args, 3);
     }
-    __pyx_v_account_text = __pyx_convert_string_from_py_std__in_string(values[0]); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 348, __pyx_L3_error)
-    __pyx_v_count = __Pyx_PyInt_As_uint64_t(values[1]); if (unlikely((__pyx_v_count == ((uint64_t)-1)) && PyErr_Occurred())) __PYX_ERR(0, 348, __pyx_L3_error)
-    __pyx_v_threshold_text = __pyx_convert_string_from_py_std__in_string(values[2]); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 348, __pyx_L3_error)
-    __pyx_v_source = __Pyx_PyObject_IsTrue(values[3]); if (unlikely((__pyx_v_source == ((bool)-1)) && PyErr_Occurred())) __PYX_ERR(0, 348, __pyx_L3_error)
+    __pyx_v_account_text = __pyx_convert_string_from_py_std__in_string(values[0]); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 351, __pyx_L3_error)
+    __pyx_v_count = __Pyx_PyInt_As_uint64_t(values[1]); if (unlikely((__pyx_v_count == ((uint64_t)-1)) && PyErr_Occurred())) __PYX_ERR(0, 351, __pyx_L3_error)
+    __pyx_v_threshold_text = __pyx_convert_string_from_py_std__in_string(values[2]); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 351, __pyx_L3_error)
+    __pyx_v_source = __Pyx_PyObject_IsTrue(values[3]); if (unlikely((__pyx_v_source == ((bool)-1)) && PyErr_Occurred())) __PYX_ERR(0, 351, __pyx_L3_error)
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("pending", 1, 4, 4, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 348, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("pending", 1, 4, 4, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 351, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("rai.pending", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
@@ -8376,7 +8392,7 @@ static PyObject *__pyx_pf_3rai_116pending(CYTHON_UNUSED PyObject *__pyx_self, st
   PyObject *__pyx_t_1 = NULL;
   __Pyx_RefNannySetupContext("pending", 0);
 
-  /* "rai.pyx":349
+  /* "rai.pyx":352
  * 
  * def pending (string account_text, uint64_t count, string threshold_text, bool source):
  *     return _rai.pending (account_text, count, threshold_text, source)             # <<<<<<<<<<<<<<
@@ -8384,13 +8400,13 @@ static PyObject *__pyx_pf_3rai_116pending(CYTHON_UNUSED PyObject *__pyx_self, st
  * def pending_exists (string hash_text):
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __pyx_v_3rai__rai->pending(__pyx_v_account_text, __pyx_v_count, __pyx_v_threshold_text, __pyx_v_source); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 349, __pyx_L1_error)
+  __pyx_t_1 = __pyx_v_3rai__rai->pending(__pyx_v_account_text, __pyx_v_count, __pyx_v_threshold_text, __pyx_v_source); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 352, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "rai.pyx":348
+  /* "rai.pyx":351
  *     return _rai.peers ();
  * 
  * def pending (string account_text, uint64_t count, string threshold_text, bool source):             # <<<<<<<<<<<<<<
@@ -8409,7 +8425,7 @@ static PyObject *__pyx_pf_3rai_116pending(CYTHON_UNUSED PyObject *__pyx_self, st
   return __pyx_r;
 }
 
-/* "rai.pyx":351
+/* "rai.pyx":354
  *     return _rai.pending (account_text, count, threshold_text, source)
  * 
  * def pending_exists (string hash_text):             # <<<<<<<<<<<<<<
@@ -8426,7 +8442,7 @@ static PyObject *__pyx_pw_3rai_119pending_exists(PyObject *__pyx_self, PyObject 
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("pending_exists (wrapper)", 0);
   assert(__pyx_arg_hash_text); {
-    __pyx_v_hash_text = __pyx_convert_string_from_py_std__in_string(__pyx_arg_hash_text); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 351, __pyx_L3_error)
+    __pyx_v_hash_text = __pyx_convert_string_from_py_std__in_string(__pyx_arg_hash_text); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 354, __pyx_L3_error)
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L3_error:;
@@ -8447,7 +8463,7 @@ static PyObject *__pyx_pf_3rai_118pending_exists(CYTHON_UNUSED PyObject *__pyx_s
   PyObject *__pyx_t_1 = NULL;
   __Pyx_RefNannySetupContext("pending_exists", 0);
 
-  /* "rai.pyx":352
+  /* "rai.pyx":355
  * 
  * def pending_exists (string hash_text):
  *     return _rai.pending_exists (hash_text)             # <<<<<<<<<<<<<<
@@ -8455,13 +8471,13 @@ static PyObject *__pyx_pf_3rai_118pending_exists(CYTHON_UNUSED PyObject *__pyx_s
  * def unchecked (uint64_t count):
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __pyx_v_3rai__rai->pending_exists(__pyx_v_hash_text); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 352, __pyx_L1_error)
+  __pyx_t_1 = __pyx_v_3rai__rai->pending_exists(__pyx_v_hash_text); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 355, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "rai.pyx":351
+  /* "rai.pyx":354
  *     return _rai.pending (account_text, count, threshold_text, source)
  * 
  * def pending_exists (string hash_text):             # <<<<<<<<<<<<<<
@@ -8480,7 +8496,7 @@ static PyObject *__pyx_pf_3rai_118pending_exists(CYTHON_UNUSED PyObject *__pyx_s
   return __pyx_r;
 }
 
-/* "rai.pyx":354
+/* "rai.pyx":357
  *     return _rai.pending_exists (hash_text)
  * 
  * def unchecked (uint64_t count):             # <<<<<<<<<<<<<<
@@ -8497,7 +8513,7 @@ static PyObject *__pyx_pw_3rai_121unchecked(PyObject *__pyx_self, PyObject *__py
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("unchecked (wrapper)", 0);
   assert(__pyx_arg_count); {
-    __pyx_v_count = __Pyx_PyInt_As_uint64_t(__pyx_arg_count); if (unlikely((__pyx_v_count == ((uint64_t)-1)) && PyErr_Occurred())) __PYX_ERR(0, 354, __pyx_L3_error)
+    __pyx_v_count = __Pyx_PyInt_As_uint64_t(__pyx_arg_count); if (unlikely((__pyx_v_count == ((uint64_t)-1)) && PyErr_Occurred())) __PYX_ERR(0, 357, __pyx_L3_error)
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L3_error:;
@@ -8518,7 +8534,7 @@ static PyObject *__pyx_pf_3rai_120unchecked(CYTHON_UNUSED PyObject *__pyx_self, 
   PyObject *__pyx_t_1 = NULL;
   __Pyx_RefNannySetupContext("unchecked", 0);
 
-  /* "rai.pyx":355
+  /* "rai.pyx":358
  * 
  * def unchecked (uint64_t count):
  *     return _rai.unchecked (count)             # <<<<<<<<<<<<<<
@@ -8526,13 +8542,13 @@ static PyObject *__pyx_pf_3rai_120unchecked(CYTHON_UNUSED PyObject *__pyx_self, 
  * def unchecked_clear ():
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __pyx_v_3rai__rai->unchecked(__pyx_v_count); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 355, __pyx_L1_error)
+  __pyx_t_1 = __pyx_v_3rai__rai->unchecked(__pyx_v_count); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 358, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "rai.pyx":354
+  /* "rai.pyx":357
  *     return _rai.pending_exists (hash_text)
  * 
  * def unchecked (uint64_t count):             # <<<<<<<<<<<<<<
@@ -8551,7 +8567,7 @@ static PyObject *__pyx_pf_3rai_120unchecked(CYTHON_UNUSED PyObject *__pyx_self, 
   return __pyx_r;
 }
 
-/* "rai.pyx":357
+/* "rai.pyx":360
  *     return _rai.unchecked (count)
  * 
  * def unchecked_clear ():             # <<<<<<<<<<<<<<
@@ -8579,7 +8595,7 @@ static PyObject *__pyx_pf_3rai_122unchecked_clear(CYTHON_UNUSED PyObject *__pyx_
   PyObject *__pyx_t_1 = NULL;
   __Pyx_RefNannySetupContext("unchecked_clear", 0);
 
-  /* "rai.pyx":358
+  /* "rai.pyx":361
  * 
  * def unchecked_clear ():
  *     return _rai.unchecked_clear ()             # <<<<<<<<<<<<<<
@@ -8587,13 +8603,13 @@ static PyObject *__pyx_pf_3rai_122unchecked_clear(CYTHON_UNUSED PyObject *__pyx_
  * def unchecked_get (string hash_text):
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __pyx_v_3rai__rai->unchecked_clear(); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 358, __pyx_L1_error)
+  __pyx_t_1 = __pyx_v_3rai__rai->unchecked_clear(); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 361, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "rai.pyx":357
+  /* "rai.pyx":360
  *     return _rai.unchecked (count)
  * 
  * def unchecked_clear ():             # <<<<<<<<<<<<<<
@@ -8612,7 +8628,7 @@ static PyObject *__pyx_pf_3rai_122unchecked_clear(CYTHON_UNUSED PyObject *__pyx_
   return __pyx_r;
 }
 
-/* "rai.pyx":360
+/* "rai.pyx":363
  *     return _rai.unchecked_clear ()
  * 
  * def unchecked_get (string hash_text):             # <<<<<<<<<<<<<<
@@ -8629,7 +8645,7 @@ static PyObject *__pyx_pw_3rai_125unchecked_get(PyObject *__pyx_self, PyObject *
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("unchecked_get (wrapper)", 0);
   assert(__pyx_arg_hash_text); {
-    __pyx_v_hash_text = __pyx_convert_string_from_py_std__in_string(__pyx_arg_hash_text); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 360, __pyx_L3_error)
+    __pyx_v_hash_text = __pyx_convert_string_from_py_std__in_string(__pyx_arg_hash_text); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 363, __pyx_L3_error)
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L3_error:;
@@ -8650,7 +8666,7 @@ static PyObject *__pyx_pf_3rai_124unchecked_get(CYTHON_UNUSED PyObject *__pyx_se
   PyObject *__pyx_t_1 = NULL;
   __Pyx_RefNannySetupContext("unchecked_get", 0);
 
-  /* "rai.pyx":361
+  /* "rai.pyx":364
  * 
  * def unchecked_get (string hash_text):
  *     return _rai.unchecked_get (hash_text)             # <<<<<<<<<<<<<<
@@ -8658,13 +8674,13 @@ static PyObject *__pyx_pf_3rai_124unchecked_get(CYTHON_UNUSED PyObject *__pyx_se
  * def unchecked_keys (uint64_t count, string hash_text):
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __pyx_v_3rai__rai->unchecked_get(__pyx_v_hash_text); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 361, __pyx_L1_error)
+  __pyx_t_1 = __pyx_v_3rai__rai->unchecked_get(__pyx_v_hash_text); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 364, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "rai.pyx":360
+  /* "rai.pyx":363
  *     return _rai.unchecked_clear ()
  * 
  * def unchecked_get (string hash_text):             # <<<<<<<<<<<<<<
@@ -8683,7 +8699,7 @@ static PyObject *__pyx_pf_3rai_124unchecked_get(CYTHON_UNUSED PyObject *__pyx_se
   return __pyx_r;
 }
 
-/* "rai.pyx":363
+/* "rai.pyx":366
  *     return _rai.unchecked_get (hash_text)
  * 
  * def unchecked_keys (uint64_t count, string hash_text):             # <<<<<<<<<<<<<<
@@ -8720,11 +8736,11 @@ static PyObject *__pyx_pw_3rai_127unchecked_keys(PyObject *__pyx_self, PyObject 
         case  1:
         if (likely((values[1] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_hash_text)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("unchecked_keys", 1, 2, 2, 1); __PYX_ERR(0, 363, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("unchecked_keys", 1, 2, 2, 1); __PYX_ERR(0, 366, __pyx_L3_error)
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "unchecked_keys") < 0)) __PYX_ERR(0, 363, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "unchecked_keys") < 0)) __PYX_ERR(0, 366, __pyx_L3_error)
       }
     } else if (PyTuple_GET_SIZE(__pyx_args) != 2) {
       goto __pyx_L5_argtuple_error;
@@ -8732,12 +8748,12 @@ static PyObject *__pyx_pw_3rai_127unchecked_keys(PyObject *__pyx_self, PyObject 
       values[0] = PyTuple_GET_ITEM(__pyx_args, 0);
       values[1] = PyTuple_GET_ITEM(__pyx_args, 1);
     }
-    __pyx_v_count = __Pyx_PyInt_As_uint64_t(values[0]); if (unlikely((__pyx_v_count == ((uint64_t)-1)) && PyErr_Occurred())) __PYX_ERR(0, 363, __pyx_L3_error)
-    __pyx_v_hash_text = __pyx_convert_string_from_py_std__in_string(values[1]); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 363, __pyx_L3_error)
+    __pyx_v_count = __Pyx_PyInt_As_uint64_t(values[0]); if (unlikely((__pyx_v_count == ((uint64_t)-1)) && PyErr_Occurred())) __PYX_ERR(0, 366, __pyx_L3_error)
+    __pyx_v_hash_text = __pyx_convert_string_from_py_std__in_string(values[1]); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 366, __pyx_L3_error)
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("unchecked_keys", 1, 2, 2, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 363, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("unchecked_keys", 1, 2, 2, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 366, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("rai.unchecked_keys", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
@@ -8756,7 +8772,7 @@ static PyObject *__pyx_pf_3rai_126unchecked_keys(CYTHON_UNUSED PyObject *__pyx_s
   PyObject *__pyx_t_1 = NULL;
   __Pyx_RefNannySetupContext("unchecked_keys", 0);
 
-  /* "rai.pyx":364
+  /* "rai.pyx":367
  * 
  * def unchecked_keys (uint64_t count, string hash_text):
  *     return _rai.unchecked_keys (count, hash_text)             # <<<<<<<<<<<<<<
@@ -8764,13 +8780,13 @@ static PyObject *__pyx_pf_3rai_126unchecked_keys(CYTHON_UNUSED PyObject *__pyx_s
  * def wallet_add (string key_text, string wallet_text, generate_work=True):
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __pyx_v_3rai__rai->unchecked_keys(__pyx_v_count, __pyx_v_hash_text); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 364, __pyx_L1_error)
+  __pyx_t_1 = __pyx_v_3rai__rai->unchecked_keys(__pyx_v_count, __pyx_v_hash_text); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 367, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "rai.pyx":363
+  /* "rai.pyx":366
  *     return _rai.unchecked_get (hash_text)
  * 
  * def unchecked_keys (uint64_t count, string hash_text):             # <<<<<<<<<<<<<<
@@ -8789,7 +8805,7 @@ static PyObject *__pyx_pf_3rai_126unchecked_keys(CYTHON_UNUSED PyObject *__pyx_s
   return __pyx_r;
 }
 
-/* "rai.pyx":366
+/* "rai.pyx":369
  *     return _rai.unchecked_keys (count, hash_text)
  * 
  * def wallet_add (string key_text, string wallet_text, generate_work=True):             # <<<<<<<<<<<<<<
@@ -8829,7 +8845,7 @@ static PyObject *__pyx_pw_3rai_129wallet_add(PyObject *__pyx_self, PyObject *__p
         case  1:
         if (likely((values[1] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_wallet_text)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("wallet_add", 0, 2, 3, 1); __PYX_ERR(0, 366, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("wallet_add", 0, 2, 3, 1); __PYX_ERR(0, 369, __pyx_L3_error)
         }
         case  2:
         if (kw_args > 0) {
@@ -8838,7 +8854,7 @@ static PyObject *__pyx_pw_3rai_129wallet_add(PyObject *__pyx_self, PyObject *__p
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "wallet_add") < 0)) __PYX_ERR(0, 366, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "wallet_add") < 0)) __PYX_ERR(0, 369, __pyx_L3_error)
       }
     } else {
       switch (PyTuple_GET_SIZE(__pyx_args)) {
@@ -8849,13 +8865,13 @@ static PyObject *__pyx_pw_3rai_129wallet_add(PyObject *__pyx_self, PyObject *__p
         default: goto __pyx_L5_argtuple_error;
       }
     }
-    __pyx_v_key_text = __pyx_convert_string_from_py_std__in_string(values[0]); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 366, __pyx_L3_error)
-    __pyx_v_wallet_text = __pyx_convert_string_from_py_std__in_string(values[1]); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 366, __pyx_L3_error)
+    __pyx_v_key_text = __pyx_convert_string_from_py_std__in_string(values[0]); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 369, __pyx_L3_error)
+    __pyx_v_wallet_text = __pyx_convert_string_from_py_std__in_string(values[1]); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 369, __pyx_L3_error)
     __pyx_v_generate_work = values[2];
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("wallet_add", 0, 2, 3, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 366, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("wallet_add", 0, 2, 3, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 369, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("rai.wallet_add", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
@@ -8875,7 +8891,7 @@ static PyObject *__pyx_pf_3rai_128wallet_add(CYTHON_UNUSED PyObject *__pyx_self,
   PyObject *__pyx_t_2 = NULL;
   __Pyx_RefNannySetupContext("wallet_add", 0);
 
-  /* "rai.pyx":367
+  /* "rai.pyx":370
  * 
  * def wallet_add (string key_text, string wallet_text, generate_work=True):
  *     return _rai.wallet_add (key_text, wallet_text, generate_work)             # <<<<<<<<<<<<<<
@@ -8883,14 +8899,14 @@ static PyObject *__pyx_pf_3rai_128wallet_add(CYTHON_UNUSED PyObject *__pyx_self,
  * def wallet_balance_total (string wallet_text):
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __Pyx_PyObject_IsTrue(__pyx_v_generate_work); if (unlikely((__pyx_t_1 == ((bool)-1)) && PyErr_Occurred())) __PYX_ERR(0, 367, __pyx_L1_error)
-  __pyx_t_2 = __pyx_v_3rai__rai->wallet_add(__pyx_v_key_text, __pyx_v_wallet_text, __pyx_t_1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 367, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_IsTrue(__pyx_v_generate_work); if (unlikely((__pyx_t_1 == ((bool)-1)) && PyErr_Occurred())) __PYX_ERR(0, 370, __pyx_L1_error)
+  __pyx_t_2 = __pyx_v_3rai__rai->wallet_add(__pyx_v_key_text, __pyx_v_wallet_text, __pyx_t_1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 370, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __pyx_r = __pyx_t_2;
   __pyx_t_2 = 0;
   goto __pyx_L0;
 
-  /* "rai.pyx":366
+  /* "rai.pyx":369
  *     return _rai.unchecked_keys (count, hash_text)
  * 
  * def wallet_add (string key_text, string wallet_text, generate_work=True):             # <<<<<<<<<<<<<<
@@ -8909,7 +8925,7 @@ static PyObject *__pyx_pf_3rai_128wallet_add(CYTHON_UNUSED PyObject *__pyx_self,
   return __pyx_r;
 }
 
-/* "rai.pyx":369
+/* "rai.pyx":372
  *     return _rai.wallet_add (key_text, wallet_text, generate_work)
  * 
  * def wallet_balance_total (string wallet_text):             # <<<<<<<<<<<<<<
@@ -8926,7 +8942,7 @@ static PyObject *__pyx_pw_3rai_131wallet_balance_total(PyObject *__pyx_self, PyO
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("wallet_balance_total (wrapper)", 0);
   assert(__pyx_arg_wallet_text); {
-    __pyx_v_wallet_text = __pyx_convert_string_from_py_std__in_string(__pyx_arg_wallet_text); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 369, __pyx_L3_error)
+    __pyx_v_wallet_text = __pyx_convert_string_from_py_std__in_string(__pyx_arg_wallet_text); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 372, __pyx_L3_error)
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L3_error:;
@@ -8947,7 +8963,7 @@ static PyObject *__pyx_pf_3rai_130wallet_balance_total(CYTHON_UNUSED PyObject *_
   PyObject *__pyx_t_1 = NULL;
   __Pyx_RefNannySetupContext("wallet_balance_total", 0);
 
-  /* "rai.pyx":370
+  /* "rai.pyx":373
  * 
  * def wallet_balance_total (string wallet_text):
  *     return _rai.wallet_balance_total (wallet_text)             # <<<<<<<<<<<<<<
@@ -8955,13 +8971,13 @@ static PyObject *__pyx_pf_3rai_130wallet_balance_total(CYTHON_UNUSED PyObject *_
  * def wallet_balances (string wallet_text, string threshold_text):
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __pyx_v_3rai__rai->wallet_balance_total(__pyx_v_wallet_text); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 370, __pyx_L1_error)
+  __pyx_t_1 = __pyx_v_3rai__rai->wallet_balance_total(__pyx_v_wallet_text); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 373, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "rai.pyx":369
+  /* "rai.pyx":372
  *     return _rai.wallet_add (key_text, wallet_text, generate_work)
  * 
  * def wallet_balance_total (string wallet_text):             # <<<<<<<<<<<<<<
@@ -8980,7 +8996,7 @@ static PyObject *__pyx_pf_3rai_130wallet_balance_total(CYTHON_UNUSED PyObject *_
   return __pyx_r;
 }
 
-/* "rai.pyx":372
+/* "rai.pyx":375
  *     return _rai.wallet_balance_total (wallet_text)
  * 
  * def wallet_balances (string wallet_text, string threshold_text):             # <<<<<<<<<<<<<<
@@ -9017,11 +9033,11 @@ static PyObject *__pyx_pw_3rai_133wallet_balances(PyObject *__pyx_self, PyObject
         case  1:
         if (likely((values[1] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_threshold_text)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("wallet_balances", 1, 2, 2, 1); __PYX_ERR(0, 372, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("wallet_balances", 1, 2, 2, 1); __PYX_ERR(0, 375, __pyx_L3_error)
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "wallet_balances") < 0)) __PYX_ERR(0, 372, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "wallet_balances") < 0)) __PYX_ERR(0, 375, __pyx_L3_error)
       }
     } else if (PyTuple_GET_SIZE(__pyx_args) != 2) {
       goto __pyx_L5_argtuple_error;
@@ -9029,12 +9045,12 @@ static PyObject *__pyx_pw_3rai_133wallet_balances(PyObject *__pyx_self, PyObject
       values[0] = PyTuple_GET_ITEM(__pyx_args, 0);
       values[1] = PyTuple_GET_ITEM(__pyx_args, 1);
     }
-    __pyx_v_wallet_text = __pyx_convert_string_from_py_std__in_string(values[0]); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 372, __pyx_L3_error)
-    __pyx_v_threshold_text = __pyx_convert_string_from_py_std__in_string(values[1]); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 372, __pyx_L3_error)
+    __pyx_v_wallet_text = __pyx_convert_string_from_py_std__in_string(values[0]); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 375, __pyx_L3_error)
+    __pyx_v_threshold_text = __pyx_convert_string_from_py_std__in_string(values[1]); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 375, __pyx_L3_error)
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("wallet_balances", 1, 2, 2, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 372, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("wallet_balances", 1, 2, 2, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 375, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("rai.wallet_balances", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
@@ -9053,7 +9069,7 @@ static PyObject *__pyx_pf_3rai_132wallet_balances(CYTHON_UNUSED PyObject *__pyx_
   PyObject *__pyx_t_1 = NULL;
   __Pyx_RefNannySetupContext("wallet_balances", 0);
 
-  /* "rai.pyx":373
+  /* "rai.pyx":376
  * 
  * def wallet_balances (string wallet_text, string threshold_text):
  *     return _rai.wallet_balances (wallet_text, threshold_text)             # <<<<<<<<<<<<<<
@@ -9061,13 +9077,13 @@ static PyObject *__pyx_pf_3rai_132wallet_balances(CYTHON_UNUSED PyObject *__pyx_
  * def wallet_change_seed (string seed_text, string wallet_text):
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __pyx_v_3rai__rai->wallet_balances(__pyx_v_wallet_text, __pyx_v_threshold_text); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 373, __pyx_L1_error)
+  __pyx_t_1 = __pyx_v_3rai__rai->wallet_balances(__pyx_v_wallet_text, __pyx_v_threshold_text); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 376, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "rai.pyx":372
+  /* "rai.pyx":375
  *     return _rai.wallet_balance_total (wallet_text)
  * 
  * def wallet_balances (string wallet_text, string threshold_text):             # <<<<<<<<<<<<<<
@@ -9086,7 +9102,7 @@ static PyObject *__pyx_pf_3rai_132wallet_balances(CYTHON_UNUSED PyObject *__pyx_
   return __pyx_r;
 }
 
-/* "rai.pyx":375
+/* "rai.pyx":378
  *     return _rai.wallet_balances (wallet_text, threshold_text)
  * 
  * def wallet_change_seed (string seed_text, string wallet_text):             # <<<<<<<<<<<<<<
@@ -9123,11 +9139,11 @@ static PyObject *__pyx_pw_3rai_135wallet_change_seed(PyObject *__pyx_self, PyObj
         case  1:
         if (likely((values[1] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_wallet_text)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("wallet_change_seed", 1, 2, 2, 1); __PYX_ERR(0, 375, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("wallet_change_seed", 1, 2, 2, 1); __PYX_ERR(0, 378, __pyx_L3_error)
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "wallet_change_seed") < 0)) __PYX_ERR(0, 375, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "wallet_change_seed") < 0)) __PYX_ERR(0, 378, __pyx_L3_error)
       }
     } else if (PyTuple_GET_SIZE(__pyx_args) != 2) {
       goto __pyx_L5_argtuple_error;
@@ -9135,12 +9151,12 @@ static PyObject *__pyx_pw_3rai_135wallet_change_seed(PyObject *__pyx_self, PyObj
       values[0] = PyTuple_GET_ITEM(__pyx_args, 0);
       values[1] = PyTuple_GET_ITEM(__pyx_args, 1);
     }
-    __pyx_v_seed_text = __pyx_convert_string_from_py_std__in_string(values[0]); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 375, __pyx_L3_error)
-    __pyx_v_wallet_text = __pyx_convert_string_from_py_std__in_string(values[1]); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 375, __pyx_L3_error)
+    __pyx_v_seed_text = __pyx_convert_string_from_py_std__in_string(values[0]); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 378, __pyx_L3_error)
+    __pyx_v_wallet_text = __pyx_convert_string_from_py_std__in_string(values[1]); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 378, __pyx_L3_error)
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("wallet_change_seed", 1, 2, 2, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 375, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("wallet_change_seed", 1, 2, 2, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 378, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("rai.wallet_change_seed", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
@@ -9159,7 +9175,7 @@ static PyObject *__pyx_pf_3rai_134wallet_change_seed(CYTHON_UNUSED PyObject *__p
   PyObject *__pyx_t_1 = NULL;
   __Pyx_RefNannySetupContext("wallet_change_seed", 0);
 
-  /* "rai.pyx":376
+  /* "rai.pyx":379
  * 
  * def wallet_change_seed (string seed_text, string wallet_text):
  *     return _rai.wallet_change_seed (seed_text, wallet_text)             # <<<<<<<<<<<<<<
@@ -9167,13 +9183,13 @@ static PyObject *__pyx_pf_3rai_134wallet_change_seed(CYTHON_UNUSED PyObject *__p
  * def wallet_contains (string account_text, string wallet_text):
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __pyx_v_3rai__rai->wallet_change_seed(__pyx_v_seed_text, __pyx_v_wallet_text); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 376, __pyx_L1_error)
+  __pyx_t_1 = __pyx_v_3rai__rai->wallet_change_seed(__pyx_v_seed_text, __pyx_v_wallet_text); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 379, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "rai.pyx":375
+  /* "rai.pyx":378
  *     return _rai.wallet_balances (wallet_text, threshold_text)
  * 
  * def wallet_change_seed (string seed_text, string wallet_text):             # <<<<<<<<<<<<<<
@@ -9192,7 +9208,7 @@ static PyObject *__pyx_pf_3rai_134wallet_change_seed(CYTHON_UNUSED PyObject *__p
   return __pyx_r;
 }
 
-/* "rai.pyx":378
+/* "rai.pyx":381
  *     return _rai.wallet_change_seed (seed_text, wallet_text)
  * 
  * def wallet_contains (string account_text, string wallet_text):             # <<<<<<<<<<<<<<
@@ -9229,11 +9245,11 @@ static PyObject *__pyx_pw_3rai_137wallet_contains(PyObject *__pyx_self, PyObject
         case  1:
         if (likely((values[1] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_wallet_text)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("wallet_contains", 1, 2, 2, 1); __PYX_ERR(0, 378, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("wallet_contains", 1, 2, 2, 1); __PYX_ERR(0, 381, __pyx_L3_error)
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "wallet_contains") < 0)) __PYX_ERR(0, 378, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "wallet_contains") < 0)) __PYX_ERR(0, 381, __pyx_L3_error)
       }
     } else if (PyTuple_GET_SIZE(__pyx_args) != 2) {
       goto __pyx_L5_argtuple_error;
@@ -9241,12 +9257,12 @@ static PyObject *__pyx_pw_3rai_137wallet_contains(PyObject *__pyx_self, PyObject
       values[0] = PyTuple_GET_ITEM(__pyx_args, 0);
       values[1] = PyTuple_GET_ITEM(__pyx_args, 1);
     }
-    __pyx_v_account_text = __pyx_convert_string_from_py_std__in_string(values[0]); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 378, __pyx_L3_error)
-    __pyx_v_wallet_text = __pyx_convert_string_from_py_std__in_string(values[1]); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 378, __pyx_L3_error)
+    __pyx_v_account_text = __pyx_convert_string_from_py_std__in_string(values[0]); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 381, __pyx_L3_error)
+    __pyx_v_wallet_text = __pyx_convert_string_from_py_std__in_string(values[1]); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 381, __pyx_L3_error)
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("wallet_contains", 1, 2, 2, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 378, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("wallet_contains", 1, 2, 2, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 381, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("rai.wallet_contains", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
@@ -9265,7 +9281,7 @@ static PyObject *__pyx_pf_3rai_136wallet_contains(CYTHON_UNUSED PyObject *__pyx_
   PyObject *__pyx_t_1 = NULL;
   __Pyx_RefNannySetupContext("wallet_contains", 0);
 
-  /* "rai.pyx":379
+  /* "rai.pyx":382
  * 
  * def wallet_contains (string account_text, string wallet_text):
  *     return _rai.wallet_contains (account_text, wallet_text)             # <<<<<<<<<<<<<<
@@ -9273,13 +9289,13 @@ static PyObject *__pyx_pf_3rai_136wallet_contains(CYTHON_UNUSED PyObject *__pyx_
  * def wallet_create ():
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __pyx_v_3rai__rai->wallet_contains(__pyx_v_account_text, __pyx_v_wallet_text); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 379, __pyx_L1_error)
+  __pyx_t_1 = __pyx_v_3rai__rai->wallet_contains(__pyx_v_account_text, __pyx_v_wallet_text); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 382, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "rai.pyx":378
+  /* "rai.pyx":381
  *     return _rai.wallet_change_seed (seed_text, wallet_text)
  * 
  * def wallet_contains (string account_text, string wallet_text):             # <<<<<<<<<<<<<<
@@ -9298,7 +9314,7 @@ static PyObject *__pyx_pf_3rai_136wallet_contains(CYTHON_UNUSED PyObject *__pyx_
   return __pyx_r;
 }
 
-/* "rai.pyx":381
+/* "rai.pyx":384
  *     return _rai.wallet_contains (account_text, wallet_text)
  * 
  * def wallet_create ():             # <<<<<<<<<<<<<<
@@ -9326,7 +9342,7 @@ static PyObject *__pyx_pf_3rai_138wallet_create(CYTHON_UNUSED PyObject *__pyx_se
   PyObject *__pyx_t_1 = NULL;
   __Pyx_RefNannySetupContext("wallet_create", 0);
 
-  /* "rai.pyx":382
+  /* "rai.pyx":385
  * 
  * def wallet_create ():
  *     return _rai.wallet_create()             # <<<<<<<<<<<<<<
@@ -9334,13 +9350,13 @@ static PyObject *__pyx_pf_3rai_138wallet_create(CYTHON_UNUSED PyObject *__pyx_se
  * def wallet_destroy (string wallet_text):
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __pyx_convert_PyBytes_string_to_py_std__in_string(__pyx_v_3rai__rai->wallet_create()); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 382, __pyx_L1_error)
+  __pyx_t_1 = __pyx_convert_PyBytes_string_to_py_std__in_string(__pyx_v_3rai__rai->wallet_create()); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 385, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "rai.pyx":381
+  /* "rai.pyx":384
  *     return _rai.wallet_contains (account_text, wallet_text)
  * 
  * def wallet_create ():             # <<<<<<<<<<<<<<
@@ -9359,7 +9375,7 @@ static PyObject *__pyx_pf_3rai_138wallet_create(CYTHON_UNUSED PyObject *__pyx_se
   return __pyx_r;
 }
 
-/* "rai.pyx":384
+/* "rai.pyx":387
  *     return _rai.wallet_create()
  * 
  * def wallet_destroy (string wallet_text):             # <<<<<<<<<<<<<<
@@ -9376,7 +9392,7 @@ static PyObject *__pyx_pw_3rai_141wallet_destroy(PyObject *__pyx_self, PyObject 
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("wallet_destroy (wrapper)", 0);
   assert(__pyx_arg_wallet_text); {
-    __pyx_v_wallet_text = __pyx_convert_string_from_py_std__in_string(__pyx_arg_wallet_text); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 384, __pyx_L3_error)
+    __pyx_v_wallet_text = __pyx_convert_string_from_py_std__in_string(__pyx_arg_wallet_text); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 387, __pyx_L3_error)
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L3_error:;
@@ -9397,7 +9413,7 @@ static PyObject *__pyx_pf_3rai_140wallet_destroy(CYTHON_UNUSED PyObject *__pyx_s
   PyObject *__pyx_t_1 = NULL;
   __Pyx_RefNannySetupContext("wallet_destroy", 0);
 
-  /* "rai.pyx":385
+  /* "rai.pyx":388
  * 
  * def wallet_destroy (string wallet_text):
  *     return _rai.wallet_destroy (wallet_text)             # <<<<<<<<<<<<<<
@@ -9405,13 +9421,13 @@ static PyObject *__pyx_pf_3rai_140wallet_destroy(CYTHON_UNUSED PyObject *__pyx_s
  * def wallet_export (string wallet_text):
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __pyx_v_3rai__rai->wallet_destroy(__pyx_v_wallet_text); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 385, __pyx_L1_error)
+  __pyx_t_1 = __pyx_v_3rai__rai->wallet_destroy(__pyx_v_wallet_text); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 388, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "rai.pyx":384
+  /* "rai.pyx":387
  *     return _rai.wallet_create()
  * 
  * def wallet_destroy (string wallet_text):             # <<<<<<<<<<<<<<
@@ -9430,7 +9446,7 @@ static PyObject *__pyx_pf_3rai_140wallet_destroy(CYTHON_UNUSED PyObject *__pyx_s
   return __pyx_r;
 }
 
-/* "rai.pyx":387
+/* "rai.pyx":390
  *     return _rai.wallet_destroy (wallet_text)
  * 
  * def wallet_export (string wallet_text):             # <<<<<<<<<<<<<<
@@ -9447,7 +9463,7 @@ static PyObject *__pyx_pw_3rai_143wallet_export(PyObject *__pyx_self, PyObject *
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("wallet_export (wrapper)", 0);
   assert(__pyx_arg_wallet_text); {
-    __pyx_v_wallet_text = __pyx_convert_string_from_py_std__in_string(__pyx_arg_wallet_text); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 387, __pyx_L3_error)
+    __pyx_v_wallet_text = __pyx_convert_string_from_py_std__in_string(__pyx_arg_wallet_text); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 390, __pyx_L3_error)
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L3_error:;
@@ -9468,7 +9484,7 @@ static PyObject *__pyx_pf_3rai_142wallet_export(CYTHON_UNUSED PyObject *__pyx_se
   PyObject *__pyx_t_1 = NULL;
   __Pyx_RefNannySetupContext("wallet_export", 0);
 
-  /* "rai.pyx":388
+  /* "rai.pyx":391
  * 
  * def wallet_export (string wallet_text):
  *     return _rai.wallet_export (wallet_text)             # <<<<<<<<<<<<<<
@@ -9476,13 +9492,13 @@ static PyObject *__pyx_pf_3rai_142wallet_export(CYTHON_UNUSED PyObject *__pyx_se
  * def wallet_frontiers (string wallet_text):
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __pyx_v_3rai__rai->wallet_export(__pyx_v_wallet_text); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 388, __pyx_L1_error)
+  __pyx_t_1 = __pyx_v_3rai__rai->wallet_export(__pyx_v_wallet_text); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 391, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "rai.pyx":387
+  /* "rai.pyx":390
  *     return _rai.wallet_destroy (wallet_text)
  * 
  * def wallet_export (string wallet_text):             # <<<<<<<<<<<<<<
@@ -9501,7 +9517,7 @@ static PyObject *__pyx_pf_3rai_142wallet_export(CYTHON_UNUSED PyObject *__pyx_se
   return __pyx_r;
 }
 
-/* "rai.pyx":390
+/* "rai.pyx":393
  *     return _rai.wallet_export (wallet_text)
  * 
  * def wallet_frontiers (string wallet_text):             # <<<<<<<<<<<<<<
@@ -9518,7 +9534,7 @@ static PyObject *__pyx_pw_3rai_145wallet_frontiers(PyObject *__pyx_self, PyObjec
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("wallet_frontiers (wrapper)", 0);
   assert(__pyx_arg_wallet_text); {
-    __pyx_v_wallet_text = __pyx_convert_string_from_py_std__in_string(__pyx_arg_wallet_text); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 390, __pyx_L3_error)
+    __pyx_v_wallet_text = __pyx_convert_string_from_py_std__in_string(__pyx_arg_wallet_text); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 393, __pyx_L3_error)
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L3_error:;
@@ -9539,7 +9555,7 @@ static PyObject *__pyx_pf_3rai_144wallet_frontiers(CYTHON_UNUSED PyObject *__pyx
   PyObject *__pyx_t_1 = NULL;
   __Pyx_RefNannySetupContext("wallet_frontiers", 0);
 
-  /* "rai.pyx":391
+  /* "rai.pyx":394
  * 
  * def wallet_frontiers (string wallet_text):
  *     return _rai.wallet_frontiers (wallet_text)             # <<<<<<<<<<<<<<
@@ -9547,13 +9563,13 @@ static PyObject *__pyx_pf_3rai_144wallet_frontiers(CYTHON_UNUSED PyObject *__pyx
  * def wallet_pending (string wallet_text, uint64_t count, string threshold_text, bool source):
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __pyx_v_3rai__rai->wallet_frontiers(__pyx_v_wallet_text); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 391, __pyx_L1_error)
+  __pyx_t_1 = __pyx_v_3rai__rai->wallet_frontiers(__pyx_v_wallet_text); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 394, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "rai.pyx":390
+  /* "rai.pyx":393
  *     return _rai.wallet_export (wallet_text)
  * 
  * def wallet_frontiers (string wallet_text):             # <<<<<<<<<<<<<<
@@ -9572,7 +9588,7 @@ static PyObject *__pyx_pf_3rai_144wallet_frontiers(CYTHON_UNUSED PyObject *__pyx
   return __pyx_r;
 }
 
-/* "rai.pyx":393
+/* "rai.pyx":396
  *     return _rai.wallet_frontiers (wallet_text)
  * 
  * def wallet_pending (string wallet_text, uint64_t count, string threshold_text, bool source):             # <<<<<<<<<<<<<<
@@ -9613,21 +9629,21 @@ static PyObject *__pyx_pw_3rai_147wallet_pending(PyObject *__pyx_self, PyObject 
         case  1:
         if (likely((values[1] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_count)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("wallet_pending", 1, 4, 4, 1); __PYX_ERR(0, 393, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("wallet_pending", 1, 4, 4, 1); __PYX_ERR(0, 396, __pyx_L3_error)
         }
         case  2:
         if (likely((values[2] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_threshold_text)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("wallet_pending", 1, 4, 4, 2); __PYX_ERR(0, 393, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("wallet_pending", 1, 4, 4, 2); __PYX_ERR(0, 396, __pyx_L3_error)
         }
         case  3:
         if (likely((values[3] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_source)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("wallet_pending", 1, 4, 4, 3); __PYX_ERR(0, 393, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("wallet_pending", 1, 4, 4, 3); __PYX_ERR(0, 396, __pyx_L3_error)
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "wallet_pending") < 0)) __PYX_ERR(0, 393, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "wallet_pending") < 0)) __PYX_ERR(0, 396, __pyx_L3_error)
       }
     } else if (PyTuple_GET_SIZE(__pyx_args) != 4) {
       goto __pyx_L5_argtuple_error;
@@ -9637,14 +9653,14 @@ static PyObject *__pyx_pw_3rai_147wallet_pending(PyObject *__pyx_self, PyObject 
       values[2] = PyTuple_GET_ITEM(__pyx_args, 2);
       values[3] = PyTuple_GET_ITEM(__pyx_args, 3);
     }
-    __pyx_v_wallet_text = __pyx_convert_string_from_py_std__in_string(values[0]); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 393, __pyx_L3_error)
-    __pyx_v_count = __Pyx_PyInt_As_uint64_t(values[1]); if (unlikely((__pyx_v_count == ((uint64_t)-1)) && PyErr_Occurred())) __PYX_ERR(0, 393, __pyx_L3_error)
-    __pyx_v_threshold_text = __pyx_convert_string_from_py_std__in_string(values[2]); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 393, __pyx_L3_error)
-    __pyx_v_source = __Pyx_PyObject_IsTrue(values[3]); if (unlikely((__pyx_v_source == ((bool)-1)) && PyErr_Occurred())) __PYX_ERR(0, 393, __pyx_L3_error)
+    __pyx_v_wallet_text = __pyx_convert_string_from_py_std__in_string(values[0]); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 396, __pyx_L3_error)
+    __pyx_v_count = __Pyx_PyInt_As_uint64_t(values[1]); if (unlikely((__pyx_v_count == ((uint64_t)-1)) && PyErr_Occurred())) __PYX_ERR(0, 396, __pyx_L3_error)
+    __pyx_v_threshold_text = __pyx_convert_string_from_py_std__in_string(values[2]); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 396, __pyx_L3_error)
+    __pyx_v_source = __Pyx_PyObject_IsTrue(values[3]); if (unlikely((__pyx_v_source == ((bool)-1)) && PyErr_Occurred())) __PYX_ERR(0, 396, __pyx_L3_error)
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("wallet_pending", 1, 4, 4, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 393, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("wallet_pending", 1, 4, 4, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 396, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("rai.wallet_pending", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
@@ -9663,7 +9679,7 @@ static PyObject *__pyx_pf_3rai_146wallet_pending(CYTHON_UNUSED PyObject *__pyx_s
   PyObject *__pyx_t_1 = NULL;
   __Pyx_RefNannySetupContext("wallet_pending", 0);
 
-  /* "rai.pyx":394
+  /* "rai.pyx":397
  * 
  * def wallet_pending (string wallet_text, uint64_t count, string threshold_text, bool source):
  *     return _rai.wallet_pending (wallet_text, count, threshold_text, source)             # <<<<<<<<<<<<<<
@@ -9671,13 +9687,13 @@ static PyObject *__pyx_pf_3rai_146wallet_pending(CYTHON_UNUSED PyObject *__pyx_s
  * def wallet_republish (string wallet_text, uint64_t count):
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __pyx_v_3rai__rai->wallet_pending(__pyx_v_wallet_text, __pyx_v_count, __pyx_v_threshold_text, __pyx_v_source); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 394, __pyx_L1_error)
+  __pyx_t_1 = __pyx_v_3rai__rai->wallet_pending(__pyx_v_wallet_text, __pyx_v_count, __pyx_v_threshold_text, __pyx_v_source); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 397, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "rai.pyx":393
+  /* "rai.pyx":396
  *     return _rai.wallet_frontiers (wallet_text)
  * 
  * def wallet_pending (string wallet_text, uint64_t count, string threshold_text, bool source):             # <<<<<<<<<<<<<<
@@ -9696,7 +9712,7 @@ static PyObject *__pyx_pf_3rai_146wallet_pending(CYTHON_UNUSED PyObject *__pyx_s
   return __pyx_r;
 }
 
-/* "rai.pyx":396
+/* "rai.pyx":399
  *     return _rai.wallet_pending (wallet_text, count, threshold_text, source)
  * 
  * def wallet_republish (string wallet_text, uint64_t count):             # <<<<<<<<<<<<<<
@@ -9733,11 +9749,11 @@ static PyObject *__pyx_pw_3rai_149wallet_republish(PyObject *__pyx_self, PyObjec
         case  1:
         if (likely((values[1] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_count)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("wallet_republish", 1, 2, 2, 1); __PYX_ERR(0, 396, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("wallet_republish", 1, 2, 2, 1); __PYX_ERR(0, 399, __pyx_L3_error)
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "wallet_republish") < 0)) __PYX_ERR(0, 396, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "wallet_republish") < 0)) __PYX_ERR(0, 399, __pyx_L3_error)
       }
     } else if (PyTuple_GET_SIZE(__pyx_args) != 2) {
       goto __pyx_L5_argtuple_error;
@@ -9745,12 +9761,12 @@ static PyObject *__pyx_pw_3rai_149wallet_republish(PyObject *__pyx_self, PyObjec
       values[0] = PyTuple_GET_ITEM(__pyx_args, 0);
       values[1] = PyTuple_GET_ITEM(__pyx_args, 1);
     }
-    __pyx_v_wallet_text = __pyx_convert_string_from_py_std__in_string(values[0]); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 396, __pyx_L3_error)
-    __pyx_v_count = __Pyx_PyInt_As_uint64_t(values[1]); if (unlikely((__pyx_v_count == ((uint64_t)-1)) && PyErr_Occurred())) __PYX_ERR(0, 396, __pyx_L3_error)
+    __pyx_v_wallet_text = __pyx_convert_string_from_py_std__in_string(values[0]); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 399, __pyx_L3_error)
+    __pyx_v_count = __Pyx_PyInt_As_uint64_t(values[1]); if (unlikely((__pyx_v_count == ((uint64_t)-1)) && PyErr_Occurred())) __PYX_ERR(0, 399, __pyx_L3_error)
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("wallet_republish", 1, 2, 2, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 396, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("wallet_republish", 1, 2, 2, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 399, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("rai.wallet_republish", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
@@ -9769,7 +9785,7 @@ static PyObject *__pyx_pf_3rai_148wallet_republish(CYTHON_UNUSED PyObject *__pyx
   PyObject *__pyx_t_1 = NULL;
   __Pyx_RefNannySetupContext("wallet_republish", 0);
 
-  /* "rai.pyx":397
+  /* "rai.pyx":400
  * 
  * def wallet_republish (string wallet_text, uint64_t count):
  *     return _rai.wallet_republish (wallet_text, count)             # <<<<<<<<<<<<<<
@@ -9777,13 +9793,13 @@ static PyObject *__pyx_pf_3rai_148wallet_republish(CYTHON_UNUSED PyObject *__pyx
  * def wallet_pending (string wallet_text, uint64_t count, string threshold_text, bool source):
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __pyx_v_3rai__rai->wallet_republish(__pyx_v_wallet_text, __pyx_v_count); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 397, __pyx_L1_error)
+  __pyx_t_1 = __pyx_v_3rai__rai->wallet_republish(__pyx_v_wallet_text, __pyx_v_count); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 400, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "rai.pyx":396
+  /* "rai.pyx":399
  *     return _rai.wallet_pending (wallet_text, count, threshold_text, source)
  * 
  * def wallet_republish (string wallet_text, uint64_t count):             # <<<<<<<<<<<<<<
@@ -9802,7 +9818,7 @@ static PyObject *__pyx_pf_3rai_148wallet_republish(CYTHON_UNUSED PyObject *__pyx
   return __pyx_r;
 }
 
-/* "rai.pyx":399
+/* "rai.pyx":402
  *     return _rai.wallet_republish (wallet_text, count)
  * 
  * def wallet_pending (string wallet_text, uint64_t count, string threshold_text, bool source):             # <<<<<<<<<<<<<<
@@ -9843,21 +9859,21 @@ static PyObject *__pyx_pw_3rai_151wallet_pending(PyObject *__pyx_self, PyObject 
         case  1:
         if (likely((values[1] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_count)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("wallet_pending", 1, 4, 4, 1); __PYX_ERR(0, 399, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("wallet_pending", 1, 4, 4, 1); __PYX_ERR(0, 402, __pyx_L3_error)
         }
         case  2:
         if (likely((values[2] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_threshold_text)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("wallet_pending", 1, 4, 4, 2); __PYX_ERR(0, 399, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("wallet_pending", 1, 4, 4, 2); __PYX_ERR(0, 402, __pyx_L3_error)
         }
         case  3:
         if (likely((values[3] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_source)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("wallet_pending", 1, 4, 4, 3); __PYX_ERR(0, 399, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("wallet_pending", 1, 4, 4, 3); __PYX_ERR(0, 402, __pyx_L3_error)
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "wallet_pending") < 0)) __PYX_ERR(0, 399, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "wallet_pending") < 0)) __PYX_ERR(0, 402, __pyx_L3_error)
       }
     } else if (PyTuple_GET_SIZE(__pyx_args) != 4) {
       goto __pyx_L5_argtuple_error;
@@ -9867,14 +9883,14 @@ static PyObject *__pyx_pw_3rai_151wallet_pending(PyObject *__pyx_self, PyObject 
       values[2] = PyTuple_GET_ITEM(__pyx_args, 2);
       values[3] = PyTuple_GET_ITEM(__pyx_args, 3);
     }
-    __pyx_v_wallet_text = __pyx_convert_string_from_py_std__in_string(values[0]); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 399, __pyx_L3_error)
-    __pyx_v_count = __Pyx_PyInt_As_uint64_t(values[1]); if (unlikely((__pyx_v_count == ((uint64_t)-1)) && PyErr_Occurred())) __PYX_ERR(0, 399, __pyx_L3_error)
-    __pyx_v_threshold_text = __pyx_convert_string_from_py_std__in_string(values[2]); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 399, __pyx_L3_error)
-    __pyx_v_source = __Pyx_PyObject_IsTrue(values[3]); if (unlikely((__pyx_v_source == ((bool)-1)) && PyErr_Occurred())) __PYX_ERR(0, 399, __pyx_L3_error)
+    __pyx_v_wallet_text = __pyx_convert_string_from_py_std__in_string(values[0]); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 402, __pyx_L3_error)
+    __pyx_v_count = __Pyx_PyInt_As_uint64_t(values[1]); if (unlikely((__pyx_v_count == ((uint64_t)-1)) && PyErr_Occurred())) __PYX_ERR(0, 402, __pyx_L3_error)
+    __pyx_v_threshold_text = __pyx_convert_string_from_py_std__in_string(values[2]); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 402, __pyx_L3_error)
+    __pyx_v_source = __Pyx_PyObject_IsTrue(values[3]); if (unlikely((__pyx_v_source == ((bool)-1)) && PyErr_Occurred())) __PYX_ERR(0, 402, __pyx_L3_error)
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("wallet_pending", 1, 4, 4, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 399, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("wallet_pending", 1, 4, 4, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 402, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("rai.wallet_pending", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
@@ -9893,7 +9909,7 @@ static PyObject *__pyx_pf_3rai_150wallet_pending(CYTHON_UNUSED PyObject *__pyx_s
   PyObject *__pyx_t_1 = NULL;
   __Pyx_RefNannySetupContext("wallet_pending", 0);
 
-  /* "rai.pyx":400
+  /* "rai.pyx":403
  * 
  * def wallet_pending (string wallet_text, uint64_t count, string threshold_text, bool source):
  *     return _rai.wallet_pending (wallet_text, count, threshold_text, source)             # <<<<<<<<<<<<<<
@@ -9901,13 +9917,13 @@ static PyObject *__pyx_pf_3rai_150wallet_pending(CYTHON_UNUSED PyObject *__pyx_s
  * def wallet_work_get (string wallet_text, uint64_t work):
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __pyx_v_3rai__rai->wallet_pending(__pyx_v_wallet_text, __pyx_v_count, __pyx_v_threshold_text, __pyx_v_source); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 400, __pyx_L1_error)
+  __pyx_t_1 = __pyx_v_3rai__rai->wallet_pending(__pyx_v_wallet_text, __pyx_v_count, __pyx_v_threshold_text, __pyx_v_source); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 403, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "rai.pyx":399
+  /* "rai.pyx":402
  *     return _rai.wallet_republish (wallet_text, count)
  * 
  * def wallet_pending (string wallet_text, uint64_t count, string threshold_text, bool source):             # <<<<<<<<<<<<<<
@@ -9926,7 +9942,7 @@ static PyObject *__pyx_pf_3rai_150wallet_pending(CYTHON_UNUSED PyObject *__pyx_s
   return __pyx_r;
 }
 
-/* "rai.pyx":402
+/* "rai.pyx":405
  *     return _rai.wallet_pending (wallet_text, count, threshold_text, source)
  * 
  * def wallet_work_get (string wallet_text, uint64_t work):             # <<<<<<<<<<<<<<
@@ -9963,11 +9979,11 @@ static PyObject *__pyx_pw_3rai_153wallet_work_get(PyObject *__pyx_self, PyObject
         case  1:
         if (likely((values[1] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_work)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("wallet_work_get", 1, 2, 2, 1); __PYX_ERR(0, 402, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("wallet_work_get", 1, 2, 2, 1); __PYX_ERR(0, 405, __pyx_L3_error)
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "wallet_work_get") < 0)) __PYX_ERR(0, 402, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "wallet_work_get") < 0)) __PYX_ERR(0, 405, __pyx_L3_error)
       }
     } else if (PyTuple_GET_SIZE(__pyx_args) != 2) {
       goto __pyx_L5_argtuple_error;
@@ -9975,12 +9991,12 @@ static PyObject *__pyx_pw_3rai_153wallet_work_get(PyObject *__pyx_self, PyObject
       values[0] = PyTuple_GET_ITEM(__pyx_args, 0);
       values[1] = PyTuple_GET_ITEM(__pyx_args, 1);
     }
-    __pyx_v_wallet_text = __pyx_convert_string_from_py_std__in_string(values[0]); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 402, __pyx_L3_error)
-    __pyx_v_work = __Pyx_PyInt_As_uint64_t(values[1]); if (unlikely((__pyx_v_work == ((uint64_t)-1)) && PyErr_Occurred())) __PYX_ERR(0, 402, __pyx_L3_error)
+    __pyx_v_wallet_text = __pyx_convert_string_from_py_std__in_string(values[0]); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 405, __pyx_L3_error)
+    __pyx_v_work = __Pyx_PyInt_As_uint64_t(values[1]); if (unlikely((__pyx_v_work == ((uint64_t)-1)) && PyErr_Occurred())) __PYX_ERR(0, 405, __pyx_L3_error)
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("wallet_work_get", 1, 2, 2, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 402, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("wallet_work_get", 1, 2, 2, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 405, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("rai.wallet_work_get", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
@@ -9999,7 +10015,7 @@ static PyObject *__pyx_pf_3rai_152wallet_work_get(CYTHON_UNUSED PyObject *__pyx_
   PyObject *__pyx_t_1 = NULL;
   __Pyx_RefNannySetupContext("wallet_work_get", 0);
 
-  /* "rai.pyx":403
+  /* "rai.pyx":406
  * 
  * def wallet_work_get (string wallet_text, uint64_t work):
  *     return _rai.wallet_work_get (wallet_text, work)             # <<<<<<<<<<<<<<
@@ -10007,13 +10023,13 @@ static PyObject *__pyx_pf_3rai_152wallet_work_get(CYTHON_UNUSED PyObject *__pyx_
  * def password_change (string wallet_text, string password_text):
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __pyx_v_3rai__rai->wallet_work_get(__pyx_v_wallet_text, __pyx_v_work); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 403, __pyx_L1_error)
+  __pyx_t_1 = __pyx_v_3rai__rai->wallet_work_get(__pyx_v_wallet_text, __pyx_v_work); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 406, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "rai.pyx":402
+  /* "rai.pyx":405
  *     return _rai.wallet_pending (wallet_text, count, threshold_text, source)
  * 
  * def wallet_work_get (string wallet_text, uint64_t work):             # <<<<<<<<<<<<<<
@@ -10032,7 +10048,7 @@ static PyObject *__pyx_pf_3rai_152wallet_work_get(CYTHON_UNUSED PyObject *__pyx_
   return __pyx_r;
 }
 
-/* "rai.pyx":405
+/* "rai.pyx":408
  *     return _rai.wallet_work_get (wallet_text, work)
  * 
  * def password_change (string wallet_text, string password_text):             # <<<<<<<<<<<<<<
@@ -10069,11 +10085,11 @@ static PyObject *__pyx_pw_3rai_155password_change(PyObject *__pyx_self, PyObject
         case  1:
         if (likely((values[1] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_password_text)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("password_change", 1, 2, 2, 1); __PYX_ERR(0, 405, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("password_change", 1, 2, 2, 1); __PYX_ERR(0, 408, __pyx_L3_error)
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "password_change") < 0)) __PYX_ERR(0, 405, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "password_change") < 0)) __PYX_ERR(0, 408, __pyx_L3_error)
       }
     } else if (PyTuple_GET_SIZE(__pyx_args) != 2) {
       goto __pyx_L5_argtuple_error;
@@ -10081,12 +10097,12 @@ static PyObject *__pyx_pw_3rai_155password_change(PyObject *__pyx_self, PyObject
       values[0] = PyTuple_GET_ITEM(__pyx_args, 0);
       values[1] = PyTuple_GET_ITEM(__pyx_args, 1);
     }
-    __pyx_v_wallet_text = __pyx_convert_string_from_py_std__in_string(values[0]); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 405, __pyx_L3_error)
-    __pyx_v_password_text = __pyx_convert_string_from_py_std__in_string(values[1]); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 405, __pyx_L3_error)
+    __pyx_v_wallet_text = __pyx_convert_string_from_py_std__in_string(values[0]); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 408, __pyx_L3_error)
+    __pyx_v_password_text = __pyx_convert_string_from_py_std__in_string(values[1]); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 408, __pyx_L3_error)
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("password_change", 1, 2, 2, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 405, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("password_change", 1, 2, 2, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 408, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("rai.password_change", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
@@ -10105,7 +10121,7 @@ static PyObject *__pyx_pf_3rai_154password_change(CYTHON_UNUSED PyObject *__pyx_
   PyObject *__pyx_t_1 = NULL;
   __Pyx_RefNannySetupContext("password_change", 0);
 
-  /* "rai.pyx":406
+  /* "rai.pyx":409
  * 
  * def password_change (string wallet_text, string password_text):
  *     return _rai.password_change (wallet_text, password_text)             # <<<<<<<<<<<<<<
@@ -10113,13 +10129,13 @@ static PyObject *__pyx_pf_3rai_154password_change(CYTHON_UNUSED PyObject *__pyx_
  * def password_enter (string wallet_text, string password_text):
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __pyx_v_3rai__rai->password_change(__pyx_v_wallet_text, __pyx_v_password_text); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 406, __pyx_L1_error)
+  __pyx_t_1 = __pyx_v_3rai__rai->password_change(__pyx_v_wallet_text, __pyx_v_password_text); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 409, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "rai.pyx":405
+  /* "rai.pyx":408
  *     return _rai.wallet_work_get (wallet_text, work)
  * 
  * def password_change (string wallet_text, string password_text):             # <<<<<<<<<<<<<<
@@ -10138,7 +10154,7 @@ static PyObject *__pyx_pf_3rai_154password_change(CYTHON_UNUSED PyObject *__pyx_
   return __pyx_r;
 }
 
-/* "rai.pyx":408
+/* "rai.pyx":411
  *     return _rai.password_change (wallet_text, password_text)
  * 
  * def password_enter (string wallet_text, string password_text):             # <<<<<<<<<<<<<<
@@ -10175,11 +10191,11 @@ static PyObject *__pyx_pw_3rai_157password_enter(PyObject *__pyx_self, PyObject 
         case  1:
         if (likely((values[1] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_password_text)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("password_enter", 1, 2, 2, 1); __PYX_ERR(0, 408, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("password_enter", 1, 2, 2, 1); __PYX_ERR(0, 411, __pyx_L3_error)
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "password_enter") < 0)) __PYX_ERR(0, 408, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "password_enter") < 0)) __PYX_ERR(0, 411, __pyx_L3_error)
       }
     } else if (PyTuple_GET_SIZE(__pyx_args) != 2) {
       goto __pyx_L5_argtuple_error;
@@ -10187,12 +10203,12 @@ static PyObject *__pyx_pw_3rai_157password_enter(PyObject *__pyx_self, PyObject 
       values[0] = PyTuple_GET_ITEM(__pyx_args, 0);
       values[1] = PyTuple_GET_ITEM(__pyx_args, 1);
     }
-    __pyx_v_wallet_text = __pyx_convert_string_from_py_std__in_string(values[0]); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 408, __pyx_L3_error)
-    __pyx_v_password_text = __pyx_convert_string_from_py_std__in_string(values[1]); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 408, __pyx_L3_error)
+    __pyx_v_wallet_text = __pyx_convert_string_from_py_std__in_string(values[0]); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 411, __pyx_L3_error)
+    __pyx_v_password_text = __pyx_convert_string_from_py_std__in_string(values[1]); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 411, __pyx_L3_error)
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("password_enter", 1, 2, 2, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 408, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("password_enter", 1, 2, 2, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 411, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("rai.password_enter", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
@@ -10211,7 +10227,7 @@ static PyObject *__pyx_pf_3rai_156password_enter(CYTHON_UNUSED PyObject *__pyx_s
   PyObject *__pyx_t_1 = NULL;
   __Pyx_RefNannySetupContext("password_enter", 0);
 
-  /* "rai.pyx":409
+  /* "rai.pyx":412
  * 
  * def password_enter (string wallet_text, string password_text):
  *     return _rai.password_enter (wallet_text, password_text)             # <<<<<<<<<<<<<<
@@ -10219,13 +10235,13 @@ static PyObject *__pyx_pf_3rai_156password_enter(CYTHON_UNUSED PyObject *__pyx_s
  * def password_valid (string wallet_text, wallet_locked = False):
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __pyx_v_3rai__rai->password_enter(__pyx_v_wallet_text, __pyx_v_password_text); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 409, __pyx_L1_error)
+  __pyx_t_1 = __pyx_v_3rai__rai->password_enter(__pyx_v_wallet_text, __pyx_v_password_text); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 412, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "rai.pyx":408
+  /* "rai.pyx":411
  *     return _rai.password_change (wallet_text, password_text)
  * 
  * def password_enter (string wallet_text, string password_text):             # <<<<<<<<<<<<<<
@@ -10244,7 +10260,7 @@ static PyObject *__pyx_pf_3rai_156password_enter(CYTHON_UNUSED PyObject *__pyx_s
   return __pyx_r;
 }
 
-/* "rai.pyx":411
+/* "rai.pyx":414
  *     return _rai.password_enter (wallet_text, password_text)
  * 
  * def password_valid (string wallet_text, wallet_locked = False):             # <<<<<<<<<<<<<<
@@ -10286,7 +10302,7 @@ static PyObject *__pyx_pw_3rai_159password_valid(PyObject *__pyx_self, PyObject 
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "password_valid") < 0)) __PYX_ERR(0, 411, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "password_valid") < 0)) __PYX_ERR(0, 414, __pyx_L3_error)
       }
     } else {
       switch (PyTuple_GET_SIZE(__pyx_args)) {
@@ -10296,12 +10312,12 @@ static PyObject *__pyx_pw_3rai_159password_valid(PyObject *__pyx_self, PyObject 
         default: goto __pyx_L5_argtuple_error;
       }
     }
-    __pyx_v_wallet_text = __pyx_convert_string_from_py_std__in_string(values[0]); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 411, __pyx_L3_error)
+    __pyx_v_wallet_text = __pyx_convert_string_from_py_std__in_string(values[0]); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 414, __pyx_L3_error)
     __pyx_v_wallet_locked = values[1];
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("password_valid", 0, 1, 2, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 411, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("password_valid", 0, 1, 2, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 414, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("rai.password_valid", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
@@ -10321,7 +10337,7 @@ static PyObject *__pyx_pf_3rai_158password_valid(CYTHON_UNUSED PyObject *__pyx_s
   PyObject *__pyx_t_2 = NULL;
   __Pyx_RefNannySetupContext("password_valid", 0);
 
-  /* "rai.pyx":412
+  /* "rai.pyx":415
  * 
  * def password_valid (string wallet_text, wallet_locked = False):
  *     return _rai.password_valid (wallet_text, wallet_locked);             # <<<<<<<<<<<<<<
@@ -10329,14 +10345,14 @@ static PyObject *__pyx_pf_3rai_158password_valid(CYTHON_UNUSED PyObject *__pyx_s
  * def wallet_locked(string wallet_text):
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __Pyx_PyObject_IsTrue(__pyx_v_wallet_locked); if (unlikely((__pyx_t_1 == ((bool)-1)) && PyErr_Occurred())) __PYX_ERR(0, 412, __pyx_L1_error)
-  __pyx_t_2 = __pyx_v_3rai__rai->password_valid(__pyx_v_wallet_text, __pyx_t_1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 412, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_IsTrue(__pyx_v_wallet_locked); if (unlikely((__pyx_t_1 == ((bool)-1)) && PyErr_Occurred())) __PYX_ERR(0, 415, __pyx_L1_error)
+  __pyx_t_2 = __pyx_v_3rai__rai->password_valid(__pyx_v_wallet_text, __pyx_t_1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 415, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __pyx_r = __pyx_t_2;
   __pyx_t_2 = 0;
   goto __pyx_L0;
 
-  /* "rai.pyx":411
+  /* "rai.pyx":414
  *     return _rai.password_enter (wallet_text, password_text)
  * 
  * def password_valid (string wallet_text, wallet_locked = False):             # <<<<<<<<<<<<<<
@@ -10355,7 +10371,7 @@ static PyObject *__pyx_pf_3rai_158password_valid(CYTHON_UNUSED PyObject *__pyx_s
   return __pyx_r;
 }
 
-/* "rai.pyx":414
+/* "rai.pyx":417
  *     return _rai.password_valid (wallet_text, wallet_locked);
  * 
  * def wallet_locked(string wallet_text):             # <<<<<<<<<<<<<<
@@ -10372,7 +10388,7 @@ static PyObject *__pyx_pw_3rai_161wallet_locked(PyObject *__pyx_self, PyObject *
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("wallet_locked (wrapper)", 0);
   assert(__pyx_arg_wallet_text); {
-    __pyx_v_wallet_text = __pyx_convert_string_from_py_std__in_string(__pyx_arg_wallet_text); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 414, __pyx_L3_error)
+    __pyx_v_wallet_text = __pyx_convert_string_from_py_std__in_string(__pyx_arg_wallet_text); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 417, __pyx_L3_error)
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L3_error:;
@@ -10398,7 +10414,7 @@ static PyObject *__pyx_pf_3rai_160wallet_locked(CYTHON_UNUSED PyObject *__pyx_se
   PyObject *__pyx_t_6 = NULL;
   __Pyx_RefNannySetupContext("wallet_locked", 0);
 
-  /* "rai.pyx":415
+  /* "rai.pyx":418
  * 
  * def wallet_locked(string wallet_text):
  *     return password_valid(wallet_text, True)             # <<<<<<<<<<<<<<
@@ -10406,9 +10422,9 @@ static PyObject *__pyx_pf_3rai_160wallet_locked(CYTHON_UNUSED PyObject *__pyx_se
  * def work_cancel (string hash_text):
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_2 = __Pyx_GetModuleGlobalName(__pyx_n_s_password_valid); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 415, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_GetModuleGlobalName(__pyx_n_s_password_valid); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 418, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_3 = __pyx_convert_PyBytes_string_to_py_std__in_string(__pyx_v_wallet_text); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 415, __pyx_L1_error)
+  __pyx_t_3 = __pyx_convert_PyBytes_string_to_py_std__in_string(__pyx_v_wallet_text); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 418, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __pyx_t_4 = NULL;
   __pyx_t_5 = 0;
@@ -10425,7 +10441,7 @@ static PyObject *__pyx_pf_3rai_160wallet_locked(CYTHON_UNUSED PyObject *__pyx_se
   #if CYTHON_FAST_PYCALL
   if (PyFunction_Check(__pyx_t_2)) {
     PyObject *__pyx_temp[3] = {__pyx_t_4, __pyx_t_3, Py_True};
-    __pyx_t_1 = __Pyx_PyFunction_FastCall(__pyx_t_2, __pyx_temp+1-__pyx_t_5, 2+__pyx_t_5); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 415, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyFunction_FastCall(__pyx_t_2, __pyx_temp+1-__pyx_t_5, 2+__pyx_t_5); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 418, __pyx_L1_error)
     __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
@@ -10434,14 +10450,14 @@ static PyObject *__pyx_pf_3rai_160wallet_locked(CYTHON_UNUSED PyObject *__pyx_se
   #if CYTHON_FAST_PYCCALL
   if (__Pyx_PyFastCFunction_Check(__pyx_t_2)) {
     PyObject *__pyx_temp[3] = {__pyx_t_4, __pyx_t_3, Py_True};
-    __pyx_t_1 = __Pyx_PyCFunction_FastCall(__pyx_t_2, __pyx_temp+1-__pyx_t_5, 2+__pyx_t_5); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 415, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyCFunction_FastCall(__pyx_t_2, __pyx_temp+1-__pyx_t_5, 2+__pyx_t_5); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 418, __pyx_L1_error)
     __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   } else
   #endif
   {
-    __pyx_t_6 = PyTuple_New(2+__pyx_t_5); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 415, __pyx_L1_error)
+    __pyx_t_6 = PyTuple_New(2+__pyx_t_5); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 418, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_6);
     if (__pyx_t_4) {
       __Pyx_GIVEREF(__pyx_t_4); PyTuple_SET_ITEM(__pyx_t_6, 0, __pyx_t_4); __pyx_t_4 = NULL;
@@ -10452,7 +10468,7 @@ static PyObject *__pyx_pf_3rai_160wallet_locked(CYTHON_UNUSED PyObject *__pyx_se
     __Pyx_GIVEREF(Py_True);
     PyTuple_SET_ITEM(__pyx_t_6, 1+__pyx_t_5, Py_True);
     __pyx_t_3 = 0;
-    __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_6, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 415, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_6, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 418, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
   }
@@ -10461,7 +10477,7 @@ static PyObject *__pyx_pf_3rai_160wallet_locked(CYTHON_UNUSED PyObject *__pyx_se
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "rai.pyx":414
+  /* "rai.pyx":417
  *     return _rai.password_valid (wallet_text, wallet_locked);
  * 
  * def wallet_locked(string wallet_text):             # <<<<<<<<<<<<<<
@@ -10484,7 +10500,7 @@ static PyObject *__pyx_pf_3rai_160wallet_locked(CYTHON_UNUSED PyObject *__pyx_se
   return __pyx_r;
 }
 
-/* "rai.pyx":417
+/* "rai.pyx":420
  *     return password_valid(wallet_text, True)
  * 
  * def work_cancel (string hash_text):             # <<<<<<<<<<<<<<
@@ -10501,7 +10517,7 @@ static PyObject *__pyx_pw_3rai_163work_cancel(PyObject *__pyx_self, PyObject *__
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("work_cancel (wrapper)", 0);
   assert(__pyx_arg_hash_text); {
-    __pyx_v_hash_text = __pyx_convert_string_from_py_std__in_string(__pyx_arg_hash_text); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 417, __pyx_L3_error)
+    __pyx_v_hash_text = __pyx_convert_string_from_py_std__in_string(__pyx_arg_hash_text); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 420, __pyx_L3_error)
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L3_error:;
@@ -10522,7 +10538,7 @@ static PyObject *__pyx_pf_3rai_162work_cancel(CYTHON_UNUSED PyObject *__pyx_self
   PyObject *__pyx_t_1 = NULL;
   __Pyx_RefNannySetupContext("work_cancel", 0);
 
-  /* "rai.pyx":418
+  /* "rai.pyx":421
  * 
  * def work_cancel (string hash_text):
  *     return _rai.work_cancel (hash_text)             # <<<<<<<<<<<<<<
@@ -10530,13 +10546,13 @@ static PyObject *__pyx_pf_3rai_162work_cancel(CYTHON_UNUSED PyObject *__pyx_self
  * def work_generate (string hash_text):
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __pyx_v_3rai__rai->work_cancel(__pyx_v_hash_text); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 418, __pyx_L1_error)
+  __pyx_t_1 = __pyx_v_3rai__rai->work_cancel(__pyx_v_hash_text); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 421, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "rai.pyx":417
+  /* "rai.pyx":420
  *     return password_valid(wallet_text, True)
  * 
  * def work_cancel (string hash_text):             # <<<<<<<<<<<<<<
@@ -10555,7 +10571,7 @@ static PyObject *__pyx_pf_3rai_162work_cancel(CYTHON_UNUSED PyObject *__pyx_self
   return __pyx_r;
 }
 
-/* "rai.pyx":420
+/* "rai.pyx":423
  *     return _rai.work_cancel (hash_text)
  * 
  * def work_generate (string hash_text):             # <<<<<<<<<<<<<<
@@ -10572,7 +10588,7 @@ static PyObject *__pyx_pw_3rai_165work_generate(PyObject *__pyx_self, PyObject *
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("work_generate (wrapper)", 0);
   assert(__pyx_arg_hash_text); {
-    __pyx_v_hash_text = __pyx_convert_string_from_py_std__in_string(__pyx_arg_hash_text); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 420, __pyx_L3_error)
+    __pyx_v_hash_text = __pyx_convert_string_from_py_std__in_string(__pyx_arg_hash_text); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 423, __pyx_L3_error)
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L3_error:;
@@ -10593,7 +10609,7 @@ static PyObject *__pyx_pf_3rai_164work_generate(CYTHON_UNUSED PyObject *__pyx_se
   PyObject *__pyx_t_1 = NULL;
   __Pyx_RefNannySetupContext("work_generate", 0);
 
-  /* "rai.pyx":421
+  /* "rai.pyx":424
  * 
  * def work_generate (string hash_text):
  *     return _rai.work_generate (hash_text)             # <<<<<<<<<<<<<<
@@ -10601,13 +10617,13 @@ static PyObject *__pyx_pf_3rai_164work_generate(CYTHON_UNUSED PyObject *__pyx_se
  * def work_get (string wallet_text, string account_text):
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __pyx_v_3rai__rai->work_generate(__pyx_v_hash_text); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 421, __pyx_L1_error)
+  __pyx_t_1 = __pyx_v_3rai__rai->work_generate(__pyx_v_hash_text); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 424, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "rai.pyx":420
+  /* "rai.pyx":423
  *     return _rai.work_cancel (hash_text)
  * 
  * def work_generate (string hash_text):             # <<<<<<<<<<<<<<
@@ -10626,7 +10642,7 @@ static PyObject *__pyx_pf_3rai_164work_generate(CYTHON_UNUSED PyObject *__pyx_se
   return __pyx_r;
 }
 
-/* "rai.pyx":423
+/* "rai.pyx":426
  *     return _rai.work_generate (hash_text)
  * 
  * def work_get (string wallet_text, string account_text):             # <<<<<<<<<<<<<<
@@ -10663,11 +10679,11 @@ static PyObject *__pyx_pw_3rai_167work_get(PyObject *__pyx_self, PyObject *__pyx
         case  1:
         if (likely((values[1] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_account_text)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("work_get", 1, 2, 2, 1); __PYX_ERR(0, 423, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("work_get", 1, 2, 2, 1); __PYX_ERR(0, 426, __pyx_L3_error)
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "work_get") < 0)) __PYX_ERR(0, 423, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "work_get") < 0)) __PYX_ERR(0, 426, __pyx_L3_error)
       }
     } else if (PyTuple_GET_SIZE(__pyx_args) != 2) {
       goto __pyx_L5_argtuple_error;
@@ -10675,12 +10691,12 @@ static PyObject *__pyx_pw_3rai_167work_get(PyObject *__pyx_self, PyObject *__pyx
       values[0] = PyTuple_GET_ITEM(__pyx_args, 0);
       values[1] = PyTuple_GET_ITEM(__pyx_args, 1);
     }
-    __pyx_v_wallet_text = __pyx_convert_string_from_py_std__in_string(values[0]); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 423, __pyx_L3_error)
-    __pyx_v_account_text = __pyx_convert_string_from_py_std__in_string(values[1]); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 423, __pyx_L3_error)
+    __pyx_v_wallet_text = __pyx_convert_string_from_py_std__in_string(values[0]); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 426, __pyx_L3_error)
+    __pyx_v_account_text = __pyx_convert_string_from_py_std__in_string(values[1]); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 426, __pyx_L3_error)
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("work_get", 1, 2, 2, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 423, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("work_get", 1, 2, 2, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 426, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("rai.work_get", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
@@ -10699,7 +10715,7 @@ static PyObject *__pyx_pf_3rai_166work_get(CYTHON_UNUSED PyObject *__pyx_self, s
   PyObject *__pyx_t_1 = NULL;
   __Pyx_RefNannySetupContext("work_get", 0);
 
-  /* "rai.pyx":424
+  /* "rai.pyx":427
  * 
  * def work_get (string wallet_text, string account_text):
  *     return _rai.work_get (wallet_text, account_text)             # <<<<<<<<<<<<<<
@@ -10707,13 +10723,13 @@ static PyObject *__pyx_pf_3rai_166work_get(CYTHON_UNUSED PyObject *__pyx_self, s
  * def work_set (string wallet_text, string account_text, string work_text):
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __pyx_v_3rai__rai->work_get(__pyx_v_wallet_text, __pyx_v_account_text); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 424, __pyx_L1_error)
+  __pyx_t_1 = __pyx_v_3rai__rai->work_get(__pyx_v_wallet_text, __pyx_v_account_text); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 427, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "rai.pyx":423
+  /* "rai.pyx":426
  *     return _rai.work_generate (hash_text)
  * 
  * def work_get (string wallet_text, string account_text):             # <<<<<<<<<<<<<<
@@ -10732,7 +10748,7 @@ static PyObject *__pyx_pf_3rai_166work_get(CYTHON_UNUSED PyObject *__pyx_self, s
   return __pyx_r;
 }
 
-/* "rai.pyx":426
+/* "rai.pyx":429
  *     return _rai.work_get (wallet_text, account_text)
  * 
  * def work_set (string wallet_text, string account_text, string work_text):             # <<<<<<<<<<<<<<
@@ -10771,16 +10787,16 @@ static PyObject *__pyx_pw_3rai_169work_set(PyObject *__pyx_self, PyObject *__pyx
         case  1:
         if (likely((values[1] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_account_text)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("work_set", 1, 3, 3, 1); __PYX_ERR(0, 426, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("work_set", 1, 3, 3, 1); __PYX_ERR(0, 429, __pyx_L3_error)
         }
         case  2:
         if (likely((values[2] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_work_text)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("work_set", 1, 3, 3, 2); __PYX_ERR(0, 426, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("work_set", 1, 3, 3, 2); __PYX_ERR(0, 429, __pyx_L3_error)
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "work_set") < 0)) __PYX_ERR(0, 426, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "work_set") < 0)) __PYX_ERR(0, 429, __pyx_L3_error)
       }
     } else if (PyTuple_GET_SIZE(__pyx_args) != 3) {
       goto __pyx_L5_argtuple_error;
@@ -10789,13 +10805,13 @@ static PyObject *__pyx_pw_3rai_169work_set(PyObject *__pyx_self, PyObject *__pyx
       values[1] = PyTuple_GET_ITEM(__pyx_args, 1);
       values[2] = PyTuple_GET_ITEM(__pyx_args, 2);
     }
-    __pyx_v_wallet_text = __pyx_convert_string_from_py_std__in_string(values[0]); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 426, __pyx_L3_error)
-    __pyx_v_account_text = __pyx_convert_string_from_py_std__in_string(values[1]); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 426, __pyx_L3_error)
-    __pyx_v_work_text = __pyx_convert_string_from_py_std__in_string(values[2]); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 426, __pyx_L3_error)
+    __pyx_v_wallet_text = __pyx_convert_string_from_py_std__in_string(values[0]); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 429, __pyx_L3_error)
+    __pyx_v_account_text = __pyx_convert_string_from_py_std__in_string(values[1]); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 429, __pyx_L3_error)
+    __pyx_v_work_text = __pyx_convert_string_from_py_std__in_string(values[2]); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 429, __pyx_L3_error)
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("work_set", 1, 3, 3, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 426, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("work_set", 1, 3, 3, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 429, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("rai.work_set", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
@@ -10814,21 +10830,21 @@ static PyObject *__pyx_pf_3rai_168work_set(CYTHON_UNUSED PyObject *__pyx_self, s
   PyObject *__pyx_t_1 = NULL;
   __Pyx_RefNannySetupContext("work_set", 0);
 
-  /* "rai.pyx":427
+  /* "rai.pyx":430
  * 
  * def work_set (string wallet_text, string account_text, string work_text):
  *     return _rai.work_set (wallet_text, account_text, work_text);             # <<<<<<<<<<<<<<
  * 
- * 
+ * def work_peer_add (string address_text, string port_text):
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __pyx_v_3rai__rai->work_set(__pyx_v_wallet_text, __pyx_v_account_text, __pyx_v_work_text); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 427, __pyx_L1_error)
+  __pyx_t_1 = __pyx_v_3rai__rai->work_set(__pyx_v_wallet_text, __pyx_v_account_text, __pyx_v_work_text); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 430, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "rai.pyx":426
+  /* "rai.pyx":429
  *     return _rai.work_get (wallet_text, account_text)
  * 
  * def work_set (string wallet_text, string account_text, string work_text):             # <<<<<<<<<<<<<<
@@ -10847,8 +10863,342 @@ static PyObject *__pyx_pf_3rai_168work_set(CYTHON_UNUSED PyObject *__pyx_self, s
   return __pyx_r;
 }
 
-/* "rai.pyx":430
+/* "rai.pyx":432
+ *     return _rai.work_set (wallet_text, account_text, work_text);
  * 
+ * def work_peer_add (string address_text, string port_text):             # <<<<<<<<<<<<<<
+ *     return _rai.work_peer_add (address_text, port_text)
+ * 
+ */
+
+/* Python wrapper */
+static PyObject *__pyx_pw_3rai_171work_peer_add(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
+static PyMethodDef __pyx_mdef_3rai_171work_peer_add = {"work_peer_add", (PyCFunction)__pyx_pw_3rai_171work_peer_add, METH_VARARGS|METH_KEYWORDS, 0};
+static PyObject *__pyx_pw_3rai_171work_peer_add(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
+  std::string __pyx_v_address_text;
+  std::string __pyx_v_port_text;
+  PyObject *__pyx_r = 0;
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("work_peer_add (wrapper)", 0);
+  {
+    static PyObject **__pyx_pyargnames[] = {&__pyx_n_s_address_text,&__pyx_n_s_port_text,0};
+    PyObject* values[2] = {0,0};
+    if (unlikely(__pyx_kwds)) {
+      Py_ssize_t kw_args;
+      const Py_ssize_t pos_args = PyTuple_GET_SIZE(__pyx_args);
+      switch (pos_args) {
+        case  2: values[1] = PyTuple_GET_ITEM(__pyx_args, 1);
+        case  1: values[0] = PyTuple_GET_ITEM(__pyx_args, 0);
+        case  0: break;
+        default: goto __pyx_L5_argtuple_error;
+      }
+      kw_args = PyDict_Size(__pyx_kwds);
+      switch (pos_args) {
+        case  0:
+        if (likely((values[0] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_address_text)) != 0)) kw_args--;
+        else goto __pyx_L5_argtuple_error;
+        case  1:
+        if (likely((values[1] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_port_text)) != 0)) kw_args--;
+        else {
+          __Pyx_RaiseArgtupleInvalid("work_peer_add", 1, 2, 2, 1); __PYX_ERR(0, 432, __pyx_L3_error)
+        }
+      }
+      if (unlikely(kw_args > 0)) {
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "work_peer_add") < 0)) __PYX_ERR(0, 432, __pyx_L3_error)
+      }
+    } else if (PyTuple_GET_SIZE(__pyx_args) != 2) {
+      goto __pyx_L5_argtuple_error;
+    } else {
+      values[0] = PyTuple_GET_ITEM(__pyx_args, 0);
+      values[1] = PyTuple_GET_ITEM(__pyx_args, 1);
+    }
+    __pyx_v_address_text = __pyx_convert_string_from_py_std__in_string(values[0]); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 432, __pyx_L3_error)
+    __pyx_v_port_text = __pyx_convert_string_from_py_std__in_string(values[1]); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 432, __pyx_L3_error)
+  }
+  goto __pyx_L4_argument_unpacking_done;
+  __pyx_L5_argtuple_error:;
+  __Pyx_RaiseArgtupleInvalid("work_peer_add", 1, 2, 2, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 432, __pyx_L3_error)
+  __pyx_L3_error:;
+  __Pyx_AddTraceback("rai.work_peer_add", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_RefNannyFinishContext();
+  return NULL;
+  __pyx_L4_argument_unpacking_done:;
+  __pyx_r = __pyx_pf_3rai_170work_peer_add(__pyx_self, __pyx_v_address_text, __pyx_v_port_text);
+
+  /* function exit code */
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+static PyObject *__pyx_pf_3rai_170work_peer_add(CYTHON_UNUSED PyObject *__pyx_self, std::string __pyx_v_address_text, std::string __pyx_v_port_text) {
+  PyObject *__pyx_r = NULL;
+  __Pyx_RefNannyDeclarations
+  PyObject *__pyx_t_1 = NULL;
+  __Pyx_RefNannySetupContext("work_peer_add", 0);
+
+  /* "rai.pyx":433
+ * 
+ * def work_peer_add (string address_text, string port_text):
+ *     return _rai.work_peer_add (address_text, port_text)             # <<<<<<<<<<<<<<
+ * 
+ * def work_peer_add (string address_text, string port_text):
+ */
+  __Pyx_XDECREF(__pyx_r);
+  __pyx_t_1 = __pyx_v_3rai__rai->work_peer_add(__pyx_v_address_text, __pyx_v_port_text); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 433, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_r = __pyx_t_1;
+  __pyx_t_1 = 0;
+  goto __pyx_L0;
+
+  /* "rai.pyx":432
+ *     return _rai.work_set (wallet_text, account_text, work_text);
+ * 
+ * def work_peer_add (string address_text, string port_text):             # <<<<<<<<<<<<<<
+ *     return _rai.work_peer_add (address_text, port_text)
+ * 
+ */
+
+  /* function exit code */
+  __pyx_L1_error:;
+  __Pyx_XDECREF(__pyx_t_1);
+  __Pyx_AddTraceback("rai.work_peer_add", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_r = NULL;
+  __pyx_L0:;
+  __Pyx_XGIVEREF(__pyx_r);
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* "rai.pyx":435
+ *     return _rai.work_peer_add (address_text, port_text)
+ * 
+ * def work_peer_add (string address_text, string port_text):             # <<<<<<<<<<<<<<
+ *     return _rai.work_peer_add (address_text, port_text)
+ * 
+ */
+
+/* Python wrapper */
+static PyObject *__pyx_pw_3rai_173work_peer_add(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
+static PyMethodDef __pyx_mdef_3rai_173work_peer_add = {"work_peer_add", (PyCFunction)__pyx_pw_3rai_173work_peer_add, METH_VARARGS|METH_KEYWORDS, 0};
+static PyObject *__pyx_pw_3rai_173work_peer_add(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
+  std::string __pyx_v_address_text;
+  std::string __pyx_v_port_text;
+  PyObject *__pyx_r = 0;
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("work_peer_add (wrapper)", 0);
+  {
+    static PyObject **__pyx_pyargnames[] = {&__pyx_n_s_address_text,&__pyx_n_s_port_text,0};
+    PyObject* values[2] = {0,0};
+    if (unlikely(__pyx_kwds)) {
+      Py_ssize_t kw_args;
+      const Py_ssize_t pos_args = PyTuple_GET_SIZE(__pyx_args);
+      switch (pos_args) {
+        case  2: values[1] = PyTuple_GET_ITEM(__pyx_args, 1);
+        case  1: values[0] = PyTuple_GET_ITEM(__pyx_args, 0);
+        case  0: break;
+        default: goto __pyx_L5_argtuple_error;
+      }
+      kw_args = PyDict_Size(__pyx_kwds);
+      switch (pos_args) {
+        case  0:
+        if (likely((values[0] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_address_text)) != 0)) kw_args--;
+        else goto __pyx_L5_argtuple_error;
+        case  1:
+        if (likely((values[1] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_port_text)) != 0)) kw_args--;
+        else {
+          __Pyx_RaiseArgtupleInvalid("work_peer_add", 1, 2, 2, 1); __PYX_ERR(0, 435, __pyx_L3_error)
+        }
+      }
+      if (unlikely(kw_args > 0)) {
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "work_peer_add") < 0)) __PYX_ERR(0, 435, __pyx_L3_error)
+      }
+    } else if (PyTuple_GET_SIZE(__pyx_args) != 2) {
+      goto __pyx_L5_argtuple_error;
+    } else {
+      values[0] = PyTuple_GET_ITEM(__pyx_args, 0);
+      values[1] = PyTuple_GET_ITEM(__pyx_args, 1);
+    }
+    __pyx_v_address_text = __pyx_convert_string_from_py_std__in_string(values[0]); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 435, __pyx_L3_error)
+    __pyx_v_port_text = __pyx_convert_string_from_py_std__in_string(values[1]); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 435, __pyx_L3_error)
+  }
+  goto __pyx_L4_argument_unpacking_done;
+  __pyx_L5_argtuple_error:;
+  __Pyx_RaiseArgtupleInvalid("work_peer_add", 1, 2, 2, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 435, __pyx_L3_error)
+  __pyx_L3_error:;
+  __Pyx_AddTraceback("rai.work_peer_add", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_RefNannyFinishContext();
+  return NULL;
+  __pyx_L4_argument_unpacking_done:;
+  __pyx_r = __pyx_pf_3rai_172work_peer_add(__pyx_self, __pyx_v_address_text, __pyx_v_port_text);
+
+  /* function exit code */
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+static PyObject *__pyx_pf_3rai_172work_peer_add(CYTHON_UNUSED PyObject *__pyx_self, std::string __pyx_v_address_text, std::string __pyx_v_port_text) {
+  PyObject *__pyx_r = NULL;
+  __Pyx_RefNannyDeclarations
+  PyObject *__pyx_t_1 = NULL;
+  __Pyx_RefNannySetupContext("work_peer_add", 0);
+
+  /* "rai.pyx":436
+ * 
+ * def work_peer_add (string address_text, string port_text):
+ *     return _rai.work_peer_add (address_text, port_text)             # <<<<<<<<<<<<<<
+ * 
+ * def work_peers ():
+ */
+  __Pyx_XDECREF(__pyx_r);
+  __pyx_t_1 = __pyx_v_3rai__rai->work_peer_add(__pyx_v_address_text, __pyx_v_port_text); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 436, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_r = __pyx_t_1;
+  __pyx_t_1 = 0;
+  goto __pyx_L0;
+
+  /* "rai.pyx":435
+ *     return _rai.work_peer_add (address_text, port_text)
+ * 
+ * def work_peer_add (string address_text, string port_text):             # <<<<<<<<<<<<<<
+ *     return _rai.work_peer_add (address_text, port_text)
+ * 
+ */
+
+  /* function exit code */
+  __pyx_L1_error:;
+  __Pyx_XDECREF(__pyx_t_1);
+  __Pyx_AddTraceback("rai.work_peer_add", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_r = NULL;
+  __pyx_L0:;
+  __Pyx_XGIVEREF(__pyx_r);
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* "rai.pyx":438
+ *     return _rai.work_peer_add (address_text, port_text)
+ * 
+ * def work_peers ():             # <<<<<<<<<<<<<<
+ *     return _rai.work_peers ()
+ * 
+ */
+
+/* Python wrapper */
+static PyObject *__pyx_pw_3rai_175work_peers(PyObject *__pyx_self, CYTHON_UNUSED PyObject *unused); /*proto*/
+static PyMethodDef __pyx_mdef_3rai_175work_peers = {"work_peers", (PyCFunction)__pyx_pw_3rai_175work_peers, METH_NOARGS, 0};
+static PyObject *__pyx_pw_3rai_175work_peers(PyObject *__pyx_self, CYTHON_UNUSED PyObject *unused) {
+  PyObject *__pyx_r = 0;
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("work_peers (wrapper)", 0);
+  __pyx_r = __pyx_pf_3rai_174work_peers(__pyx_self);
+
+  /* function exit code */
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+static PyObject *__pyx_pf_3rai_174work_peers(CYTHON_UNUSED PyObject *__pyx_self) {
+  PyObject *__pyx_r = NULL;
+  __Pyx_RefNannyDeclarations
+  PyObject *__pyx_t_1 = NULL;
+  __Pyx_RefNannySetupContext("work_peers", 0);
+
+  /* "rai.pyx":439
+ * 
+ * def work_peers ():
+ *     return _rai.work_peers ()             # <<<<<<<<<<<<<<
+ * 
+ * def work_peers_clear ():
+ */
+  __Pyx_XDECREF(__pyx_r);
+  __pyx_t_1 = __pyx_v_3rai__rai->work_peers(); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 439, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_r = __pyx_t_1;
+  __pyx_t_1 = 0;
+  goto __pyx_L0;
+
+  /* "rai.pyx":438
+ *     return _rai.work_peer_add (address_text, port_text)
+ * 
+ * def work_peers ():             # <<<<<<<<<<<<<<
+ *     return _rai.work_peers ()
+ * 
+ */
+
+  /* function exit code */
+  __pyx_L1_error:;
+  __Pyx_XDECREF(__pyx_t_1);
+  __Pyx_AddTraceback("rai.work_peers", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_r = NULL;
+  __pyx_L0:;
+  __Pyx_XGIVEREF(__pyx_r);
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* "rai.pyx":441
+ *     return _rai.work_peers ()
+ * 
+ * def work_peers_clear ():             # <<<<<<<<<<<<<<
+ *     return _rai.work_peers_clear ()
+ * 
+ */
+
+/* Python wrapper */
+static PyObject *__pyx_pw_3rai_177work_peers_clear(PyObject *__pyx_self, CYTHON_UNUSED PyObject *unused); /*proto*/
+static PyMethodDef __pyx_mdef_3rai_177work_peers_clear = {"work_peers_clear", (PyCFunction)__pyx_pw_3rai_177work_peers_clear, METH_NOARGS, 0};
+static PyObject *__pyx_pw_3rai_177work_peers_clear(PyObject *__pyx_self, CYTHON_UNUSED PyObject *unused) {
+  PyObject *__pyx_r = 0;
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("work_peers_clear (wrapper)", 0);
+  __pyx_r = __pyx_pf_3rai_176work_peers_clear(__pyx_self);
+
+  /* function exit code */
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+static PyObject *__pyx_pf_3rai_176work_peers_clear(CYTHON_UNUSED PyObject *__pyx_self) {
+  PyObject *__pyx_r = NULL;
+  __Pyx_RefNannyDeclarations
+  PyObject *__pyx_t_1 = NULL;
+  __Pyx_RefNannySetupContext("work_peers_clear", 0);
+
+  /* "rai.pyx":442
+ * 
+ * def work_peers_clear ():
+ *     return _rai.work_peers_clear ()             # <<<<<<<<<<<<<<
+ * 
+ * def send (string wallet_text, string source_text, string destination_text, string amount_text, uint64_t work):
+ */
+  __Pyx_XDECREF(__pyx_r);
+  __pyx_t_1 = __pyx_v_3rai__rai->work_peers_clear(); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 442, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_r = __pyx_t_1;
+  __pyx_t_1 = 0;
+  goto __pyx_L0;
+
+  /* "rai.pyx":441
+ *     return _rai.work_peers ()
+ * 
+ * def work_peers_clear ():             # <<<<<<<<<<<<<<
+ *     return _rai.work_peers_clear ()
+ * 
+ */
+
+  /* function exit code */
+  __pyx_L1_error:;
+  __Pyx_XDECREF(__pyx_t_1);
+  __Pyx_AddTraceback("rai.work_peers_clear", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_r = NULL;
+  __pyx_L0:;
+  __Pyx_XGIVEREF(__pyx_r);
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* "rai.pyx":444
+ *     return _rai.work_peers_clear ()
  * 
  * def send (string wallet_text, string source_text, string destination_text, string amount_text, uint64_t work):             # <<<<<<<<<<<<<<
  *     return _rai.send (wallet_text, source_text, destination_text, amount_text, work)
@@ -10856,9 +11206,9 @@ static PyObject *__pyx_pf_3rai_168work_set(CYTHON_UNUSED PyObject *__pyx_self, s
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_3rai_171send(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-static PyMethodDef __pyx_mdef_3rai_171send = {"send", (PyCFunction)__pyx_pw_3rai_171send, METH_VARARGS|METH_KEYWORDS, 0};
-static PyObject *__pyx_pw_3rai_171send(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
+static PyObject *__pyx_pw_3rai_179send(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
+static PyMethodDef __pyx_mdef_3rai_179send = {"send", (PyCFunction)__pyx_pw_3rai_179send, METH_VARARGS|METH_KEYWORDS, 0};
+static PyObject *__pyx_pw_3rai_179send(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
   std::string __pyx_v_wallet_text;
   std::string __pyx_v_source_text;
   std::string __pyx_v_destination_text;
@@ -10890,26 +11240,26 @@ static PyObject *__pyx_pw_3rai_171send(PyObject *__pyx_self, PyObject *__pyx_arg
         case  1:
         if (likely((values[1] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_source_text)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("send", 1, 5, 5, 1); __PYX_ERR(0, 430, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("send", 1, 5, 5, 1); __PYX_ERR(0, 444, __pyx_L3_error)
         }
         case  2:
         if (likely((values[2] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_destination_text)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("send", 1, 5, 5, 2); __PYX_ERR(0, 430, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("send", 1, 5, 5, 2); __PYX_ERR(0, 444, __pyx_L3_error)
         }
         case  3:
         if (likely((values[3] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_amount_text)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("send", 1, 5, 5, 3); __PYX_ERR(0, 430, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("send", 1, 5, 5, 3); __PYX_ERR(0, 444, __pyx_L3_error)
         }
         case  4:
         if (likely((values[4] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_work)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("send", 1, 5, 5, 4); __PYX_ERR(0, 430, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("send", 1, 5, 5, 4); __PYX_ERR(0, 444, __pyx_L3_error)
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "send") < 0)) __PYX_ERR(0, 430, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "send") < 0)) __PYX_ERR(0, 444, __pyx_L3_error)
       }
     } else if (PyTuple_GET_SIZE(__pyx_args) != 5) {
       goto __pyx_L5_argtuple_error;
@@ -10920,34 +11270,34 @@ static PyObject *__pyx_pw_3rai_171send(PyObject *__pyx_self, PyObject *__pyx_arg
       values[3] = PyTuple_GET_ITEM(__pyx_args, 3);
       values[4] = PyTuple_GET_ITEM(__pyx_args, 4);
     }
-    __pyx_v_wallet_text = __pyx_convert_string_from_py_std__in_string(values[0]); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 430, __pyx_L3_error)
-    __pyx_v_source_text = __pyx_convert_string_from_py_std__in_string(values[1]); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 430, __pyx_L3_error)
-    __pyx_v_destination_text = __pyx_convert_string_from_py_std__in_string(values[2]); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 430, __pyx_L3_error)
-    __pyx_v_amount_text = __pyx_convert_string_from_py_std__in_string(values[3]); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 430, __pyx_L3_error)
-    __pyx_v_work = __Pyx_PyInt_As_uint64_t(values[4]); if (unlikely((__pyx_v_work == ((uint64_t)-1)) && PyErr_Occurred())) __PYX_ERR(0, 430, __pyx_L3_error)
+    __pyx_v_wallet_text = __pyx_convert_string_from_py_std__in_string(values[0]); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 444, __pyx_L3_error)
+    __pyx_v_source_text = __pyx_convert_string_from_py_std__in_string(values[1]); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 444, __pyx_L3_error)
+    __pyx_v_destination_text = __pyx_convert_string_from_py_std__in_string(values[2]); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 444, __pyx_L3_error)
+    __pyx_v_amount_text = __pyx_convert_string_from_py_std__in_string(values[3]); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 444, __pyx_L3_error)
+    __pyx_v_work = __Pyx_PyInt_As_uint64_t(values[4]); if (unlikely((__pyx_v_work == ((uint64_t)-1)) && PyErr_Occurred())) __PYX_ERR(0, 444, __pyx_L3_error)
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("send", 1, 5, 5, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 430, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("send", 1, 5, 5, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 444, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("rai.send", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  __pyx_r = __pyx_pf_3rai_170send(__pyx_self, __pyx_v_wallet_text, __pyx_v_source_text, __pyx_v_destination_text, __pyx_v_amount_text, __pyx_v_work);
+  __pyx_r = __pyx_pf_3rai_178send(__pyx_self, __pyx_v_wallet_text, __pyx_v_source_text, __pyx_v_destination_text, __pyx_v_amount_text, __pyx_v_work);
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_3rai_170send(CYTHON_UNUSED PyObject *__pyx_self, std::string __pyx_v_wallet_text, std::string __pyx_v_source_text, std::string __pyx_v_destination_text, std::string __pyx_v_amount_text, uint64_t __pyx_v_work) {
+static PyObject *__pyx_pf_3rai_178send(CYTHON_UNUSED PyObject *__pyx_self, std::string __pyx_v_wallet_text, std::string __pyx_v_source_text, std::string __pyx_v_destination_text, std::string __pyx_v_amount_text, uint64_t __pyx_v_work) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
   __Pyx_RefNannySetupContext("send", 0);
 
-  /* "rai.pyx":431
+  /* "rai.pyx":445
  * 
  * def send (string wallet_text, string source_text, string destination_text, string amount_text, uint64_t work):
  *     return _rai.send (wallet_text, source_text, destination_text, amount_text, work)             # <<<<<<<<<<<<<<
@@ -10955,14 +11305,14 @@ static PyObject *__pyx_pf_3rai_170send(CYTHON_UNUSED PyObject *__pyx_self, std::
  * def genesis_account():
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __pyx_v_3rai__rai->send(__pyx_v_wallet_text, __pyx_v_source_text, __pyx_v_destination_text, __pyx_v_amount_text, __pyx_v_work); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 431, __pyx_L1_error)
+  __pyx_t_1 = __pyx_v_3rai__rai->send(__pyx_v_wallet_text, __pyx_v_source_text, __pyx_v_destination_text, __pyx_v_amount_text, __pyx_v_work); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 445, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "rai.pyx":430
- * 
+  /* "rai.pyx":444
+ *     return _rai.work_peers_clear ()
  * 
  * def send (string wallet_text, string source_text, string destination_text, string amount_text, uint64_t work):             # <<<<<<<<<<<<<<
  *     return _rai.send (wallet_text, source_text, destination_text, amount_text, work)
@@ -10980,7 +11330,7 @@ static PyObject *__pyx_pf_3rai_170send(CYTHON_UNUSED PyObject *__pyx_self, std::
   return __pyx_r;
 }
 
-/* "rai.pyx":433
+/* "rai.pyx":447
  *     return _rai.send (wallet_text, source_text, destination_text, amount_text, work)
  * 
  * def genesis_account():             # <<<<<<<<<<<<<<
@@ -10989,26 +11339,26 @@ static PyObject *__pyx_pf_3rai_170send(CYTHON_UNUSED PyObject *__pyx_self, std::
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_3rai_173genesis_account(PyObject *__pyx_self, CYTHON_UNUSED PyObject *unused); /*proto*/
-static PyMethodDef __pyx_mdef_3rai_173genesis_account = {"genesis_account", (PyCFunction)__pyx_pw_3rai_173genesis_account, METH_NOARGS, 0};
-static PyObject *__pyx_pw_3rai_173genesis_account(PyObject *__pyx_self, CYTHON_UNUSED PyObject *unused) {
+static PyObject *__pyx_pw_3rai_181genesis_account(PyObject *__pyx_self, CYTHON_UNUSED PyObject *unused); /*proto*/
+static PyMethodDef __pyx_mdef_3rai_181genesis_account = {"genesis_account", (PyCFunction)__pyx_pw_3rai_181genesis_account, METH_NOARGS, 0};
+static PyObject *__pyx_pw_3rai_181genesis_account(PyObject *__pyx_self, CYTHON_UNUSED PyObject *unused) {
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("genesis_account (wrapper)", 0);
-  __pyx_r = __pyx_pf_3rai_172genesis_account(__pyx_self);
+  __pyx_r = __pyx_pf_3rai_180genesis_account(__pyx_self);
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_3rai_172genesis_account(CYTHON_UNUSED PyObject *__pyx_self) {
+static PyObject *__pyx_pf_3rai_180genesis_account(CYTHON_UNUSED PyObject *__pyx_self) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
   __Pyx_RefNannySetupContext("genesis_account", 0);
 
-  /* "rai.pyx":434
+  /* "rai.pyx":448
  * 
  * def genesis_account():
  *     return _rai.genesis_account()             # <<<<<<<<<<<<<<
@@ -11016,13 +11366,13 @@ static PyObject *__pyx_pf_3rai_172genesis_account(CYTHON_UNUSED PyObject *__pyx_
  * def block_count_type ():
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __pyx_v_3rai__rai->genesis_account(); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 434, __pyx_L1_error)
+  __pyx_t_1 = __pyx_v_3rai__rai->genesis_account(); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 448, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "rai.pyx":433
+  /* "rai.pyx":447
  *     return _rai.send (wallet_text, source_text, destination_text, amount_text, work)
  * 
  * def genesis_account():             # <<<<<<<<<<<<<<
@@ -11041,7 +11391,7 @@ static PyObject *__pyx_pf_3rai_172genesis_account(CYTHON_UNUSED PyObject *__pyx_
   return __pyx_r;
 }
 
-/* "rai.pyx":436
+/* "rai.pyx":450
  *     return _rai.genesis_account()
  * 
  * def block_count_type ():             # <<<<<<<<<<<<<<
@@ -11050,26 +11400,26 @@ static PyObject *__pyx_pf_3rai_172genesis_account(CYTHON_UNUSED PyObject *__pyx_
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_3rai_175block_count_type(PyObject *__pyx_self, CYTHON_UNUSED PyObject *unused); /*proto*/
-static PyMethodDef __pyx_mdef_3rai_175block_count_type = {"block_count_type", (PyCFunction)__pyx_pw_3rai_175block_count_type, METH_NOARGS, 0};
-static PyObject *__pyx_pw_3rai_175block_count_type(PyObject *__pyx_self, CYTHON_UNUSED PyObject *unused) {
+static PyObject *__pyx_pw_3rai_183block_count_type(PyObject *__pyx_self, CYTHON_UNUSED PyObject *unused); /*proto*/
+static PyMethodDef __pyx_mdef_3rai_183block_count_type = {"block_count_type", (PyCFunction)__pyx_pw_3rai_183block_count_type, METH_NOARGS, 0};
+static PyObject *__pyx_pw_3rai_183block_count_type(PyObject *__pyx_self, CYTHON_UNUSED PyObject *unused) {
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("block_count_type (wrapper)", 0);
-  __pyx_r = __pyx_pf_3rai_174block_count_type(__pyx_self);
+  __pyx_r = __pyx_pf_3rai_182block_count_type(__pyx_self);
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_3rai_174block_count_type(CYTHON_UNUSED PyObject *__pyx_self) {
+static PyObject *__pyx_pf_3rai_182block_count_type(CYTHON_UNUSED PyObject *__pyx_self) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
   __Pyx_RefNannySetupContext("block_count_type", 0);
 
-  /* "rai.pyx":437
+  /* "rai.pyx":451
  * 
  * def block_count_type ():
  *     return _rai.block_count_type ()             # <<<<<<<<<<<<<<
@@ -11077,13 +11427,13 @@ static PyObject *__pyx_pf_3rai_174block_count_type(CYTHON_UNUSED PyObject *__pyx
  * 
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __pyx_v_3rai__rai->block_count_type(); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 437, __pyx_L1_error)
+  __pyx_t_1 = __pyx_v_3rai__rai->block_count_type(); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 451, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "rai.pyx":436
+  /* "rai.pyx":450
  *     return _rai.genesis_account()
  * 
  * def block_count_type ():             # <<<<<<<<<<<<<<
@@ -11687,13 +12037,16 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_n_s_work_cancel, __pyx_k_work_cancel, sizeof(__pyx_k_work_cancel), 0, 0, 1, 1},
   {&__pyx_n_s_work_generate, __pyx_k_work_generate, sizeof(__pyx_k_work_generate), 0, 0, 1, 1},
   {&__pyx_n_s_work_get, __pyx_k_work_get, sizeof(__pyx_k_work_get), 0, 0, 1, 1},
+  {&__pyx_n_s_work_peer_add, __pyx_k_work_peer_add, sizeof(__pyx_k_work_peer_add), 0, 0, 1, 1},
+  {&__pyx_n_s_work_peers, __pyx_k_work_peers, sizeof(__pyx_k_work_peers), 0, 0, 1, 1},
+  {&__pyx_n_s_work_peers_clear, __pyx_k_work_peers_clear, sizeof(__pyx_k_work_peers_clear), 0, 0, 1, 1},
   {&__pyx_n_s_work_set, __pyx_k_work_set, sizeof(__pyx_k_work_set), 0, 0, 1, 1},
   {&__pyx_n_s_work_text, __pyx_k_work_text, sizeof(__pyx_k_work_text), 0, 0, 1, 1},
   {0, 0, 0, 0, 0, 0, 0}
 };
 static int __Pyx_InitCachedBuiltins(void) {
-  __pyx_builtin_object = __Pyx_GetBuiltinName(__pyx_n_s_object); if (!__pyx_builtin_object) __PYX_ERR(0, 116, __pyx_L1_error)
-  __pyx_builtin_range = __Pyx_GetBuiltinName(__pyx_n_s_range); if (!__pyx_builtin_range) __PYX_ERR(0, 128, __pyx_L1_error)
+  __pyx_builtin_object = __Pyx_GetBuiltinName(__pyx_n_s_object); if (!__pyx_builtin_object) __PYX_ERR(0, 119, __pyx_L1_error)
+  __pyx_builtin_range = __Pyx_GetBuiltinName(__pyx_n_s_range); if (!__pyx_builtin_range) __PYX_ERR(0, 131, __pyx_L1_error)
   return 0;
   __pyx_L1_error:;
   return -1;
@@ -11703,1080 +12056,1122 @@ static int __Pyx_InitCachedConstants(void) {
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__Pyx_InitCachedConstants", 0);
 
-  /* "rai.pyx":119
+  /* "rai.pyx":122
  *     def __init__(self, js):
  *         if isinstance(js, bytes):
  *             js = js.decode('utf8')             # <<<<<<<<<<<<<<
  *             js = json.loads(js)
  *             if isinstance(js, str):
  */
-  __pyx_tuple_ = PyTuple_Pack(1, __pyx_n_s_utf8); if (unlikely(!__pyx_tuple_)) __PYX_ERR(0, 119, __pyx_L1_error)
+  __pyx_tuple_ = PyTuple_Pack(1, __pyx_n_s_utf8); if (unlikely(!__pyx_tuple_)) __PYX_ERR(0, 122, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple_);
   __Pyx_GIVEREF(__pyx_tuple_);
 
-  /* "rai.pyx":139
+  /* "rai.pyx":142
  * #        return json.dumps(self, default=lambda x: x.__dict__,sort_keys=False,indent=4, separators=(',', ': '))
  *     def __repr__(self):
  *         return json.dumps(self, default=lambda x: x.__dict__, sort_keys=False, indent=4, separators=(',', ': '))             # <<<<<<<<<<<<<<
  * 
  * def block_count ():
  */
-  __pyx_tuple__4 = PyTuple_Pack(2, __pyx_kp_s__2, __pyx_kp_s__3); if (unlikely(!__pyx_tuple__4)) __PYX_ERR(0, 139, __pyx_L1_error)
+  __pyx_tuple__4 = PyTuple_Pack(2, __pyx_kp_s__2, __pyx_kp_s__3); if (unlikely(!__pyx_tuple__4)) __PYX_ERR(0, 142, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__4);
   __Pyx_GIVEREF(__pyx_tuple__4);
 
-  /* "rai.pyx":117
+  /* "rai.pyx":120
  * 
  * class JsonStruct(object):
  *     def __init__(self, js):             # <<<<<<<<<<<<<<
  *         if isinstance(js, bytes):
  *             js = js.decode('utf8')
  */
-  __pyx_tuple__5 = PyTuple_Pack(6, __pyx_n_s_self, __pyx_n_s_js, __pyx_n_s_key, __pyx_n_s_value, __pyx_n_s_i, __pyx_n_s_v); if (unlikely(!__pyx_tuple__5)) __PYX_ERR(0, 117, __pyx_L1_error)
+  __pyx_tuple__5 = PyTuple_Pack(6, __pyx_n_s_self, __pyx_n_s_js, __pyx_n_s_key, __pyx_n_s_value, __pyx_n_s_i, __pyx_n_s_v); if (unlikely(!__pyx_tuple__5)) __PYX_ERR(0, 120, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__5);
   __Pyx_GIVEREF(__pyx_tuple__5);
-  __pyx_codeobj__6 = (PyObject*)__Pyx_PyCode_New(2, 0, 6, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__5, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_newworld_dev_raiblocks_ra, __pyx_n_s_init, 117, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__6)) __PYX_ERR(0, 117, __pyx_L1_error)
+  __pyx_codeobj__6 = (PyObject*)__Pyx_PyCode_New(2, 0, 6, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__5, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_newworld_dev_raiblocks_ra, __pyx_n_s_init, 120, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__6)) __PYX_ERR(0, 120, __pyx_L1_error)
 
-  /* "rai.pyx":135
+  /* "rai.pyx":138
  *             else:
  *                 self.__dict__[key] = value
  *     def __str__(self):             # <<<<<<<<<<<<<<
  *         return str(self.__dict__)
  * #        return json.dumps(self, default=lambda x: x.__dict__,sort_keys=False,indent=4, separators=(',', ': '))
  */
-  __pyx_tuple__7 = PyTuple_Pack(1, __pyx_n_s_self); if (unlikely(!__pyx_tuple__7)) __PYX_ERR(0, 135, __pyx_L1_error)
+  __pyx_tuple__7 = PyTuple_Pack(1, __pyx_n_s_self); if (unlikely(!__pyx_tuple__7)) __PYX_ERR(0, 138, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__7);
   __Pyx_GIVEREF(__pyx_tuple__7);
-  __pyx_codeobj__8 = (PyObject*)__Pyx_PyCode_New(1, 0, 1, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__7, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_newworld_dev_raiblocks_ra, __pyx_n_s_str, 135, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__8)) __PYX_ERR(0, 135, __pyx_L1_error)
+  __pyx_codeobj__8 = (PyObject*)__Pyx_PyCode_New(1, 0, 1, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__7, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_newworld_dev_raiblocks_ra, __pyx_n_s_str, 138, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__8)) __PYX_ERR(0, 138, __pyx_L1_error)
 
-  /* "rai.pyx":138
+  /* "rai.pyx":141
  *         return str(self.__dict__)
  * #        return json.dumps(self, default=lambda x: x.__dict__,sort_keys=False,indent=4, separators=(',', ': '))
  *     def __repr__(self):             # <<<<<<<<<<<<<<
  *         return json.dumps(self, default=lambda x: x.__dict__, sort_keys=False, indent=4, separators=(',', ': '))
  * 
  */
-  __pyx_tuple__9 = PyTuple_Pack(1, __pyx_n_s_self); if (unlikely(!__pyx_tuple__9)) __PYX_ERR(0, 138, __pyx_L1_error)
+  __pyx_tuple__9 = PyTuple_Pack(1, __pyx_n_s_self); if (unlikely(!__pyx_tuple__9)) __PYX_ERR(0, 141, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__9);
   __Pyx_GIVEREF(__pyx_tuple__9);
-  __pyx_codeobj__10 = (PyObject*)__Pyx_PyCode_New(1, 0, 1, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__9, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_newworld_dev_raiblocks_ra, __pyx_n_s_repr, 138, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__10)) __PYX_ERR(0, 138, __pyx_L1_error)
+  __pyx_codeobj__10 = (PyObject*)__Pyx_PyCode_New(1, 0, 1, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__9, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_newworld_dev_raiblocks_ra, __pyx_n_s_repr, 141, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__10)) __PYX_ERR(0, 141, __pyx_L1_error)
 
-  /* "rai.pyx":141
+  /* "rai.pyx":144
  *         return json.dumps(self, default=lambda x: x.__dict__, sort_keys=False, indent=4, separators=(',', ': '))
  * 
  * def block_count ():             # <<<<<<<<<<<<<<
  *     return _rai.block_count()
  * 
  */
-  __pyx_codeobj__11 = (PyObject*)__Pyx_PyCode_New(0, 0, 0, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_newworld_dev_raiblocks_ra, __pyx_n_s_block_count, 141, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__11)) __PYX_ERR(0, 141, __pyx_L1_error)
+  __pyx_codeobj__11 = (PyObject*)__Pyx_PyCode_New(0, 0, 0, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_newworld_dev_raiblocks_ra, __pyx_n_s_block_count, 144, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__11)) __PYX_ERR(0, 144, __pyx_L1_error)
 
-  /* "rai.pyx":144
+  /* "rai.pyx":147
  *     return _rai.block_count()
  * 
  * def get_last_error():             # <<<<<<<<<<<<<<
  *     return get_last_error_()
  * 
  */
-  __pyx_codeobj__12 = (PyObject*)__Pyx_PyCode_New(0, 0, 0, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_newworld_dev_raiblocks_ra, __pyx_n_s_get_last_error, 144, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__12)) __PYX_ERR(0, 144, __pyx_L1_error)
+  __pyx_codeobj__12 = (PyObject*)__Pyx_PyCode_New(0, 0, 0, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_newworld_dev_raiblocks_ra, __pyx_n_s_get_last_error, 147, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__12)) __PYX_ERR(0, 147, __pyx_L1_error)
 
-  /* "rai.pyx":147
+  /* "rai.pyx":150
  *     return get_last_error_()
  * 
  * def account_balance (string account_text):             # <<<<<<<<<<<<<<
  *     cdef string balance
  *     cdef string pending
  */
-  __pyx_tuple__13 = PyTuple_Pack(5, __pyx_n_s_account_text, __pyx_n_s_account_text, __pyx_n_s_balance, __pyx_n_s_pending, __pyx_n_s_ret); if (unlikely(!__pyx_tuple__13)) __PYX_ERR(0, 147, __pyx_L1_error)
+  __pyx_tuple__13 = PyTuple_Pack(5, __pyx_n_s_account_text, __pyx_n_s_account_text, __pyx_n_s_balance, __pyx_n_s_pending, __pyx_n_s_ret); if (unlikely(!__pyx_tuple__13)) __PYX_ERR(0, 150, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__13);
   __Pyx_GIVEREF(__pyx_tuple__13);
-  __pyx_codeobj__14 = (PyObject*)__Pyx_PyCode_New(1, 0, 5, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__13, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_newworld_dev_raiblocks_ra, __pyx_n_s_account_balance, 147, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__14)) __PYX_ERR(0, 147, __pyx_L1_error)
+  __pyx_codeobj__14 = (PyObject*)__Pyx_PyCode_New(1, 0, 5, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__13, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_newworld_dev_raiblocks_ra, __pyx_n_s_account_balance, 150, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__14)) __PYX_ERR(0, 150, __pyx_L1_error)
 
-  /* "rai.pyx":154
+  /* "rai.pyx":157
  *     return JsonStruct(ret)
  * 
  * def account_block_count (account):             # <<<<<<<<<<<<<<
  *     return _rai.account_block_count (account)
  * 
  */
-  __pyx_tuple__15 = PyTuple_Pack(1, __pyx_n_s_account); if (unlikely(!__pyx_tuple__15)) __PYX_ERR(0, 154, __pyx_L1_error)
+  __pyx_tuple__15 = PyTuple_Pack(1, __pyx_n_s_account); if (unlikely(!__pyx_tuple__15)) __PYX_ERR(0, 157, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__15);
   __Pyx_GIVEREF(__pyx_tuple__15);
-  __pyx_codeobj__16 = (PyObject*)__Pyx_PyCode_New(1, 0, 1, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__15, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_newworld_dev_raiblocks_ra, __pyx_n_s_account_block_count, 154, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__16)) __PYX_ERR(0, 154, __pyx_L1_error)
+  __pyx_codeobj__16 = (PyObject*)__Pyx_PyCode_New(1, 0, 1, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__15, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_newworld_dev_raiblocks_ra, __pyx_n_s_account_block_count, 157, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__16)) __PYX_ERR(0, 157, __pyx_L1_error)
 
-  /* "rai.pyx":157
+  /* "rai.pyx":160
  *     return _rai.account_block_count (account)
  * 
  * def account_info (account_text, representative=True, weight=True, pending=True):             # <<<<<<<<<<<<<<
  *     info = _rai.account_info (account_text, representative, weight, pending)
  *     return JsonStruct(info)
  */
-  __pyx_tuple__17 = PyTuple_Pack(5, __pyx_n_s_account_text, __pyx_n_s_representative, __pyx_n_s_weight, __pyx_n_s_pending, __pyx_n_s_info); if (unlikely(!__pyx_tuple__17)) __PYX_ERR(0, 157, __pyx_L1_error)
+  __pyx_tuple__17 = PyTuple_Pack(5, __pyx_n_s_account_text, __pyx_n_s_representative, __pyx_n_s_weight, __pyx_n_s_pending, __pyx_n_s_info); if (unlikely(!__pyx_tuple__17)) __PYX_ERR(0, 160, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__17);
   __Pyx_GIVEREF(__pyx_tuple__17);
-  __pyx_codeobj__18 = (PyObject*)__Pyx_PyCode_New(4, 0, 5, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__17, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_newworld_dev_raiblocks_ra, __pyx_n_s_account_info, 157, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__18)) __PYX_ERR(0, 157, __pyx_L1_error)
+  __pyx_codeobj__18 = (PyObject*)__Pyx_PyCode_New(4, 0, 5, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__17, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_newworld_dev_raiblocks_ra, __pyx_n_s_account_info, 160, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__18)) __PYX_ERR(0, 160, __pyx_L1_error)
 
-  /* "rai.pyx":161
+  /* "rai.pyx":164
  *     return JsonStruct(info)
  * 
  * def account_create (wallet_text, generate_work=True):             # <<<<<<<<<<<<<<
  *     return _rai.account_create (wallet_text, generate_work)
  * 
  */
-  __pyx_tuple__19 = PyTuple_Pack(2, __pyx_n_s_wallet_text, __pyx_n_s_generate_work); if (unlikely(!__pyx_tuple__19)) __PYX_ERR(0, 161, __pyx_L1_error)
+  __pyx_tuple__19 = PyTuple_Pack(2, __pyx_n_s_wallet_text, __pyx_n_s_generate_work); if (unlikely(!__pyx_tuple__19)) __PYX_ERR(0, 164, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__19);
   __Pyx_GIVEREF(__pyx_tuple__19);
-  __pyx_codeobj__20 = (PyObject*)__Pyx_PyCode_New(2, 0, 2, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__19, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_newworld_dev_raiblocks_ra, __pyx_n_s_account_create, 161, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__20)) __PYX_ERR(0, 161, __pyx_L1_error)
+  __pyx_codeobj__20 = (PyObject*)__Pyx_PyCode_New(2, 0, 2, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__19, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_newworld_dev_raiblocks_ra, __pyx_n_s_account_create, 164, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__20)) __PYX_ERR(0, 164, __pyx_L1_error)
 
-  /* "rai.pyx":164
+  /* "rai.pyx":167
  *     return _rai.account_create (wallet_text, generate_work)
  * 
  * def account_get (string key_text):             # <<<<<<<<<<<<<<
  *     return _rai.account_get (key_text)
  * 
  */
-  __pyx_tuple__21 = PyTuple_Pack(2, __pyx_n_s_key_text, __pyx_n_s_key_text); if (unlikely(!__pyx_tuple__21)) __PYX_ERR(0, 164, __pyx_L1_error)
+  __pyx_tuple__21 = PyTuple_Pack(2, __pyx_n_s_key_text, __pyx_n_s_key_text); if (unlikely(!__pyx_tuple__21)) __PYX_ERR(0, 167, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__21);
   __Pyx_GIVEREF(__pyx_tuple__21);
-  __pyx_codeobj__22 = (PyObject*)__Pyx_PyCode_New(1, 0, 2, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__21, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_newworld_dev_raiblocks_ra, __pyx_n_s_account_get, 164, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__22)) __PYX_ERR(0, 164, __pyx_L1_error)
+  __pyx_codeobj__22 = (PyObject*)__Pyx_PyCode_New(1, 0, 2, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__21, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_newworld_dev_raiblocks_ra, __pyx_n_s_account_get, 167, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__22)) __PYX_ERR(0, 167, __pyx_L1_error)
 
-  /* "rai.pyx":167
+  /* "rai.pyx":170
  *     return _rai.account_get (key_text)
  * 
  * def account_history (account_text, count):             # <<<<<<<<<<<<<<
  *     ret = _rai.account_history (account_text, count)
  *     if isinstance(ret, Exception):
  */
-  __pyx_tuple__23 = PyTuple_Pack(3, __pyx_n_s_account_text, __pyx_n_s_count, __pyx_n_s_ret); if (unlikely(!__pyx_tuple__23)) __PYX_ERR(0, 167, __pyx_L1_error)
+  __pyx_tuple__23 = PyTuple_Pack(3, __pyx_n_s_account_text, __pyx_n_s_count, __pyx_n_s_ret); if (unlikely(!__pyx_tuple__23)) __PYX_ERR(0, 170, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__23);
   __Pyx_GIVEREF(__pyx_tuple__23);
-  __pyx_codeobj__24 = (PyObject*)__Pyx_PyCode_New(2, 0, 3, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__23, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_newworld_dev_raiblocks_ra, __pyx_n_s_account_history, 167, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__24)) __PYX_ERR(0, 167, __pyx_L1_error)
+  __pyx_codeobj__24 = (PyObject*)__Pyx_PyCode_New(2, 0, 3, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__23, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_newworld_dev_raiblocks_ra, __pyx_n_s_account_history, 170, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__24)) __PYX_ERR(0, 170, __pyx_L1_error)
 
-  /* "rai.pyx":173
+  /* "rai.pyx":176
  *     return ret
  * 
  * def account_list (string wallet_text):             # <<<<<<<<<<<<<<
  *     ret = _rai.account_list (wallet_text)
  *     if isinstance(ret, Exception):
  */
-  __pyx_tuple__25 = PyTuple_Pack(3, __pyx_n_s_wallet_text, __pyx_n_s_wallet_text, __pyx_n_s_ret); if (unlikely(!__pyx_tuple__25)) __PYX_ERR(0, 173, __pyx_L1_error)
+  __pyx_tuple__25 = PyTuple_Pack(3, __pyx_n_s_wallet_text, __pyx_n_s_wallet_text, __pyx_n_s_ret); if (unlikely(!__pyx_tuple__25)) __PYX_ERR(0, 176, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__25);
   __Pyx_GIVEREF(__pyx_tuple__25);
-  __pyx_codeobj__26 = (PyObject*)__Pyx_PyCode_New(1, 0, 3, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__25, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_newworld_dev_raiblocks_ra, __pyx_n_s_account_list, 173, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__26)) __PYX_ERR(0, 173, __pyx_L1_error)
+  __pyx_codeobj__26 = (PyObject*)__Pyx_PyCode_New(1, 0, 3, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__25, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_newworld_dev_raiblocks_ra, __pyx_n_s_account_list, 176, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__26)) __PYX_ERR(0, 176, __pyx_L1_error)
 
-  /* "rai.pyx":179
+  /* "rai.pyx":182
  *     return ret
  * 
  * def account_move (string wallet_text, string source_text, vector[string] accounts_text):             # <<<<<<<<<<<<<<
  *     ret = _rai.account_move (wallet_text, source_text, accounts_text);
  *     if isinstance(ret, Exception):
  */
-  __pyx_tuple__27 = PyTuple_Pack(4, __pyx_n_s_wallet_text, __pyx_n_s_source_text, __pyx_n_s_accounts_text, __pyx_n_s_ret); if (unlikely(!__pyx_tuple__27)) __PYX_ERR(0, 179, __pyx_L1_error)
+  __pyx_tuple__27 = PyTuple_Pack(4, __pyx_n_s_wallet_text, __pyx_n_s_source_text, __pyx_n_s_accounts_text, __pyx_n_s_ret); if (unlikely(!__pyx_tuple__27)) __PYX_ERR(0, 182, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__27);
   __Pyx_GIVEREF(__pyx_tuple__27);
-  __pyx_codeobj__28 = (PyObject*)__Pyx_PyCode_New(3, 0, 4, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__27, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_newworld_dev_raiblocks_ra, __pyx_n_s_account_move, 179, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__28)) __PYX_ERR(0, 179, __pyx_L1_error)
+  __pyx_codeobj__28 = (PyObject*)__Pyx_PyCode_New(3, 0, 4, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__27, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_newworld_dev_raiblocks_ra, __pyx_n_s_account_move, 182, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__28)) __PYX_ERR(0, 182, __pyx_L1_error)
 
-  /* "rai.pyx":185
+  /* "rai.pyx":188
  *     return ret
  * 
  * def account_key (string account_text):             # <<<<<<<<<<<<<<
  *     ret = _rai.account_key (account_text);
  *     if isinstance(ret, Exception):
  */
-  __pyx_tuple__29 = PyTuple_Pack(3, __pyx_n_s_account_text, __pyx_n_s_account_text, __pyx_n_s_ret); if (unlikely(!__pyx_tuple__29)) __PYX_ERR(0, 185, __pyx_L1_error)
+  __pyx_tuple__29 = PyTuple_Pack(3, __pyx_n_s_account_text, __pyx_n_s_account_text, __pyx_n_s_ret); if (unlikely(!__pyx_tuple__29)) __PYX_ERR(0, 188, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__29);
   __Pyx_GIVEREF(__pyx_tuple__29);
-  __pyx_codeobj__30 = (PyObject*)__Pyx_PyCode_New(1, 0, 3, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__29, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_newworld_dev_raiblocks_ra, __pyx_n_s_account_key, 185, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__30)) __PYX_ERR(0, 185, __pyx_L1_error)
+  __pyx_codeobj__30 = (PyObject*)__Pyx_PyCode_New(1, 0, 3, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__29, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_newworld_dev_raiblocks_ra, __pyx_n_s_account_key, 188, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__30)) __PYX_ERR(0, 188, __pyx_L1_error)
 
-  /* "rai.pyx":191
+  /* "rai.pyx":194
  *     return ret
  * 
  * def account_remove (string wallet_text, string account_text):             # <<<<<<<<<<<<<<
  *     ret = _rai.account_remove (wallet_text, account_text)
  *     if isinstance(ret, Exception):
  */
-  __pyx_tuple__31 = PyTuple_Pack(3, __pyx_n_s_wallet_text, __pyx_n_s_account_text, __pyx_n_s_ret); if (unlikely(!__pyx_tuple__31)) __PYX_ERR(0, 191, __pyx_L1_error)
+  __pyx_tuple__31 = PyTuple_Pack(3, __pyx_n_s_wallet_text, __pyx_n_s_account_text, __pyx_n_s_ret); if (unlikely(!__pyx_tuple__31)) __PYX_ERR(0, 194, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__31);
   __Pyx_GIVEREF(__pyx_tuple__31);
-  __pyx_codeobj__32 = (PyObject*)__Pyx_PyCode_New(2, 0, 3, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__31, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_newworld_dev_raiblocks_ra, __pyx_n_s_account_remove, 191, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__32)) __PYX_ERR(0, 191, __pyx_L1_error)
+  __pyx_codeobj__32 = (PyObject*)__Pyx_PyCode_New(2, 0, 3, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__31, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_newworld_dev_raiblocks_ra, __pyx_n_s_account_remove, 194, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__32)) __PYX_ERR(0, 194, __pyx_L1_error)
 
-  /* "rai.pyx":197
+  /* "rai.pyx":200
  *     return ret
  * 
  * def account_representative (string account_text):             # <<<<<<<<<<<<<<
  *     return _rai.account_representative (account_text)
  * 
  */
-  __pyx_tuple__33 = PyTuple_Pack(2, __pyx_n_s_account_text, __pyx_n_s_account_text); if (unlikely(!__pyx_tuple__33)) __PYX_ERR(0, 197, __pyx_L1_error)
+  __pyx_tuple__33 = PyTuple_Pack(2, __pyx_n_s_account_text, __pyx_n_s_account_text); if (unlikely(!__pyx_tuple__33)) __PYX_ERR(0, 200, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__33);
   __Pyx_GIVEREF(__pyx_tuple__33);
-  __pyx_codeobj__34 = (PyObject*)__Pyx_PyCode_New(1, 0, 2, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__33, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_newworld_dev_raiblocks_ra, __pyx_n_s_account_representative, 197, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__34)) __PYX_ERR(0, 197, __pyx_L1_error)
+  __pyx_codeobj__34 = (PyObject*)__Pyx_PyCode_New(1, 0, 2, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__33, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_newworld_dev_raiblocks_ra, __pyx_n_s_account_representative, 200, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__34)) __PYX_ERR(0, 200, __pyx_L1_error)
 
-  /* "rai.pyx":200
+  /* "rai.pyx":203
  *     return _rai.account_representative (account_text)
  * 
  * def account_representative_set (string wallet_text, string account_text, string representative_text, uint64_t work):             # <<<<<<<<<<<<<<
  *     return _rai.account_representative_set (wallet_text, account_text, representative_text, work)
  * 
  */
-  __pyx_tuple__35 = PyTuple_Pack(4, __pyx_n_s_wallet_text, __pyx_n_s_account_text, __pyx_n_s_representative_text, __pyx_n_s_work); if (unlikely(!__pyx_tuple__35)) __PYX_ERR(0, 200, __pyx_L1_error)
+  __pyx_tuple__35 = PyTuple_Pack(4, __pyx_n_s_wallet_text, __pyx_n_s_account_text, __pyx_n_s_representative_text, __pyx_n_s_work); if (unlikely(!__pyx_tuple__35)) __PYX_ERR(0, 203, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__35);
   __Pyx_GIVEREF(__pyx_tuple__35);
-  __pyx_codeobj__36 = (PyObject*)__Pyx_PyCode_New(4, 0, 4, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__35, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_newworld_dev_raiblocks_ra, __pyx_n_s_account_representative_set, 200, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__36)) __PYX_ERR(0, 200, __pyx_L1_error)
+  __pyx_codeobj__36 = (PyObject*)__Pyx_PyCode_New(4, 0, 4, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__35, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_newworld_dev_raiblocks_ra, __pyx_n_s_account_representative_set, 203, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__36)) __PYX_ERR(0, 203, __pyx_L1_error)
 
-  /* "rai.pyx":203
+  /* "rai.pyx":206
  *     return _rai.account_representative_set (wallet_text, account_text, representative_text, work)
  * 
  * def account_weight (string account_text):             # <<<<<<<<<<<<<<
  *     return  _rai.account_weight (account_text)
  * 
  */
-  __pyx_tuple__37 = PyTuple_Pack(2, __pyx_n_s_account_text, __pyx_n_s_account_text); if (unlikely(!__pyx_tuple__37)) __PYX_ERR(0, 203, __pyx_L1_error)
+  __pyx_tuple__37 = PyTuple_Pack(2, __pyx_n_s_account_text, __pyx_n_s_account_text); if (unlikely(!__pyx_tuple__37)) __PYX_ERR(0, 206, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__37);
   __Pyx_GIVEREF(__pyx_tuple__37);
-  __pyx_codeobj__38 = (PyObject*)__Pyx_PyCode_New(1, 0, 2, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__37, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_newworld_dev_raiblocks_ra, __pyx_n_s_account_weight, 203, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__38)) __PYX_ERR(0, 203, __pyx_L1_error)
+  __pyx_codeobj__38 = (PyObject*)__Pyx_PyCode_New(1, 0, 2, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__37, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_newworld_dev_raiblocks_ra, __pyx_n_s_account_weight, 206, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__38)) __PYX_ERR(0, 206, __pyx_L1_error)
 
-  /* "rai.pyx":206
+  /* "rai.pyx":209
  *     return  _rai.account_weight (account_text)
  * 
  * def accounts_balances (vector[string] accounts):             # <<<<<<<<<<<<<<
  *     return _rai.accounts_balances (accounts)
  * 
  */
-  __pyx_tuple__39 = PyTuple_Pack(2, __pyx_n_s_accounts, __pyx_n_s_accounts); if (unlikely(!__pyx_tuple__39)) __PYX_ERR(0, 206, __pyx_L1_error)
+  __pyx_tuple__39 = PyTuple_Pack(2, __pyx_n_s_accounts, __pyx_n_s_accounts); if (unlikely(!__pyx_tuple__39)) __PYX_ERR(0, 209, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__39);
   __Pyx_GIVEREF(__pyx_tuple__39);
-  __pyx_codeobj__40 = (PyObject*)__Pyx_PyCode_New(1, 0, 2, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__39, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_newworld_dev_raiblocks_ra, __pyx_n_s_accounts_balances, 206, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__40)) __PYX_ERR(0, 206, __pyx_L1_error)
+  __pyx_codeobj__40 = (PyObject*)__Pyx_PyCode_New(1, 0, 2, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__39, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_newworld_dev_raiblocks_ra, __pyx_n_s_accounts_balances, 209, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__40)) __PYX_ERR(0, 209, __pyx_L1_error)
 
-  /* "rai.pyx":209
+  /* "rai.pyx":212
  *     return _rai.accounts_balances (accounts)
  * 
  * def accounts_create (string wallet_text, int count, generate_work = True):             # <<<<<<<<<<<<<<
  *     return _rai.accounts_create (wallet_text, count, generate_work)
  * 
  */
-  __pyx_tuple__41 = PyTuple_Pack(3, __pyx_n_s_wallet_text, __pyx_n_s_count, __pyx_n_s_generate_work); if (unlikely(!__pyx_tuple__41)) __PYX_ERR(0, 209, __pyx_L1_error)
+  __pyx_tuple__41 = PyTuple_Pack(3, __pyx_n_s_wallet_text, __pyx_n_s_count, __pyx_n_s_generate_work); if (unlikely(!__pyx_tuple__41)) __PYX_ERR(0, 212, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__41);
   __Pyx_GIVEREF(__pyx_tuple__41);
-  __pyx_codeobj__42 = (PyObject*)__Pyx_PyCode_New(3, 0, 3, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__41, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_newworld_dev_raiblocks_ra, __pyx_n_s_accounts_create, 209, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__42)) __PYX_ERR(0, 209, __pyx_L1_error)
+  __pyx_codeobj__42 = (PyObject*)__Pyx_PyCode_New(3, 0, 3, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__41, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_newworld_dev_raiblocks_ra, __pyx_n_s_accounts_create, 212, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__42)) __PYX_ERR(0, 212, __pyx_L1_error)
 
-  /* "rai.pyx":212
+  /* "rai.pyx":215
  *     return _rai.accounts_create (wallet_text, count, generate_work)
  * 
  * def accounts_frontiers (vector[string] accounts):             # <<<<<<<<<<<<<<
  *     return _rai.accounts_frontiers (accounts)
  * 
  */
-  __pyx_tuple__43 = PyTuple_Pack(2, __pyx_n_s_accounts, __pyx_n_s_accounts); if (unlikely(!__pyx_tuple__43)) __PYX_ERR(0, 212, __pyx_L1_error)
+  __pyx_tuple__43 = PyTuple_Pack(2, __pyx_n_s_accounts, __pyx_n_s_accounts); if (unlikely(!__pyx_tuple__43)) __PYX_ERR(0, 215, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__43);
   __Pyx_GIVEREF(__pyx_tuple__43);
-  __pyx_codeobj__44 = (PyObject*)__Pyx_PyCode_New(1, 0, 2, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__43, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_newworld_dev_raiblocks_ra, __pyx_n_s_accounts_frontiers, 212, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__44)) __PYX_ERR(0, 212, __pyx_L1_error)
+  __pyx_codeobj__44 = (PyObject*)__Pyx_PyCode_New(1, 0, 2, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__43, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_newworld_dev_raiblocks_ra, __pyx_n_s_accounts_frontiers, 215, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__44)) __PYX_ERR(0, 215, __pyx_L1_error)
 
-  /* "rai.pyx":215
+  /* "rai.pyx":218
  *     return _rai.accounts_frontiers (accounts)
  * 
  * def accounts_pending (vector[string] accounts, uint64_t count, string threshold_text, bool source):             # <<<<<<<<<<<<<<
  *     return _rai.accounts_pending (accounts, count, threshold_text, source)
  * 
  */
-  __pyx_tuple__45 = PyTuple_Pack(4, __pyx_n_s_accounts, __pyx_n_s_count, __pyx_n_s_threshold_text, __pyx_n_s_source); if (unlikely(!__pyx_tuple__45)) __PYX_ERR(0, 215, __pyx_L1_error)
+  __pyx_tuple__45 = PyTuple_Pack(4, __pyx_n_s_accounts, __pyx_n_s_count, __pyx_n_s_threshold_text, __pyx_n_s_source); if (unlikely(!__pyx_tuple__45)) __PYX_ERR(0, 218, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__45);
   __Pyx_GIVEREF(__pyx_tuple__45);
-  __pyx_codeobj__46 = (PyObject*)__Pyx_PyCode_New(4, 0, 4, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__45, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_newworld_dev_raiblocks_ra, __pyx_n_s_accounts_pending, 215, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__46)) __PYX_ERR(0, 215, __pyx_L1_error)
+  __pyx_codeobj__46 = (PyObject*)__Pyx_PyCode_New(4, 0, 4, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__45, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_newworld_dev_raiblocks_ra, __pyx_n_s_accounts_pending, 218, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__46)) __PYX_ERR(0, 218, __pyx_L1_error)
 
-  /* "rai.pyx":218
+  /* "rai.pyx":221
  *     return _rai.accounts_pending (accounts, count, threshold_text, source)
  * 
  * def available_supply():             # <<<<<<<<<<<<<<
  *     return _rai.available_supply ()
  * 
  */
-  __pyx_codeobj__47 = (PyObject*)__Pyx_PyCode_New(0, 0, 0, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_newworld_dev_raiblocks_ra, __pyx_n_s_available_supply, 218, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__47)) __PYX_ERR(0, 218, __pyx_L1_error)
+  __pyx_codeobj__47 = (PyObject*)__Pyx_PyCode_New(0, 0, 0, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_newworld_dev_raiblocks_ra, __pyx_n_s_available_supply, 221, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__47)) __PYX_ERR(0, 221, __pyx_L1_error)
 
-  /* "rai.pyx":221
+  /* "rai.pyx":224
  *     return _rai.available_supply ()
  * 
  * def block (string hash_text):             # <<<<<<<<<<<<<<
  *     ret = _rai.block (hash_text);
  *     if ret:
  */
-  __pyx_tuple__48 = PyTuple_Pack(3, __pyx_n_s_hash_text, __pyx_n_s_hash_text, __pyx_n_s_ret); if (unlikely(!__pyx_tuple__48)) __PYX_ERR(0, 221, __pyx_L1_error)
+  __pyx_tuple__48 = PyTuple_Pack(3, __pyx_n_s_hash_text, __pyx_n_s_hash_text, __pyx_n_s_ret); if (unlikely(!__pyx_tuple__48)) __PYX_ERR(0, 224, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__48);
   __Pyx_GIVEREF(__pyx_tuple__48);
-  __pyx_codeobj__49 = (PyObject*)__Pyx_PyCode_New(1, 0, 3, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__48, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_newworld_dev_raiblocks_ra, __pyx_n_s_block, 221, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__49)) __PYX_ERR(0, 221, __pyx_L1_error)
+  __pyx_codeobj__49 = (PyObject*)__Pyx_PyCode_New(1, 0, 3, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__48, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_newworld_dev_raiblocks_ra, __pyx_n_s_block, 224, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__49)) __PYX_ERR(0, 224, __pyx_L1_error)
 
-  /* "rai.pyx":227
+  /* "rai.pyx":230
  *         return JsonStruct(ret)
  * 
  * def blocks (vector[string] hashes):             # <<<<<<<<<<<<<<
  *     return _rai.blocks (hashes);
  * 
  */
-  __pyx_tuple__50 = PyTuple_Pack(2, __pyx_n_s_hashes, __pyx_n_s_hashes); if (unlikely(!__pyx_tuple__50)) __PYX_ERR(0, 227, __pyx_L1_error)
+  __pyx_tuple__50 = PyTuple_Pack(2, __pyx_n_s_hashes, __pyx_n_s_hashes); if (unlikely(!__pyx_tuple__50)) __PYX_ERR(0, 230, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__50);
   __Pyx_GIVEREF(__pyx_tuple__50);
-  __pyx_codeobj__51 = (PyObject*)__Pyx_PyCode_New(1, 0, 2, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__50, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_newworld_dev_raiblocks_ra, __pyx_n_s_blocks, 227, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__51)) __PYX_ERR(0, 227, __pyx_L1_error)
+  __pyx_codeobj__51 = (PyObject*)__Pyx_PyCode_New(1, 0, 2, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__50, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_newworld_dev_raiblocks_ra, __pyx_n_s_blocks, 230, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__51)) __PYX_ERR(0, 230, __pyx_L1_error)
 
-  /* "rai.pyx":230
+  /* "rai.pyx":233
  *     return _rai.blocks (hashes);
  * 
  * def blocks_info (vector[string] hashes, pending = False, source = False):             # <<<<<<<<<<<<<<
  *     return _rai.blocks_info (hashes, pending, source)
  * 
  */
-  __pyx_tuple__52 = PyTuple_Pack(3, __pyx_n_s_hashes, __pyx_n_s_pending, __pyx_n_s_source); if (unlikely(!__pyx_tuple__52)) __PYX_ERR(0, 230, __pyx_L1_error)
+  __pyx_tuple__52 = PyTuple_Pack(3, __pyx_n_s_hashes, __pyx_n_s_pending, __pyx_n_s_source); if (unlikely(!__pyx_tuple__52)) __PYX_ERR(0, 233, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__52);
   __Pyx_GIVEREF(__pyx_tuple__52);
-  __pyx_codeobj__53 = (PyObject*)__Pyx_PyCode_New(3, 0, 3, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__52, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_newworld_dev_raiblocks_ra, __pyx_n_s_blocks_info, 230, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__53)) __PYX_ERR(0, 230, __pyx_L1_error)
+  __pyx_codeobj__53 = (PyObject*)__Pyx_PyCode_New(3, 0, 3, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__52, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_newworld_dev_raiblocks_ra, __pyx_n_s_blocks_info, 233, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__53)) __PYX_ERR(0, 233, __pyx_L1_error)
 
-  /* "rai.pyx":233
+  /* "rai.pyx":236
  *     return _rai.blocks_info (hashes, pending, source)
  * 
  * def block_account (string hash_text):             # <<<<<<<<<<<<<<
  *     return _rai.block_account (hash_text)
  * 
  */
-  __pyx_tuple__54 = PyTuple_Pack(2, __pyx_n_s_hash_text, __pyx_n_s_hash_text); if (unlikely(!__pyx_tuple__54)) __PYX_ERR(0, 233, __pyx_L1_error)
+  __pyx_tuple__54 = PyTuple_Pack(2, __pyx_n_s_hash_text, __pyx_n_s_hash_text); if (unlikely(!__pyx_tuple__54)) __PYX_ERR(0, 236, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__54);
   __Pyx_GIVEREF(__pyx_tuple__54);
-  __pyx_codeobj__55 = (PyObject*)__Pyx_PyCode_New(1, 0, 2, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__54, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_newworld_dev_raiblocks_ra, __pyx_n_s_block_account, 233, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__55)) __PYX_ERR(0, 233, __pyx_L1_error)
+  __pyx_codeobj__55 = (PyObject*)__Pyx_PyCode_New(1, 0, 2, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__54, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_newworld_dev_raiblocks_ra, __pyx_n_s_block_account, 236, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__55)) __PYX_ERR(0, 236, __pyx_L1_error)
 
-  /* "rai.pyx":236
+  /* "rai.pyx":239
  *     return _rai.block_account (hash_text)
  * 
  * def bootstrap (string address_text, string port_text):             # <<<<<<<<<<<<<<
  *     return _rai.bootstrap (address_text, port_text)
  * 
  */
-  __pyx_tuple__56 = PyTuple_Pack(2, __pyx_n_s_address_text, __pyx_n_s_port_text); if (unlikely(!__pyx_tuple__56)) __PYX_ERR(0, 236, __pyx_L1_error)
+  __pyx_tuple__56 = PyTuple_Pack(2, __pyx_n_s_address_text, __pyx_n_s_port_text); if (unlikely(!__pyx_tuple__56)) __PYX_ERR(0, 239, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__56);
   __Pyx_GIVEREF(__pyx_tuple__56);
-  __pyx_codeobj__57 = (PyObject*)__Pyx_PyCode_New(2, 0, 2, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__56, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_newworld_dev_raiblocks_ra, __pyx_n_s_bootstrap, 236, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__57)) __PYX_ERR(0, 236, __pyx_L1_error)
+  __pyx_codeobj__57 = (PyObject*)__Pyx_PyCode_New(2, 0, 2, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__56, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_newworld_dev_raiblocks_ra, __pyx_n_s_bootstrap, 239, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__57)) __PYX_ERR(0, 239, __pyx_L1_error)
 
-  /* "rai.pyx":239
+  /* "rai.pyx":242
  *     return _rai.bootstrap (address_text, port_text)
  * 
  * def bootstrap_any ():             # <<<<<<<<<<<<<<
  *     return _rai.bootstrap_any ()
  * 
  */
-  __pyx_codeobj__58 = (PyObject*)__Pyx_PyCode_New(0, 0, 0, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_newworld_dev_raiblocks_ra, __pyx_n_s_bootstrap_any, 239, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__58)) __PYX_ERR(0, 239, __pyx_L1_error)
+  __pyx_codeobj__58 = (PyObject*)__Pyx_PyCode_New(0, 0, 0, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_newworld_dev_raiblocks_ra, __pyx_n_s_bootstrap_any, 242, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__58)) __PYX_ERR(0, 242, __pyx_L1_error)
 
-  /* "rai.pyx":242
+  /* "rai.pyx":245
  *     return _rai.bootstrap_any ()
  * 
  * def chain (string block_text, uint64_t count):             # <<<<<<<<<<<<<<
  *     return _rai.chain (block_text, count)
  * 
  */
-  __pyx_tuple__59 = PyTuple_Pack(2, __pyx_n_s_block_text, __pyx_n_s_count); if (unlikely(!__pyx_tuple__59)) __PYX_ERR(0, 242, __pyx_L1_error)
+  __pyx_tuple__59 = PyTuple_Pack(2, __pyx_n_s_block_text, __pyx_n_s_count); if (unlikely(!__pyx_tuple__59)) __PYX_ERR(0, 245, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__59);
   __Pyx_GIVEREF(__pyx_tuple__59);
-  __pyx_codeobj__60 = (PyObject*)__Pyx_PyCode_New(2, 0, 2, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__59, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_newworld_dev_raiblocks_ra, __pyx_n_s_chain, 242, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__60)) __PYX_ERR(0, 242, __pyx_L1_error)
+  __pyx_codeobj__60 = (PyObject*)__Pyx_PyCode_New(2, 0, 2, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__59, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_newworld_dev_raiblocks_ra, __pyx_n_s_chain, 245, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__60)) __PYX_ERR(0, 245, __pyx_L1_error)
 
-  /* "rai.pyx":245
+  /* "rai.pyx":248
  *     return _rai.chain (block_text, count)
  * 
  * def delegators (string account_text):             # <<<<<<<<<<<<<<
  *     return _rai.delegators (account_text)
  * 
  */
-  __pyx_tuple__61 = PyTuple_Pack(2, __pyx_n_s_account_text, __pyx_n_s_account_text); if (unlikely(!__pyx_tuple__61)) __PYX_ERR(0, 245, __pyx_L1_error)
+  __pyx_tuple__61 = PyTuple_Pack(2, __pyx_n_s_account_text, __pyx_n_s_account_text); if (unlikely(!__pyx_tuple__61)) __PYX_ERR(0, 248, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__61);
   __Pyx_GIVEREF(__pyx_tuple__61);
-  __pyx_codeobj__62 = (PyObject*)__Pyx_PyCode_New(1, 0, 2, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__61, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_newworld_dev_raiblocks_ra, __pyx_n_s_delegators, 245, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__62)) __PYX_ERR(0, 245, __pyx_L1_error)
+  __pyx_codeobj__62 = (PyObject*)__Pyx_PyCode_New(1, 0, 2, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__61, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_newworld_dev_raiblocks_ra, __pyx_n_s_delegators, 248, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__62)) __PYX_ERR(0, 248, __pyx_L1_error)
 
-  /* "rai.pyx":248
+  /* "rai.pyx":251
  *     return _rai.delegators (account_text)
  * 
  * def delegators_count (string account_text):             # <<<<<<<<<<<<<<
  *     return _rai.delegators_count (account_text)
  * 
  */
-  __pyx_tuple__63 = PyTuple_Pack(2, __pyx_n_s_account_text, __pyx_n_s_account_text); if (unlikely(!__pyx_tuple__63)) __PYX_ERR(0, 248, __pyx_L1_error)
+  __pyx_tuple__63 = PyTuple_Pack(2, __pyx_n_s_account_text, __pyx_n_s_account_text); if (unlikely(!__pyx_tuple__63)) __PYX_ERR(0, 251, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__63);
   __Pyx_GIVEREF(__pyx_tuple__63);
-  __pyx_codeobj__64 = (PyObject*)__Pyx_PyCode_New(1, 0, 2, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__63, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_newworld_dev_raiblocks_ra, __pyx_n_s_delegators_count, 248, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__64)) __PYX_ERR(0, 248, __pyx_L1_error)
+  __pyx_codeobj__64 = (PyObject*)__Pyx_PyCode_New(1, 0, 2, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__63, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_newworld_dev_raiblocks_ra, __pyx_n_s_delegators_count, 251, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__64)) __PYX_ERR(0, 251, __pyx_L1_error)
 
-  /* "rai.pyx":251
+  /* "rai.pyx":254
  *     return _rai.delegators_count (account_text)
  * 
  * def deterministic_key (string seed_text, uint64_t index):             # <<<<<<<<<<<<<<
  *     return _rai.deterministic_key (seed_text, index)
  * 
  */
-  __pyx_tuple__65 = PyTuple_Pack(2, __pyx_n_s_seed_text, __pyx_n_s_index); if (unlikely(!__pyx_tuple__65)) __PYX_ERR(0, 251, __pyx_L1_error)
+  __pyx_tuple__65 = PyTuple_Pack(2, __pyx_n_s_seed_text, __pyx_n_s_index); if (unlikely(!__pyx_tuple__65)) __PYX_ERR(0, 254, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__65);
   __Pyx_GIVEREF(__pyx_tuple__65);
-  __pyx_codeobj__66 = (PyObject*)__Pyx_PyCode_New(2, 0, 2, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__65, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_newworld_dev_raiblocks_ra, __pyx_n_s_deterministic_key, 251, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__66)) __PYX_ERR(0, 251, __pyx_L1_error)
+  __pyx_codeobj__66 = (PyObject*)__Pyx_PyCode_New(2, 0, 2, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__65, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_newworld_dev_raiblocks_ra, __pyx_n_s_deterministic_key, 254, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__66)) __PYX_ERR(0, 254, __pyx_L1_error)
 
-  /* "rai.pyx":254
+  /* "rai.pyx":257
  *     return _rai.deterministic_key (seed_text, index)
  * 
  * def frontiers (string account_text, uint64_t count):             # <<<<<<<<<<<<<<
  *     return _rai.frontiers (account_text, count)
  * 
  */
-  __pyx_tuple__67 = PyTuple_Pack(2, __pyx_n_s_account_text, __pyx_n_s_count); if (unlikely(!__pyx_tuple__67)) __PYX_ERR(0, 254, __pyx_L1_error)
+  __pyx_tuple__67 = PyTuple_Pack(2, __pyx_n_s_account_text, __pyx_n_s_count); if (unlikely(!__pyx_tuple__67)) __PYX_ERR(0, 257, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__67);
   __Pyx_GIVEREF(__pyx_tuple__67);
-  __pyx_codeobj__68 = (PyObject*)__Pyx_PyCode_New(2, 0, 2, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__67, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_newworld_dev_raiblocks_ra, __pyx_n_s_frontiers, 254, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__68)) __PYX_ERR(0, 254, __pyx_L1_error)
+  __pyx_codeobj__68 = (PyObject*)__Pyx_PyCode_New(2, 0, 2, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__67, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_newworld_dev_raiblocks_ra, __pyx_n_s_frontiers, 257, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__68)) __PYX_ERR(0, 257, __pyx_L1_error)
 
-  /* "rai.pyx":257
+  /* "rai.pyx":260
  *     return _rai.frontiers (account_text, count)
  * 
  * def frontier_count ():             # <<<<<<<<<<<<<<
  *     return _rai.frontier_count ()
  * 
  */
-  __pyx_codeobj__69 = (PyObject*)__Pyx_PyCode_New(0, 0, 0, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_newworld_dev_raiblocks_ra, __pyx_n_s_frontier_count, 257, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__69)) __PYX_ERR(0, 257, __pyx_L1_error)
+  __pyx_codeobj__69 = (PyObject*)__Pyx_PyCode_New(0, 0, 0, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_newworld_dev_raiblocks_ra, __pyx_n_s_frontier_count, 260, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__69)) __PYX_ERR(0, 260, __pyx_L1_error)
 
-  /* "rai.pyx":260
+  /* "rai.pyx":263
  *     return _rai.frontier_count ()
  * 
  * def history (string hash_text, uint64_t count):             # <<<<<<<<<<<<<<
  *     ret = []
  *     result = _rai.history (hash_text, count)
  */
-  __pyx_tuple__70 = PyTuple_Pack(5, __pyx_n_s_hash_text, __pyx_n_s_count, __pyx_n_s_ret, __pyx_n_s_result, __pyx_n_s_r); if (unlikely(!__pyx_tuple__70)) __PYX_ERR(0, 260, __pyx_L1_error)
+  __pyx_tuple__70 = PyTuple_Pack(5, __pyx_n_s_hash_text, __pyx_n_s_count, __pyx_n_s_ret, __pyx_n_s_result, __pyx_n_s_r); if (unlikely(!__pyx_tuple__70)) __PYX_ERR(0, 263, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__70);
   __Pyx_GIVEREF(__pyx_tuple__70);
-  __pyx_codeobj__71 = (PyObject*)__Pyx_PyCode_New(2, 0, 5, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__70, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_newworld_dev_raiblocks_ra, __pyx_n_s_history, 260, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__71)) __PYX_ERR(0, 260, __pyx_L1_error)
+  __pyx_codeobj__71 = (PyObject*)__Pyx_PyCode_New(2, 0, 5, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__70, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_newworld_dev_raiblocks_ra, __pyx_n_s_history, 263, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__71)) __PYX_ERR(0, 263, __pyx_L1_error)
 
-  /* "rai.pyx":267
+  /* "rai.pyx":270
  *     return ret
  * 
  * def mrai_from_raw (string amount_text):             # <<<<<<<<<<<<<<
  *     return _rai.mrai_from_raw (amount_text)
  * 
  */
-  __pyx_tuple__72 = PyTuple_Pack(2, __pyx_n_s_amount_text, __pyx_n_s_amount_text); if (unlikely(!__pyx_tuple__72)) __PYX_ERR(0, 267, __pyx_L1_error)
+  __pyx_tuple__72 = PyTuple_Pack(2, __pyx_n_s_amount_text, __pyx_n_s_amount_text); if (unlikely(!__pyx_tuple__72)) __PYX_ERR(0, 270, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__72);
   __Pyx_GIVEREF(__pyx_tuple__72);
-  __pyx_codeobj__73 = (PyObject*)__Pyx_PyCode_New(1, 0, 2, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__72, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_newworld_dev_raiblocks_ra, __pyx_n_s_mrai_from_raw, 267, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__73)) __PYX_ERR(0, 267, __pyx_L1_error)
+  __pyx_codeobj__73 = (PyObject*)__Pyx_PyCode_New(1, 0, 2, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__72, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_newworld_dev_raiblocks_ra, __pyx_n_s_mrai_from_raw, 270, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__73)) __PYX_ERR(0, 270, __pyx_L1_error)
 
-  /* "rai.pyx":270
+  /* "rai.pyx":273
  *     return _rai.mrai_from_raw (amount_text)
  * 
  * def mrai_to_raw (string amount_text):             # <<<<<<<<<<<<<<
  *     return _rai.mrai_to_raw (amount_text)
  * 
  */
-  __pyx_tuple__74 = PyTuple_Pack(2, __pyx_n_s_amount_text, __pyx_n_s_amount_text); if (unlikely(!__pyx_tuple__74)) __PYX_ERR(0, 270, __pyx_L1_error)
+  __pyx_tuple__74 = PyTuple_Pack(2, __pyx_n_s_amount_text, __pyx_n_s_amount_text); if (unlikely(!__pyx_tuple__74)) __PYX_ERR(0, 273, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__74);
   __Pyx_GIVEREF(__pyx_tuple__74);
-  __pyx_codeobj__75 = (PyObject*)__Pyx_PyCode_New(1, 0, 2, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__74, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_newworld_dev_raiblocks_ra, __pyx_n_s_mrai_to_raw, 270, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__75)) __PYX_ERR(0, 270, __pyx_L1_error)
+  __pyx_codeobj__75 = (PyObject*)__Pyx_PyCode_New(1, 0, 2, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__74, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_newworld_dev_raiblocks_ra, __pyx_n_s_mrai_to_raw, 273, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__75)) __PYX_ERR(0, 273, __pyx_L1_error)
 
-  /* "rai.pyx":273
+  /* "rai.pyx":276
  *     return _rai.mrai_to_raw (amount_text)
  * 
  * def krai_from_raw (string amount_text):             # <<<<<<<<<<<<<<
  *     return _rai.krai_from_raw (amount_text)
  * 
  */
-  __pyx_tuple__76 = PyTuple_Pack(2, __pyx_n_s_amount_text, __pyx_n_s_amount_text); if (unlikely(!__pyx_tuple__76)) __PYX_ERR(0, 273, __pyx_L1_error)
+  __pyx_tuple__76 = PyTuple_Pack(2, __pyx_n_s_amount_text, __pyx_n_s_amount_text); if (unlikely(!__pyx_tuple__76)) __PYX_ERR(0, 276, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__76);
   __Pyx_GIVEREF(__pyx_tuple__76);
-  __pyx_codeobj__77 = (PyObject*)__Pyx_PyCode_New(1, 0, 2, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__76, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_newworld_dev_raiblocks_ra, __pyx_n_s_krai_from_raw, 273, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__77)) __PYX_ERR(0, 273, __pyx_L1_error)
+  __pyx_codeobj__77 = (PyObject*)__Pyx_PyCode_New(1, 0, 2, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__76, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_newworld_dev_raiblocks_ra, __pyx_n_s_krai_from_raw, 276, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__77)) __PYX_ERR(0, 276, __pyx_L1_error)
 
-  /* "rai.pyx":276
+  /* "rai.pyx":279
  *     return _rai.krai_from_raw (amount_text)
  * 
  * def keepalive (string address_text, string port_text):             # <<<<<<<<<<<<<<
  *     return _rai.keepalive (address_text, port_text)
  * 
  */
-  __pyx_tuple__78 = PyTuple_Pack(2, __pyx_n_s_address_text, __pyx_n_s_port_text); if (unlikely(!__pyx_tuple__78)) __PYX_ERR(0, 276, __pyx_L1_error)
+  __pyx_tuple__78 = PyTuple_Pack(2, __pyx_n_s_address_text, __pyx_n_s_port_text); if (unlikely(!__pyx_tuple__78)) __PYX_ERR(0, 279, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__78);
   __Pyx_GIVEREF(__pyx_tuple__78);
-  __pyx_codeobj__79 = (PyObject*)__Pyx_PyCode_New(2, 0, 2, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__78, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_newworld_dev_raiblocks_ra, __pyx_n_s_keepalive, 276, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__79)) __PYX_ERR(0, 276, __pyx_L1_error)
+  __pyx_codeobj__79 = (PyObject*)__Pyx_PyCode_New(2, 0, 2, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__78, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_newworld_dev_raiblocks_ra, __pyx_n_s_keepalive, 279, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__79)) __PYX_ERR(0, 279, __pyx_L1_error)
 
-  /* "rai.pyx":279
+  /* "rai.pyx":282
  *     return _rai.keepalive (address_text, port_text)
  * 
  * def key_create ():             # <<<<<<<<<<<<<<
  *     ret = _rai.key_create ()
  *     return JsonStruct(ret)
  */
-  __pyx_tuple__80 = PyTuple_Pack(1, __pyx_n_s_ret); if (unlikely(!__pyx_tuple__80)) __PYX_ERR(0, 279, __pyx_L1_error)
+  __pyx_tuple__80 = PyTuple_Pack(1, __pyx_n_s_ret); if (unlikely(!__pyx_tuple__80)) __PYX_ERR(0, 282, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__80);
   __Pyx_GIVEREF(__pyx_tuple__80);
-  __pyx_codeobj__81 = (PyObject*)__Pyx_PyCode_New(0, 0, 1, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__80, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_newworld_dev_raiblocks_ra, __pyx_n_s_key_create, 279, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__81)) __PYX_ERR(0, 279, __pyx_L1_error)
+  __pyx_codeobj__81 = (PyObject*)__Pyx_PyCode_New(0, 0, 1, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__80, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_newworld_dev_raiblocks_ra, __pyx_n_s_key_create, 282, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__81)) __PYX_ERR(0, 282, __pyx_L1_error)
 
-  /* "rai.pyx":283
+  /* "rai.pyx":286
  *     return JsonStruct(ret)
  * 
  * def key_expand (string key_text):             # <<<<<<<<<<<<<<
  *     ret = _rai.key_expand (key_text)
  *     if ret:
  */
-  __pyx_tuple__82 = PyTuple_Pack(3, __pyx_n_s_key_text, __pyx_n_s_key_text, __pyx_n_s_ret); if (unlikely(!__pyx_tuple__82)) __PYX_ERR(0, 283, __pyx_L1_error)
+  __pyx_tuple__82 = PyTuple_Pack(3, __pyx_n_s_key_text, __pyx_n_s_key_text, __pyx_n_s_ret); if (unlikely(!__pyx_tuple__82)) __PYX_ERR(0, 286, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__82);
   __Pyx_GIVEREF(__pyx_tuple__82);
-  __pyx_codeobj__83 = (PyObject*)__Pyx_PyCode_New(1, 0, 3, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__82, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_newworld_dev_raiblocks_ra, __pyx_n_s_key_expand, 283, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__83)) __PYX_ERR(0, 283, __pyx_L1_error)
+  __pyx_codeobj__83 = (PyObject*)__Pyx_PyCode_New(1, 0, 3, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__82, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_newworld_dev_raiblocks_ra, __pyx_n_s_key_expand, 286, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__83)) __PYX_ERR(0, 286, __pyx_L1_error)
 
-  /* "rai.pyx":288
+  /* "rai.pyx":291
  *         return JsonStruct(ret)
  * 
  * def ledger (string account_text, uint64_t count, sorting = False, representative = False, weight = False, pending = False):             # <<<<<<<<<<<<<<
  *     return _rai.ledger (account_text, count, sorting, representative, weight, pending)
  * 
  */
-  __pyx_tuple__84 = PyTuple_Pack(6, __pyx_n_s_account_text, __pyx_n_s_count, __pyx_n_s_sorting, __pyx_n_s_representative, __pyx_n_s_weight, __pyx_n_s_pending); if (unlikely(!__pyx_tuple__84)) __PYX_ERR(0, 288, __pyx_L1_error)
+  __pyx_tuple__84 = PyTuple_Pack(6, __pyx_n_s_account_text, __pyx_n_s_count, __pyx_n_s_sorting, __pyx_n_s_representative, __pyx_n_s_weight, __pyx_n_s_pending); if (unlikely(!__pyx_tuple__84)) __PYX_ERR(0, 291, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__84);
   __Pyx_GIVEREF(__pyx_tuple__84);
-  __pyx_codeobj__85 = (PyObject*)__Pyx_PyCode_New(6, 0, 6, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__84, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_newworld_dev_raiblocks_ra, __pyx_n_s_ledger, 288, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__85)) __PYX_ERR(0, 288, __pyx_L1_error)
+  __pyx_codeobj__85 = (PyObject*)__Pyx_PyCode_New(6, 0, 6, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__84, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_newworld_dev_raiblocks_ra, __pyx_n_s_ledger, 291, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__85)) __PYX_ERR(0, 291, __pyx_L1_error)
 
-  /* "rai.pyx":291
+  /* "rai.pyx":294
  *     return _rai.ledger (account_text, count, sorting, representative, weight, pending)
  * 
  * def block_create (d):             # <<<<<<<<<<<<<<
  *     ret = _rai.block_create (d)
  *     if ret:
  */
-  __pyx_tuple__86 = PyTuple_Pack(2, __pyx_n_s_d, __pyx_n_s_ret); if (unlikely(!__pyx_tuple__86)) __PYX_ERR(0, 291, __pyx_L1_error)
+  __pyx_tuple__86 = PyTuple_Pack(2, __pyx_n_s_d, __pyx_n_s_ret); if (unlikely(!__pyx_tuple__86)) __PYX_ERR(0, 294, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__86);
   __Pyx_GIVEREF(__pyx_tuple__86);
-  __pyx_codeobj__87 = (PyObject*)__Pyx_PyCode_New(1, 0, 2, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__86, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_newworld_dev_raiblocks_ra, __pyx_n_s_block_create, 291, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__87)) __PYX_ERR(0, 291, __pyx_L1_error)
+  __pyx_codeobj__87 = (PyObject*)__Pyx_PyCode_New(1, 0, 2, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__86, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_newworld_dev_raiblocks_ra, __pyx_n_s_block_create, 294, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__87)) __PYX_ERR(0, 294, __pyx_L1_error)
 
-  /* "rai.pyx":297
+  /* "rai.pyx":300
  *     return ret
  * 
  * def payment_begin (string id_text):             # <<<<<<<<<<<<<<
  *     return _rai.payment_begin(id_text)
  * 
  */
-  __pyx_tuple__88 = PyTuple_Pack(2, __pyx_n_s_id_text, __pyx_n_s_id_text); if (unlikely(!__pyx_tuple__88)) __PYX_ERR(0, 297, __pyx_L1_error)
+  __pyx_tuple__88 = PyTuple_Pack(2, __pyx_n_s_id_text, __pyx_n_s_id_text); if (unlikely(!__pyx_tuple__88)) __PYX_ERR(0, 300, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__88);
   __Pyx_GIVEREF(__pyx_tuple__88);
-  __pyx_codeobj__89 = (PyObject*)__Pyx_PyCode_New(1, 0, 2, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__88, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_newworld_dev_raiblocks_ra, __pyx_n_s_payment_begin, 297, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__89)) __PYX_ERR(0, 297, __pyx_L1_error)
+  __pyx_codeobj__89 = (PyObject*)__Pyx_PyCode_New(1, 0, 2, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__88, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_newworld_dev_raiblocks_ra, __pyx_n_s_payment_begin, 300, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__89)) __PYX_ERR(0, 300, __pyx_L1_error)
 
-  /* "rai.pyx":300
+  /* "rai.pyx":303
  *     return _rai.payment_begin(id_text)
  * 
  * def payment_init (string id_text):             # <<<<<<<<<<<<<<
  *     return _rai.payment_init (id_text)
  * 
  */
-  __pyx_tuple__90 = PyTuple_Pack(2, __pyx_n_s_id_text, __pyx_n_s_id_text); if (unlikely(!__pyx_tuple__90)) __PYX_ERR(0, 300, __pyx_L1_error)
+  __pyx_tuple__90 = PyTuple_Pack(2, __pyx_n_s_id_text, __pyx_n_s_id_text); if (unlikely(!__pyx_tuple__90)) __PYX_ERR(0, 303, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__90);
   __Pyx_GIVEREF(__pyx_tuple__90);
-  __pyx_codeobj__91 = (PyObject*)__Pyx_PyCode_New(1, 0, 2, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__90, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_newworld_dev_raiblocks_ra, __pyx_n_s_payment_init, 300, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__91)) __PYX_ERR(0, 300, __pyx_L1_error)
+  __pyx_codeobj__91 = (PyObject*)__Pyx_PyCode_New(1, 0, 2, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__90, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_newworld_dev_raiblocks_ra, __pyx_n_s_payment_init, 303, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__91)) __PYX_ERR(0, 303, __pyx_L1_error)
 
-  /* "rai.pyx":303
+  /* "rai.pyx":306
  *     return _rai.payment_init (id_text)
  * 
  * def payment_end (string id_text, string account_text):             # <<<<<<<<<<<<<<
  *     return _rai.payment_end (id_text, account_text)
  * 
  */
-  __pyx_tuple__92 = PyTuple_Pack(2, __pyx_n_s_id_text, __pyx_n_s_account_text); if (unlikely(!__pyx_tuple__92)) __PYX_ERR(0, 303, __pyx_L1_error)
+  __pyx_tuple__92 = PyTuple_Pack(2, __pyx_n_s_id_text, __pyx_n_s_account_text); if (unlikely(!__pyx_tuple__92)) __PYX_ERR(0, 306, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__92);
   __Pyx_GIVEREF(__pyx_tuple__92);
-  __pyx_codeobj__93 = (PyObject*)__Pyx_PyCode_New(2, 0, 2, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__92, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_newworld_dev_raiblocks_ra, __pyx_n_s_payment_end, 303, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__93)) __PYX_ERR(0, 303, __pyx_L1_error)
+  __pyx_codeobj__93 = (PyObject*)__Pyx_PyCode_New(2, 0, 2, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__92, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_newworld_dev_raiblocks_ra, __pyx_n_s_payment_end, 306, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__93)) __PYX_ERR(0, 306, __pyx_L1_error)
 
-  /* "rai.pyx":306
+  /* "rai.pyx":309
  *     return _rai.payment_end (id_text, account_text)
  * 
  * def payment_wait (string account_text, string amount_text, uint64_t timeout):             # <<<<<<<<<<<<<<
  *     return _rai.payment_wait (account_text, amount_text, timeout)
  * 
  */
-  __pyx_tuple__94 = PyTuple_Pack(3, __pyx_n_s_account_text, __pyx_n_s_amount_text, __pyx_n_s_timeout); if (unlikely(!__pyx_tuple__94)) __PYX_ERR(0, 306, __pyx_L1_error)
+  __pyx_tuple__94 = PyTuple_Pack(3, __pyx_n_s_account_text, __pyx_n_s_amount_text, __pyx_n_s_timeout); if (unlikely(!__pyx_tuple__94)) __PYX_ERR(0, 309, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__94);
   __Pyx_GIVEREF(__pyx_tuple__94);
-  __pyx_codeobj__95 = (PyObject*)__Pyx_PyCode_New(3, 0, 3, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__94, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_newworld_dev_raiblocks_ra, __pyx_n_s_payment_wait, 306, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__95)) __PYX_ERR(0, 306, __pyx_L1_error)
+  __pyx_codeobj__95 = (PyObject*)__Pyx_PyCode_New(3, 0, 3, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__94, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_newworld_dev_raiblocks_ra, __pyx_n_s_payment_wait, 309, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__95)) __PYX_ERR(0, 309, __pyx_L1_error)
 
-  /* "rai.pyx":309
+  /* "rai.pyx":312
  *     return _rai.payment_wait (account_text, amount_text, timeout)
  * 
  * def process (string block_text):             # <<<<<<<<<<<<<<
  *     return _rai.process (block_text)
  * 
  */
-  __pyx_tuple__96 = PyTuple_Pack(2, __pyx_n_s_block_text, __pyx_n_s_block_text); if (unlikely(!__pyx_tuple__96)) __PYX_ERR(0, 309, __pyx_L1_error)
+  __pyx_tuple__96 = PyTuple_Pack(2, __pyx_n_s_block_text, __pyx_n_s_block_text); if (unlikely(!__pyx_tuple__96)) __PYX_ERR(0, 312, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__96);
   __Pyx_GIVEREF(__pyx_tuple__96);
-  __pyx_codeobj__97 = (PyObject*)__Pyx_PyCode_New(1, 0, 2, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__96, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_newworld_dev_raiblocks_ra, __pyx_n_s_process, 309, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__97)) __PYX_ERR(0, 309, __pyx_L1_error)
+  __pyx_codeobj__97 = (PyObject*)__Pyx_PyCode_New(1, 0, 2, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__96, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_newworld_dev_raiblocks_ra, __pyx_n_s_process, 312, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__97)) __PYX_ERR(0, 312, __pyx_L1_error)
 
-  /* "rai.pyx":312
+  /* "rai.pyx":315
  *     return _rai.process (block_text)
  * 
  * def receive (string wallet_text, string account_text, string hash_text, uint64_t work):             # <<<<<<<<<<<<<<
  *     return _rai.receive (wallet_text, account_text, hash_text, work)
  * 
  */
-  __pyx_tuple__98 = PyTuple_Pack(4, __pyx_n_s_wallet_text, __pyx_n_s_account_text, __pyx_n_s_hash_text, __pyx_n_s_work); if (unlikely(!__pyx_tuple__98)) __PYX_ERR(0, 312, __pyx_L1_error)
+  __pyx_tuple__98 = PyTuple_Pack(4, __pyx_n_s_wallet_text, __pyx_n_s_account_text, __pyx_n_s_hash_text, __pyx_n_s_work); if (unlikely(!__pyx_tuple__98)) __PYX_ERR(0, 315, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__98);
   __Pyx_GIVEREF(__pyx_tuple__98);
-  __pyx_codeobj__99 = (PyObject*)__Pyx_PyCode_New(4, 0, 4, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__98, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_newworld_dev_raiblocks_ra, __pyx_n_s_receive, 312, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__99)) __PYX_ERR(0, 312, __pyx_L1_error)
+  __pyx_codeobj__99 = (PyObject*)__Pyx_PyCode_New(4, 0, 4, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__98, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_newworld_dev_raiblocks_ra, __pyx_n_s_receive, 315, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__99)) __PYX_ERR(0, 315, __pyx_L1_error)
 
-  /* "rai.pyx":315
+  /* "rai.pyx":318
  *     return _rai.receive (wallet_text, account_text, hash_text, work)
  * 
  * def receive_minimum ():             # <<<<<<<<<<<<<<
  *     return _rai.receive_minimum ();
  * 
  */
-  __pyx_codeobj__100 = (PyObject*)__Pyx_PyCode_New(0, 0, 0, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_newworld_dev_raiblocks_ra, __pyx_n_s_receive_minimum, 315, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__100)) __PYX_ERR(0, 315, __pyx_L1_error)
+  __pyx_codeobj__100 = (PyObject*)__Pyx_PyCode_New(0, 0, 0, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_newworld_dev_raiblocks_ra, __pyx_n_s_receive_minimum, 318, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__100)) __PYX_ERR(0, 318, __pyx_L1_error)
 
-  /* "rai.pyx":318
+  /* "rai.pyx":321
  *     return _rai.receive_minimum ();
  * 
  * def receive_minimum_set (string amount_text):             # <<<<<<<<<<<<<<
  *     return _rai.receive_minimum_set (amount_text)
  * 
  */
-  __pyx_tuple__101 = PyTuple_Pack(2, __pyx_n_s_amount_text, __pyx_n_s_amount_text); if (unlikely(!__pyx_tuple__101)) __PYX_ERR(0, 318, __pyx_L1_error)
+  __pyx_tuple__101 = PyTuple_Pack(2, __pyx_n_s_amount_text, __pyx_n_s_amount_text); if (unlikely(!__pyx_tuple__101)) __PYX_ERR(0, 321, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__101);
   __Pyx_GIVEREF(__pyx_tuple__101);
-  __pyx_codeobj__102 = (PyObject*)__Pyx_PyCode_New(1, 0, 2, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__101, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_newworld_dev_raiblocks_ra, __pyx_n_s_receive_minimum_set, 318, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__102)) __PYX_ERR(0, 318, __pyx_L1_error)
+  __pyx_codeobj__102 = (PyObject*)__Pyx_PyCode_New(1, 0, 2, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__101, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_newworld_dev_raiblocks_ra, __pyx_n_s_receive_minimum_set, 321, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__102)) __PYX_ERR(0, 321, __pyx_L1_error)
 
-  /* "rai.pyx":321
+  /* "rai.pyx":324
  *     return _rai.receive_minimum_set (amount_text)
  * 
  * def representatives (uint64_t count, bool sorting):             # <<<<<<<<<<<<<<
  *     return _rai.representatives (count, sorting)
  * 
  */
-  __pyx_tuple__103 = PyTuple_Pack(2, __pyx_n_s_count, __pyx_n_s_sorting); if (unlikely(!__pyx_tuple__103)) __PYX_ERR(0, 321, __pyx_L1_error)
+  __pyx_tuple__103 = PyTuple_Pack(2, __pyx_n_s_count, __pyx_n_s_sorting); if (unlikely(!__pyx_tuple__103)) __PYX_ERR(0, 324, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__103);
   __Pyx_GIVEREF(__pyx_tuple__103);
-  __pyx_codeobj__104 = (PyObject*)__Pyx_PyCode_New(2, 0, 2, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__103, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_newworld_dev_raiblocks_ra, __pyx_n_s_representatives, 321, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__104)) __PYX_ERR(0, 321, __pyx_L1_error)
+  __pyx_codeobj__104 = (PyObject*)__Pyx_PyCode_New(2, 0, 2, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__103, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_newworld_dev_raiblocks_ra, __pyx_n_s_representatives, 324, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__104)) __PYX_ERR(0, 324, __pyx_L1_error)
 
-  /* "rai.pyx":324
+  /* "rai.pyx":327
  *     return _rai.representatives (count, sorting)
  * 
  * def wallet_representative (string wallet_text):             # <<<<<<<<<<<<<<
  *     return _rai.wallet_representative (wallet_text)
  * 
  */
-  __pyx_tuple__105 = PyTuple_Pack(2, __pyx_n_s_wallet_text, __pyx_n_s_wallet_text); if (unlikely(!__pyx_tuple__105)) __PYX_ERR(0, 324, __pyx_L1_error)
+  __pyx_tuple__105 = PyTuple_Pack(2, __pyx_n_s_wallet_text, __pyx_n_s_wallet_text); if (unlikely(!__pyx_tuple__105)) __PYX_ERR(0, 327, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__105);
   __Pyx_GIVEREF(__pyx_tuple__105);
-  __pyx_codeobj__106 = (PyObject*)__Pyx_PyCode_New(1, 0, 2, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__105, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_newworld_dev_raiblocks_ra, __pyx_n_s_wallet_representative, 324, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__106)) __PYX_ERR(0, 324, __pyx_L1_error)
+  __pyx_codeobj__106 = (PyObject*)__Pyx_PyCode_New(1, 0, 2, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__105, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_newworld_dev_raiblocks_ra, __pyx_n_s_wallet_representative, 327, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__106)) __PYX_ERR(0, 327, __pyx_L1_error)
 
-  /* "rai.pyx":327
+  /* "rai.pyx":330
  *     return _rai.wallet_representative (wallet_text)
  * 
  * def wallet_representative_set (string wallet_text, string representative_text):             # <<<<<<<<<<<<<<
  *     return _rai.wallet_representative_set (wallet_text, representative_text)
  * 
  */
-  __pyx_tuple__107 = PyTuple_Pack(2, __pyx_n_s_wallet_text, __pyx_n_s_representative_text); if (unlikely(!__pyx_tuple__107)) __PYX_ERR(0, 327, __pyx_L1_error)
+  __pyx_tuple__107 = PyTuple_Pack(2, __pyx_n_s_wallet_text, __pyx_n_s_representative_text); if (unlikely(!__pyx_tuple__107)) __PYX_ERR(0, 330, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__107);
   __Pyx_GIVEREF(__pyx_tuple__107);
-  __pyx_codeobj__108 = (PyObject*)__Pyx_PyCode_New(2, 0, 2, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__107, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_newworld_dev_raiblocks_ra, __pyx_n_s_wallet_representative_set, 327, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__108)) __PYX_ERR(0, 327, __pyx_L1_error)
+  __pyx_codeobj__108 = (PyObject*)__Pyx_PyCode_New(2, 0, 2, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__107, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_newworld_dev_raiblocks_ra, __pyx_n_s_wallet_representative_set, 330, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__108)) __PYX_ERR(0, 330, __pyx_L1_error)
 
-  /* "rai.pyx":330
+  /* "rai.pyx":333
  *     return _rai.wallet_representative_set (wallet_text, representative_text)
  * 
  * def search_pending (string wallet_text):             # <<<<<<<<<<<<<<
  *     return _rai.search_pending (wallet_text)
  * 
  */
-  __pyx_tuple__109 = PyTuple_Pack(2, __pyx_n_s_wallet_text, __pyx_n_s_wallet_text); if (unlikely(!__pyx_tuple__109)) __PYX_ERR(0, 330, __pyx_L1_error)
+  __pyx_tuple__109 = PyTuple_Pack(2, __pyx_n_s_wallet_text, __pyx_n_s_wallet_text); if (unlikely(!__pyx_tuple__109)) __PYX_ERR(0, 333, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__109);
   __Pyx_GIVEREF(__pyx_tuple__109);
-  __pyx_codeobj__110 = (PyObject*)__Pyx_PyCode_New(1, 0, 2, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__109, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_newworld_dev_raiblocks_ra, __pyx_n_s_search_pending, 330, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__110)) __PYX_ERR(0, 330, __pyx_L1_error)
+  __pyx_codeobj__110 = (PyObject*)__Pyx_PyCode_New(1, 0, 2, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__109, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_newworld_dev_raiblocks_ra, __pyx_n_s_search_pending, 333, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__110)) __PYX_ERR(0, 333, __pyx_L1_error)
 
-  /* "rai.pyx":333
+  /* "rai.pyx":336
  *     return _rai.search_pending (wallet_text)
  * 
  * def search_pending_all ():             # <<<<<<<<<<<<<<
  *     return _rai.search_pending_all ()
  * 
  */
-  __pyx_codeobj__111 = (PyObject*)__Pyx_PyCode_New(0, 0, 0, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_newworld_dev_raiblocks_ra, __pyx_n_s_search_pending_all, 333, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__111)) __PYX_ERR(0, 333, __pyx_L1_error)
+  __pyx_codeobj__111 = (PyObject*)__Pyx_PyCode_New(0, 0, 0, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_newworld_dev_raiblocks_ra, __pyx_n_s_search_pending_all, 336, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__111)) __PYX_ERR(0, 336, __pyx_L1_error)
 
-  /* "rai.pyx":336
+  /* "rai.pyx":339
  *     return _rai.search_pending_all ()
  * 
  * def validate_account_number (string account_text):             # <<<<<<<<<<<<<<
  *     return _rai.validate_account_number (account_text)
  * 
  */
-  __pyx_tuple__112 = PyTuple_Pack(2, __pyx_n_s_account_text, __pyx_n_s_account_text); if (unlikely(!__pyx_tuple__112)) __PYX_ERR(0, 336, __pyx_L1_error)
+  __pyx_tuple__112 = PyTuple_Pack(2, __pyx_n_s_account_text, __pyx_n_s_account_text); if (unlikely(!__pyx_tuple__112)) __PYX_ERR(0, 339, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__112);
   __Pyx_GIVEREF(__pyx_tuple__112);
-  __pyx_codeobj__113 = (PyObject*)__Pyx_PyCode_New(1, 0, 2, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__112, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_newworld_dev_raiblocks_ra, __pyx_n_s_validate_account_number, 336, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__113)) __PYX_ERR(0, 336, __pyx_L1_error)
+  __pyx_codeobj__113 = (PyObject*)__Pyx_PyCode_New(1, 0, 2, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__112, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_newworld_dev_raiblocks_ra, __pyx_n_s_validate_account_number, 339, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__113)) __PYX_ERR(0, 339, __pyx_L1_error)
 
-  /* "rai.pyx":339
+  /* "rai.pyx":342
  *     return _rai.validate_account_number (account_text)
  * 
  * def successors (string block_text, uint64_t count):             # <<<<<<<<<<<<<<
  *     return _rai.successors (block_text, count)
  * 
  */
-  __pyx_tuple__114 = PyTuple_Pack(2, __pyx_n_s_block_text, __pyx_n_s_count); if (unlikely(!__pyx_tuple__114)) __PYX_ERR(0, 339, __pyx_L1_error)
+  __pyx_tuple__114 = PyTuple_Pack(2, __pyx_n_s_block_text, __pyx_n_s_count); if (unlikely(!__pyx_tuple__114)) __PYX_ERR(0, 342, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__114);
   __Pyx_GIVEREF(__pyx_tuple__114);
-  __pyx_codeobj__115 = (PyObject*)__Pyx_PyCode_New(2, 0, 2, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__114, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_newworld_dev_raiblocks_ra, __pyx_n_s_successors, 339, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__115)) __PYX_ERR(0, 339, __pyx_L1_error)
+  __pyx_codeobj__115 = (PyObject*)__Pyx_PyCode_New(2, 0, 2, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__114, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_newworld_dev_raiblocks_ra, __pyx_n_s_successors, 342, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__115)) __PYX_ERR(0, 342, __pyx_L1_error)
 
-  /* "rai.pyx":342
+  /* "rai.pyx":345
  *     return _rai.successors (block_text, count)
  * 
  * def version ():             # <<<<<<<<<<<<<<
  *     return _rai.version ()
  * 
  */
-  __pyx_codeobj__116 = (PyObject*)__Pyx_PyCode_New(0, 0, 0, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_newworld_dev_raiblocks_ra, __pyx_n_s_version, 342, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__116)) __PYX_ERR(0, 342, __pyx_L1_error)
+  __pyx_codeobj__116 = (PyObject*)__Pyx_PyCode_New(0, 0, 0, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_newworld_dev_raiblocks_ra, __pyx_n_s_version, 345, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__116)) __PYX_ERR(0, 345, __pyx_L1_error)
 
-  /* "rai.pyx":345
+  /* "rai.pyx":348
  *     return _rai.version ()
  * 
  * def peers ():             # <<<<<<<<<<<<<<
  *     return _rai.peers ();
  * 
  */
-  __pyx_codeobj__117 = (PyObject*)__Pyx_PyCode_New(0, 0, 0, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_newworld_dev_raiblocks_ra, __pyx_n_s_peers, 345, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__117)) __PYX_ERR(0, 345, __pyx_L1_error)
+  __pyx_codeobj__117 = (PyObject*)__Pyx_PyCode_New(0, 0, 0, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_newworld_dev_raiblocks_ra, __pyx_n_s_peers, 348, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__117)) __PYX_ERR(0, 348, __pyx_L1_error)
 
-  /* "rai.pyx":348
+  /* "rai.pyx":351
  *     return _rai.peers ();
  * 
  * def pending (string account_text, uint64_t count, string threshold_text, bool source):             # <<<<<<<<<<<<<<
  *     return _rai.pending (account_text, count, threshold_text, source)
  * 
  */
-  __pyx_tuple__118 = PyTuple_Pack(4, __pyx_n_s_account_text, __pyx_n_s_count, __pyx_n_s_threshold_text, __pyx_n_s_source); if (unlikely(!__pyx_tuple__118)) __PYX_ERR(0, 348, __pyx_L1_error)
+  __pyx_tuple__118 = PyTuple_Pack(4, __pyx_n_s_account_text, __pyx_n_s_count, __pyx_n_s_threshold_text, __pyx_n_s_source); if (unlikely(!__pyx_tuple__118)) __PYX_ERR(0, 351, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__118);
   __Pyx_GIVEREF(__pyx_tuple__118);
-  __pyx_codeobj__119 = (PyObject*)__Pyx_PyCode_New(4, 0, 4, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__118, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_newworld_dev_raiblocks_ra, __pyx_n_s_pending, 348, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__119)) __PYX_ERR(0, 348, __pyx_L1_error)
+  __pyx_codeobj__119 = (PyObject*)__Pyx_PyCode_New(4, 0, 4, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__118, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_newworld_dev_raiblocks_ra, __pyx_n_s_pending, 351, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__119)) __PYX_ERR(0, 351, __pyx_L1_error)
 
-  /* "rai.pyx":351
+  /* "rai.pyx":354
  *     return _rai.pending (account_text, count, threshold_text, source)
  * 
  * def pending_exists (string hash_text):             # <<<<<<<<<<<<<<
  *     return _rai.pending_exists (hash_text)
  * 
  */
-  __pyx_tuple__120 = PyTuple_Pack(2, __pyx_n_s_hash_text, __pyx_n_s_hash_text); if (unlikely(!__pyx_tuple__120)) __PYX_ERR(0, 351, __pyx_L1_error)
+  __pyx_tuple__120 = PyTuple_Pack(2, __pyx_n_s_hash_text, __pyx_n_s_hash_text); if (unlikely(!__pyx_tuple__120)) __PYX_ERR(0, 354, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__120);
   __Pyx_GIVEREF(__pyx_tuple__120);
-  __pyx_codeobj__121 = (PyObject*)__Pyx_PyCode_New(1, 0, 2, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__120, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_newworld_dev_raiblocks_ra, __pyx_n_s_pending_exists, 351, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__121)) __PYX_ERR(0, 351, __pyx_L1_error)
+  __pyx_codeobj__121 = (PyObject*)__Pyx_PyCode_New(1, 0, 2, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__120, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_newworld_dev_raiblocks_ra, __pyx_n_s_pending_exists, 354, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__121)) __PYX_ERR(0, 354, __pyx_L1_error)
 
-  /* "rai.pyx":354
+  /* "rai.pyx":357
  *     return _rai.pending_exists (hash_text)
  * 
  * def unchecked (uint64_t count):             # <<<<<<<<<<<<<<
  *     return _rai.unchecked (count)
  * 
  */
-  __pyx_tuple__122 = PyTuple_Pack(2, __pyx_n_s_count, __pyx_n_s_count); if (unlikely(!__pyx_tuple__122)) __PYX_ERR(0, 354, __pyx_L1_error)
+  __pyx_tuple__122 = PyTuple_Pack(2, __pyx_n_s_count, __pyx_n_s_count); if (unlikely(!__pyx_tuple__122)) __PYX_ERR(0, 357, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__122);
   __Pyx_GIVEREF(__pyx_tuple__122);
-  __pyx_codeobj__123 = (PyObject*)__Pyx_PyCode_New(1, 0, 2, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__122, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_newworld_dev_raiblocks_ra, __pyx_n_s_unchecked, 354, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__123)) __PYX_ERR(0, 354, __pyx_L1_error)
+  __pyx_codeobj__123 = (PyObject*)__Pyx_PyCode_New(1, 0, 2, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__122, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_newworld_dev_raiblocks_ra, __pyx_n_s_unchecked, 357, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__123)) __PYX_ERR(0, 357, __pyx_L1_error)
 
-  /* "rai.pyx":357
+  /* "rai.pyx":360
  *     return _rai.unchecked (count)
  * 
  * def unchecked_clear ():             # <<<<<<<<<<<<<<
  *     return _rai.unchecked_clear ()
  * 
  */
-  __pyx_codeobj__124 = (PyObject*)__Pyx_PyCode_New(0, 0, 0, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_newworld_dev_raiblocks_ra, __pyx_n_s_unchecked_clear, 357, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__124)) __PYX_ERR(0, 357, __pyx_L1_error)
+  __pyx_codeobj__124 = (PyObject*)__Pyx_PyCode_New(0, 0, 0, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_newworld_dev_raiblocks_ra, __pyx_n_s_unchecked_clear, 360, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__124)) __PYX_ERR(0, 360, __pyx_L1_error)
 
-  /* "rai.pyx":360
+  /* "rai.pyx":363
  *     return _rai.unchecked_clear ()
  * 
  * def unchecked_get (string hash_text):             # <<<<<<<<<<<<<<
  *     return _rai.unchecked_get (hash_text)
  * 
  */
-  __pyx_tuple__125 = PyTuple_Pack(2, __pyx_n_s_hash_text, __pyx_n_s_hash_text); if (unlikely(!__pyx_tuple__125)) __PYX_ERR(0, 360, __pyx_L1_error)
+  __pyx_tuple__125 = PyTuple_Pack(2, __pyx_n_s_hash_text, __pyx_n_s_hash_text); if (unlikely(!__pyx_tuple__125)) __PYX_ERR(0, 363, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__125);
   __Pyx_GIVEREF(__pyx_tuple__125);
-  __pyx_codeobj__126 = (PyObject*)__Pyx_PyCode_New(1, 0, 2, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__125, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_newworld_dev_raiblocks_ra, __pyx_n_s_unchecked_get, 360, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__126)) __PYX_ERR(0, 360, __pyx_L1_error)
+  __pyx_codeobj__126 = (PyObject*)__Pyx_PyCode_New(1, 0, 2, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__125, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_newworld_dev_raiblocks_ra, __pyx_n_s_unchecked_get, 363, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__126)) __PYX_ERR(0, 363, __pyx_L1_error)
 
-  /* "rai.pyx":363
+  /* "rai.pyx":366
  *     return _rai.unchecked_get (hash_text)
  * 
  * def unchecked_keys (uint64_t count, string hash_text):             # <<<<<<<<<<<<<<
  *     return _rai.unchecked_keys (count, hash_text)
  * 
  */
-  __pyx_tuple__127 = PyTuple_Pack(2, __pyx_n_s_count, __pyx_n_s_hash_text); if (unlikely(!__pyx_tuple__127)) __PYX_ERR(0, 363, __pyx_L1_error)
+  __pyx_tuple__127 = PyTuple_Pack(2, __pyx_n_s_count, __pyx_n_s_hash_text); if (unlikely(!__pyx_tuple__127)) __PYX_ERR(0, 366, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__127);
   __Pyx_GIVEREF(__pyx_tuple__127);
-  __pyx_codeobj__128 = (PyObject*)__Pyx_PyCode_New(2, 0, 2, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__127, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_newworld_dev_raiblocks_ra, __pyx_n_s_unchecked_keys, 363, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__128)) __PYX_ERR(0, 363, __pyx_L1_error)
+  __pyx_codeobj__128 = (PyObject*)__Pyx_PyCode_New(2, 0, 2, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__127, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_newworld_dev_raiblocks_ra, __pyx_n_s_unchecked_keys, 366, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__128)) __PYX_ERR(0, 366, __pyx_L1_error)
 
-  /* "rai.pyx":366
+  /* "rai.pyx":369
  *     return _rai.unchecked_keys (count, hash_text)
  * 
  * def wallet_add (string key_text, string wallet_text, generate_work=True):             # <<<<<<<<<<<<<<
  *     return _rai.wallet_add (key_text, wallet_text, generate_work)
  * 
  */
-  __pyx_tuple__129 = PyTuple_Pack(3, __pyx_n_s_key_text, __pyx_n_s_wallet_text, __pyx_n_s_generate_work); if (unlikely(!__pyx_tuple__129)) __PYX_ERR(0, 366, __pyx_L1_error)
+  __pyx_tuple__129 = PyTuple_Pack(3, __pyx_n_s_key_text, __pyx_n_s_wallet_text, __pyx_n_s_generate_work); if (unlikely(!__pyx_tuple__129)) __PYX_ERR(0, 369, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__129);
   __Pyx_GIVEREF(__pyx_tuple__129);
-  __pyx_codeobj__130 = (PyObject*)__Pyx_PyCode_New(3, 0, 3, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__129, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_newworld_dev_raiblocks_ra, __pyx_n_s_wallet_add, 366, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__130)) __PYX_ERR(0, 366, __pyx_L1_error)
+  __pyx_codeobj__130 = (PyObject*)__Pyx_PyCode_New(3, 0, 3, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__129, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_newworld_dev_raiblocks_ra, __pyx_n_s_wallet_add, 369, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__130)) __PYX_ERR(0, 369, __pyx_L1_error)
 
-  /* "rai.pyx":369
+  /* "rai.pyx":372
  *     return _rai.wallet_add (key_text, wallet_text, generate_work)
  * 
  * def wallet_balance_total (string wallet_text):             # <<<<<<<<<<<<<<
  *     return _rai.wallet_balance_total (wallet_text)
  * 
  */
-  __pyx_tuple__131 = PyTuple_Pack(2, __pyx_n_s_wallet_text, __pyx_n_s_wallet_text); if (unlikely(!__pyx_tuple__131)) __PYX_ERR(0, 369, __pyx_L1_error)
+  __pyx_tuple__131 = PyTuple_Pack(2, __pyx_n_s_wallet_text, __pyx_n_s_wallet_text); if (unlikely(!__pyx_tuple__131)) __PYX_ERR(0, 372, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__131);
   __Pyx_GIVEREF(__pyx_tuple__131);
-  __pyx_codeobj__132 = (PyObject*)__Pyx_PyCode_New(1, 0, 2, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__131, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_newworld_dev_raiblocks_ra, __pyx_n_s_wallet_balance_total, 369, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__132)) __PYX_ERR(0, 369, __pyx_L1_error)
+  __pyx_codeobj__132 = (PyObject*)__Pyx_PyCode_New(1, 0, 2, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__131, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_newworld_dev_raiblocks_ra, __pyx_n_s_wallet_balance_total, 372, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__132)) __PYX_ERR(0, 372, __pyx_L1_error)
 
-  /* "rai.pyx":372
+  /* "rai.pyx":375
  *     return _rai.wallet_balance_total (wallet_text)
  * 
  * def wallet_balances (string wallet_text, string threshold_text):             # <<<<<<<<<<<<<<
  *     return _rai.wallet_balances (wallet_text, threshold_text)
  * 
  */
-  __pyx_tuple__133 = PyTuple_Pack(2, __pyx_n_s_wallet_text, __pyx_n_s_threshold_text); if (unlikely(!__pyx_tuple__133)) __PYX_ERR(0, 372, __pyx_L1_error)
+  __pyx_tuple__133 = PyTuple_Pack(2, __pyx_n_s_wallet_text, __pyx_n_s_threshold_text); if (unlikely(!__pyx_tuple__133)) __PYX_ERR(0, 375, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__133);
   __Pyx_GIVEREF(__pyx_tuple__133);
-  __pyx_codeobj__134 = (PyObject*)__Pyx_PyCode_New(2, 0, 2, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__133, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_newworld_dev_raiblocks_ra, __pyx_n_s_wallet_balances, 372, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__134)) __PYX_ERR(0, 372, __pyx_L1_error)
+  __pyx_codeobj__134 = (PyObject*)__Pyx_PyCode_New(2, 0, 2, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__133, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_newworld_dev_raiblocks_ra, __pyx_n_s_wallet_balances, 375, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__134)) __PYX_ERR(0, 375, __pyx_L1_error)
 
-  /* "rai.pyx":375
+  /* "rai.pyx":378
  *     return _rai.wallet_balances (wallet_text, threshold_text)
  * 
  * def wallet_change_seed (string seed_text, string wallet_text):             # <<<<<<<<<<<<<<
  *     return _rai.wallet_change_seed (seed_text, wallet_text)
  * 
  */
-  __pyx_tuple__135 = PyTuple_Pack(2, __pyx_n_s_seed_text, __pyx_n_s_wallet_text); if (unlikely(!__pyx_tuple__135)) __PYX_ERR(0, 375, __pyx_L1_error)
+  __pyx_tuple__135 = PyTuple_Pack(2, __pyx_n_s_seed_text, __pyx_n_s_wallet_text); if (unlikely(!__pyx_tuple__135)) __PYX_ERR(0, 378, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__135);
   __Pyx_GIVEREF(__pyx_tuple__135);
-  __pyx_codeobj__136 = (PyObject*)__Pyx_PyCode_New(2, 0, 2, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__135, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_newworld_dev_raiblocks_ra, __pyx_n_s_wallet_change_seed, 375, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__136)) __PYX_ERR(0, 375, __pyx_L1_error)
+  __pyx_codeobj__136 = (PyObject*)__Pyx_PyCode_New(2, 0, 2, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__135, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_newworld_dev_raiblocks_ra, __pyx_n_s_wallet_change_seed, 378, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__136)) __PYX_ERR(0, 378, __pyx_L1_error)
 
-  /* "rai.pyx":378
+  /* "rai.pyx":381
  *     return _rai.wallet_change_seed (seed_text, wallet_text)
  * 
  * def wallet_contains (string account_text, string wallet_text):             # <<<<<<<<<<<<<<
  *     return _rai.wallet_contains (account_text, wallet_text)
  * 
  */
-  __pyx_tuple__137 = PyTuple_Pack(2, __pyx_n_s_account_text, __pyx_n_s_wallet_text); if (unlikely(!__pyx_tuple__137)) __PYX_ERR(0, 378, __pyx_L1_error)
+  __pyx_tuple__137 = PyTuple_Pack(2, __pyx_n_s_account_text, __pyx_n_s_wallet_text); if (unlikely(!__pyx_tuple__137)) __PYX_ERR(0, 381, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__137);
   __Pyx_GIVEREF(__pyx_tuple__137);
-  __pyx_codeobj__138 = (PyObject*)__Pyx_PyCode_New(2, 0, 2, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__137, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_newworld_dev_raiblocks_ra, __pyx_n_s_wallet_contains, 378, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__138)) __PYX_ERR(0, 378, __pyx_L1_error)
+  __pyx_codeobj__138 = (PyObject*)__Pyx_PyCode_New(2, 0, 2, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__137, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_newworld_dev_raiblocks_ra, __pyx_n_s_wallet_contains, 381, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__138)) __PYX_ERR(0, 381, __pyx_L1_error)
 
-  /* "rai.pyx":381
+  /* "rai.pyx":384
  *     return _rai.wallet_contains (account_text, wallet_text)
  * 
  * def wallet_create ():             # <<<<<<<<<<<<<<
  *     return _rai.wallet_create()
  * 
  */
-  __pyx_codeobj__139 = (PyObject*)__Pyx_PyCode_New(0, 0, 0, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_newworld_dev_raiblocks_ra, __pyx_n_s_wallet_create, 381, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__139)) __PYX_ERR(0, 381, __pyx_L1_error)
+  __pyx_codeobj__139 = (PyObject*)__Pyx_PyCode_New(0, 0, 0, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_newworld_dev_raiblocks_ra, __pyx_n_s_wallet_create, 384, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__139)) __PYX_ERR(0, 384, __pyx_L1_error)
 
-  /* "rai.pyx":384
+  /* "rai.pyx":387
  *     return _rai.wallet_create()
  * 
  * def wallet_destroy (string wallet_text):             # <<<<<<<<<<<<<<
  *     return _rai.wallet_destroy (wallet_text)
  * 
  */
-  __pyx_tuple__140 = PyTuple_Pack(2, __pyx_n_s_wallet_text, __pyx_n_s_wallet_text); if (unlikely(!__pyx_tuple__140)) __PYX_ERR(0, 384, __pyx_L1_error)
+  __pyx_tuple__140 = PyTuple_Pack(2, __pyx_n_s_wallet_text, __pyx_n_s_wallet_text); if (unlikely(!__pyx_tuple__140)) __PYX_ERR(0, 387, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__140);
   __Pyx_GIVEREF(__pyx_tuple__140);
-  __pyx_codeobj__141 = (PyObject*)__Pyx_PyCode_New(1, 0, 2, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__140, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_newworld_dev_raiblocks_ra, __pyx_n_s_wallet_destroy, 384, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__141)) __PYX_ERR(0, 384, __pyx_L1_error)
+  __pyx_codeobj__141 = (PyObject*)__Pyx_PyCode_New(1, 0, 2, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__140, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_newworld_dev_raiblocks_ra, __pyx_n_s_wallet_destroy, 387, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__141)) __PYX_ERR(0, 387, __pyx_L1_error)
 
-  /* "rai.pyx":387
+  /* "rai.pyx":390
  *     return _rai.wallet_destroy (wallet_text)
  * 
  * def wallet_export (string wallet_text):             # <<<<<<<<<<<<<<
  *     return _rai.wallet_export (wallet_text)
  * 
  */
-  __pyx_tuple__142 = PyTuple_Pack(2, __pyx_n_s_wallet_text, __pyx_n_s_wallet_text); if (unlikely(!__pyx_tuple__142)) __PYX_ERR(0, 387, __pyx_L1_error)
+  __pyx_tuple__142 = PyTuple_Pack(2, __pyx_n_s_wallet_text, __pyx_n_s_wallet_text); if (unlikely(!__pyx_tuple__142)) __PYX_ERR(0, 390, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__142);
   __Pyx_GIVEREF(__pyx_tuple__142);
-  __pyx_codeobj__143 = (PyObject*)__Pyx_PyCode_New(1, 0, 2, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__142, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_newworld_dev_raiblocks_ra, __pyx_n_s_wallet_export, 387, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__143)) __PYX_ERR(0, 387, __pyx_L1_error)
+  __pyx_codeobj__143 = (PyObject*)__Pyx_PyCode_New(1, 0, 2, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__142, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_newworld_dev_raiblocks_ra, __pyx_n_s_wallet_export, 390, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__143)) __PYX_ERR(0, 390, __pyx_L1_error)
 
-  /* "rai.pyx":390
+  /* "rai.pyx":393
  *     return _rai.wallet_export (wallet_text)
  * 
  * def wallet_frontiers (string wallet_text):             # <<<<<<<<<<<<<<
  *     return _rai.wallet_frontiers (wallet_text)
  * 
  */
-  __pyx_tuple__144 = PyTuple_Pack(2, __pyx_n_s_wallet_text, __pyx_n_s_wallet_text); if (unlikely(!__pyx_tuple__144)) __PYX_ERR(0, 390, __pyx_L1_error)
+  __pyx_tuple__144 = PyTuple_Pack(2, __pyx_n_s_wallet_text, __pyx_n_s_wallet_text); if (unlikely(!__pyx_tuple__144)) __PYX_ERR(0, 393, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__144);
   __Pyx_GIVEREF(__pyx_tuple__144);
-  __pyx_codeobj__145 = (PyObject*)__Pyx_PyCode_New(1, 0, 2, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__144, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_newworld_dev_raiblocks_ra, __pyx_n_s_wallet_frontiers, 390, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__145)) __PYX_ERR(0, 390, __pyx_L1_error)
+  __pyx_codeobj__145 = (PyObject*)__Pyx_PyCode_New(1, 0, 2, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__144, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_newworld_dev_raiblocks_ra, __pyx_n_s_wallet_frontiers, 393, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__145)) __PYX_ERR(0, 393, __pyx_L1_error)
 
-  /* "rai.pyx":393
+  /* "rai.pyx":396
  *     return _rai.wallet_frontiers (wallet_text)
  * 
  * def wallet_pending (string wallet_text, uint64_t count, string threshold_text, bool source):             # <<<<<<<<<<<<<<
  *     return _rai.wallet_pending (wallet_text, count, threshold_text, source)
  * 
  */
-  __pyx_tuple__146 = PyTuple_Pack(4, __pyx_n_s_wallet_text, __pyx_n_s_count, __pyx_n_s_threshold_text, __pyx_n_s_source); if (unlikely(!__pyx_tuple__146)) __PYX_ERR(0, 393, __pyx_L1_error)
+  __pyx_tuple__146 = PyTuple_Pack(4, __pyx_n_s_wallet_text, __pyx_n_s_count, __pyx_n_s_threshold_text, __pyx_n_s_source); if (unlikely(!__pyx_tuple__146)) __PYX_ERR(0, 396, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__146);
   __Pyx_GIVEREF(__pyx_tuple__146);
-  __pyx_codeobj__147 = (PyObject*)__Pyx_PyCode_New(4, 0, 4, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__146, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_newworld_dev_raiblocks_ra, __pyx_n_s_wallet_pending, 393, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__147)) __PYX_ERR(0, 393, __pyx_L1_error)
+  __pyx_codeobj__147 = (PyObject*)__Pyx_PyCode_New(4, 0, 4, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__146, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_newworld_dev_raiblocks_ra, __pyx_n_s_wallet_pending, 396, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__147)) __PYX_ERR(0, 396, __pyx_L1_error)
 
-  /* "rai.pyx":396
+  /* "rai.pyx":399
  *     return _rai.wallet_pending (wallet_text, count, threshold_text, source)
  * 
  * def wallet_republish (string wallet_text, uint64_t count):             # <<<<<<<<<<<<<<
  *     return _rai.wallet_republish (wallet_text, count)
  * 
  */
-  __pyx_tuple__148 = PyTuple_Pack(2, __pyx_n_s_wallet_text, __pyx_n_s_count); if (unlikely(!__pyx_tuple__148)) __PYX_ERR(0, 396, __pyx_L1_error)
+  __pyx_tuple__148 = PyTuple_Pack(2, __pyx_n_s_wallet_text, __pyx_n_s_count); if (unlikely(!__pyx_tuple__148)) __PYX_ERR(0, 399, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__148);
   __Pyx_GIVEREF(__pyx_tuple__148);
-  __pyx_codeobj__149 = (PyObject*)__Pyx_PyCode_New(2, 0, 2, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__148, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_newworld_dev_raiblocks_ra, __pyx_n_s_wallet_republish, 396, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__149)) __PYX_ERR(0, 396, __pyx_L1_error)
+  __pyx_codeobj__149 = (PyObject*)__Pyx_PyCode_New(2, 0, 2, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__148, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_newworld_dev_raiblocks_ra, __pyx_n_s_wallet_republish, 399, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__149)) __PYX_ERR(0, 399, __pyx_L1_error)
 
-  /* "rai.pyx":399
+  /* "rai.pyx":402
  *     return _rai.wallet_republish (wallet_text, count)
  * 
  * def wallet_pending (string wallet_text, uint64_t count, string threshold_text, bool source):             # <<<<<<<<<<<<<<
  *     return _rai.wallet_pending (wallet_text, count, threshold_text, source)
  * 
  */
-  __pyx_tuple__150 = PyTuple_Pack(4, __pyx_n_s_wallet_text, __pyx_n_s_count, __pyx_n_s_threshold_text, __pyx_n_s_source); if (unlikely(!__pyx_tuple__150)) __PYX_ERR(0, 399, __pyx_L1_error)
+  __pyx_tuple__150 = PyTuple_Pack(4, __pyx_n_s_wallet_text, __pyx_n_s_count, __pyx_n_s_threshold_text, __pyx_n_s_source); if (unlikely(!__pyx_tuple__150)) __PYX_ERR(0, 402, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__150);
   __Pyx_GIVEREF(__pyx_tuple__150);
-  __pyx_codeobj__151 = (PyObject*)__Pyx_PyCode_New(4, 0, 4, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__150, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_newworld_dev_raiblocks_ra, __pyx_n_s_wallet_pending, 399, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__151)) __PYX_ERR(0, 399, __pyx_L1_error)
+  __pyx_codeobj__151 = (PyObject*)__Pyx_PyCode_New(4, 0, 4, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__150, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_newworld_dev_raiblocks_ra, __pyx_n_s_wallet_pending, 402, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__151)) __PYX_ERR(0, 402, __pyx_L1_error)
 
-  /* "rai.pyx":402
+  /* "rai.pyx":405
  *     return _rai.wallet_pending (wallet_text, count, threshold_text, source)
  * 
  * def wallet_work_get (string wallet_text, uint64_t work):             # <<<<<<<<<<<<<<
  *     return _rai.wallet_work_get (wallet_text, work)
  * 
  */
-  __pyx_tuple__152 = PyTuple_Pack(2, __pyx_n_s_wallet_text, __pyx_n_s_work); if (unlikely(!__pyx_tuple__152)) __PYX_ERR(0, 402, __pyx_L1_error)
+  __pyx_tuple__152 = PyTuple_Pack(2, __pyx_n_s_wallet_text, __pyx_n_s_work); if (unlikely(!__pyx_tuple__152)) __PYX_ERR(0, 405, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__152);
   __Pyx_GIVEREF(__pyx_tuple__152);
-  __pyx_codeobj__153 = (PyObject*)__Pyx_PyCode_New(2, 0, 2, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__152, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_newworld_dev_raiblocks_ra, __pyx_n_s_wallet_work_get, 402, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__153)) __PYX_ERR(0, 402, __pyx_L1_error)
+  __pyx_codeobj__153 = (PyObject*)__Pyx_PyCode_New(2, 0, 2, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__152, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_newworld_dev_raiblocks_ra, __pyx_n_s_wallet_work_get, 405, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__153)) __PYX_ERR(0, 405, __pyx_L1_error)
 
-  /* "rai.pyx":405
+  /* "rai.pyx":408
  *     return _rai.wallet_work_get (wallet_text, work)
  * 
  * def password_change (string wallet_text, string password_text):             # <<<<<<<<<<<<<<
  *     return _rai.password_change (wallet_text, password_text)
  * 
  */
-  __pyx_tuple__154 = PyTuple_Pack(2, __pyx_n_s_wallet_text, __pyx_n_s_password_text); if (unlikely(!__pyx_tuple__154)) __PYX_ERR(0, 405, __pyx_L1_error)
+  __pyx_tuple__154 = PyTuple_Pack(2, __pyx_n_s_wallet_text, __pyx_n_s_password_text); if (unlikely(!__pyx_tuple__154)) __PYX_ERR(0, 408, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__154);
   __Pyx_GIVEREF(__pyx_tuple__154);
-  __pyx_codeobj__155 = (PyObject*)__Pyx_PyCode_New(2, 0, 2, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__154, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_newworld_dev_raiblocks_ra, __pyx_n_s_password_change, 405, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__155)) __PYX_ERR(0, 405, __pyx_L1_error)
+  __pyx_codeobj__155 = (PyObject*)__Pyx_PyCode_New(2, 0, 2, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__154, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_newworld_dev_raiblocks_ra, __pyx_n_s_password_change, 408, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__155)) __PYX_ERR(0, 408, __pyx_L1_error)
 
-  /* "rai.pyx":408
+  /* "rai.pyx":411
  *     return _rai.password_change (wallet_text, password_text)
  * 
  * def password_enter (string wallet_text, string password_text):             # <<<<<<<<<<<<<<
  *     return _rai.password_enter (wallet_text, password_text)
  * 
  */
-  __pyx_tuple__156 = PyTuple_Pack(2, __pyx_n_s_wallet_text, __pyx_n_s_password_text); if (unlikely(!__pyx_tuple__156)) __PYX_ERR(0, 408, __pyx_L1_error)
+  __pyx_tuple__156 = PyTuple_Pack(2, __pyx_n_s_wallet_text, __pyx_n_s_password_text); if (unlikely(!__pyx_tuple__156)) __PYX_ERR(0, 411, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__156);
   __Pyx_GIVEREF(__pyx_tuple__156);
-  __pyx_codeobj__157 = (PyObject*)__Pyx_PyCode_New(2, 0, 2, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__156, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_newworld_dev_raiblocks_ra, __pyx_n_s_password_enter, 408, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__157)) __PYX_ERR(0, 408, __pyx_L1_error)
+  __pyx_codeobj__157 = (PyObject*)__Pyx_PyCode_New(2, 0, 2, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__156, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_newworld_dev_raiblocks_ra, __pyx_n_s_password_enter, 411, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__157)) __PYX_ERR(0, 411, __pyx_L1_error)
 
-  /* "rai.pyx":411
+  /* "rai.pyx":414
  *     return _rai.password_enter (wallet_text, password_text)
  * 
  * def password_valid (string wallet_text, wallet_locked = False):             # <<<<<<<<<<<<<<
  *     return _rai.password_valid (wallet_text, wallet_locked);
  * 
  */
-  __pyx_tuple__158 = PyTuple_Pack(2, __pyx_n_s_wallet_text, __pyx_n_s_wallet_locked); if (unlikely(!__pyx_tuple__158)) __PYX_ERR(0, 411, __pyx_L1_error)
+  __pyx_tuple__158 = PyTuple_Pack(2, __pyx_n_s_wallet_text, __pyx_n_s_wallet_locked); if (unlikely(!__pyx_tuple__158)) __PYX_ERR(0, 414, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__158);
   __Pyx_GIVEREF(__pyx_tuple__158);
-  __pyx_codeobj__159 = (PyObject*)__Pyx_PyCode_New(2, 0, 2, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__158, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_newworld_dev_raiblocks_ra, __pyx_n_s_password_valid, 411, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__159)) __PYX_ERR(0, 411, __pyx_L1_error)
+  __pyx_codeobj__159 = (PyObject*)__Pyx_PyCode_New(2, 0, 2, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__158, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_newworld_dev_raiblocks_ra, __pyx_n_s_password_valid, 414, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__159)) __PYX_ERR(0, 414, __pyx_L1_error)
 
-  /* "rai.pyx":414
+  /* "rai.pyx":417
  *     return _rai.password_valid (wallet_text, wallet_locked);
  * 
  * def wallet_locked(string wallet_text):             # <<<<<<<<<<<<<<
  *     return password_valid(wallet_text, True)
  * 
  */
-  __pyx_tuple__160 = PyTuple_Pack(2, __pyx_n_s_wallet_text, __pyx_n_s_wallet_text); if (unlikely(!__pyx_tuple__160)) __PYX_ERR(0, 414, __pyx_L1_error)
+  __pyx_tuple__160 = PyTuple_Pack(2, __pyx_n_s_wallet_text, __pyx_n_s_wallet_text); if (unlikely(!__pyx_tuple__160)) __PYX_ERR(0, 417, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__160);
   __Pyx_GIVEREF(__pyx_tuple__160);
-  __pyx_codeobj__161 = (PyObject*)__Pyx_PyCode_New(1, 0, 2, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__160, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_newworld_dev_raiblocks_ra, __pyx_n_s_wallet_locked, 414, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__161)) __PYX_ERR(0, 414, __pyx_L1_error)
+  __pyx_codeobj__161 = (PyObject*)__Pyx_PyCode_New(1, 0, 2, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__160, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_newworld_dev_raiblocks_ra, __pyx_n_s_wallet_locked, 417, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__161)) __PYX_ERR(0, 417, __pyx_L1_error)
 
-  /* "rai.pyx":417
+  /* "rai.pyx":420
  *     return password_valid(wallet_text, True)
  * 
  * def work_cancel (string hash_text):             # <<<<<<<<<<<<<<
  *     return _rai.work_cancel (hash_text)
  * 
  */
-  __pyx_tuple__162 = PyTuple_Pack(2, __pyx_n_s_hash_text, __pyx_n_s_hash_text); if (unlikely(!__pyx_tuple__162)) __PYX_ERR(0, 417, __pyx_L1_error)
+  __pyx_tuple__162 = PyTuple_Pack(2, __pyx_n_s_hash_text, __pyx_n_s_hash_text); if (unlikely(!__pyx_tuple__162)) __PYX_ERR(0, 420, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__162);
   __Pyx_GIVEREF(__pyx_tuple__162);
-  __pyx_codeobj__163 = (PyObject*)__Pyx_PyCode_New(1, 0, 2, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__162, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_newworld_dev_raiblocks_ra, __pyx_n_s_work_cancel, 417, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__163)) __PYX_ERR(0, 417, __pyx_L1_error)
+  __pyx_codeobj__163 = (PyObject*)__Pyx_PyCode_New(1, 0, 2, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__162, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_newworld_dev_raiblocks_ra, __pyx_n_s_work_cancel, 420, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__163)) __PYX_ERR(0, 420, __pyx_L1_error)
 
-  /* "rai.pyx":420
+  /* "rai.pyx":423
  *     return _rai.work_cancel (hash_text)
  * 
  * def work_generate (string hash_text):             # <<<<<<<<<<<<<<
  *     return _rai.work_generate (hash_text)
  * 
  */
-  __pyx_tuple__164 = PyTuple_Pack(2, __pyx_n_s_hash_text, __pyx_n_s_hash_text); if (unlikely(!__pyx_tuple__164)) __PYX_ERR(0, 420, __pyx_L1_error)
+  __pyx_tuple__164 = PyTuple_Pack(2, __pyx_n_s_hash_text, __pyx_n_s_hash_text); if (unlikely(!__pyx_tuple__164)) __PYX_ERR(0, 423, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__164);
   __Pyx_GIVEREF(__pyx_tuple__164);
-  __pyx_codeobj__165 = (PyObject*)__Pyx_PyCode_New(1, 0, 2, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__164, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_newworld_dev_raiblocks_ra, __pyx_n_s_work_generate, 420, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__165)) __PYX_ERR(0, 420, __pyx_L1_error)
+  __pyx_codeobj__165 = (PyObject*)__Pyx_PyCode_New(1, 0, 2, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__164, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_newworld_dev_raiblocks_ra, __pyx_n_s_work_generate, 423, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__165)) __PYX_ERR(0, 423, __pyx_L1_error)
 
-  /* "rai.pyx":423
+  /* "rai.pyx":426
  *     return _rai.work_generate (hash_text)
  * 
  * def work_get (string wallet_text, string account_text):             # <<<<<<<<<<<<<<
  *     return _rai.work_get (wallet_text, account_text)
  * 
  */
-  __pyx_tuple__166 = PyTuple_Pack(2, __pyx_n_s_wallet_text, __pyx_n_s_account_text); if (unlikely(!__pyx_tuple__166)) __PYX_ERR(0, 423, __pyx_L1_error)
+  __pyx_tuple__166 = PyTuple_Pack(2, __pyx_n_s_wallet_text, __pyx_n_s_account_text); if (unlikely(!__pyx_tuple__166)) __PYX_ERR(0, 426, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__166);
   __Pyx_GIVEREF(__pyx_tuple__166);
-  __pyx_codeobj__167 = (PyObject*)__Pyx_PyCode_New(2, 0, 2, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__166, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_newworld_dev_raiblocks_ra, __pyx_n_s_work_get, 423, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__167)) __PYX_ERR(0, 423, __pyx_L1_error)
+  __pyx_codeobj__167 = (PyObject*)__Pyx_PyCode_New(2, 0, 2, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__166, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_newworld_dev_raiblocks_ra, __pyx_n_s_work_get, 426, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__167)) __PYX_ERR(0, 426, __pyx_L1_error)
 
-  /* "rai.pyx":426
+  /* "rai.pyx":429
  *     return _rai.work_get (wallet_text, account_text)
  * 
  * def work_set (string wallet_text, string account_text, string work_text):             # <<<<<<<<<<<<<<
  *     return _rai.work_set (wallet_text, account_text, work_text);
  * 
  */
-  __pyx_tuple__168 = PyTuple_Pack(3, __pyx_n_s_wallet_text, __pyx_n_s_account_text, __pyx_n_s_work_text); if (unlikely(!__pyx_tuple__168)) __PYX_ERR(0, 426, __pyx_L1_error)
+  __pyx_tuple__168 = PyTuple_Pack(3, __pyx_n_s_wallet_text, __pyx_n_s_account_text, __pyx_n_s_work_text); if (unlikely(!__pyx_tuple__168)) __PYX_ERR(0, 429, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__168);
   __Pyx_GIVEREF(__pyx_tuple__168);
-  __pyx_codeobj__169 = (PyObject*)__Pyx_PyCode_New(3, 0, 3, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__168, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_newworld_dev_raiblocks_ra, __pyx_n_s_work_set, 426, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__169)) __PYX_ERR(0, 426, __pyx_L1_error)
+  __pyx_codeobj__169 = (PyObject*)__Pyx_PyCode_New(3, 0, 3, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__168, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_newworld_dev_raiblocks_ra, __pyx_n_s_work_set, 429, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__169)) __PYX_ERR(0, 429, __pyx_L1_error)
 
-  /* "rai.pyx":430
+  /* "rai.pyx":432
+ *     return _rai.work_set (wallet_text, account_text, work_text);
  * 
+ * def work_peer_add (string address_text, string port_text):             # <<<<<<<<<<<<<<
+ *     return _rai.work_peer_add (address_text, port_text)
+ * 
+ */
+  __pyx_tuple__170 = PyTuple_Pack(2, __pyx_n_s_address_text, __pyx_n_s_port_text); if (unlikely(!__pyx_tuple__170)) __PYX_ERR(0, 432, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__170);
+  __Pyx_GIVEREF(__pyx_tuple__170);
+  __pyx_codeobj__171 = (PyObject*)__Pyx_PyCode_New(2, 0, 2, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__170, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_newworld_dev_raiblocks_ra, __pyx_n_s_work_peer_add, 432, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__171)) __PYX_ERR(0, 432, __pyx_L1_error)
+
+  /* "rai.pyx":435
+ *     return _rai.work_peer_add (address_text, port_text)
+ * 
+ * def work_peer_add (string address_text, string port_text):             # <<<<<<<<<<<<<<
+ *     return _rai.work_peer_add (address_text, port_text)
+ * 
+ */
+  __pyx_tuple__172 = PyTuple_Pack(2, __pyx_n_s_address_text, __pyx_n_s_port_text); if (unlikely(!__pyx_tuple__172)) __PYX_ERR(0, 435, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__172);
+  __Pyx_GIVEREF(__pyx_tuple__172);
+  __pyx_codeobj__173 = (PyObject*)__Pyx_PyCode_New(2, 0, 2, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__172, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_newworld_dev_raiblocks_ra, __pyx_n_s_work_peer_add, 435, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__173)) __PYX_ERR(0, 435, __pyx_L1_error)
+
+  /* "rai.pyx":438
+ *     return _rai.work_peer_add (address_text, port_text)
+ * 
+ * def work_peers ():             # <<<<<<<<<<<<<<
+ *     return _rai.work_peers ()
+ * 
+ */
+  __pyx_codeobj__174 = (PyObject*)__Pyx_PyCode_New(0, 0, 0, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_newworld_dev_raiblocks_ra, __pyx_n_s_work_peers, 438, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__174)) __PYX_ERR(0, 438, __pyx_L1_error)
+
+  /* "rai.pyx":441
+ *     return _rai.work_peers ()
+ * 
+ * def work_peers_clear ():             # <<<<<<<<<<<<<<
+ *     return _rai.work_peers_clear ()
+ * 
+ */
+  __pyx_codeobj__175 = (PyObject*)__Pyx_PyCode_New(0, 0, 0, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_newworld_dev_raiblocks_ra, __pyx_n_s_work_peers_clear, 441, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__175)) __PYX_ERR(0, 441, __pyx_L1_error)
+
+  /* "rai.pyx":444
+ *     return _rai.work_peers_clear ()
  * 
  * def send (string wallet_text, string source_text, string destination_text, string amount_text, uint64_t work):             # <<<<<<<<<<<<<<
  *     return _rai.send (wallet_text, source_text, destination_text, amount_text, work)
  * 
  */
-  __pyx_tuple__170 = PyTuple_Pack(5, __pyx_n_s_wallet_text, __pyx_n_s_source_text, __pyx_n_s_destination_text, __pyx_n_s_amount_text, __pyx_n_s_work); if (unlikely(!__pyx_tuple__170)) __PYX_ERR(0, 430, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__170);
-  __Pyx_GIVEREF(__pyx_tuple__170);
-  __pyx_codeobj__171 = (PyObject*)__Pyx_PyCode_New(5, 0, 5, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__170, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_newworld_dev_raiblocks_ra, __pyx_n_s_send, 430, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__171)) __PYX_ERR(0, 430, __pyx_L1_error)
+  __pyx_tuple__176 = PyTuple_Pack(5, __pyx_n_s_wallet_text, __pyx_n_s_source_text, __pyx_n_s_destination_text, __pyx_n_s_amount_text, __pyx_n_s_work); if (unlikely(!__pyx_tuple__176)) __PYX_ERR(0, 444, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__176);
+  __Pyx_GIVEREF(__pyx_tuple__176);
+  __pyx_codeobj__177 = (PyObject*)__Pyx_PyCode_New(5, 0, 5, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__176, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_newworld_dev_raiblocks_ra, __pyx_n_s_send, 444, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__177)) __PYX_ERR(0, 444, __pyx_L1_error)
 
-  /* "rai.pyx":433
+  /* "rai.pyx":447
  *     return _rai.send (wallet_text, source_text, destination_text, amount_text, work)
  * 
  * def genesis_account():             # <<<<<<<<<<<<<<
  *     return _rai.genesis_account()
  * 
  */
-  __pyx_codeobj__172 = (PyObject*)__Pyx_PyCode_New(0, 0, 0, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_newworld_dev_raiblocks_ra, __pyx_n_s_genesis_account, 433, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__172)) __PYX_ERR(0, 433, __pyx_L1_error)
+  __pyx_codeobj__178 = (PyObject*)__Pyx_PyCode_New(0, 0, 0, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_newworld_dev_raiblocks_ra, __pyx_n_s_genesis_account, 447, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__178)) __PYX_ERR(0, 447, __pyx_L1_error)
 
-  /* "rai.pyx":436
+  /* "rai.pyx":450
  *     return _rai.genesis_account()
  * 
  * def block_count_type ():             # <<<<<<<<<<<<<<
  *     return _rai.block_count_type ()
  * 
  */
-  __pyx_codeobj__173 = (PyObject*)__Pyx_PyCode_New(0, 0, 0, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_newworld_dev_raiblocks_ra, __pyx_n_s_block_count_type, 436, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__173)) __PYX_ERR(0, 436, __pyx_L1_error)
+  __pyx_codeobj__179 = (PyObject*)__Pyx_PyCode_New(0, 0, 0, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_newworld_dev_raiblocks_ra, __pyx_n_s_block_count_type, 450, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__179)) __PYX_ERR(0, 450, __pyx_L1_error)
   __Pyx_RefNannyFinishContext();
   return 0;
   __pyx_L1_error:;
@@ -12899,7 +13294,7 @@ PyMODINIT_FUNC PyInit_rai(void)
   if (PyDict_SetItem(__pyx_d, __pyx_n_s_json, __pyx_t_1) < 0) __PYX_ERR(0, 4, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "rai.pyx":114
+  /* "rai.pyx":117
  *     const char* get_last_error_()
  * 
  * cdef pyrai* _rai = get_pyrai()             # <<<<<<<<<<<<<<
@@ -12908,1128 +13303,1176 @@ PyMODINIT_FUNC PyInit_rai(void)
  */
   __pyx_v_3rai__rai = python::get_pyrai();
 
-  /* "rai.pyx":116
+  /* "rai.pyx":119
  * cdef pyrai* _rai = get_pyrai()
  * 
  * class JsonStruct(object):             # <<<<<<<<<<<<<<
  *     def __init__(self, js):
  *         if isinstance(js, bytes):
  */
-  __pyx_t_1 = PyTuple_New(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 116, __pyx_L1_error)
+  __pyx_t_1 = PyTuple_New(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 119, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_INCREF(__pyx_builtin_object);
   __Pyx_GIVEREF(__pyx_builtin_object);
   PyTuple_SET_ITEM(__pyx_t_1, 0, __pyx_builtin_object);
-  __pyx_t_2 = __Pyx_CalculateMetaclass(NULL, __pyx_t_1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 116, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_CalculateMetaclass(NULL, __pyx_t_1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 119, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_3 = __Pyx_Py3MetaclassPrepare(__pyx_t_2, __pyx_t_1, __pyx_n_s_JsonStruct, __pyx_n_s_JsonStruct, (PyObject *) NULL, __pyx_n_s_rai, (PyObject *) NULL); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 116, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_Py3MetaclassPrepare(__pyx_t_2, __pyx_t_1, __pyx_n_s_JsonStruct, __pyx_n_s_JsonStruct, (PyObject *) NULL, __pyx_n_s_rai, (PyObject *) NULL); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 119, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
 
-  /* "rai.pyx":117
+  /* "rai.pyx":120
  * 
  * class JsonStruct(object):
  *     def __init__(self, js):             # <<<<<<<<<<<<<<
  *         if isinstance(js, bytes):
  *             js = js.decode('utf8')
  */
-  __pyx_t_4 = __Pyx_CyFunction_NewEx(&__pyx_mdef_3rai_10JsonStruct_1__init__, 0, __pyx_n_s_JsonStruct___init, NULL, __pyx_n_s_rai, __pyx_d, ((PyObject *)__pyx_codeobj__6)); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 117, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_CyFunction_NewEx(&__pyx_mdef_3rai_10JsonStruct_1__init__, 0, __pyx_n_s_JsonStruct___init, NULL, __pyx_n_s_rai, __pyx_d, ((PyObject *)__pyx_codeobj__6)); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 120, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
-  if (PyObject_SetItem(__pyx_t_3, __pyx_n_s_init, __pyx_t_4) < 0) __PYX_ERR(0, 117, __pyx_L1_error)
+  if (PyObject_SetItem(__pyx_t_3, __pyx_n_s_init, __pyx_t_4) < 0) __PYX_ERR(0, 120, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
 
-  /* "rai.pyx":135
+  /* "rai.pyx":138
  *             else:
  *                 self.__dict__[key] = value
  *     def __str__(self):             # <<<<<<<<<<<<<<
  *         return str(self.__dict__)
  * #        return json.dumps(self, default=lambda x: x.__dict__,sort_keys=False,indent=4, separators=(',', ': '))
  */
-  __pyx_t_4 = __Pyx_CyFunction_NewEx(&__pyx_mdef_3rai_10JsonStruct_3__str__, 0, __pyx_n_s_JsonStruct___str, NULL, __pyx_n_s_rai, __pyx_d, ((PyObject *)__pyx_codeobj__8)); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 135, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_CyFunction_NewEx(&__pyx_mdef_3rai_10JsonStruct_3__str__, 0, __pyx_n_s_JsonStruct___str, NULL, __pyx_n_s_rai, __pyx_d, ((PyObject *)__pyx_codeobj__8)); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 138, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
-  if (PyObject_SetItem(__pyx_t_3, __pyx_n_s_str, __pyx_t_4) < 0) __PYX_ERR(0, 135, __pyx_L1_error)
+  if (PyObject_SetItem(__pyx_t_3, __pyx_n_s_str, __pyx_t_4) < 0) __PYX_ERR(0, 138, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
 
-  /* "rai.pyx":138
+  /* "rai.pyx":141
  *         return str(self.__dict__)
  * #        return json.dumps(self, default=lambda x: x.__dict__,sort_keys=False,indent=4, separators=(',', ': '))
  *     def __repr__(self):             # <<<<<<<<<<<<<<
  *         return json.dumps(self, default=lambda x: x.__dict__, sort_keys=False, indent=4, separators=(',', ': '))
  * 
  */
-  __pyx_t_4 = __Pyx_CyFunction_NewEx(&__pyx_mdef_3rai_10JsonStruct_5__repr__, 0, __pyx_n_s_JsonStruct___repr, NULL, __pyx_n_s_rai, __pyx_d, ((PyObject *)__pyx_codeobj__10)); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 138, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_CyFunction_NewEx(&__pyx_mdef_3rai_10JsonStruct_5__repr__, 0, __pyx_n_s_JsonStruct___repr, NULL, __pyx_n_s_rai, __pyx_d, ((PyObject *)__pyx_codeobj__10)); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 141, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
-  if (PyObject_SetItem(__pyx_t_3, __pyx_n_s_repr, __pyx_t_4) < 0) __PYX_ERR(0, 138, __pyx_L1_error)
+  if (PyObject_SetItem(__pyx_t_3, __pyx_n_s_repr, __pyx_t_4) < 0) __PYX_ERR(0, 141, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
 
-  /* "rai.pyx":116
+  /* "rai.pyx":119
  * cdef pyrai* _rai = get_pyrai()
  * 
  * class JsonStruct(object):             # <<<<<<<<<<<<<<
  *     def __init__(self, js):
  *         if isinstance(js, bytes):
  */
-  __pyx_t_4 = __Pyx_Py3ClassCreate(__pyx_t_2, __pyx_n_s_JsonStruct, __pyx_t_1, __pyx_t_3, NULL, 0, 1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 116, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_Py3ClassCreate(__pyx_t_2, __pyx_n_s_JsonStruct, __pyx_t_1, __pyx_t_3, NULL, 0, 1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 119, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_JsonStruct, __pyx_t_4) < 0) __PYX_ERR(0, 116, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_JsonStruct, __pyx_t_4) < 0) __PYX_ERR(0, 119, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "rai.pyx":141
+  /* "rai.pyx":144
  *         return json.dumps(self, default=lambda x: x.__dict__, sort_keys=False, indent=4, separators=(',', ': '))
  * 
  * def block_count ():             # <<<<<<<<<<<<<<
  *     return _rai.block_count()
  * 
  */
-  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_3rai_1block_count, NULL, __pyx_n_s_rai); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 141, __pyx_L1_error)
+  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_3rai_1block_count, NULL, __pyx_n_s_rai); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 144, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_block_count, __pyx_t_1) < 0) __PYX_ERR(0, 141, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_block_count, __pyx_t_1) < 0) __PYX_ERR(0, 144, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "rai.pyx":144
+  /* "rai.pyx":147
  *     return _rai.block_count()
  * 
  * def get_last_error():             # <<<<<<<<<<<<<<
  *     return get_last_error_()
  * 
  */
-  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_3rai_3get_last_error, NULL, __pyx_n_s_rai); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 144, __pyx_L1_error)
+  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_3rai_3get_last_error, NULL, __pyx_n_s_rai); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 147, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_get_last_error, __pyx_t_1) < 0) __PYX_ERR(0, 144, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_get_last_error, __pyx_t_1) < 0) __PYX_ERR(0, 147, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "rai.pyx":147
+  /* "rai.pyx":150
  *     return get_last_error_()
  * 
  * def account_balance (string account_text):             # <<<<<<<<<<<<<<
  *     cdef string balance
  *     cdef string pending
  */
-  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_3rai_5account_balance, NULL, __pyx_n_s_rai); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 147, __pyx_L1_error)
+  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_3rai_5account_balance, NULL, __pyx_n_s_rai); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 150, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_account_balance, __pyx_t_1) < 0) __PYX_ERR(0, 147, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_account_balance, __pyx_t_1) < 0) __PYX_ERR(0, 150, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "rai.pyx":154
+  /* "rai.pyx":157
  *     return JsonStruct(ret)
  * 
  * def account_block_count (account):             # <<<<<<<<<<<<<<
  *     return _rai.account_block_count (account)
  * 
  */
-  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_3rai_7account_block_count, NULL, __pyx_n_s_rai); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 154, __pyx_L1_error)
+  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_3rai_7account_block_count, NULL, __pyx_n_s_rai); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 157, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_account_block_count, __pyx_t_1) < 0) __PYX_ERR(0, 154, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_account_block_count, __pyx_t_1) < 0) __PYX_ERR(0, 157, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "rai.pyx":157
+  /* "rai.pyx":160
  *     return _rai.account_block_count (account)
  * 
  * def account_info (account_text, representative=True, weight=True, pending=True):             # <<<<<<<<<<<<<<
  *     info = _rai.account_info (account_text, representative, weight, pending)
  *     return JsonStruct(info)
  */
-  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_3rai_9account_info, NULL, __pyx_n_s_rai); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 157, __pyx_L1_error)
+  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_3rai_9account_info, NULL, __pyx_n_s_rai); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 160, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_account_info, __pyx_t_1) < 0) __PYX_ERR(0, 157, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_account_info, __pyx_t_1) < 0) __PYX_ERR(0, 160, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "rai.pyx":161
+  /* "rai.pyx":164
  *     return JsonStruct(info)
  * 
  * def account_create (wallet_text, generate_work=True):             # <<<<<<<<<<<<<<
  *     return _rai.account_create (wallet_text, generate_work)
  * 
  */
-  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_3rai_11account_create, NULL, __pyx_n_s_rai); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 161, __pyx_L1_error)
+  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_3rai_11account_create, NULL, __pyx_n_s_rai); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 164, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_account_create, __pyx_t_1) < 0) __PYX_ERR(0, 161, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_account_create, __pyx_t_1) < 0) __PYX_ERR(0, 164, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "rai.pyx":164
+  /* "rai.pyx":167
  *     return _rai.account_create (wallet_text, generate_work)
  * 
  * def account_get (string key_text):             # <<<<<<<<<<<<<<
  *     return _rai.account_get (key_text)
  * 
  */
-  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_3rai_13account_get, NULL, __pyx_n_s_rai); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 164, __pyx_L1_error)
+  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_3rai_13account_get, NULL, __pyx_n_s_rai); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 167, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_account_get, __pyx_t_1) < 0) __PYX_ERR(0, 164, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_account_get, __pyx_t_1) < 0) __PYX_ERR(0, 167, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "rai.pyx":167
+  /* "rai.pyx":170
  *     return _rai.account_get (key_text)
  * 
  * def account_history (account_text, count):             # <<<<<<<<<<<<<<
  *     ret = _rai.account_history (account_text, count)
  *     if isinstance(ret, Exception):
  */
-  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_3rai_15account_history, NULL, __pyx_n_s_rai); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 167, __pyx_L1_error)
+  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_3rai_15account_history, NULL, __pyx_n_s_rai); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 170, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_account_history, __pyx_t_1) < 0) __PYX_ERR(0, 167, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_account_history, __pyx_t_1) < 0) __PYX_ERR(0, 170, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "rai.pyx":173
+  /* "rai.pyx":176
  *     return ret
  * 
  * def account_list (string wallet_text):             # <<<<<<<<<<<<<<
  *     ret = _rai.account_list (wallet_text)
  *     if isinstance(ret, Exception):
  */
-  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_3rai_17account_list, NULL, __pyx_n_s_rai); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 173, __pyx_L1_error)
+  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_3rai_17account_list, NULL, __pyx_n_s_rai); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 176, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_account_list, __pyx_t_1) < 0) __PYX_ERR(0, 173, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_account_list, __pyx_t_1) < 0) __PYX_ERR(0, 176, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "rai.pyx":179
+  /* "rai.pyx":182
  *     return ret
  * 
  * def account_move (string wallet_text, string source_text, vector[string] accounts_text):             # <<<<<<<<<<<<<<
  *     ret = _rai.account_move (wallet_text, source_text, accounts_text);
  *     if isinstance(ret, Exception):
  */
-  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_3rai_19account_move, NULL, __pyx_n_s_rai); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 179, __pyx_L1_error)
+  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_3rai_19account_move, NULL, __pyx_n_s_rai); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 182, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_account_move, __pyx_t_1) < 0) __PYX_ERR(0, 179, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_account_move, __pyx_t_1) < 0) __PYX_ERR(0, 182, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "rai.pyx":185
+  /* "rai.pyx":188
  *     return ret
  * 
  * def account_key (string account_text):             # <<<<<<<<<<<<<<
  *     ret = _rai.account_key (account_text);
  *     if isinstance(ret, Exception):
  */
-  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_3rai_21account_key, NULL, __pyx_n_s_rai); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 185, __pyx_L1_error)
+  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_3rai_21account_key, NULL, __pyx_n_s_rai); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 188, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_account_key, __pyx_t_1) < 0) __PYX_ERR(0, 185, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_account_key, __pyx_t_1) < 0) __PYX_ERR(0, 188, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "rai.pyx":191
+  /* "rai.pyx":194
  *     return ret
  * 
  * def account_remove (string wallet_text, string account_text):             # <<<<<<<<<<<<<<
  *     ret = _rai.account_remove (wallet_text, account_text)
  *     if isinstance(ret, Exception):
  */
-  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_3rai_23account_remove, NULL, __pyx_n_s_rai); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 191, __pyx_L1_error)
+  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_3rai_23account_remove, NULL, __pyx_n_s_rai); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 194, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_account_remove, __pyx_t_1) < 0) __PYX_ERR(0, 191, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_account_remove, __pyx_t_1) < 0) __PYX_ERR(0, 194, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "rai.pyx":197
+  /* "rai.pyx":200
  *     return ret
  * 
  * def account_representative (string account_text):             # <<<<<<<<<<<<<<
  *     return _rai.account_representative (account_text)
  * 
  */
-  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_3rai_25account_representative, NULL, __pyx_n_s_rai); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 197, __pyx_L1_error)
+  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_3rai_25account_representative, NULL, __pyx_n_s_rai); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 200, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_account_representative, __pyx_t_1) < 0) __PYX_ERR(0, 197, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_account_representative, __pyx_t_1) < 0) __PYX_ERR(0, 200, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "rai.pyx":200
+  /* "rai.pyx":203
  *     return _rai.account_representative (account_text)
  * 
  * def account_representative_set (string wallet_text, string account_text, string representative_text, uint64_t work):             # <<<<<<<<<<<<<<
  *     return _rai.account_representative_set (wallet_text, account_text, representative_text, work)
  * 
  */
-  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_3rai_27account_representative_set, NULL, __pyx_n_s_rai); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 200, __pyx_L1_error)
+  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_3rai_27account_representative_set, NULL, __pyx_n_s_rai); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 203, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_account_representative_set, __pyx_t_1) < 0) __PYX_ERR(0, 200, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_account_representative_set, __pyx_t_1) < 0) __PYX_ERR(0, 203, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "rai.pyx":203
+  /* "rai.pyx":206
  *     return _rai.account_representative_set (wallet_text, account_text, representative_text, work)
  * 
  * def account_weight (string account_text):             # <<<<<<<<<<<<<<
  *     return  _rai.account_weight (account_text)
  * 
  */
-  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_3rai_29account_weight, NULL, __pyx_n_s_rai); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 203, __pyx_L1_error)
+  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_3rai_29account_weight, NULL, __pyx_n_s_rai); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 206, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_account_weight, __pyx_t_1) < 0) __PYX_ERR(0, 203, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_account_weight, __pyx_t_1) < 0) __PYX_ERR(0, 206, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "rai.pyx":206
+  /* "rai.pyx":209
  *     return  _rai.account_weight (account_text)
  * 
  * def accounts_balances (vector[string] accounts):             # <<<<<<<<<<<<<<
  *     return _rai.accounts_balances (accounts)
  * 
  */
-  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_3rai_31accounts_balances, NULL, __pyx_n_s_rai); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 206, __pyx_L1_error)
+  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_3rai_31accounts_balances, NULL, __pyx_n_s_rai); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 209, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_accounts_balances, __pyx_t_1) < 0) __PYX_ERR(0, 206, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_accounts_balances, __pyx_t_1) < 0) __PYX_ERR(0, 209, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "rai.pyx":209
+  /* "rai.pyx":212
  *     return _rai.accounts_balances (accounts)
  * 
  * def accounts_create (string wallet_text, int count, generate_work = True):             # <<<<<<<<<<<<<<
  *     return _rai.accounts_create (wallet_text, count, generate_work)
  * 
  */
-  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_3rai_33accounts_create, NULL, __pyx_n_s_rai); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 209, __pyx_L1_error)
+  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_3rai_33accounts_create, NULL, __pyx_n_s_rai); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 212, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_accounts_create, __pyx_t_1) < 0) __PYX_ERR(0, 209, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_accounts_create, __pyx_t_1) < 0) __PYX_ERR(0, 212, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "rai.pyx":212
+  /* "rai.pyx":215
  *     return _rai.accounts_create (wallet_text, count, generate_work)
  * 
  * def accounts_frontiers (vector[string] accounts):             # <<<<<<<<<<<<<<
  *     return _rai.accounts_frontiers (accounts)
  * 
  */
-  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_3rai_35accounts_frontiers, NULL, __pyx_n_s_rai); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 212, __pyx_L1_error)
+  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_3rai_35accounts_frontiers, NULL, __pyx_n_s_rai); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 215, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_accounts_frontiers, __pyx_t_1) < 0) __PYX_ERR(0, 212, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_accounts_frontiers, __pyx_t_1) < 0) __PYX_ERR(0, 215, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "rai.pyx":215
+  /* "rai.pyx":218
  *     return _rai.accounts_frontiers (accounts)
  * 
  * def accounts_pending (vector[string] accounts, uint64_t count, string threshold_text, bool source):             # <<<<<<<<<<<<<<
  *     return _rai.accounts_pending (accounts, count, threshold_text, source)
  * 
  */
-  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_3rai_37accounts_pending, NULL, __pyx_n_s_rai); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 215, __pyx_L1_error)
+  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_3rai_37accounts_pending, NULL, __pyx_n_s_rai); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 218, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_accounts_pending, __pyx_t_1) < 0) __PYX_ERR(0, 215, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_accounts_pending, __pyx_t_1) < 0) __PYX_ERR(0, 218, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "rai.pyx":218
+  /* "rai.pyx":221
  *     return _rai.accounts_pending (accounts, count, threshold_text, source)
  * 
  * def available_supply():             # <<<<<<<<<<<<<<
  *     return _rai.available_supply ()
  * 
  */
-  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_3rai_39available_supply, NULL, __pyx_n_s_rai); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 218, __pyx_L1_error)
+  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_3rai_39available_supply, NULL, __pyx_n_s_rai); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 221, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_available_supply, __pyx_t_1) < 0) __PYX_ERR(0, 218, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_available_supply, __pyx_t_1) < 0) __PYX_ERR(0, 221, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "rai.pyx":221
+  /* "rai.pyx":224
  *     return _rai.available_supply ()
  * 
  * def block (string hash_text):             # <<<<<<<<<<<<<<
  *     ret = _rai.block (hash_text);
  *     if ret:
  */
-  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_3rai_41block, NULL, __pyx_n_s_rai); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 221, __pyx_L1_error)
+  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_3rai_41block, NULL, __pyx_n_s_rai); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 224, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_block, __pyx_t_1) < 0) __PYX_ERR(0, 221, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_block, __pyx_t_1) < 0) __PYX_ERR(0, 224, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "rai.pyx":227
+  /* "rai.pyx":230
  *         return JsonStruct(ret)
  * 
  * def blocks (vector[string] hashes):             # <<<<<<<<<<<<<<
  *     return _rai.blocks (hashes);
  * 
  */
-  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_3rai_43blocks, NULL, __pyx_n_s_rai); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 227, __pyx_L1_error)
+  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_3rai_43blocks, NULL, __pyx_n_s_rai); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 230, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_blocks, __pyx_t_1) < 0) __PYX_ERR(0, 227, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_blocks, __pyx_t_1) < 0) __PYX_ERR(0, 230, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "rai.pyx":230
+  /* "rai.pyx":233
  *     return _rai.blocks (hashes);
  * 
  * def blocks_info (vector[string] hashes, pending = False, source = False):             # <<<<<<<<<<<<<<
  *     return _rai.blocks_info (hashes, pending, source)
  * 
  */
-  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_3rai_45blocks_info, NULL, __pyx_n_s_rai); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 230, __pyx_L1_error)
+  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_3rai_45blocks_info, NULL, __pyx_n_s_rai); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 233, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_blocks_info, __pyx_t_1) < 0) __PYX_ERR(0, 230, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_blocks_info, __pyx_t_1) < 0) __PYX_ERR(0, 233, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "rai.pyx":233
+  /* "rai.pyx":236
  *     return _rai.blocks_info (hashes, pending, source)
  * 
  * def block_account (string hash_text):             # <<<<<<<<<<<<<<
  *     return _rai.block_account (hash_text)
  * 
  */
-  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_3rai_47block_account, NULL, __pyx_n_s_rai); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 233, __pyx_L1_error)
+  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_3rai_47block_account, NULL, __pyx_n_s_rai); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 236, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_block_account, __pyx_t_1) < 0) __PYX_ERR(0, 233, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_block_account, __pyx_t_1) < 0) __PYX_ERR(0, 236, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "rai.pyx":236
+  /* "rai.pyx":239
  *     return _rai.block_account (hash_text)
  * 
  * def bootstrap (string address_text, string port_text):             # <<<<<<<<<<<<<<
  *     return _rai.bootstrap (address_text, port_text)
  * 
  */
-  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_3rai_49bootstrap, NULL, __pyx_n_s_rai); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 236, __pyx_L1_error)
+  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_3rai_49bootstrap, NULL, __pyx_n_s_rai); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 239, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_bootstrap, __pyx_t_1) < 0) __PYX_ERR(0, 236, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_bootstrap, __pyx_t_1) < 0) __PYX_ERR(0, 239, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "rai.pyx":239
+  /* "rai.pyx":242
  *     return _rai.bootstrap (address_text, port_text)
  * 
  * def bootstrap_any ():             # <<<<<<<<<<<<<<
  *     return _rai.bootstrap_any ()
  * 
  */
-  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_3rai_51bootstrap_any, NULL, __pyx_n_s_rai); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 239, __pyx_L1_error)
+  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_3rai_51bootstrap_any, NULL, __pyx_n_s_rai); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 242, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_bootstrap_any, __pyx_t_1) < 0) __PYX_ERR(0, 239, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_bootstrap_any, __pyx_t_1) < 0) __PYX_ERR(0, 242, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "rai.pyx":242
+  /* "rai.pyx":245
  *     return _rai.bootstrap_any ()
  * 
  * def chain (string block_text, uint64_t count):             # <<<<<<<<<<<<<<
  *     return _rai.chain (block_text, count)
  * 
  */
-  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_3rai_53chain, NULL, __pyx_n_s_rai); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 242, __pyx_L1_error)
+  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_3rai_53chain, NULL, __pyx_n_s_rai); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 245, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_chain, __pyx_t_1) < 0) __PYX_ERR(0, 242, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_chain, __pyx_t_1) < 0) __PYX_ERR(0, 245, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "rai.pyx":245
+  /* "rai.pyx":248
  *     return _rai.chain (block_text, count)
  * 
  * def delegators (string account_text):             # <<<<<<<<<<<<<<
  *     return _rai.delegators (account_text)
  * 
  */
-  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_3rai_55delegators, NULL, __pyx_n_s_rai); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 245, __pyx_L1_error)
+  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_3rai_55delegators, NULL, __pyx_n_s_rai); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 248, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_delegators, __pyx_t_1) < 0) __PYX_ERR(0, 245, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_delegators, __pyx_t_1) < 0) __PYX_ERR(0, 248, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "rai.pyx":248
+  /* "rai.pyx":251
  *     return _rai.delegators (account_text)
  * 
  * def delegators_count (string account_text):             # <<<<<<<<<<<<<<
  *     return _rai.delegators_count (account_text)
  * 
  */
-  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_3rai_57delegators_count, NULL, __pyx_n_s_rai); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 248, __pyx_L1_error)
+  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_3rai_57delegators_count, NULL, __pyx_n_s_rai); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 251, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_delegators_count, __pyx_t_1) < 0) __PYX_ERR(0, 248, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_delegators_count, __pyx_t_1) < 0) __PYX_ERR(0, 251, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "rai.pyx":251
+  /* "rai.pyx":254
  *     return _rai.delegators_count (account_text)
  * 
  * def deterministic_key (string seed_text, uint64_t index):             # <<<<<<<<<<<<<<
  *     return _rai.deterministic_key (seed_text, index)
  * 
  */
-  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_3rai_59deterministic_key, NULL, __pyx_n_s_rai); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 251, __pyx_L1_error)
+  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_3rai_59deterministic_key, NULL, __pyx_n_s_rai); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 254, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_deterministic_key, __pyx_t_1) < 0) __PYX_ERR(0, 251, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_deterministic_key, __pyx_t_1) < 0) __PYX_ERR(0, 254, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "rai.pyx":254
+  /* "rai.pyx":257
  *     return _rai.deterministic_key (seed_text, index)
  * 
  * def frontiers (string account_text, uint64_t count):             # <<<<<<<<<<<<<<
  *     return _rai.frontiers (account_text, count)
  * 
  */
-  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_3rai_61frontiers, NULL, __pyx_n_s_rai); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 254, __pyx_L1_error)
+  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_3rai_61frontiers, NULL, __pyx_n_s_rai); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 257, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_frontiers, __pyx_t_1) < 0) __PYX_ERR(0, 254, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_frontiers, __pyx_t_1) < 0) __PYX_ERR(0, 257, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "rai.pyx":257
+  /* "rai.pyx":260
  *     return _rai.frontiers (account_text, count)
  * 
  * def frontier_count ():             # <<<<<<<<<<<<<<
  *     return _rai.frontier_count ()
  * 
  */
-  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_3rai_63frontier_count, NULL, __pyx_n_s_rai); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 257, __pyx_L1_error)
+  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_3rai_63frontier_count, NULL, __pyx_n_s_rai); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 260, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_frontier_count, __pyx_t_1) < 0) __PYX_ERR(0, 257, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_frontier_count, __pyx_t_1) < 0) __PYX_ERR(0, 260, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "rai.pyx":260
+  /* "rai.pyx":263
  *     return _rai.frontier_count ()
  * 
  * def history (string hash_text, uint64_t count):             # <<<<<<<<<<<<<<
  *     ret = []
  *     result = _rai.history (hash_text, count)
  */
-  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_3rai_65history, NULL, __pyx_n_s_rai); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 260, __pyx_L1_error)
+  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_3rai_65history, NULL, __pyx_n_s_rai); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 263, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_history, __pyx_t_1) < 0) __PYX_ERR(0, 260, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_history, __pyx_t_1) < 0) __PYX_ERR(0, 263, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "rai.pyx":267
+  /* "rai.pyx":270
  *     return ret
  * 
  * def mrai_from_raw (string amount_text):             # <<<<<<<<<<<<<<
  *     return _rai.mrai_from_raw (amount_text)
  * 
  */
-  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_3rai_67mrai_from_raw, NULL, __pyx_n_s_rai); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 267, __pyx_L1_error)
+  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_3rai_67mrai_from_raw, NULL, __pyx_n_s_rai); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 270, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_mrai_from_raw, __pyx_t_1) < 0) __PYX_ERR(0, 267, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_mrai_from_raw, __pyx_t_1) < 0) __PYX_ERR(0, 270, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "rai.pyx":270
+  /* "rai.pyx":273
  *     return _rai.mrai_from_raw (amount_text)
  * 
  * def mrai_to_raw (string amount_text):             # <<<<<<<<<<<<<<
  *     return _rai.mrai_to_raw (amount_text)
  * 
  */
-  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_3rai_69mrai_to_raw, NULL, __pyx_n_s_rai); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 270, __pyx_L1_error)
+  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_3rai_69mrai_to_raw, NULL, __pyx_n_s_rai); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 273, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_mrai_to_raw, __pyx_t_1) < 0) __PYX_ERR(0, 270, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_mrai_to_raw, __pyx_t_1) < 0) __PYX_ERR(0, 273, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "rai.pyx":273
+  /* "rai.pyx":276
  *     return _rai.mrai_to_raw (amount_text)
  * 
  * def krai_from_raw (string amount_text):             # <<<<<<<<<<<<<<
  *     return _rai.krai_from_raw (amount_text)
  * 
  */
-  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_3rai_71krai_from_raw, NULL, __pyx_n_s_rai); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 273, __pyx_L1_error)
+  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_3rai_71krai_from_raw, NULL, __pyx_n_s_rai); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 276, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_krai_from_raw, __pyx_t_1) < 0) __PYX_ERR(0, 273, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_krai_from_raw, __pyx_t_1) < 0) __PYX_ERR(0, 276, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "rai.pyx":276
+  /* "rai.pyx":279
  *     return _rai.krai_from_raw (amount_text)
  * 
  * def keepalive (string address_text, string port_text):             # <<<<<<<<<<<<<<
  *     return _rai.keepalive (address_text, port_text)
  * 
  */
-  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_3rai_73keepalive, NULL, __pyx_n_s_rai); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 276, __pyx_L1_error)
+  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_3rai_73keepalive, NULL, __pyx_n_s_rai); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 279, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_keepalive, __pyx_t_1) < 0) __PYX_ERR(0, 276, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_keepalive, __pyx_t_1) < 0) __PYX_ERR(0, 279, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "rai.pyx":279
+  /* "rai.pyx":282
  *     return _rai.keepalive (address_text, port_text)
  * 
  * def key_create ():             # <<<<<<<<<<<<<<
  *     ret = _rai.key_create ()
  *     return JsonStruct(ret)
  */
-  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_3rai_75key_create, NULL, __pyx_n_s_rai); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 279, __pyx_L1_error)
+  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_3rai_75key_create, NULL, __pyx_n_s_rai); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 282, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_key_create, __pyx_t_1) < 0) __PYX_ERR(0, 279, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_key_create, __pyx_t_1) < 0) __PYX_ERR(0, 282, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "rai.pyx":283
+  /* "rai.pyx":286
  *     return JsonStruct(ret)
  * 
  * def key_expand (string key_text):             # <<<<<<<<<<<<<<
  *     ret = _rai.key_expand (key_text)
  *     if ret:
  */
-  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_3rai_77key_expand, NULL, __pyx_n_s_rai); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 283, __pyx_L1_error)
+  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_3rai_77key_expand, NULL, __pyx_n_s_rai); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 286, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_key_expand, __pyx_t_1) < 0) __PYX_ERR(0, 283, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_key_expand, __pyx_t_1) < 0) __PYX_ERR(0, 286, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "rai.pyx":288
+  /* "rai.pyx":291
  *         return JsonStruct(ret)
  * 
  * def ledger (string account_text, uint64_t count, sorting = False, representative = False, weight = False, pending = False):             # <<<<<<<<<<<<<<
  *     return _rai.ledger (account_text, count, sorting, representative, weight, pending)
  * 
  */
-  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_3rai_79ledger, NULL, __pyx_n_s_rai); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 288, __pyx_L1_error)
+  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_3rai_79ledger, NULL, __pyx_n_s_rai); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 291, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_ledger, __pyx_t_1) < 0) __PYX_ERR(0, 288, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_ledger, __pyx_t_1) < 0) __PYX_ERR(0, 291, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "rai.pyx":291
+  /* "rai.pyx":294
  *     return _rai.ledger (account_text, count, sorting, representative, weight, pending)
  * 
  * def block_create (d):             # <<<<<<<<<<<<<<
  *     ret = _rai.block_create (d)
  *     if ret:
  */
-  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_3rai_81block_create, NULL, __pyx_n_s_rai); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 291, __pyx_L1_error)
+  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_3rai_81block_create, NULL, __pyx_n_s_rai); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 294, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_block_create, __pyx_t_1) < 0) __PYX_ERR(0, 291, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_block_create, __pyx_t_1) < 0) __PYX_ERR(0, 294, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "rai.pyx":297
+  /* "rai.pyx":300
  *     return ret
  * 
  * def payment_begin (string id_text):             # <<<<<<<<<<<<<<
  *     return _rai.payment_begin(id_text)
  * 
  */
-  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_3rai_83payment_begin, NULL, __pyx_n_s_rai); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 297, __pyx_L1_error)
+  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_3rai_83payment_begin, NULL, __pyx_n_s_rai); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 300, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_payment_begin, __pyx_t_1) < 0) __PYX_ERR(0, 297, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_payment_begin, __pyx_t_1) < 0) __PYX_ERR(0, 300, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "rai.pyx":300
+  /* "rai.pyx":303
  *     return _rai.payment_begin(id_text)
  * 
  * def payment_init (string id_text):             # <<<<<<<<<<<<<<
  *     return _rai.payment_init (id_text)
  * 
  */
-  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_3rai_85payment_init, NULL, __pyx_n_s_rai); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 300, __pyx_L1_error)
+  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_3rai_85payment_init, NULL, __pyx_n_s_rai); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 303, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_payment_init, __pyx_t_1) < 0) __PYX_ERR(0, 300, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_payment_init, __pyx_t_1) < 0) __PYX_ERR(0, 303, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "rai.pyx":303
+  /* "rai.pyx":306
  *     return _rai.payment_init (id_text)
  * 
  * def payment_end (string id_text, string account_text):             # <<<<<<<<<<<<<<
  *     return _rai.payment_end (id_text, account_text)
  * 
  */
-  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_3rai_87payment_end, NULL, __pyx_n_s_rai); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 303, __pyx_L1_error)
+  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_3rai_87payment_end, NULL, __pyx_n_s_rai); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 306, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_payment_end, __pyx_t_1) < 0) __PYX_ERR(0, 303, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_payment_end, __pyx_t_1) < 0) __PYX_ERR(0, 306, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "rai.pyx":306
+  /* "rai.pyx":309
  *     return _rai.payment_end (id_text, account_text)
  * 
  * def payment_wait (string account_text, string amount_text, uint64_t timeout):             # <<<<<<<<<<<<<<
  *     return _rai.payment_wait (account_text, amount_text, timeout)
  * 
  */
-  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_3rai_89payment_wait, NULL, __pyx_n_s_rai); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 306, __pyx_L1_error)
+  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_3rai_89payment_wait, NULL, __pyx_n_s_rai); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 309, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_payment_wait, __pyx_t_1) < 0) __PYX_ERR(0, 306, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_payment_wait, __pyx_t_1) < 0) __PYX_ERR(0, 309, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "rai.pyx":309
+  /* "rai.pyx":312
  *     return _rai.payment_wait (account_text, amount_text, timeout)
  * 
  * def process (string block_text):             # <<<<<<<<<<<<<<
  *     return _rai.process (block_text)
  * 
  */
-  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_3rai_91process, NULL, __pyx_n_s_rai); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 309, __pyx_L1_error)
+  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_3rai_91process, NULL, __pyx_n_s_rai); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 312, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_process, __pyx_t_1) < 0) __PYX_ERR(0, 309, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_process, __pyx_t_1) < 0) __PYX_ERR(0, 312, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "rai.pyx":312
+  /* "rai.pyx":315
  *     return _rai.process (block_text)
  * 
  * def receive (string wallet_text, string account_text, string hash_text, uint64_t work):             # <<<<<<<<<<<<<<
  *     return _rai.receive (wallet_text, account_text, hash_text, work)
  * 
  */
-  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_3rai_93receive, NULL, __pyx_n_s_rai); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 312, __pyx_L1_error)
+  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_3rai_93receive, NULL, __pyx_n_s_rai); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 315, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_receive, __pyx_t_1) < 0) __PYX_ERR(0, 312, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_receive, __pyx_t_1) < 0) __PYX_ERR(0, 315, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "rai.pyx":315
+  /* "rai.pyx":318
  *     return _rai.receive (wallet_text, account_text, hash_text, work)
  * 
  * def receive_minimum ():             # <<<<<<<<<<<<<<
  *     return _rai.receive_minimum ();
  * 
  */
-  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_3rai_95receive_minimum, NULL, __pyx_n_s_rai); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 315, __pyx_L1_error)
+  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_3rai_95receive_minimum, NULL, __pyx_n_s_rai); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 318, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_receive_minimum, __pyx_t_1) < 0) __PYX_ERR(0, 315, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_receive_minimum, __pyx_t_1) < 0) __PYX_ERR(0, 318, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "rai.pyx":318
+  /* "rai.pyx":321
  *     return _rai.receive_minimum ();
  * 
  * def receive_minimum_set (string amount_text):             # <<<<<<<<<<<<<<
  *     return _rai.receive_minimum_set (amount_text)
  * 
  */
-  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_3rai_97receive_minimum_set, NULL, __pyx_n_s_rai); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 318, __pyx_L1_error)
+  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_3rai_97receive_minimum_set, NULL, __pyx_n_s_rai); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 321, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_receive_minimum_set, __pyx_t_1) < 0) __PYX_ERR(0, 318, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_receive_minimum_set, __pyx_t_1) < 0) __PYX_ERR(0, 321, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "rai.pyx":321
+  /* "rai.pyx":324
  *     return _rai.receive_minimum_set (amount_text)
  * 
  * def representatives (uint64_t count, bool sorting):             # <<<<<<<<<<<<<<
  *     return _rai.representatives (count, sorting)
  * 
  */
-  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_3rai_99representatives, NULL, __pyx_n_s_rai); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 321, __pyx_L1_error)
+  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_3rai_99representatives, NULL, __pyx_n_s_rai); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 324, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_representatives, __pyx_t_1) < 0) __PYX_ERR(0, 321, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_representatives, __pyx_t_1) < 0) __PYX_ERR(0, 324, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "rai.pyx":324
+  /* "rai.pyx":327
  *     return _rai.representatives (count, sorting)
  * 
  * def wallet_representative (string wallet_text):             # <<<<<<<<<<<<<<
  *     return _rai.wallet_representative (wallet_text)
  * 
  */
-  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_3rai_101wallet_representative, NULL, __pyx_n_s_rai); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 324, __pyx_L1_error)
+  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_3rai_101wallet_representative, NULL, __pyx_n_s_rai); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 327, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_wallet_representative, __pyx_t_1) < 0) __PYX_ERR(0, 324, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_wallet_representative, __pyx_t_1) < 0) __PYX_ERR(0, 327, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "rai.pyx":327
+  /* "rai.pyx":330
  *     return _rai.wallet_representative (wallet_text)
  * 
  * def wallet_representative_set (string wallet_text, string representative_text):             # <<<<<<<<<<<<<<
  *     return _rai.wallet_representative_set (wallet_text, representative_text)
  * 
  */
-  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_3rai_103wallet_representative_set, NULL, __pyx_n_s_rai); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 327, __pyx_L1_error)
+  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_3rai_103wallet_representative_set, NULL, __pyx_n_s_rai); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 330, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_wallet_representative_set, __pyx_t_1) < 0) __PYX_ERR(0, 327, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_wallet_representative_set, __pyx_t_1) < 0) __PYX_ERR(0, 330, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "rai.pyx":330
+  /* "rai.pyx":333
  *     return _rai.wallet_representative_set (wallet_text, representative_text)
  * 
  * def search_pending (string wallet_text):             # <<<<<<<<<<<<<<
  *     return _rai.search_pending (wallet_text)
  * 
  */
-  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_3rai_105search_pending, NULL, __pyx_n_s_rai); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 330, __pyx_L1_error)
+  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_3rai_105search_pending, NULL, __pyx_n_s_rai); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 333, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_search_pending, __pyx_t_1) < 0) __PYX_ERR(0, 330, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_search_pending, __pyx_t_1) < 0) __PYX_ERR(0, 333, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "rai.pyx":333
+  /* "rai.pyx":336
  *     return _rai.search_pending (wallet_text)
  * 
  * def search_pending_all ():             # <<<<<<<<<<<<<<
  *     return _rai.search_pending_all ()
  * 
  */
-  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_3rai_107search_pending_all, NULL, __pyx_n_s_rai); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 333, __pyx_L1_error)
+  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_3rai_107search_pending_all, NULL, __pyx_n_s_rai); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 336, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_search_pending_all, __pyx_t_1) < 0) __PYX_ERR(0, 333, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_search_pending_all, __pyx_t_1) < 0) __PYX_ERR(0, 336, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "rai.pyx":336
+  /* "rai.pyx":339
  *     return _rai.search_pending_all ()
  * 
  * def validate_account_number (string account_text):             # <<<<<<<<<<<<<<
  *     return _rai.validate_account_number (account_text)
  * 
  */
-  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_3rai_109validate_account_number, NULL, __pyx_n_s_rai); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 336, __pyx_L1_error)
+  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_3rai_109validate_account_number, NULL, __pyx_n_s_rai); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 339, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_validate_account_number, __pyx_t_1) < 0) __PYX_ERR(0, 336, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_validate_account_number, __pyx_t_1) < 0) __PYX_ERR(0, 339, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "rai.pyx":339
+  /* "rai.pyx":342
  *     return _rai.validate_account_number (account_text)
  * 
  * def successors (string block_text, uint64_t count):             # <<<<<<<<<<<<<<
  *     return _rai.successors (block_text, count)
  * 
  */
-  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_3rai_111successors, NULL, __pyx_n_s_rai); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 339, __pyx_L1_error)
+  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_3rai_111successors, NULL, __pyx_n_s_rai); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 342, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_successors, __pyx_t_1) < 0) __PYX_ERR(0, 339, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_successors, __pyx_t_1) < 0) __PYX_ERR(0, 342, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "rai.pyx":342
+  /* "rai.pyx":345
  *     return _rai.successors (block_text, count)
  * 
  * def version ():             # <<<<<<<<<<<<<<
  *     return _rai.version ()
  * 
  */
-  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_3rai_113version, NULL, __pyx_n_s_rai); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 342, __pyx_L1_error)
+  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_3rai_113version, NULL, __pyx_n_s_rai); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 345, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_version, __pyx_t_1) < 0) __PYX_ERR(0, 342, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_version, __pyx_t_1) < 0) __PYX_ERR(0, 345, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "rai.pyx":345
+  /* "rai.pyx":348
  *     return _rai.version ()
  * 
  * def peers ():             # <<<<<<<<<<<<<<
  *     return _rai.peers ();
  * 
  */
-  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_3rai_115peers, NULL, __pyx_n_s_rai); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 345, __pyx_L1_error)
+  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_3rai_115peers, NULL, __pyx_n_s_rai); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 348, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_peers, __pyx_t_1) < 0) __PYX_ERR(0, 345, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_peers, __pyx_t_1) < 0) __PYX_ERR(0, 348, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "rai.pyx":348
+  /* "rai.pyx":351
  *     return _rai.peers ();
  * 
  * def pending (string account_text, uint64_t count, string threshold_text, bool source):             # <<<<<<<<<<<<<<
  *     return _rai.pending (account_text, count, threshold_text, source)
  * 
  */
-  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_3rai_117pending, NULL, __pyx_n_s_rai); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 348, __pyx_L1_error)
+  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_3rai_117pending, NULL, __pyx_n_s_rai); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 351, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_pending, __pyx_t_1) < 0) __PYX_ERR(0, 348, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_pending, __pyx_t_1) < 0) __PYX_ERR(0, 351, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "rai.pyx":351
+  /* "rai.pyx":354
  *     return _rai.pending (account_text, count, threshold_text, source)
  * 
  * def pending_exists (string hash_text):             # <<<<<<<<<<<<<<
  *     return _rai.pending_exists (hash_text)
  * 
  */
-  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_3rai_119pending_exists, NULL, __pyx_n_s_rai); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 351, __pyx_L1_error)
+  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_3rai_119pending_exists, NULL, __pyx_n_s_rai); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 354, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_pending_exists, __pyx_t_1) < 0) __PYX_ERR(0, 351, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_pending_exists, __pyx_t_1) < 0) __PYX_ERR(0, 354, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "rai.pyx":354
+  /* "rai.pyx":357
  *     return _rai.pending_exists (hash_text)
  * 
  * def unchecked (uint64_t count):             # <<<<<<<<<<<<<<
  *     return _rai.unchecked (count)
  * 
  */
-  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_3rai_121unchecked, NULL, __pyx_n_s_rai); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 354, __pyx_L1_error)
+  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_3rai_121unchecked, NULL, __pyx_n_s_rai); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 357, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_unchecked, __pyx_t_1) < 0) __PYX_ERR(0, 354, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_unchecked, __pyx_t_1) < 0) __PYX_ERR(0, 357, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "rai.pyx":357
+  /* "rai.pyx":360
  *     return _rai.unchecked (count)
  * 
  * def unchecked_clear ():             # <<<<<<<<<<<<<<
  *     return _rai.unchecked_clear ()
  * 
  */
-  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_3rai_123unchecked_clear, NULL, __pyx_n_s_rai); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 357, __pyx_L1_error)
+  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_3rai_123unchecked_clear, NULL, __pyx_n_s_rai); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 360, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_unchecked_clear, __pyx_t_1) < 0) __PYX_ERR(0, 357, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_unchecked_clear, __pyx_t_1) < 0) __PYX_ERR(0, 360, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "rai.pyx":360
+  /* "rai.pyx":363
  *     return _rai.unchecked_clear ()
  * 
  * def unchecked_get (string hash_text):             # <<<<<<<<<<<<<<
  *     return _rai.unchecked_get (hash_text)
  * 
  */
-  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_3rai_125unchecked_get, NULL, __pyx_n_s_rai); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 360, __pyx_L1_error)
+  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_3rai_125unchecked_get, NULL, __pyx_n_s_rai); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 363, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_unchecked_get, __pyx_t_1) < 0) __PYX_ERR(0, 360, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_unchecked_get, __pyx_t_1) < 0) __PYX_ERR(0, 363, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "rai.pyx":363
+  /* "rai.pyx":366
  *     return _rai.unchecked_get (hash_text)
  * 
  * def unchecked_keys (uint64_t count, string hash_text):             # <<<<<<<<<<<<<<
  *     return _rai.unchecked_keys (count, hash_text)
  * 
  */
-  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_3rai_127unchecked_keys, NULL, __pyx_n_s_rai); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 363, __pyx_L1_error)
+  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_3rai_127unchecked_keys, NULL, __pyx_n_s_rai); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 366, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_unchecked_keys, __pyx_t_1) < 0) __PYX_ERR(0, 363, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_unchecked_keys, __pyx_t_1) < 0) __PYX_ERR(0, 366, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "rai.pyx":366
+  /* "rai.pyx":369
  *     return _rai.unchecked_keys (count, hash_text)
  * 
  * def wallet_add (string key_text, string wallet_text, generate_work=True):             # <<<<<<<<<<<<<<
  *     return _rai.wallet_add (key_text, wallet_text, generate_work)
  * 
  */
-  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_3rai_129wallet_add, NULL, __pyx_n_s_rai); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 366, __pyx_L1_error)
+  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_3rai_129wallet_add, NULL, __pyx_n_s_rai); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 369, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_wallet_add, __pyx_t_1) < 0) __PYX_ERR(0, 366, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_wallet_add, __pyx_t_1) < 0) __PYX_ERR(0, 369, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "rai.pyx":369
+  /* "rai.pyx":372
  *     return _rai.wallet_add (key_text, wallet_text, generate_work)
  * 
  * def wallet_balance_total (string wallet_text):             # <<<<<<<<<<<<<<
  *     return _rai.wallet_balance_total (wallet_text)
  * 
  */
-  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_3rai_131wallet_balance_total, NULL, __pyx_n_s_rai); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 369, __pyx_L1_error)
+  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_3rai_131wallet_balance_total, NULL, __pyx_n_s_rai); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 372, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_wallet_balance_total, __pyx_t_1) < 0) __PYX_ERR(0, 369, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_wallet_balance_total, __pyx_t_1) < 0) __PYX_ERR(0, 372, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "rai.pyx":372
+  /* "rai.pyx":375
  *     return _rai.wallet_balance_total (wallet_text)
  * 
  * def wallet_balances (string wallet_text, string threshold_text):             # <<<<<<<<<<<<<<
  *     return _rai.wallet_balances (wallet_text, threshold_text)
  * 
  */
-  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_3rai_133wallet_balances, NULL, __pyx_n_s_rai); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 372, __pyx_L1_error)
+  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_3rai_133wallet_balances, NULL, __pyx_n_s_rai); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 375, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_wallet_balances, __pyx_t_1) < 0) __PYX_ERR(0, 372, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_wallet_balances, __pyx_t_1) < 0) __PYX_ERR(0, 375, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "rai.pyx":375
+  /* "rai.pyx":378
  *     return _rai.wallet_balances (wallet_text, threshold_text)
  * 
  * def wallet_change_seed (string seed_text, string wallet_text):             # <<<<<<<<<<<<<<
  *     return _rai.wallet_change_seed (seed_text, wallet_text)
  * 
  */
-  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_3rai_135wallet_change_seed, NULL, __pyx_n_s_rai); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 375, __pyx_L1_error)
+  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_3rai_135wallet_change_seed, NULL, __pyx_n_s_rai); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 378, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_wallet_change_seed, __pyx_t_1) < 0) __PYX_ERR(0, 375, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_wallet_change_seed, __pyx_t_1) < 0) __PYX_ERR(0, 378, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "rai.pyx":378
+  /* "rai.pyx":381
  *     return _rai.wallet_change_seed (seed_text, wallet_text)
  * 
  * def wallet_contains (string account_text, string wallet_text):             # <<<<<<<<<<<<<<
  *     return _rai.wallet_contains (account_text, wallet_text)
  * 
  */
-  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_3rai_137wallet_contains, NULL, __pyx_n_s_rai); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 378, __pyx_L1_error)
+  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_3rai_137wallet_contains, NULL, __pyx_n_s_rai); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 381, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_wallet_contains, __pyx_t_1) < 0) __PYX_ERR(0, 378, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_wallet_contains, __pyx_t_1) < 0) __PYX_ERR(0, 381, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "rai.pyx":381
+  /* "rai.pyx":384
  *     return _rai.wallet_contains (account_text, wallet_text)
  * 
  * def wallet_create ():             # <<<<<<<<<<<<<<
  *     return _rai.wallet_create()
  * 
  */
-  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_3rai_139wallet_create, NULL, __pyx_n_s_rai); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 381, __pyx_L1_error)
+  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_3rai_139wallet_create, NULL, __pyx_n_s_rai); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 384, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_wallet_create, __pyx_t_1) < 0) __PYX_ERR(0, 381, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_wallet_create, __pyx_t_1) < 0) __PYX_ERR(0, 384, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "rai.pyx":384
+  /* "rai.pyx":387
  *     return _rai.wallet_create()
  * 
  * def wallet_destroy (string wallet_text):             # <<<<<<<<<<<<<<
  *     return _rai.wallet_destroy (wallet_text)
  * 
  */
-  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_3rai_141wallet_destroy, NULL, __pyx_n_s_rai); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 384, __pyx_L1_error)
+  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_3rai_141wallet_destroy, NULL, __pyx_n_s_rai); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 387, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_wallet_destroy, __pyx_t_1) < 0) __PYX_ERR(0, 384, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_wallet_destroy, __pyx_t_1) < 0) __PYX_ERR(0, 387, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "rai.pyx":387
+  /* "rai.pyx":390
  *     return _rai.wallet_destroy (wallet_text)
  * 
  * def wallet_export (string wallet_text):             # <<<<<<<<<<<<<<
  *     return _rai.wallet_export (wallet_text)
  * 
  */
-  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_3rai_143wallet_export, NULL, __pyx_n_s_rai); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 387, __pyx_L1_error)
+  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_3rai_143wallet_export, NULL, __pyx_n_s_rai); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 390, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_wallet_export, __pyx_t_1) < 0) __PYX_ERR(0, 387, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_wallet_export, __pyx_t_1) < 0) __PYX_ERR(0, 390, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "rai.pyx":390
+  /* "rai.pyx":393
  *     return _rai.wallet_export (wallet_text)
  * 
  * def wallet_frontiers (string wallet_text):             # <<<<<<<<<<<<<<
  *     return _rai.wallet_frontiers (wallet_text)
  * 
  */
-  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_3rai_145wallet_frontiers, NULL, __pyx_n_s_rai); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 390, __pyx_L1_error)
+  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_3rai_145wallet_frontiers, NULL, __pyx_n_s_rai); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 393, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_wallet_frontiers, __pyx_t_1) < 0) __PYX_ERR(0, 390, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_wallet_frontiers, __pyx_t_1) < 0) __PYX_ERR(0, 393, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "rai.pyx":393
+  /* "rai.pyx":396
  *     return _rai.wallet_frontiers (wallet_text)
  * 
  * def wallet_pending (string wallet_text, uint64_t count, string threshold_text, bool source):             # <<<<<<<<<<<<<<
  *     return _rai.wallet_pending (wallet_text, count, threshold_text, source)
  * 
  */
-  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_3rai_147wallet_pending, NULL, __pyx_n_s_rai); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 393, __pyx_L1_error)
+  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_3rai_147wallet_pending, NULL, __pyx_n_s_rai); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 396, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_wallet_pending, __pyx_t_1) < 0) __PYX_ERR(0, 393, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_wallet_pending, __pyx_t_1) < 0) __PYX_ERR(0, 396, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "rai.pyx":396
+  /* "rai.pyx":399
  *     return _rai.wallet_pending (wallet_text, count, threshold_text, source)
  * 
  * def wallet_republish (string wallet_text, uint64_t count):             # <<<<<<<<<<<<<<
  *     return _rai.wallet_republish (wallet_text, count)
  * 
  */
-  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_3rai_149wallet_republish, NULL, __pyx_n_s_rai); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 396, __pyx_L1_error)
+  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_3rai_149wallet_republish, NULL, __pyx_n_s_rai); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 399, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_wallet_republish, __pyx_t_1) < 0) __PYX_ERR(0, 396, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_wallet_republish, __pyx_t_1) < 0) __PYX_ERR(0, 399, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "rai.pyx":399
+  /* "rai.pyx":402
  *     return _rai.wallet_republish (wallet_text, count)
  * 
  * def wallet_pending (string wallet_text, uint64_t count, string threshold_text, bool source):             # <<<<<<<<<<<<<<
  *     return _rai.wallet_pending (wallet_text, count, threshold_text, source)
  * 
  */
-  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_3rai_151wallet_pending, NULL, __pyx_n_s_rai); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 399, __pyx_L1_error)
+  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_3rai_151wallet_pending, NULL, __pyx_n_s_rai); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 402, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_wallet_pending, __pyx_t_1) < 0) __PYX_ERR(0, 399, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_wallet_pending, __pyx_t_1) < 0) __PYX_ERR(0, 402, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "rai.pyx":402
+  /* "rai.pyx":405
  *     return _rai.wallet_pending (wallet_text, count, threshold_text, source)
  * 
  * def wallet_work_get (string wallet_text, uint64_t work):             # <<<<<<<<<<<<<<
  *     return _rai.wallet_work_get (wallet_text, work)
  * 
  */
-  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_3rai_153wallet_work_get, NULL, __pyx_n_s_rai); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 402, __pyx_L1_error)
+  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_3rai_153wallet_work_get, NULL, __pyx_n_s_rai); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 405, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_wallet_work_get, __pyx_t_1) < 0) __PYX_ERR(0, 402, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_wallet_work_get, __pyx_t_1) < 0) __PYX_ERR(0, 405, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "rai.pyx":405
+  /* "rai.pyx":408
  *     return _rai.wallet_work_get (wallet_text, work)
  * 
  * def password_change (string wallet_text, string password_text):             # <<<<<<<<<<<<<<
  *     return _rai.password_change (wallet_text, password_text)
  * 
  */
-  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_3rai_155password_change, NULL, __pyx_n_s_rai); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 405, __pyx_L1_error)
+  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_3rai_155password_change, NULL, __pyx_n_s_rai); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 408, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_password_change, __pyx_t_1) < 0) __PYX_ERR(0, 405, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_password_change, __pyx_t_1) < 0) __PYX_ERR(0, 408, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "rai.pyx":408
+  /* "rai.pyx":411
  *     return _rai.password_change (wallet_text, password_text)
  * 
  * def password_enter (string wallet_text, string password_text):             # <<<<<<<<<<<<<<
  *     return _rai.password_enter (wallet_text, password_text)
  * 
  */
-  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_3rai_157password_enter, NULL, __pyx_n_s_rai); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 408, __pyx_L1_error)
+  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_3rai_157password_enter, NULL, __pyx_n_s_rai); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 411, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_password_enter, __pyx_t_1) < 0) __PYX_ERR(0, 408, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_password_enter, __pyx_t_1) < 0) __PYX_ERR(0, 411, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "rai.pyx":411
+  /* "rai.pyx":414
  *     return _rai.password_enter (wallet_text, password_text)
  * 
  * def password_valid (string wallet_text, wallet_locked = False):             # <<<<<<<<<<<<<<
  *     return _rai.password_valid (wallet_text, wallet_locked);
  * 
  */
-  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_3rai_159password_valid, NULL, __pyx_n_s_rai); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 411, __pyx_L1_error)
+  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_3rai_159password_valid, NULL, __pyx_n_s_rai); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 414, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_password_valid, __pyx_t_1) < 0) __PYX_ERR(0, 411, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_password_valid, __pyx_t_1) < 0) __PYX_ERR(0, 414, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "rai.pyx":414
+  /* "rai.pyx":417
  *     return _rai.password_valid (wallet_text, wallet_locked);
  * 
  * def wallet_locked(string wallet_text):             # <<<<<<<<<<<<<<
  *     return password_valid(wallet_text, True)
  * 
  */
-  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_3rai_161wallet_locked, NULL, __pyx_n_s_rai); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 414, __pyx_L1_error)
+  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_3rai_161wallet_locked, NULL, __pyx_n_s_rai); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 417, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_wallet_locked, __pyx_t_1) < 0) __PYX_ERR(0, 414, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_wallet_locked, __pyx_t_1) < 0) __PYX_ERR(0, 417, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "rai.pyx":417
+  /* "rai.pyx":420
  *     return password_valid(wallet_text, True)
  * 
  * def work_cancel (string hash_text):             # <<<<<<<<<<<<<<
  *     return _rai.work_cancel (hash_text)
  * 
  */
-  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_3rai_163work_cancel, NULL, __pyx_n_s_rai); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 417, __pyx_L1_error)
+  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_3rai_163work_cancel, NULL, __pyx_n_s_rai); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 420, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_work_cancel, __pyx_t_1) < 0) __PYX_ERR(0, 417, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_work_cancel, __pyx_t_1) < 0) __PYX_ERR(0, 420, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "rai.pyx":420
+  /* "rai.pyx":423
  *     return _rai.work_cancel (hash_text)
  * 
  * def work_generate (string hash_text):             # <<<<<<<<<<<<<<
  *     return _rai.work_generate (hash_text)
  * 
  */
-  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_3rai_165work_generate, NULL, __pyx_n_s_rai); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 420, __pyx_L1_error)
+  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_3rai_165work_generate, NULL, __pyx_n_s_rai); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 423, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_work_generate, __pyx_t_1) < 0) __PYX_ERR(0, 420, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_work_generate, __pyx_t_1) < 0) __PYX_ERR(0, 423, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "rai.pyx":423
+  /* "rai.pyx":426
  *     return _rai.work_generate (hash_text)
  * 
  * def work_get (string wallet_text, string account_text):             # <<<<<<<<<<<<<<
  *     return _rai.work_get (wallet_text, account_text)
  * 
  */
-  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_3rai_167work_get, NULL, __pyx_n_s_rai); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 423, __pyx_L1_error)
+  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_3rai_167work_get, NULL, __pyx_n_s_rai); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 426, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_work_get, __pyx_t_1) < 0) __PYX_ERR(0, 423, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_work_get, __pyx_t_1) < 0) __PYX_ERR(0, 426, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "rai.pyx":426
+  /* "rai.pyx":429
  *     return _rai.work_get (wallet_text, account_text)
  * 
  * def work_set (string wallet_text, string account_text, string work_text):             # <<<<<<<<<<<<<<
  *     return _rai.work_set (wallet_text, account_text, work_text);
  * 
  */
-  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_3rai_169work_set, NULL, __pyx_n_s_rai); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 426, __pyx_L1_error)
+  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_3rai_169work_set, NULL, __pyx_n_s_rai); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 429, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_work_set, __pyx_t_1) < 0) __PYX_ERR(0, 426, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_work_set, __pyx_t_1) < 0) __PYX_ERR(0, 429, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "rai.pyx":430
+  /* "rai.pyx":432
+ *     return _rai.work_set (wallet_text, account_text, work_text);
  * 
+ * def work_peer_add (string address_text, string port_text):             # <<<<<<<<<<<<<<
+ *     return _rai.work_peer_add (address_text, port_text)
+ * 
+ */
+  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_3rai_171work_peer_add, NULL, __pyx_n_s_rai); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 432, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_work_peer_add, __pyx_t_1) < 0) __PYX_ERR(0, 432, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+
+  /* "rai.pyx":435
+ *     return _rai.work_peer_add (address_text, port_text)
+ * 
+ * def work_peer_add (string address_text, string port_text):             # <<<<<<<<<<<<<<
+ *     return _rai.work_peer_add (address_text, port_text)
+ * 
+ */
+  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_3rai_173work_peer_add, NULL, __pyx_n_s_rai); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 435, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_work_peer_add, __pyx_t_1) < 0) __PYX_ERR(0, 435, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+
+  /* "rai.pyx":438
+ *     return _rai.work_peer_add (address_text, port_text)
+ * 
+ * def work_peers ():             # <<<<<<<<<<<<<<
+ *     return _rai.work_peers ()
+ * 
+ */
+  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_3rai_175work_peers, NULL, __pyx_n_s_rai); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 438, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_work_peers, __pyx_t_1) < 0) __PYX_ERR(0, 438, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+
+  /* "rai.pyx":441
+ *     return _rai.work_peers ()
+ * 
+ * def work_peers_clear ():             # <<<<<<<<<<<<<<
+ *     return _rai.work_peers_clear ()
+ * 
+ */
+  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_3rai_177work_peers_clear, NULL, __pyx_n_s_rai); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 441, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_work_peers_clear, __pyx_t_1) < 0) __PYX_ERR(0, 441, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+
+  /* "rai.pyx":444
+ *     return _rai.work_peers_clear ()
  * 
  * def send (string wallet_text, string source_text, string destination_text, string amount_text, uint64_t work):             # <<<<<<<<<<<<<<
  *     return _rai.send (wallet_text, source_text, destination_text, amount_text, work)
  * 
  */
-  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_3rai_171send, NULL, __pyx_n_s_rai); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 430, __pyx_L1_error)
+  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_3rai_179send, NULL, __pyx_n_s_rai); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 444, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_send, __pyx_t_1) < 0) __PYX_ERR(0, 430, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_send, __pyx_t_1) < 0) __PYX_ERR(0, 444, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "rai.pyx":433
+  /* "rai.pyx":447
  *     return _rai.send (wallet_text, source_text, destination_text, amount_text, work)
  * 
  * def genesis_account():             # <<<<<<<<<<<<<<
  *     return _rai.genesis_account()
  * 
  */
-  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_3rai_173genesis_account, NULL, __pyx_n_s_rai); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 433, __pyx_L1_error)
+  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_3rai_181genesis_account, NULL, __pyx_n_s_rai); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 447, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_genesis_account, __pyx_t_1) < 0) __PYX_ERR(0, 433, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_genesis_account, __pyx_t_1) < 0) __PYX_ERR(0, 447, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "rai.pyx":436
+  /* "rai.pyx":450
  *     return _rai.genesis_account()
  * 
  * def block_count_type ():             # <<<<<<<<<<<<<<
  *     return _rai.block_count_type ()
  * 
  */
-  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_3rai_175block_count_type, NULL, __pyx_n_s_rai); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 436, __pyx_L1_error)
+  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_3rai_183block_count_type, NULL, __pyx_n_s_rai); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 450, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_block_count_type, __pyx_t_1) < 0) __PYX_ERR(0, 436, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_block_count_type, __pyx_t_1) < 0) __PYX_ERR(0, 450, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
   /* "rai.pyx":1

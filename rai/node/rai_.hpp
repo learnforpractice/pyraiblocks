@@ -124,6 +124,9 @@ public:
    PyObject* work_generate (string hash_text);
    PyObject* work_get (string wallet_text, string account_text);
    PyObject* work_set (string wallet_text, string account_text, string work_text);
+   PyObject* work_peer_add (string address_text, string port_text);
+   PyObject* work_peers ();
+   PyObject* work_peers_clear ();
 
    PyObject* genesis_account();
    PyObject* send (string wallet_text, string source_text, string destination_text, string amount_text, uint64_t work);

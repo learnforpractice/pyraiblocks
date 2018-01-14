@@ -104,6 +104,9 @@ cdef extern from "rai_.hpp" namespace "python":
         object work_generate (string hash_text)
         object work_get (string wallet_text, string account_text)
         object work_set (string wallet_text, string account_text, string work_text)
+        object work_peer_add (string address_text, string port_text)
+        object work_peers ()
+        object work_peers_clear ()
 
         object genesis_account()
         object block_count_type ()
@@ -425,6 +428,18 @@ def work_get (string wallet_text, string account_text):
 
 def work_set (string wallet_text, string account_text, string work_text):
     return _rai.work_set (wallet_text, account_text, work_text);
+
+def work_peer_add (string address_text, string port_text):
+    return _rai.work_peer_add (address_text, port_text)
+
+def work_peer_add (string address_text, string port_text):
+    return _rai.work_peer_add (address_text, port_text)
+
+def work_peers ():
+    return _rai.work_peers ()
+
+def work_peers_clear ():
+    return _rai.work_peers_clear ()
 
 def send (string wallet_text, string source_text, string destination_text, string amount_text, uint64_t work):
     return _rai.send (wallet_text, source_text, destination_text, amount_text, work)

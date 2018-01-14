@@ -2900,7 +2900,45 @@ PyObject* pyrai::work_set (string wallet_text, string account_text, string work_
    {
       error_response_false (response, "Bad wallet number");
    }
+}
 
+PyObject* pyrai::work_peer_add (string address_text, string port_text)
+{
+   boost::system::error_code ec;
+   auto address (boost::asio::ip::address_v6::from_string (address_text, ec));
+   if (!ec)
+   {
+      uint16_t port;
+      if (!rai::parse_port (port_text, port))
+      {
+         node.config.work_peers.push_back (std::make_pair (address, port));
+         return py_new_bool (true);
+      }
+      else
+      {
+         error_response_false (response, "Invalid port");
+      }
+   }
+   else
+   {
+      error_response_false (response, "Invalid address");
+   }
+}
+
+PyObject* pyrai::work_peers ()
+{
+   PyArray work_peers_l;
+   for (auto i (node.config.work_peers.begin ()), n (node.config.work_peers.end ()); i != n; ++i)
+   {
+      work_peers_l.append (boost::str (boost::format ("%1%:%2%") % i->first % i->second));
+   }
+   return work_peers_l.get ();
+}
+
+PyObject* pyrai::work_peers_clear ()
+{
+   node.config.work_peers.clear ();
+   return py_new_bool(true);
 }
 
 PyObject* pyrai::send (string wallet_text, string source_text, string destination_text, string amount_text, uint64_t work)
