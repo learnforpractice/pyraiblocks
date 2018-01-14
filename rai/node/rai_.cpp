@@ -2941,6 +2941,31 @@ PyObject* pyrai::work_peers_clear ()
    return py_new_bool(true);
 }
 
+PyObject* pyrai::work_validate (string hash_text, string work_text)
+{
+   rai::block_hash hash;
+   auto error (hash.decode_hex (hash_text));
+   if (!error)
+   {
+      uint64_t work;
+      auto work_error (rai::from_string_hex (work_text, work));
+      if (!work_error)
+      {
+         auto validate (rai::work_validate (hash, work));
+         return py_new_bool (validate ? 0 : 1);
+      }
+      else
+      {
+         error_response_false (response, "Bad work");
+      }
+   }
+   else
+   {
+      error_response_false (response, "Bad block hash");
+   }
+}
+
+
 PyObject* pyrai::send (string wallet_text, string source_text, string destination_text, string amount_text, uint64_t work)
 {
    rai::uint256_union wallet;

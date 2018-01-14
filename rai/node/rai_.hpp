@@ -127,6 +127,7 @@ public:
    PyObject* work_peer_add (string address_text, string port_text);
    PyObject* work_peers ();
    PyObject* work_peers_clear ();
+   PyObject* work_validate (string hash_text, string work_text);
 
    PyObject* genesis_account();
    PyObject* send (string wallet_text, string source_text, string destination_text, string amount_text, uint64_t work);
