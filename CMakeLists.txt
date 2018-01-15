@@ -260,8 +260,8 @@ add_custom_command(
     DEPENDS ${CMAKE_SOURCE_DIR}/rai/node/pyobject.pyx
 )
 
-include_directories ("/Users/newworld/dev/pyeos/libraries/python/Include")
-include_directories ("/Users/newworld/dev/pyeos/libraries/python")
+include_directories ($ENV{PYTHON_INC})
+include_directories ($ENV{PYTHON_INC}/..)
 
 add_library (rai_lib SHARED ${RAI_LIB_SOURCES})
 add_library (rai_lib_static STATIC ${RAI_LIB_SOURCES})
@@ -395,7 +395,7 @@ target_link_libraries (rai_lib ed25519 xxhash blake2 ${CRYPTOPP_LIBRARY})
 target_link_libraries (rai_lib_static ed25519 xxhash blake2 ${CRYPTOPP_LIBRARY})
 
 add_library(python3.6m SHARED IMPORTED)
-set_property(TARGET python3.6m PROPERTY IMPORTED_LOCATION "/Users/newworld/dev/pyeos/libraries/python/libpython3.6m.a")
+set_property(TARGET python3.6m PROPERTY IMPORTED_LOCATION $ENV{PYTHON_LIB})
 
 add_library( ssl SHARED IMPORTED )
 set_property( TARGET ssl PROPERTY IMPORTED_LOCATION /usr//local/opt/openssl/lib/libssl.dylib )
