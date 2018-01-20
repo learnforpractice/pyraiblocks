@@ -20,6 +20,14 @@ if(NOT CMAKE_BUILD_TYPE)
 	set(CMAKE_BUILD_TYPE "Release" CACHE STRING "Choose the type of build, options are: Debug Release RelWithDebInfo MinSizeRel." FORCE)
 endif(NOT CMAKE_BUILD_TYPE)
 
+if(NOT PYTHON_INC)
+    set(PYTHON_INC "" CACHE STRING "Specify the python include directory" FORCE)
+endif(NOT PYTHON_INC)
+
+if(NOT PYTHON_LIB)
+    set(PYTHON_LIB "" CACHE STRING "Specify the python library path" FORCE)
+endif(NOT PYTHON_LIB)
+
 if (WIN32)
 	set (PLATFORM_COMPILE_FLAGS "-DBOOST_SPIRIT_THREADSAFE -D_WIN32_WINNT=0x0600 -DWINVER=0x0600 -DWIN32_LEAN_AND_MEAN -DMINIUPNP_STATICLIB")
 	set (BLAKE2_IMPLEMENTATION "blake2/blake2b.c")
@@ -260,8 +268,8 @@ add_custom_command(
     DEPENDS ${CMAKE_SOURCE_DIR}/rai/node/pyobject.pyx
 )
 
-include_directories ($ENV{PYTHON_INC})
-include_directories ($ENV{PYTHON_INC}/..)
+include_directories (${PYTHON_INC})
+include_directories (${PYTHON_INC}/..)
 
 add_library (rai_lib SHARED ${RAI_LIB_SOURCES})
 add_library (rai_lib_static STATIC ${RAI_LIB_SOURCES})
@@ -395,7 +403,7 @@ target_link_libraries (rai_lib ed25519 xxhash blake2 ${CRYPTOPP_LIBRARY})
 target_link_libraries (rai_lib_static ed25519 xxhash blake2 ${CRYPTOPP_LIBRARY})
 
 add_library(python3.6m SHARED IMPORTED)
-set_property(TARGET python3.6m PROPERTY IMPORTED_LOCATION $ENV{PYTHON_LIB})
+set_property(TARGET python3.6m PROPERTY IMPORTED_LOCATION ${PYTHON_LIB})
 
 add_library( ssl SHARED IMPORTED )
 set_property( TARGET ssl PROPERTY IMPORTED_LOCATION /usr//local/opt/openssl/lib/libssl.dylib )
