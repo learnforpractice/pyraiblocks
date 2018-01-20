@@ -1,3 +1,5 @@
+# cython: c_string_type=str, c_string_encoding=ascii
+
 from libcpp.string cimport string
 from libcpp.vector cimport vector
 from libcpp cimport bool
@@ -445,7 +447,7 @@ def work_peers_clear ():
 def work_validate (string hash_text, string work_text):
     return _rai.work_validate (hash_text, work_text)
 
-def send (string wallet_text, string source_text, string destination_text, string amount_text, uint64_t work):
+def send (string wallet_text, string source_text, string destination_text, string amount_text, uint64_t work = 0):
     return _rai.send (wallet_text, source_text, destination_text, amount_text, work)
 
 def genesis_account():

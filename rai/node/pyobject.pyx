@@ -1,3 +1,4 @@
+# cython: c_string_type=str, c_string_encoding=ascii
 from libcpp.string cimport string
 from libcpp.vector cimport vector
 from libcpp.map cimport map
@@ -12,8 +13,9 @@ cdef extern object py_new_none():
     return None
 
 cdef extern object py_new_string(string s):
-    ss = s
-    return ss.decode('utf8')
+    return s
+#    ss = s
+#    return ss.decode('utf8')
 
 cdef extern object py_new_int(int n):
     return n
