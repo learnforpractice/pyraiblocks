@@ -15,8 +15,15 @@ static const char* last_error = "";
 PyObject* set_last_error(const char *error)
 {
    last_error = error;
+   printf("%s\n", last_error);
    return py_new_none();
 }
+
+void clear_last_error_()
+{
+   last_error = "";
+}
+
 
 PyObject* set_last_error_return_false(const char *error)
 {
@@ -2299,7 +2306,7 @@ PyObject* pyrai::unchecked_keys (uint64_t count, string hash_text)
    return unchecked.get ();
 }
 
-PyObject* pyrai::wallet_add (string key_text, string wallet_text, bool generate_work)
+PyObject* pyrai::wallet_add (string wallet_text, string key_text, bool generate_work)
 {
    rai::raw_key key;
    auto error (key.data.decode_hex (key_text));

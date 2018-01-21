@@ -102,7 +102,7 @@ public:
    PyObject* unchecked_get (string hash_text);
    PyObject* unchecked_keys (uint64_t count, string hash_text);
 
-   PyObject* wallet_add (string key_text, string wallet_text, bool generate_work);
+   PyObject* wallet_add (string wallet_text, string key_text, bool generate_work);
 
    PyObject* wallet_balance_total (string wallet_text);
    PyObject* wallet_balances (string wallet_text, string threshold_text);
@@ -143,6 +143,7 @@ private:
 
 pyrai* get_pyrai();
 const char* get_last_error_();
+void clear_last_error_();
 
 
 }

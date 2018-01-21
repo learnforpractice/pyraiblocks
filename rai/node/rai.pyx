@@ -85,7 +85,8 @@ cdef extern from "rai_.hpp" namespace "python":
         object unchecked_get (string hash_text)
         object unchecked_keys (uint64_t count, string hash_text)
 
-        object wallet_add (string key_text, string wallet_text, bool generate_work)
+        object wallet_add (string wallet_text, string key_text, bool generate_work);
+
         object wallet_balance_total (string wallet_text)
         object wallet_balances (string wallet_text, string threshold_text)
         object wallet_change_seed (string seed_text, string wallet_text)
@@ -116,6 +117,7 @@ cdef extern from "rai_.hpp" namespace "python":
 
     pyrai* get_pyrai()
     const char* get_last_error_()
+    void clear_last_error_()
     
 cdef pyrai* _rai = get_pyrai()
 
@@ -149,6 +151,9 @@ def block_count ():
 
 def get_last_error():
     return get_last_error_()
+
+def clear_last_error():
+    clear_last_error_();
 
 def account_balance (string account_text):
     cdef string balance
@@ -210,7 +215,9 @@ def account_weight (string account_text):
     return  _rai.account_weight (account_text)
 
 def accounts_balances (vector[string] accounts):
-    return _rai.accounts_balances (accounts)
+    ret = _rai.accounts_balances (accounts)
+    if ret:
+        return JsonStruct(ret)
 
 def accounts_create (string wallet_text, int count, generate_work = True):
     return _rai.accounts_create (wallet_text, count, generate_work)
@@ -315,7 +322,7 @@ def payment_wait (string account_text, string amount_text, uint64_t timeout):
 def process (string block_text):
     return _rai.process (block_text)
 
-def receive (string wallet_text, string account_text, string hash_text, uint64_t work):
+def receive (string wallet_text, string account_text, string hash_text, uint64_t work = 0):
     return _rai.receive (wallet_text, account_text, hash_text, work)
 
 def receive_minimum ():
@@ -369,8 +376,8 @@ def unchecked_get (string hash_text):
 def unchecked_keys (uint64_t count, string hash_text):
     return _rai.unchecked_keys (count, hash_text)
 
-def wallet_add (string key_text, string wallet_text, generate_work=True):
-    return _rai.wallet_add (key_text, wallet_text, generate_work)
+def wallet_add (string wallet_text, string key_text, generate_work=True):
+    return _rai.wallet_add (wallet_text, key_text, generate_work)
 
 def wallet_balance_total (string wallet_text):
     return _rai.wallet_balance_total (wallet_text)
@@ -447,7 +454,8 @@ def work_peers_clear ():
 def work_validate (string hash_text, string work_text):
     return _rai.work_validate (hash_text, work_text)
 
-def send (string wallet_text, string source_text, string destination_text, string amount_text, uint64_t work = 0):
+def send (string wallet_text, string source_text, string destination_text, amount_text, uint64_t work = 0):
+    amount_text = str(amount_text)
     return _rai.send (wallet_text, source_text, destination_text, amount_text, work)
 
 def genesis_account():
