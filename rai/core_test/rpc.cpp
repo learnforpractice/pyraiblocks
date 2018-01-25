@@ -1,9 +1,9 @@
 #include <gtest/gtest.h>
 
+#include <boost/beast.hpp>
+#include <rai/node/common.hpp>
 #include <rai/node/rpc.hpp>
 #include <rai/node/testing.hpp>
-
-#include <boost/beast.hpp>
 
 #include <boost/algorithm/string.hpp>
 #include <boost/property_tree/json_parser.hpp>
@@ -1171,7 +1171,7 @@ TEST (rpc, payment_begin_locked)
 	ASSERT_FALSE (response1.json.get<std::string> ("error").empty ());
 }
 
-TEST (rpc, DISABLED_payment_wait)
+TEST (rpc, payment_wait)
 {
 	rai::system system (24000, 1);
 	rai::node_init init1;
@@ -1195,7 +1195,7 @@ TEST (rpc, DISABLED_payment_wait)
 	ASSERT_EQ ("nothing", response1.json.get<std::string> ("status"));
 	request1.put ("timeout", "100000");
 	system.wallet (0)->send_action (rai::test_genesis_key.pub, key.pub, rai::Mxrb_ratio);
-	system.alarm.add (std::chrono::system_clock::now () + std::chrono::milliseconds (500), [&]() {
+	system.alarm.add (std::chrono::steady_clock::now () + std::chrono::milliseconds (500), [&]() {
 		system.wallet (0)->send_action (rai::test_genesis_key.pub, key.pub, rai::Mxrb_ratio);
 	});
 	test_response response2 (request1, rpc, system.service);
@@ -2690,7 +2690,8 @@ TEST (rpc, account_info)
 	auto latest (system.nodes[0]->latest (rai::test_genesis_key.pub));
 	rai::send_block send (latest, key.pub, 100, rai::test_genesis_key.prv, rai::test_genesis_key.pub, node1.generate_work (latest));
 	system.nodes[0]->process (send);
-	auto time (std::chrono::system_clock::to_time_t (std::chrono::system_clock::now ()));
+	auto time (rai::seconds_since_epoch ());
+
 	rai::rpc rpc (system.service, *system.nodes[0], rai::rpc_config (true));
 	rpc.start ();
 	boost::property_tree::ptree request;
@@ -2711,7 +2712,7 @@ TEST (rpc, account_info)
 	std::string balance (response.json.get<std::string> ("balance"));
 	ASSERT_EQ ("100", balance);
 	std::string modified_timestamp (response.json.get<std::string> ("modified_timestamp"));
-	ASSERT_EQ (std::to_string (time), modified_timestamp);
+	ASSERT_TRUE (time - stol (modified_timestamp) < 5);
 	std::string block_count (response.json.get<std::string> ("block_count"));
 	ASSERT_EQ ("2", block_count);
 }
@@ -2844,7 +2845,7 @@ TEST (rpc, ledger)
 	system.nodes[0]->process (send);
 	rai::open_block open (send.hash (), rai::test_genesis_key.pub, key.pub, key.prv, key.pub, node1.generate_work (key.pub));
 	ASSERT_EQ (rai::process_result::progress, system.nodes[0]->process (open).code);
-	auto time (std::chrono::system_clock::to_time_t (std::chrono::system_clock::now ()));
+	auto time (rai::seconds_since_epoch ());
 	rai::rpc rpc (system.service, *system.nodes[0], rai::rpc_config (true));
 	rpc.start ();
 	boost::property_tree::ptree request;
@@ -3065,4 +3066,26 @@ TEST (rpc, wallet_locked)
 	ASSERT_EQ (200, response.status);
 	std::string account_text1 (response.json.get<std::string> ("locked"));
 	ASSERT_EQ (account_text1, "0");
+}
+
+TEST (rpc, wallet_create_fail)
+{
+	rai::system system (24000, 1);
+	rai::rpc rpc (system.service, *system.nodes[0], rai::rpc_config (true));
+	auto node = system.nodes[0];
+	// lmdb_max_dbs should be removed once the wallet store is refactored to support more wallets.
+	for (int i = 0; i < 113; i++)
+	{
+		rai::keypair key;
+		node->wallets.create (key.pub);
+	}
+	rpc.start ();
+	boost::property_tree::ptree request;
+	request.put ("action", "wallet_create");
+	test_response response (request, rpc, system.service);
+	while (response.status == 0)
+	{
+		system.poll ();
+	}
+	ASSERT_EQ ("Failed to create wallet. Increase lmdb_max_dbs in node config.", response.json.get<std::string> ("error"));
 }

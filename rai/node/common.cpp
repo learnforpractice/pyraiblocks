@@ -54,51 +54,20 @@ void rai::message::write_header (rai::stream & stream_a)
 
 bool rai::message::read_header (rai::stream & stream_a, uint8_t & version_max_a, uint8_t & version_using_a, uint8_t & version_min_a, rai::message_type & type_a, std::bitset<16> & extensions_a)
 {
-	std::array<uint8_t, 2> magic_number_l;
-	auto result (rai::read (stream_a, magic_number_l));
-	if (result)
-	{
-	   return result;
-	}
-
-   result = magic_number_l != magic_number;
-   if (result)
-   {
-      return result;
-   }
-
-   result = rai::read (stream_a, version_max_a);
-   if (result)
-   {
-      return result;
-   }
-
-   result = rai::read (stream_a, version_using_a);
-   if (result)
-   {
-      return result;
-   }
-
-   result = rai::read (stream_a, version_min_a);
-   if (result)
-   {
-      return result;
-   }
-
-   result = rai::read (stream_a, type_a);
-   if (result)
-   {
-      return result;
-   }
-
    uint16_t extensions_l;
-   result = rai::read (stream_a, extensions_l);
+   std::array<uint8_t, 2> magic_number_l;
+   auto result (rai::read (stream_a, magic_number_l));
+   result = result || magic_number_l != magic_number;
+   result = result || rai::read (stream_a, version_max_a);
+   result = result || rai::read (stream_a, version_using_a);
+   result = result || rai::read (stream_a, version_min_a);
+   result = result || rai::read (stream_a, type_a);
+   result = result || rai::read (stream_a, extensions_l);
    if (!result)
    {
       extensions_a = extensions_l;
    }
-
-	return result;
+   return result;
 }
 
 rai::message_parser::message_parser (rai::message_visitor & visitor_a, rai::work_pool & pool_a) :
@@ -509,6 +478,52 @@ void rai::bulk_pull::serialize (rai::stream & stream_a)
 	write (stream_a, end);
 }
 
+rai::bulk_pull_blocks::bulk_pull_blocks () :
+message (rai::message_type::bulk_pull_blocks)
+{
+}
+
+void rai::bulk_pull_blocks::visit (rai::message_visitor & visitor_a) const
+{
+	visitor_a.bulk_pull_blocks (*this);
+}
+
+bool rai::bulk_pull_blocks::deserialize (rai::stream & stream_a)
+{
+	auto result (read_header (stream_a, version_max, version_using, version_min, type, extensions));
+	assert (!result);
+	assert (rai::message_type::bulk_pull_blocks == type);
+	if (!result)
+	{
+		assert (type == rai::message_type::bulk_pull_blocks);
+		result = read (stream_a, min_hash);
+		if (!result)
+		{
+			result = read (stream_a, max_hash);
+		}
+
+		if (!result)
+		{
+			result = read (stream_a, mode);
+		}
+
+		if (!result)
+		{
+			result = read (stream_a, max_count);
+		}
+	}
+	return result;
+}
+
+void rai::bulk_pull_blocks::serialize (rai::stream & stream_a)
+{
+	write_header (stream_a);
+	write (stream_a, min_hash);
+	write (stream_a, max_hash);
+	write (stream_a, mode);
+	write (stream_a, max_count);
+}
+
 rai::bulk_push::bulk_push () :
 message (rai::message_type::bulk_push)
 {
@@ -530,4 +545,8 @@ void rai::bulk_push::serialize (rai::stream & stream_a)
 void rai::bulk_push::visit (rai::message_visitor & visitor_a) const
 {
 	visitor_a.bulk_push (*this);
+}
+
+rai::message_visitor::~message_visitor ()
+{
 }

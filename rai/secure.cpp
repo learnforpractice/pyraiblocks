@@ -1,6 +1,7 @@
 #include <rai/secure.hpp>
 
 #include <rai/lib/interface.h>
+#include <rai/node/common.hpp>
 #include <rai/node/working.hpp>
 #include <rai/versioning.hpp>
 
@@ -453,8 +454,8 @@ size_t rai::block_counts::sum ()
 	return send + receive + open + change;
 }
 
-rai::block_store::block_store (bool & error_a, boost::filesystem::path const & path_a) :
-environment (error_a, path_a),
+rai::block_store::block_store (bool & error_a, boost::filesystem::path const & path_a, int lmdb_max_dbs) :
+environment (error_a, path_a, lmdb_max_dbs),
 frontiers (0),
 accounts (0),
 send_blocks (0),
@@ -591,6 +592,9 @@ public:
 	transaction (transaction_a),
 	store (store_a),
 	result (0)
+	{
+	}
+	virtual ~representative_visitor ()
 	{
 	}
 	void compute (rai::block_hash const & hash_a)
@@ -796,6 +800,9 @@ public:
 	set_predecessor (MDB_txn * transaction_a, rai::block_store & store_a) :
 	transaction (transaction_a),
 	store (store_a)
+	{
+	}
+	virtual ~set_predecessor ()
 	{
 	}
 	void fill_value (rai::block const & block_a)
@@ -1724,6 +1731,9 @@ public:
 	store (store_a)
 	{
 	}
+	virtual ~root_visitor ()
+	{
+	}
 	void send_block (rai::send_block const & block_a) override
 	{
 		result = block_a.previous ();
@@ -1788,6 +1798,7 @@ class ledger_processor : public rai::block_visitor
 {
 public:
 	ledger_processor (rai::ledger &, MDB_txn *);
+	virtual ~ledger_processor ();
 	void send_block (rai::send_block const &) override;
 	void receive_block (rai::receive_block const &) override;
 	void open_block (rai::open_block const &) override;
@@ -1802,6 +1813,7 @@ class amount_visitor : public rai::block_visitor
 {
 public:
 	amount_visitor (MDB_txn *, rai::block_store &);
+	virtual ~amount_visitor ();
 	void compute (rai::block_hash const &);
 	void send_block (rai::send_block const &) override;
 	void receive_block (rai::receive_block const &) override;
@@ -1818,6 +1830,7 @@ class balance_visitor : public rai::block_visitor
 {
 public:
 	balance_visitor (MDB_txn *, rai::block_store &);
+	virtual ~balance_visitor ();
 	void compute (rai::block_hash const &);
 	void send_block (rai::send_block const &) override;
 	void receive_block (rai::receive_block const &) override;
@@ -1832,6 +1845,10 @@ public:
 amount_visitor::amount_visitor (MDB_txn * transaction_a, rai::block_store & store_a) :
 transaction (transaction_a),
 store (store_a)
+{
+}
+
+amount_visitor::~amount_visitor ()
 {
 }
 
@@ -1876,6 +1893,10 @@ transaction (transaction_a),
 store (store_a),
 current (0),
 result (0)
+{
+}
+
+balance_visitor::~balance_visitor ()
 {
 }
 
@@ -1931,6 +1952,9 @@ public:
 	rollback_visitor (MDB_txn * transaction_a, rai::ledger & ledger_a) :
 	transaction (transaction_a),
 	ledger (ledger_a)
+	{
+	}
+	virtual ~rollback_visitor ()
 	{
 	}
 	void send_block (rai::send_block const & block_a) override
@@ -2283,7 +2307,7 @@ void rai::ledger::change_latest (MDB_txn * transaction_a, rai::account const & a
 		info.head = hash_a;
 		info.rep_block = rep_block_a;
 		info.balance = balance_a;
-		info.modified = store.now ();
+		info.modified = rai::seconds_since_epoch ();
 		info.block_count = block_count_a;
 		store.account_put (transaction_a, account_a, info);
 		if (!(block_count_a % store.block_info_max))
@@ -2411,6 +2435,7 @@ void ledger_processor::send_block (rai::send_block const & block_a)
 						ledger.store.frontier_put (transaction, hash, account);
 						result.account = account;
 						result.amount = amount;
+						result.pending_account = block_a.hashables.destination;
 					}
 				}
 			}
@@ -2516,6 +2541,10 @@ void ledger_processor::open_block (rai::open_block const & block_a)
 ledger_processor::ledger_processor (rai::ledger & ledger_a, MDB_txn * transaction_a) :
 ledger (ledger_a),
 transaction (transaction_a)
+{
+}
+
+ledger_processor::~ledger_processor ()
 {
 }
 
@@ -2638,7 +2667,7 @@ void rai::genesis::initialize (MDB_txn * transaction_a, rai::block_store & store
 	auto hash_l (hash ());
 	assert (store_a.latest_begin (transaction_a) == store_a.latest_end ());
 	store_a.block_put (transaction_a, hash_l, *open);
-	store_a.account_put (transaction_a, genesis_account, { hash_l, open->hash (), open->hash (), std::numeric_limits<rai::uint128_t>::max (), store_a.now (), 1 });
+	store_a.account_put (transaction_a, genesis_account, { hash_l, open->hash (), open->hash (), std::numeric_limits<rai::uint128_t>::max (), rai::seconds_since_epoch (), 1 });
 	store_a.representation_put (transaction_a, genesis_account, std::numeric_limits<rai::uint128_t>::max ());
 	store_a.checksum_put (transaction_a, 0, 0, hash_l);
 	store_a.frontier_put (transaction_a, hash_l, genesis_account);

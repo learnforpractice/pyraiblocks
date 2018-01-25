@@ -21,11 +21,18 @@ enum class sync_result
 	error,
 	fork
 };
+
+/**
+ * The length of every message header, parsed by rai::message::read_header ()
+ * The 2 here represents the size of a std::bitset<16>, which is 2 chars long normally
+ */
+static const int bootstrap_message_header_size = sizeof (rai::message::magic_number) + sizeof (uint8_t) + sizeof (uint8_t) + sizeof (uint8_t) + sizeof (rai::message_type) + 2;
+
 class block_synchronization
 {
 public:
 	block_synchronization (boost::log::sources::logger_mt &);
-	~block_synchronization ();
+	virtual ~block_synchronization ();
 	// Return true if target already has block
 	virtual bool synchronized (MDB_txn *, rai::block_hash const &) = 0;
 	virtual std::unique_ptr<rai::block> retrieve (MDB_txn *, rai::block_hash const &) = 0;
@@ -42,6 +49,7 @@ class push_synchronization : public rai::block_synchronization
 {
 public:
 	push_synchronization (rai::node &, std::function<rai::sync_result (MDB_txn *, rai::block const &)> const &);
+	virtual ~push_synchronization ();
 	bool synchronized (MDB_txn *, rai::block_hash const &) override;
 	std::unique_ptr<rai::block> retrieve (MDB_txn *, rai::block_hash const &) override;
 	rai::sync_result target (MDB_txn *, rai::block const &) override;
@@ -77,16 +85,20 @@ public:
 	void pool_connection (std::shared_ptr<rai::bootstrap_client>);
 	void stop ();
 	void requeue_pull (rai::pull_info const &);
+	void add_pull (rai::pull_info const &);
 	bool still_pulling ();
+	void process_fork (MDB_txn *, std::shared_ptr<rai::block>);
 	std::deque<std::weak_ptr<rai::bootstrap_client>> clients;
+	std::weak_ptr<rai::bootstrap_client> connection_frontier_request;
 	std::weak_ptr<rai::frontier_req_client> frontiers;
 	std::weak_ptr<rai::bulk_push_client> push;
 	std::deque<rai::pull_info> pulls;
-	std::vector<std::shared_ptr<rai::bootstrap_client>> idle;
+	std::deque<std::shared_ptr<rai::bootstrap_client>> idle;
 	std::atomic<unsigned> connections;
 	std::atomic<unsigned> pulling;
 	std::shared_ptr<rai::node> node;
 	std::atomic<unsigned> account_count;
+	std::atomic<uint64_t> total_blocks;
 	bool stopped;
 	std::mutex mutex;
 	std::condition_variable condition;
@@ -109,7 +121,8 @@ public:
 	unsigned count;
 	rai::account landing;
 	rai::account faucet;
-	std::chrono::system_clock::time_point next_report;
+	std::chrono::steady_clock::time_point start_time;
+	std::chrono::steady_clock::time_point next_report;
 	std::promise<bool> promise;
 };
 class bulk_pull_client : public std::enable_shared_from_this<rai::bulk_pull_client>
@@ -135,12 +148,19 @@ public:
 	std::shared_ptr<rai::bootstrap_client> shared ();
 	void start_timeout ();
 	void stop_timeout ();
+	void stop (bool force);
+	double block_rate () const;
+	double elapsed_seconds () const;
 	std::shared_ptr<rai::node> node;
 	std::shared_ptr<rai::bootstrap_attempt> attempt;
 	boost::asio::ip::tcp::socket socket;
 	std::array<uint8_t, 200> receive_buffer;
 	rai::tcp_endpoint endpoint;
 	boost::asio::deadline_timer timeout;
+	std::chrono::steady_clock::time_point start_time;
+	std::atomic<uint64_t> block_count;
+	std::atomic<bool> pending_stop;
+	std::atomic<bool> hard_stop;
 };
 class bulk_push_client : public std::enable_shared_from_this<rai::bulk_push_client>
 {
@@ -166,6 +186,7 @@ public:
 	void notify_listeners (bool);
 	void add_observer (std::function<void(bool)> const &);
 	bool in_progress ();
+	void process_fork (MDB_txn *, std::shared_ptr<rai::block>);
 	void stop ();
 	rai::node & node;
 	std::shared_ptr<rai::bootstrap_attempt> attempt;
@@ -204,6 +225,7 @@ public:
 	void receive ();
 	void receive_header_action (boost::system::error_code const &, size_t);
 	void receive_bulk_pull_action (boost::system::error_code const &, size_t);
+	void receive_bulk_pull_blocks_action (boost::system::error_code const &, size_t);
 	void receive_frontier_req_action (boost::system::error_code const &, size_t);
 	void receive_bulk_push_action ();
 	void add_request (std::unique_ptr<rai::message>);
@@ -230,6 +252,25 @@ public:
 	std::unique_ptr<rai::bulk_pull> request;
 	std::vector<uint8_t> send_buffer;
 	rai::block_hash current;
+};
+class bulk_pull_blocks;
+class bulk_pull_blocks_server : public std::enable_shared_from_this<rai::bulk_pull_blocks_server>
+{
+public:
+	bulk_pull_blocks_server (std::shared_ptr<rai::bootstrap_server> const &, std::unique_ptr<rai::bulk_pull_blocks>);
+	void set_params ();
+	std::unique_ptr<rai::block> get_next ();
+	void send_next ();
+	void sent_action (boost::system::error_code const &, size_t);
+	void send_finished ();
+	void no_block_sent (boost::system::error_code const &, size_t);
+	std::shared_ptr<rai::bootstrap_server> connection;
+	std::unique_ptr<rai::bulk_pull_blocks> request;
+	std::vector<uint8_t> send_buffer;
+	rai::store_iterator stream;
+	rai::transaction stream_transaction;
+	uint32_t sent_count;
+	rai::block_hash checksum;
 };
 class bulk_push_server : public std::enable_shared_from_this<rai::bulk_push_server>
 {

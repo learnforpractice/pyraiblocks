@@ -95,7 +95,7 @@ wallet (wallet_a)
 	QObject::connect (copy_button, &QPushButton::clicked, [this]() {
 		this->wallet.application.clipboard ()->setText (QString (this->wallet.account.to_account ().c_str ()));
 		copy_button->setText ("Copied!");
-		this->wallet.node.alarm.add (std::chrono::system_clock::now () + std::chrono::seconds (2), [this]() {
+		QTimer::singleShot (std::chrono::milliseconds (2000).count (), [this]() {
 			copy_button->setText ("Copy");
 		});
 	});
@@ -186,7 +186,7 @@ wallet (wallet_a)
 			show_button_success (*create_account);
 			create_account->setText ("New account was created");
 			refresh ();
-			this->wallet.node.alarm.add (std::chrono::system_clock::now () + std::chrono::seconds (5), [this]() {
+			QTimer::singleShot (std::chrono::milliseconds (5000).count (), [this]() {
 				show_button_ok (*create_account);
 				create_account->setText ("Create account");
 			});
@@ -195,7 +195,7 @@ wallet (wallet_a)
 		{
 			show_button_error (*create_account);
 			create_account->setText ("Wallet is locked, unlock it to create account");
-			this->wallet.node.alarm.add (std::chrono::system_clock::now () + std::chrono::seconds (5), [this]() {
+			QTimer::singleShot (std::chrono::milliseconds (5000).count (), [this]() {
 				show_button_ok (*create_account);
 				create_account->setText ("Create account");
 			});
@@ -213,7 +213,7 @@ wallet (wallet_a)
 			this->wallet.application.clipboard ()->setText (QString (seed.data.to_string ().c_str ()));
 			show_button_success (*backup_seed);
 			backup_seed->setText ("Seed was copied to clipboard");
-			this->wallet.node.alarm.add (std::chrono::system_clock::now () + std::chrono::seconds (5), [this]() {
+			QTimer::singleShot (std::chrono::milliseconds (5000).count (), [this]() {
 				show_button_ok (*backup_seed);
 				backup_seed->setText ("Copy wallet seed to clipboard");
 			});
@@ -223,7 +223,7 @@ wallet (wallet_a)
 			this->wallet.application.clipboard ()->setText ("");
 			show_button_error (*backup_seed);
 			backup_seed->setText ("Wallet is locked, unlock it to enable the backup");
-			this->wallet.node.alarm.add (std::chrono::system_clock::now () + std::chrono::seconds (5), [this]() {
+			QTimer::singleShot (std::chrono::milliseconds (5000).count (), [this]() {
 				show_button_ok (*backup_seed);
 				backup_seed->setText ("Copy wallet seed to clipboard");
 			});
@@ -243,13 +243,13 @@ void rai_qt::accounts::refresh_wallet_balance ()
 		balance = balance + (this->wallet.node.ledger.account_balance (transaction, key));
 		pending = pending + (this->wallet.node.ledger.account_pending (transaction, key));
 	}
-	auto final_text (std::string ("Wallet balance (XRB): ") + wallet.format_balance (balance));
+	auto final_text (std::string ("Balance: ") + wallet.format_balance (balance));
 	if (!pending.is_zero ())
 	{
-		final_text += "\nWallet pending: " + wallet.format_balance (pending);
+		final_text += "\nPending: " + wallet.format_balance (pending);
 	}
 	wallet_balance_label->setText (QString (final_text.c_str ()));
-	this->wallet.node.alarm.add (std::chrono::system_clock::now () + std::chrono::seconds (60), [this]() {
+	this->wallet.node.alarm.add (std::chrono::steady_clock::now () + std::chrono::seconds (60), [this]() {
 		this->wallet.application.postEvent (&this->wallet.processor, new eventloop_event ([this]() {
 			refresh_wallet_balance ();
 		}));
@@ -302,7 +302,7 @@ clear_label (new QLabel ("Modifying seed clears existing keys\nType 'clear keys'
 clear_line (new QLineEdit),
 import_seed (new QPushButton ("Import seed")),
 separator (new QFrame),
-filename_label (new QLabel ("Filename:")),
+filename_label (new QLabel ("Path to file:")),
 filename (new QLineEdit),
 password_label (new QLabel ("Password:")),
 password (new QLineEdit),
@@ -373,7 +373,7 @@ wallet (wallet_a)
 						show_line_error (*seed);
 						show_button_error (*import_seed);
 						import_seed->setText ("Wallet is locked, unlock it to enable the import");
-						this->wallet.node.alarm.add (std::chrono::system_clock::now () + std::chrono::seconds (10), [this]() {
+						QTimer::singleShot (std::chrono::milliseconds (10000).count (), [this]() {
 							show_line_ok (*seed);
 							show_button_ok (*import_seed);
 							import_seed->setText ("Import seed");
@@ -410,7 +410,7 @@ wallet (wallet_a)
 					show_button_success (*import_seed);
 					import_seed->setText ("Successful import of seed");
 					this->wallet.refresh ();
-					this->wallet.node.alarm.add (std::chrono::system_clock::now () + std::chrono::seconds (5), [this]() {
+					QTimer::singleShot (std::chrono::milliseconds (5000).count (), [this]() {
 						show_button_ok (*import_seed);
 						import_seed->setText ("Import seed");
 					});
@@ -428,7 +428,7 @@ wallet (wallet_a)
 				{
 					import_seed->setText ("Incorrect seed. Only HEX characters allowed");
 				}
-				this->wallet.node.alarm.add (std::chrono::system_clock::now () + std::chrono::seconds (5), [this]() {
+				QTimer::singleShot (std::chrono::milliseconds (5000).count (), [this]() {
 					show_button_ok (*import_seed);
 					import_seed->setText ("Import seed");
 				});
@@ -439,7 +439,7 @@ wallet (wallet_a)
 			show_line_error (*clear_line);
 			show_button_error (*import_seed);
 			import_seed->setText ("Type words 'clear keys'");
-			this->wallet.node.alarm.add (std::chrono::system_clock::now () + std::chrono::seconds (5), [this]() {
+			QTimer::singleShot (std::chrono::milliseconds (5000).count (), [this]() {
 				show_button_ok (*import_seed);
 				import_seed->setText ("Import seed");
 			});
@@ -544,7 +544,9 @@ void rai_qt::history::refresh ()
 		block->visit (visitor);
 		items.push_back (new QStandardItem (QString (visitor.type.c_str ())));
 		items.push_back (new QStandardItem (QString (visitor.account.to_account ().c_str ())));
-		items.push_back (new QStandardItem (QString (wallet.format_balance (visitor.amount).c_str ())));
+		auto balanceItem = new QStandardItem (QString (wallet.format_balance (visitor.amount).c_str ()));
+		balanceItem->setData (Qt::AlignRight, Qt::TextAlignmentRole);
+		items.push_back (balanceItem);
 		items.push_back (new QStandardItem (QString (hash.to_string ().c_str ())));
 		hash = block->previous ();
 		model->appendRow (items);
@@ -633,7 +635,7 @@ void rai_qt::block_viewer::rebroadcast_action (rai::uint256_union const & hash_a
 		if (!successor.is_zero ())
 		{
 			done = false;
-			wallet.node.alarm.add (std::chrono::system_clock::now () + std::chrono::seconds (1), [this, successor]() {
+			QTimer::singleShot (std::chrono::milliseconds (1000).count (), [this, successor]() {
 				rebroadcast_action (successor);
 			});
 		}
@@ -969,7 +971,7 @@ void rai_qt::wallet::start ()
 							{
 								show_button_error (*this_l->send_blocks_send);
 								this_l->send_blocks_send->setText ("Wallet is locked, unlock it to send");
-								this_l->node.alarm.add (std::chrono::system_clock::now () + std::chrono::seconds (5), [this_w]() {
+								QTimer::singleShot (std::chrono::milliseconds (5000).count (), [this_w]() {
 									if (auto this_l = this_w.lock ())
 									{
 										show_button_ok (*this_l->send_blocks_send);
@@ -983,7 +985,7 @@ void rai_qt::wallet::start ()
 							show_line_error (*this_l->send_count);
 							show_button_error (*this_l->send_blocks_send);
 							this_l->send_blocks_send->setText ("Not enough balance");
-							this_l->node.alarm.add (std::chrono::system_clock::now () + std::chrono::seconds (5), [this_w]() {
+							QTimer::singleShot (std::chrono::milliseconds (5000).count (), [this_w]() {
 								if (auto this_l = this_w.lock ())
 								{
 									show_button_ok (*this_l->send_blocks_send);
@@ -997,7 +999,7 @@ void rai_qt::wallet::start ()
 						show_line_error (*this_l->send_account);
 						show_button_error (*this_l->send_blocks_send);
 						this_l->send_blocks_send->setText ("Bad destination account");
-						this_l->node.alarm.add (std::chrono::system_clock::now () + std::chrono::seconds (5), [this_w]() {
+						QTimer::singleShot (std::chrono::milliseconds (5000).count (), [this_w]() {
 							if (auto this_l = this_w.lock ())
 							{
 								show_button_ok (*this_l->send_blocks_send);
@@ -1011,7 +1013,7 @@ void rai_qt::wallet::start ()
 					show_line_error (*this_l->send_count);
 					show_button_error (*this_l->send_blocks_send);
 					this_l->send_blocks_send->setText ("Amount too big");
-					this_l->node.alarm.add (std::chrono::system_clock::now () + std::chrono::seconds (5), [this_w]() {
+					QTimer::singleShot (std::chrono::milliseconds (5000).count (), [this_w]() {
 						if (auto this_l = this_w.lock ())
 						{
 							show_line_ok (*this_l->send_account);
@@ -1026,7 +1028,7 @@ void rai_qt::wallet::start ()
 				show_line_error (*this_l->send_count);
 				show_button_error (*this_l->send_blocks_send);
 				this_l->send_blocks_send->setText ("Bad amount number");
-				this_l->node.alarm.add (std::chrono::system_clock::now () + std::chrono::seconds (5), [this_w]() {
+				QTimer::singleShot (std::chrono::milliseconds (5000).count (), [this_w]() {
 					if (auto this_l = this_w.lock ())
 					{
 						show_button_ok (*this_l->send_blocks_send);
@@ -1048,10 +1050,10 @@ void rai_qt::wallet::start ()
 			this_l->push_main_stack (this_l->send_blocks_window);
 		}
 	});
-	node.observers.blocks.add ([this_w](std::shared_ptr<rai::block>, rai::account const & account_a, rai::amount const &) {
+	node.observers.blocks.add ([this_w](std::shared_ptr<rai::block> block_a, rai::account const & account_a, rai::amount const &) {
 		if (auto this_l = this_w.lock ())
 		{
-			this_l->application.postEvent (&this_l->processor, new eventloop_event ([this_w, account_a]() {
+			this_l->application.postEvent (&this_l->processor, new eventloop_event ([this_w, block_a, account_a]() {
 				if (auto this_l = this_w.lock ())
 				{
 					if (this_l->wallet_m->exists (account_a))
@@ -1061,6 +1063,19 @@ void rai_qt::wallet::start ()
 					if (account_a == this_l->account)
 					{
 						this_l->history.refresh ();
+					}
+				}
+			}));
+		}
+	});
+	node.observers.account_balance.add ([this_w](rai::account const & account_a, bool is_pending) {
+		if (auto this_l = this_w.lock ())
+		{
+			this_l->application.postEvent (&this_l->processor, new eventloop_event ([this_w, account_a]() {
+				if (auto this_l = this_w.lock ())
+				{
+					if (account_a == this_l->account)
+					{
 						this_l->self.refresh_balance ();
 					}
 				}
@@ -1185,7 +1200,7 @@ void rai_qt::wallet::update_connected ()
 
 void rai_qt::wallet::empty_password ()
 {
-	this->node.alarm.add (std::chrono::system_clock::now () + std::chrono::seconds (3), [this]() {
+	this->node.alarm.add (std::chrono::steady_clock::now () + std::chrono::seconds (3), [this]() {
 		wallet_m->enter_password (std::string (""));
 	});
 }
@@ -1289,7 +1304,7 @@ wallet (wallet_a)
 					show_button_success (*change);
 					change->setText ("Password was changed");
 					update_locked (false, false);
-					this->wallet.node.alarm.add (std::chrono::system_clock::now () + std::chrono::seconds (5), [this]() {
+					QTimer::singleShot (std::chrono::milliseconds (5000).count (), [this]() {
 						show_button_ok (*change);
 						change->setText ("Set/Change password");
 					});
@@ -1305,7 +1320,7 @@ wallet (wallet_a)
 		{
 			show_button_error (*change);
 			change->setText ("Wallet is locked, unlock it");
-			this->wallet.node.alarm.add (std::chrono::system_clock::now () + std::chrono::seconds (5), [this]() {
+			QTimer::singleShot (std::chrono::milliseconds (5000).count (), [this]() {
 				show_button_ok (*change);
 				change->setText ("Set/Change password");
 			});
@@ -1326,10 +1341,10 @@ wallet (wallet_a)
 				auto block (this->wallet.wallet_m->change_sync (this->wallet.account, representative_l));
 				change_rep->setEnabled (true);
 				show_button_success (*change_rep);
-				change_rep->setText ("Represenative was changed");
+				change_rep->setText ("Representative was changed");
 				current_representative->setText (QString (representative_l.to_account_split ().c_str ()));
 				new_representative->clear ();
-				this->wallet.node.alarm.add (std::chrono::system_clock::now () + std::chrono::seconds (5), [this]() {
+				QTimer::singleShot (std::chrono::seconds (5000).count (), [this]() {
 					show_button_ok (*change_rep);
 					change_rep->setText ("Change representative");
 				});
@@ -1338,7 +1353,7 @@ wallet (wallet_a)
 			{
 				show_button_error (*change_rep);
 				change_rep->setText ("Wallet is locked, unlock it");
-				this->wallet.node.alarm.add (std::chrono::system_clock::now () + std::chrono::seconds (5), [this]() {
+				QTimer::singleShot (std::chrono::milliseconds (5000).count (), [this]() {
 					show_button_ok (*change_rep);
 					change_rep->setText ("Change representative");
 				});
@@ -1349,7 +1364,7 @@ wallet (wallet_a)
 			show_line_error (*new_representative);
 			show_button_error (*change_rep);
 			change_rep->setText ("Invalid account");
-			this->wallet.node.alarm.add (std::chrono::system_clock::now () + std::chrono::seconds (5), [this]() {
+			QTimer::singleShot (std::chrono::milliseconds (5000).count (), [this]() {
 				show_line_ok (*new_representative);
 				show_button_ok (*change_rep);
 				change_rep->setText ("Change representative");
@@ -1386,7 +1401,7 @@ wallet (wallet_a)
 				show_line_error (*password);
 				show_button_error (*lock_toggle);
 				lock_toggle->setText ("Invalid password");
-				this->wallet.node.alarm.add (std::chrono::system_clock::now () + std::chrono::seconds (5), [this]() {
+				QTimer::singleShot (std::chrono::milliseconds (5000).count (), [this]() {
 					show_line_ok (*password);
 					show_button_ok (*lock_toggle);
 

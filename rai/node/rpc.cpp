@@ -1546,6 +1546,9 @@ public:
 	hash (hash_a)
 	{
 	}
+	virtual ~history_visitor ()
+	{
+	}
 	void send_block (rai::send_block const & block_a)
 	{
 		tree.put ("type", "send");
@@ -3382,10 +3385,19 @@ void rai::rpc_handler::wallet_create ()
 	if (rpc.config.enable_control)
 	{
 		rai::keypair wallet_id;
-		auto wallet (node.wallets.create (wallet_id.pub));
-		boost::property_tree::ptree response_l;
-		response_l.put ("wallet", wallet_id.pub.to_string ());
-		response (response_l);
+		node.wallets.create (wallet_id.pub);
+		rai::transaction transaction (node.store.environment, nullptr, false);
+		auto existing (node.wallets.items.find (wallet_id.pub));
+		if (existing != node.wallets.items.end ())
+		{
+			boost::property_tree::ptree response_l;
+			response_l.put ("wallet", wallet_id.pub.to_string ());
+			response (response_l);
+		}
+		else
+		{
+			error_response (response, "Failed to create wallet. Increase lmdb_max_dbs in node config.");
+		}
 	}
 	else
 	{
@@ -4105,7 +4117,7 @@ void rai::rpc_connection::parse_connection ()
 		if (!ec)
 		{
 			this_l->node->background ([this_l]() {
-				auto start (std::chrono::system_clock::now ());
+				auto start (std::chrono::steady_clock::now ());
 				auto version (this_l->request.version ());
 				auto response_handler ([this_l, version, start](boost::property_tree::ptree const & tree_a) {
 					std::stringstream ostream;
@@ -4115,6 +4127,7 @@ void rai::rpc_connection::parse_connection ()
 					this_l->res.set ("Content-Type", "application/json");
 					this_l->res.set ("Access-Control-Allow-Origin", "*");
 					this_l->res.set ("Access-Control-Allow-Headers", "Accept, Accept-Language, Content-Language, Content-Type");
+					this_l->res.set ("Connection", "close");
 					this_l->res.result (boost::beast::http::status::ok);
 					this_l->res.body () = body;
 					this_l->res.version (version);
@@ -4124,7 +4137,7 @@ void rai::rpc_connection::parse_connection ()
 					});
 					if (this_l->node->config.logging.log_rpc ())
 					{
-						BOOST_LOG (this_l->node->log) << boost::str (boost::format ("RPC request %2% completed in: %1% microseconds") % std::chrono::duration_cast<std::chrono::microseconds> (std::chrono::system_clock::now () - start).count () % boost::io::group (std::hex, std::showbase, reinterpret_cast<uintptr_t> (this_l.get ())));
+						BOOST_LOG (this_l->node->log) << boost::str (boost::format ("RPC request %2% completed in: %1% microseconds") % std::chrono::duration_cast<std::chrono::microseconds> (std::chrono::steady_clock::now () - start).count () % boost::io::group (std::hex, std::showbase, reinterpret_cast<uintptr_t> (this_l.get ())));
 					}
 				});
 				if (this_l->request.method () == boost::beast::http::verb::post)
@@ -4595,7 +4608,7 @@ response (response_a)
 void rai::payment_observer::start (uint64_t timeout)
 {
 	auto this_l (shared_from_this ());
-	rpc.node.alarm.add (std::chrono::system_clock::now () + std::chrono::milliseconds (timeout), [this_l]() {
+	rpc.node.alarm.add (std::chrono::steady_clock::now () + std::chrono::milliseconds (timeout), [this_l]() {
 		this_l->complete (rai::payment_status::nothing);
 	});
 }
