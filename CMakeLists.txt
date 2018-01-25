@@ -1,5 +1,6 @@
 cmake_minimum_required (VERSION 2.8.11)
 project (rai)
+add_subdirectory(micropython)
 
 set (CPACK_PACKAGE_VERSION_MAJOR "9")
 set (CPACK_PACKAGE_VERSION_MINOR "0")
@@ -411,7 +412,7 @@ set_property( TARGET ssl PROPERTY IMPORTED_LOCATION /usr//local/opt/openssl/lib/
 add_library( crypto SHARED IMPORTED )
 set_property( TARGET crypto PROPERTY IMPORTED_LOCATION /usr//local/opt/openssl/lib/libcrypto.dylib )
 
-target_link_libraries (rai_node node secure lmdb ed25519 rai_lib_static argon2 ${CRYPTOPP_LIBRARY} libminiupnpc-static ${Boost_ATOMIC_LIBRARY} ${Boost_CHRONO_LIBRARY} ${Boost_REGEX_LIBRARY} ${Boost_DATE_TIME_LIBRARY} ${Boost_FILESYSTEM_LIBRARY} ${Boost_SYSTEM_LIBRARY} ${Boost_LOG_LIBRARY} ${Boost_PROGRAM_OPTIONS_LIBRARY} ${Boost_LOG_SETUP_LIBRARY} ${Boost_THREAD_LIBRARY} ${PLATFORM_LIBS} ssl crypto intl python3.6m)
+target_link_libraries (rai_node node secure lmdb ed25519 rai_lib_static argon2 ${CRYPTOPP_LIBRARY} libminiupnpc-static ${Boost_ATOMIC_LIBRARY} ${Boost_CHRONO_LIBRARY} ${Boost_REGEX_LIBRARY} ${Boost_DATE_TIME_LIBRARY} ${Boost_FILESYSTEM_LIBRARY} ${Boost_SYSTEM_LIBRARY} ${Boost_LOG_LIBRARY} ${Boost_PROGRAM_OPTIONS_LIBRARY} ${Boost_LOG_SETUP_LIBRARY} ${Boost_THREAD_LIBRARY} ${PLATFORM_LIBS} ssl crypto intl python3.6m micropython)
 
 set (CPACK_RESOURCE_FILE_LICENSE ${CMAKE_SOURCE_DIR}/LICENSE)
 if (RAIBLOCKS_GUI)
