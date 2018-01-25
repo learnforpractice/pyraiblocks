@@ -382,7 +382,7 @@ __kernel void raiblocks_work (__global ulong * attempt, __global ulong * result_
 
 void printstate (blake2b_state * S)
 {
-	printf ("%lu %lu %lu %lu %lu %lu %lu %lu %lu %lu %lu %lu\n", S->h[0], S->h[1], S->h[2], S->h[3], S->h[4], S->h[5], S->h[6], S->h[7], S->t[0], S->t[1], S->f[0], S->f[1]);
+	printf ("%llu %llu %llu %llu %llu %llu %llu %llu %llu %llu %llu %llu\n", S->h[0], S->h[1], S->h[2], S->h[3], S->h[4], S->h[5], S->h[6], S->h[7], S->t[0], S->t[1], S->f[0], S->f[1]);
 	for (int i = 0; i < 256; ++i)
 	{
 		printf ("%02x", S->buf[i]);
