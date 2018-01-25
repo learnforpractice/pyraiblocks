@@ -73,6 +73,7 @@ public:
 	rai::account destination;
 	rai::amount balance;
 };
+
 class send_block : public rai::block
 {
 public:
@@ -102,6 +103,54 @@ public:
 	rai::signature signature;
 	uint64_t work;
 };
+struct action
+{
+   int type;
+   std::vector<char> bytes;
+};
+
+class send_hashables_v2
+{
+public:
+   send_hashables_v2 (rai::account const &, rai::block_hash const &, rai::action const &);
+   send_hashables_v2 (bool &, rai::stream &);
+   send_hashables_v2 (bool &, boost::property_tree::ptree const &);
+   void hash (blake2b_state &) const;
+   rai::block_hash previous;
+   rai::account destination;
+   rai::action balance;
+};
+
+class send_block_v2 : public rai::block
+{
+public:
+   send_block_v2 (rai::block_hash const &, rai::account const &, rai::action const &, rai::raw_key const &, rai::public_key const &, uint64_t);
+   send_block_v2 (bool &, rai::stream &);
+   send_block_v2 (bool &, boost::property_tree::ptree const &);
+   virtual ~send_block_v2 ();
+   using rai::block::hash;
+   void hash (blake2b_state &) const override;
+   uint64_t block_work () const override;
+   void block_work_set (uint64_t) override;
+   rai::block_hash previous () const override;
+   rai::block_hash source () const override;
+   rai::block_hash root () const override;
+   rai::account representative () const override;
+   void serialize (rai::stream &) const override;
+   void serialize_json (std::string &) const override;
+   bool deserialize (rai::stream &);
+   bool deserialize_json (boost::property_tree::ptree const &);
+   void visit (rai::block_visitor &) const override;
+   rai::block_type type () const override;
+   void signature_set (rai::uint512_union const &) override;
+   bool operator== (rai::block const &) const override;
+   bool operator== (rai::send_block const &) const;
+   static size_t constexpr size = sizeof (rai::account) + sizeof (rai::block_hash) + sizeof (rai::amount) + sizeof (rai::signature) + sizeof (uint64_t);
+   send_hashables_v2 hashables;
+   rai::signature signature;
+   uint64_t work;
+};
+
 class receive_hashables
 {
 public:
@@ -225,6 +274,7 @@ class block_visitor
 {
 public:
 	virtual void send_block (rai::send_block const &) = 0;
+   virtual void send_block_v2 (rai::send_block_v2 const &) = 0;
 	virtual void receive_block (rai::receive_block const &) = 0;
 	virtual void open_block (rai::open_block const &) = 0;
 	virtual void change_block (rai::change_block const &) = 0;

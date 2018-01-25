@@ -32,6 +32,10 @@ public:
 	{
 		add_dependency (block_a.hashables.previous);
 	}
+   void send_block_v2 (rai::send_block_v2 const & block_a) override
+   {
+      add_dependency (block_a.hashables.previous);
+   }
 	void receive_block (rai::receive_block const & block_a) override
 	{
 		add_dependency (block_a.hashables.previous);

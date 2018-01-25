@@ -2239,6 +2239,9 @@ public:
 			}
 		}
 	}
+   void send_block_v2 (rai::send_block_v2 const & block_a) override
+   {
+   }
 	void receive_block (rai::receive_block const &) override
 	{
 	}

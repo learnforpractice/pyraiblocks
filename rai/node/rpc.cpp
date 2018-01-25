@@ -1557,6 +1557,16 @@ public:
 		auto amount (handler.node.ledger.amount (transaction, hash).convert_to<std::string> ());
 		tree.put ("amount", amount);
 	}
+   void send_block_v2 (rai::send_block_v2 const & block_a)
+   {
+#if 0
+      tree.put ("type", "send");
+      auto account (block_a.hashables.destination.to_account ());
+      tree.put ("account", account);
+      auto amount (handler.node.ledger.amount (transaction, hash).convert_to<std::string> ());
+      tree.put ("amount", amount);
+#endif
+   }
 	void receive_block (rai::receive_block const & block_a)
 	{
 		tree.put ("type", "receive");

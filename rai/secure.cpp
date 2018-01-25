@@ -611,6 +611,10 @@ public:
 	{
 		current = block_a.previous ();
 	}
+   void send_block_v2 (rai::send_block_v2 const & block_a) override
+   {
+      current = block_a.previous ();
+   }
 	void receive_block (rai::receive_block const & block_a) override
 	{
 		current = block_a.previous ();
@@ -819,6 +823,10 @@ public:
 	{
 		fill_value (block_a);
 	}
+   void send_block_v2 (rai::send_block_v2 const & block_a) override
+   {
+      fill_value (block_a);
+   }
 	void receive_block (rai::receive_block const & block_a) override
 	{
 		fill_value (block_a);
@@ -1738,6 +1746,10 @@ public:
 	{
 		result = block_a.previous ();
 	}
+   void send_block_v2 (rai::send_block_v2 const & block_a) override
+   {
+      result = block_a.previous ();
+   }
 	void receive_block (rai::receive_block const & block_a) override
 	{
 		result = block_a.previous ();
@@ -1800,6 +1812,7 @@ public:
 	ledger_processor (rai::ledger &, MDB_txn *);
 	virtual ~ledger_processor ();
 	void send_block (rai::send_block const &) override;
+   void send_block_v2 (rai::send_block_v2 const &) override;
 	void receive_block (rai::receive_block const &) override;
 	void open_block (rai::open_block const &) override;
 	void change_block (rai::change_block const &) override;
@@ -1816,6 +1829,7 @@ public:
 	virtual ~amount_visitor ();
 	void compute (rai::block_hash const &);
 	void send_block (rai::send_block const &) override;
+   void send_block_v2 (rai::send_block_v2 const &) override;
 	void receive_block (rai::receive_block const &) override;
 	void open_block (rai::open_block const &) override;
 	void change_block (rai::change_block const &) override;
@@ -1833,6 +1847,7 @@ public:
 	virtual ~balance_visitor ();
 	void compute (rai::block_hash const &);
 	void send_block (rai::send_block const &) override;
+   void send_block_v2 (rai::send_block_v2 const &) override;
 	void receive_block (rai::receive_block const &) override;
 	void open_block (rai::open_block const &) override;
 	void change_block (rai::change_block const &) override;
@@ -1857,6 +1872,15 @@ void amount_visitor::send_block (rai::send_block const & block_a)
 	balance_visitor prev (transaction, store);
 	prev.compute (block_a.hashables.previous);
 	result = prev.result - block_a.hashables.balance.number ();
+}
+
+void amount_visitor::send_block_v2 (rai::send_block_v2 const & block_a)
+{
+#if 0
+   balance_visitor prev (transaction, store);
+   prev.compute (block_a.hashables.previous);
+   result = prev.result - block_a.hashables.balance.number ();
+#endif
 }
 
 void amount_visitor::receive_block (rai::receive_block const & block_a)
@@ -1904,6 +1928,14 @@ void balance_visitor::send_block (rai::send_block const & block_a)
 {
 	result += block_a.hashables.balance.number ();
 	current = 0;
+}
+
+void balance_visitor::send_block_v2 (rai::send_block_v2 const & block_a)
+{
+#if 0
+   result += block_a.hashables.balance.number ();
+   current = 0;
+#endif
 }
 
 void balance_visitor::receive_block (rai::receive_block const & block_a)
@@ -1981,6 +2013,9 @@ public:
 			ledger.store.block_info_del (transaction, hash);
 		}
 	}
+   void send_block_v2 (rai::send_block_v2 const & block_a) override
+   {
+   }
 	void receive_block (rai::receive_block const & block_a) override
 	{
 		auto hash (block_a.hash ());
@@ -2441,6 +2476,11 @@ void ledger_processor::send_block (rai::send_block const & block_a)
 			}
 		}
 	}
+}
+
+void ledger_processor::send_block_v2 (rai::send_block_v2 const & block_a)
+{
+
 }
 
 void ledger_processor::receive_block (rai::receive_block const & block_a)

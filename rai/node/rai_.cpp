@@ -66,6 +66,9 @@ public:
       auto amount (node.ledger.amount (transaction, hash).convert_to<string> ());
       tree.put ("amount", amount);
    }
+   void send_block_v2 (rai::send_block_v2 const & block_a)
+   {
+   }
    void receive_block (rai::receive_block const & block_a)
    {
       tree.put ("type", "receive");
@@ -117,6 +120,9 @@ public:
       tree.add ("account", account);
       auto amount (node.ledger.amount (transaction, hash).convert_to<string> ());
       tree.add ("amount", amount);
+   }
+   void send_block_v2 (rai::send_block_v2 const & block_a)
+   {
    }
    void receive_block (rai::receive_block const & block_a)
    {
