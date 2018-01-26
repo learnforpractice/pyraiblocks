@@ -153,18 +153,7 @@ std::map<rai::uint128_t, std::shared_ptr<rai::block>, std::greater<rai::uint128_
 		auto existing (totals.find (i.second));
 		if (existing == totals.end ())
 		{
-         std::cout << "totals.size():" << totals.size() << "\n";
 			auto ret = totals.insert (std::make_pair (i.second, 0));
-			std::cout << "totals.size():" << totals.size() << "\n";
-
-			std::cout << i.second->to_json() << "\n";
-	      std::cout << ret.second <<"\n";
-	      std::cout << "==========================" << "\n";
-	      for (auto & ii : totals)
-	      {
-	         std::cout << ii.first->to_json() << "\nsecond:" << ii.second << std::endl;
-	      }
-
 	      existing = totals.find (i.second);
 			assert (existing != totals.end ());
 		}
@@ -1000,8 +989,8 @@ std::unique_ptr<rai::block> rai::block_store::block_random (MDB_txn * transactio
             }
             else
             {
-               region -= count.change;
-               result = block_random (transaction_a, change_blocks);
+//               region -= count.change;
+               result = block_random (transaction_a, send_blocks_v2);
             }
 			}
 		}

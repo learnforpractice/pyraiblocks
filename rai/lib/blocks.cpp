@@ -1129,12 +1129,7 @@ std::unique_ptr<rai::block> rai::deserialize_block (rai::stream & stream_a)
 	std::unique_ptr<rai::block> result;
 	if (!error)
 	{
-      std::cout<<"deserialize:"<<(int)type<<std::endl;
 		result = rai::deserialize_block (stream_a, type);
-	}
-	else
-	{
-	   std::cout<<"deserialize failed!"<<std::endl;
 	}
 	return result;
 }
