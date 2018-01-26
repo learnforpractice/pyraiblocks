@@ -8,6 +8,30 @@ std::string rai::to_string_hex (uint64_t value_a)
 	return stream.str ();
 }
 
+bool rai::read_bytes (rai::stream& stream_a, std::vector<uint8_t>& bytes)
+{
+   uint8_t c1,c2;
+   stream_a.sgetn (&c1, sizeof (c1));
+   stream_a.sgetn (&c2, sizeof (c2));
+   int nsize = c1+(c2<<8);
+   for (int i=0;i<nsize;i++)
+   {
+      auto read_a = stream_a.sgetn (&c1, sizeof (c1));
+      if (read_a != sizeof(c1))
+      {
+         return true;
+      }
+      bytes.push_back(c1);
+   }
+   return false;
+}
+
+void rai::write_bytes (rai::stream& stream_a, const std::vector<uint8_t>& bytes)
+{
+   stream_a.sputc(bytes.size()&0xff);
+   stream_a.sputc(bytes.size()>>8);
+   stream_a.sputn (bytes.data(), bytes.size());
+}
 bool rai::from_string_hex (std::string const & value_a, uint64_t & target_a)
 {
 	auto result (value_a.empty ());
@@ -330,21 +354,7 @@ rai::send_hashables_v2::send_hashables_v2 (bool & error_a, rai::stream & stream_
       error_a = rai::read (stream_a, destination.bytes);
       if (!error_a)
       {
-         uint8_t c1,c2;
-         stream_a.sgetn (&c1, sizeof (c1));
-         stream_a.sgetn (&c2, sizeof (c2));
-         int nsize = c1+(c2<<8);
-         for (int i=0;i<nsize;i++)
-         {
-            auto read_a = stream_a.sgetn (&c1, sizeof (c1));
-            if (read_a != sizeof(c1))
-            {
-               error_a = true;
-               return;
-            }
-            _action.bytes.push_back(c1);
-         }
-//         error_a = rai::read (stream_a, balance.bytes);
+         error_a = rai::read_bytes(stream_a, _action.bytes);
       }
    }
 }
@@ -406,11 +416,7 @@ void rai::send_block_v2::serialize (rai::stream & stream_a) const
 {
    write (stream_a, hashables.previous.bytes);
    write (stream_a, hashables.destination.bytes);
-//   write (stream_a, hashables._action.bytes);
-   stream_a.sputc(hashables._action.bytes.size()&0xff);
-   stream_a.sputc(hashables._action.bytes.size()>>8);
-   stream_a.sputn (hashables._action.bytes.data(), hashables._action.bytes.size());
-   stream_a.sputn (hashables._action.bytes.data(), hashables._action.bytes.size());
+   write_bytes (stream_a, hashables._action.bytes);
    write (stream_a, signature.bytes);
    write (stream_a, work);
 }
@@ -444,23 +450,14 @@ bool rai::send_block_v2::deserialize (rai::stream & stream_a)
       result = read (stream_a, hashables.destination.bytes);
       if (!result)
       {
-         uint8_t c1,c2;
-         stream_a.sgetn (&c1, sizeof (c1));
-         stream_a.sgetn (&c2, sizeof (c2));
-         int nsize = c1+(c2<<8);
-         for (int i=0;i<nsize;i++)
-         {
-            auto amount_read = stream_a.sgetn (&c1, sizeof (c1));
-            if (amount_read != sizeof(c1))
-            {
-               return true;
-            }
-            hashables._action.bytes.push_back(c1);
-         }
-         result = read (stream_a, signature.bytes);
+         result = read_bytes (stream_a, hashables._action.bytes);
          if (!result)
          {
-            result = read (stream_a, work);
+            result = read (stream_a, signature.bytes);
+            if (!result)
+            {
+               result = read (stream_a, work);
+            }
          }
       }
    }

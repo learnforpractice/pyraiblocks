@@ -28,6 +28,10 @@ void write (rai::stream & stream_a, T const & value)
 	auto amount_written (stream_a.sputn (reinterpret_cast<uint8_t const *> (&value), sizeof (value)));
 	assert (amount_written == sizeof (value));
 }
+
+bool read_bytes (rai::stream& stream_a, std::vector<uint8_t>& bytes);
+void write_bytes (rai::stream& stream_a, const std::vector<uint8_t>& bytes);
+
 class block_visitor;
 enum class block_type : uint8_t
 {

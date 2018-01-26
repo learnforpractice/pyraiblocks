@@ -2521,8 +2521,6 @@ void ledger_processor::send_block (rai::send_block const & block_a)
 
 void ledger_processor::send_block_v2 (rai::send_block_v2 const & block_a)
 {
-   std::cout<<(char*)block_a.hashables._action.bytes.data()<<std::endl;
-   printf("ledger_processor::send_block_v2\n");
    auto hash (block_a.hash ());
    auto existing (ledger.store.block_exists (transaction, hash));
    result.code = existing ? rai::process_result::old : rai::process_result::progress; // Have we seen this block before? (Harmless)
@@ -2544,25 +2542,21 @@ void ledger_processor::send_block_v2 (rai::send_block_v2 const & block_a)
                assert (!latest_error);
                assert (info.head == block_a.hashables.previous);
 
-               ledger.store.block_put (transaction, hash, block_a);
-               ledger.store.frontier_put (transaction, hash, account);
-
-#if 0
-               result.code = info.balance.number () >= block_a.hashables.balance.number () ? rai::process_result::progress : rai::process_result::overspend; // Is this trying to spend more than they have (Malicious)
+//               result.code = info.balance.number () >= block_a.hashables.balance.number () ? rai::process_result::progress : rai::process_result::overspend; // Is this trying to spend more than they have (Malicious)
+               result.code = rai::process_result::progress;
                if (result.code == rai::process_result::progress)
                {
-                  auto amount (info.balance.number () - block_a.hashables.balance.number ());
-                  ledger.store.representation_add (transaction, info.rep_block, 0 - amount);
+//                  auto amount (info.balance.number () - block_a.hashables.balance.number ());
+//                  ledger.store.representation_add (transaction, info.rep_block, 0 - amount);
                   ledger.store.block_put (transaction, hash, block_a);
-                  ledger.change_latest (transaction, account, hash, info.rep_block, block_a.hashables.balance, info.block_count + 1);
-                  ledger.store.pending_put (transaction, rai::pending_key (block_a.hashables.destination, hash), { account, amount });
+                  ledger.change_latest (transaction, account, hash, info.rep_block, info.balance, info.block_count + 1);
+    //              ledger.store.pending_put (transaction, rai::pending_key (block_a.hashables.destination, hash), { account, amount });
                   ledger.store.frontier_del (transaction, block_a.hashables.previous);
                   ledger.store.frontier_put (transaction, hash, account);
                   result.account = account;
-                  result.amount = amount;
+//                  result.amount = amount;
                   result.pending_account = block_a.hashables.destination;
                }
-#endif
             }
          }
       }

@@ -549,6 +549,16 @@ void rai::bulk_pull_client::received_type ()
 			});
 			break;
 		}
+      case rai::block_type::send_v2:
+      {
+         connection->start_timeout ();
+         boost::asio::async_read (connection->socket, boost::asio::buffer (connection->receive_buffer.data () + 1, rai::send_block::size), [this_l](boost::system::error_code const & ec, size_t size_a) {
+            this_l->connection->stop_timeout ();
+            this_l->received_block (ec, size_a);
+         });
+         break;
+      }
+
 		case rai::block_type::receive:
 		{
 			connection->start_timeout ();
@@ -1619,6 +1629,7 @@ void rai::bulk_pull_server::send_next ()
 			rai::serialize_block (stream, *block);
 		}
 		auto this_l (shared_from_this ());
+
 		if (connection->node->config.logging.bulk_pull_logging ())
 		{
 			BOOST_LOG (connection->node->log) << boost::str (boost::format ("Sending block: %1%") % block->hash ().to_string ());
@@ -1923,6 +1934,13 @@ void rai::bulk_push_server::received_type ()
 			});
 			break;
 		}
+      case rai::block_type::send_v2:
+      {
+         boost::asio::async_read (*connection->socket, boost::asio::buffer (receive_buffer.data () + 1, rai::send_block::size), [this_l](boost::system::error_code const & ec, size_t size_a) {
+            this_l->received_block (ec, size_a);
+         });
+         break;
+      }
 		case rai::block_type::receive:
 		{
 			boost::asio::async_read (*connection->socket, boost::asio::buffer (receive_buffer.data () + 1, rai::receive_block::size), [this_l](boost::system::error_code const & ec, size_t size_a) {
