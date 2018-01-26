@@ -1013,15 +1013,75 @@ rai::block_hash rai::wallet::send_sync (rai::account const & source_a, rai::acco
 	return result.get_future ().get ();
 }
 
+
 void rai::wallet::send_async (rai::account const & source_a, rai::account const & account_a, rai::uint128_t const & amount_a, std::function<void(std::shared_ptr<rai::block>)> const & action_a, bool generate_work_a)
 {
-	node.background ([this, source_a, account_a, amount_a, action_a, generate_work_a]() {
-		this->node.wallets.queue_wallet_action (rai::wallets::high_priority, [this, source_a, account_a, amount_a, action_a, generate_work_a]() {
-			auto block (send_action (source_a, account_a, amount_a, generate_work_a));
-			action_a (block);
-		});
-	});
+   node.background ([this, source_a, account_a, amount_a, action_a, generate_work_a]() {
+      this->node.wallets.queue_wallet_action (rai::wallets::high_priority, [this, source_a, account_a, amount_a, action_a, generate_work_a]() {
+         auto block (send_action (source_a, account_a, amount_a, generate_work_a));
+         action_a (block);
+      });
+   });
 }
+
+
+
+std::shared_ptr<rai::block> rai::wallet::send_action_v2 (rai::account const & source_a, rai::account const & account_a, rai::action const & action_a, bool generate_work_a)
+{
+   std::shared_ptr<rai::block> block;
+   {
+      rai::transaction transaction (store.environment, nullptr, false);
+      if (store.valid_password (transaction))
+      {
+         auto existing (store.find (transaction, source_a));
+         if (existing != store.end ())
+         {
+            rai::account_info info;
+            auto error1 (node.ledger.store.account_get (transaction, source_a, info));
+            assert (!error1);
+            rai::raw_key prv;
+            auto error2 (store.fetch (transaction, source_a, prv));
+            assert (!error2);
+            block.reset (new rai::send_block_v2 (info.head, account_a, action_a, prv, source_a, generate_work_a ? work_fetch (transaction, source_a, info.head) : 0));
+         }
+      }
+   }
+   if (block != nullptr)
+   {
+      assert (block != nullptr);
+      node.block_arrival.add (block->hash ());
+      node.block_processor.process_receive_many (block);
+      if (generate_work_a)
+      {
+         auto hash (block->hash ());
+         auto this_l (shared_from_this ());
+         node.wallets.queue_wallet_action (rai::wallets::generate_priority, [this_l, source_a, hash] {
+            this_l->work_generate (source_a, hash);
+         });
+      }
+   }
+   return block;
+}
+void rai::wallet::send_async_v2 (rai::account const & source_a, rai::account const & account_a, rai::action const & action_a, std::function<void(std::shared_ptr<rai::block>)> const & func_a, bool generate_work_a)
+{
+   node.background ([this, source_a, account_a, action_a, func_a, generate_work_a]() {
+      this->node.wallets.queue_wallet_action (rai::wallets::high_priority, [this, source_a, account_a, action_a, func_a, generate_work_a]() {
+         auto block (send_action_v2 (source_a, account_a, action_a, generate_work_a));
+         func_a (block);
+      });
+   });
+}
+
+rai::block_hash rai::wallet::send_sync_v2 (rai::account const & source_a, rai::account const & account_a, rai::action const & action_a)
+{
+   std::promise<rai::block_hash> result;
+   send_async_v2 (source_a, account_a, action_a, [&result](std::shared_ptr<rai::block> block_a) {
+      result.set_value (block_a->hash ());
+   },
+   true);
+   return result.get_future ().get ();
+}
+
 
 // Update work for account if latest root is root_a
 void rai::wallet::work_update (MDB_txn * transaction_a, rai::account const & account_a, rai::block_hash const & root_a, uint64_t work_a)

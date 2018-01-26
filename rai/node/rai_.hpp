@@ -131,6 +131,7 @@ public:
 
    PyObject* genesis_account();
    PyObject* send (string wallet_text, string source_text, string destination_text, string amount_text, uint64_t work);
+   PyObject* send_v2 (string wallet_text, string source_text, string destination_text, string action_text, uint64_t work);
 
    PyObject* block_count_type ();
 

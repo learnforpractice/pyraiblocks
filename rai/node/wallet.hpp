@@ -124,6 +124,7 @@ public:
 	std::shared_ptr<rai::block> change_action (rai::account const &, rai::account const &, bool = true);
 	std::shared_ptr<rai::block> receive_action (rai::send_block const &, rai::account const &, rai::uint128_union const &, bool = true);
 	std::shared_ptr<rai::block> send_action (rai::account const &, rai::account const &, rai::uint128_t const &, bool = true);
+   std::shared_ptr<rai::block> send_action_v2 (rai::account const &, rai::account const &, rai::action const &, bool = true);
 	wallet (bool &, rai::transaction &, rai::node &, std::string const &);
 	wallet (bool &, rai::transaction &, rai::node &, std::string const &, std::string const &);
 	void enter_initial_password ();
@@ -142,6 +143,10 @@ public:
 	void receive_async (std::shared_ptr<rai::block>, rai::account const &, rai::uint128_t const &, std::function<void(std::shared_ptr<rai::block>)> const &, bool = true);
 	rai::block_hash send_sync (rai::account const &, rai::account const &, rai::uint128_t const &);
 	void send_async (rai::account const &, rai::account const &, rai::uint128_t const &, std::function<void(std::shared_ptr<rai::block>)> const &, bool = true);
+
+	rai::block_hash send_sync_v2 (rai::account const &, rai::account const &, rai::action const &);
+   void send_async_v2 (rai::account const &, rai::account const &, rai::action const &, std::function<void(std::shared_ptr<rai::block>)> const &, bool = true);
+
 	void work_generate (rai::account const &, rai::block_hash const &);
 	void work_update (MDB_txn *, rai::account const &, rai::block_hash const &, uint64_t);
 	uint64_t work_fetch (MDB_txn *, rai::account const &, rai::block_hash const &);

@@ -315,43 +315,54 @@ void rai::send_block::signature_set (rai::uint512_union const & signature_a)
 
 
 
-rai::send_hashables_v2::send_hashables_v2 (rai::block_hash const & previous_a, rai::account const & destination_a, rai::action const & balance_a) :
+rai::send_hashables_v2::send_hashables_v2 (rai::block_hash const & previous_a, rai::account const & destination_a, rai::action const & action_a) :
 previous (previous_a),
 destination (destination_a),
-balance (balance_a)
+_action (action_a)
 {
 }
 
 rai::send_hashables_v2::send_hashables_v2 (bool & error_a, rai::stream & stream_a)
 {
-#if 0
    error_a = rai::read (stream_a, previous.bytes);
    if (!error_a)
    {
       error_a = rai::read (stream_a, destination.bytes);
       if (!error_a)
       {
-         error_a = rai::read (stream_a, balance.bytes);
+         uint8_t c1,c2;
+         stream_a.sgetn (&c1, sizeof (c1));
+         stream_a.sgetn (&c2, sizeof (c2));
+         int nsize = c1+(c2<<8);
+         for (int i=0;i<nsize;i++)
+         {
+            auto read_a = stream_a.sgetn (&c1, sizeof (c1));
+            if (read_a != sizeof(c1))
+            {
+               error_a = true;
+               return;
+            }
+            _action.bytes.push_back(c1);
+         }
+//         error_a = rai::read (stream_a, balance.bytes);
       }
    }
-#endif
 }
 
 rai::send_hashables_v2::send_hashables_v2 (bool & error_a, boost::property_tree::ptree const & tree_a)
 {
-#if 0
    try
    {
       auto previous_l (tree_a.get<std::string> ("previous"));
       auto destination_l (tree_a.get<std::string> ("destination"));
-      auto balance_l (tree_a.get<std::string> ("balance"));
+      auto action_l (tree_a.get<std::string> ("action"));
       error_a = previous.decode_hex (previous_l);
       if (!error_a)
       {
          error_a = destination.decode_account (destination_l);
          if (!error_a)
          {
-            error_a = balance.decode_hex (balance_l);
+            error_a = _action.decode_hex (action_l);
          }
       }
    }
@@ -359,7 +370,6 @@ rai::send_hashables_v2::send_hashables_v2 (bool & error_a, boost::property_tree:
    {
       error_a = true;
    }
-#endif
 }
 
 void rai::send_hashables_v2::hash (blake2b_state & hash_a) const
@@ -368,15 +378,13 @@ void rai::send_hashables_v2::hash (blake2b_state & hash_a) const
    assert (status == 0);
    status = blake2b_update (&hash_a, destination.bytes.data (), sizeof (destination.bytes));
    assert (status == 0);
-   status = blake2b_update (&hash_a, balance.bytes.data (), sizeof (balance.bytes));
+   status = blake2b_update (&hash_a, _action.bytes.data (), _action.bytes.size());
    assert (status == 0);
 }
 
-
-
 void rai::send_block_v2::visit (rai::block_visitor & visitor_a) const
 {
-//   visitor_a.send_block_v2 (*this);
+   visitor_a.send_block_v2 (*this);
 }
 
 void rai::send_block_v2::hash (blake2b_state & hash_a) const
@@ -394,30 +402,30 @@ void rai::send_block_v2::block_work_set (uint64_t work_a)
    work = work_a;
 }
 
-
 void rai::send_block_v2::serialize (rai::stream & stream_a) const
 {
-/*
    write (stream_a, hashables.previous.bytes);
    write (stream_a, hashables.destination.bytes);
-   write (stream_a, hashables.balance.bytes);
+//   write (stream_a, hashables._action.bytes);
+   stream_a.sputc(hashables._action.bytes.size()&0xff);
+   stream_a.sputc(hashables._action.bytes.size()>>8);
+   stream_a.sputn (hashables._action.bytes.data(), hashables._action.bytes.size());
+   stream_a.sputn (hashables._action.bytes.data(), hashables._action.bytes.size());
    write (stream_a, signature.bytes);
    write (stream_a, work);
-*/
 }
 
 void rai::send_block_v2::serialize_json (std::string & string_a) const
 {
-#if 0
    boost::property_tree::ptree tree;
-   tree.put ("type", "send");
+   tree.put ("type", "send_v2");
    std::string previous;
    hashables.previous.encode_hex (previous);
    tree.put ("previous", previous);
    tree.put ("destination", hashables.destination.to_account ());
-   std::string balance;
-   hashables.balance.encode_hex (balance);
-   tree.put ("balance", balance);
+   std::string _action;
+   hashables._action.encode_hex (_action);
+   tree.put ("action", _action);
    std::string signature_l;
    signature.encode_hex (signature_l);
    tree.put ("work", rai::to_string_hex (work));
@@ -425,44 +433,49 @@ void rai::send_block_v2::serialize_json (std::string & string_a) const
    std::stringstream ostream;
    boost::property_tree::write_json (ostream, tree);
    string_a = ostream.str ();
-#endif
 }
 
 bool rai::send_block_v2::deserialize (rai::stream & stream_a)
 {
    auto result (false);
-#if 0
    result = read (stream_a, hashables.previous.bytes);
    if (!result)
    {
       result = read (stream_a, hashables.destination.bytes);
       if (!result)
       {
-         result = read (stream_a, hashables.balance.bytes);
+         uint8_t c1,c2;
+         stream_a.sgetn (&c1, sizeof (c1));
+         stream_a.sgetn (&c2, sizeof (c2));
+         int nsize = c1+(c2<<8);
+         for (int i=0;i<nsize;i++)
+         {
+            auto amount_read = stream_a.sgetn (&c1, sizeof (c1));
+            if (amount_read != sizeof(c1))
+            {
+               return true;
+            }
+            hashables._action.bytes.push_back(c1);
+         }
+         result = read (stream_a, signature.bytes);
          if (!result)
          {
-            result = read (stream_a, signature.bytes);
-            if (!result)
-            {
-               result = read (stream_a, work);
-            }
+            result = read (stream_a, work);
          }
       }
    }
-#endif
    return result;
 }
 
 bool rai::send_block_v2::deserialize_json (boost::property_tree::ptree const & tree_a)
 {
    auto result (false);
-#if 0
    try
    {
       assert (tree_a.get<std::string> ("type") == "send");
       auto previous_l (tree_a.get<std::string> ("previous"));
       auto destination_l (tree_a.get<std::string> ("destination"));
-      auto balance_l (tree_a.get<std::string> ("balance"));
+      auto action_l (tree_a.get<std::string> ("action"));
       auto work_l (tree_a.get<std::string> ("work"));
       auto signature_l (tree_a.get<std::string> ("signature"));
       result = hashables.previous.decode_hex (previous_l);
@@ -471,7 +484,7 @@ bool rai::send_block_v2::deserialize_json (boost::property_tree::ptree const & t
          result = hashables.destination.decode_account (destination_l);
          if (!result)
          {
-            result = hashables.balance.decode_hex (balance_l);
+            result = hashables._action.decode_hex (action_l);
             if (!result)
             {
                result = rai::from_string_hex (work_l, work);
@@ -487,12 +500,11 @@ bool rai::send_block_v2::deserialize_json (boost::property_tree::ptree const & t
    {
       result = true;
    }
-#endif
    return result;
 }
 
-rai::send_block_v2::send_block_v2 (rai::block_hash const & previous_a, rai::account const & destination_a, rai::action const & balance_a, rai::raw_key const & prv_a, rai::public_key const & pub_a, uint64_t work_a) :
-hashables (previous_a, destination_a, balance_a),
+rai::send_block_v2::send_block_v2 (rai::block_hash const & previous_a, rai::account const & destination_a, rai::action const & action_a, rai::raw_key const & prv_a, rai::public_key const & pub_a, uint64_t work_a) :
+hashables (previous_a, destination_a, action_a),
 signature (rai::sign_message (prv_a, pub_a, hash ())),
 work (work_a)
 {
@@ -535,7 +547,7 @@ hashables (error_a, tree_a)
 
 bool rai::send_block_v2::operator== (rai::block const & other_a) const
 {
-   auto other_l (dynamic_cast<rai::send_block const *> (&other_a));
+   auto other_l (dynamic_cast<rai::send_block_v2 const *> (&other_a));
    auto result (other_l != nullptr);
    if (result)
    {
@@ -546,16 +558,14 @@ bool rai::send_block_v2::operator== (rai::block const & other_a) const
 
 rai::block_type rai::send_block_v2::type () const
 {
-   return rai::block_type::send;
+   return rai::block_type::send_v2;
 }
 
-bool rai::send_block_v2::operator== (rai::send_block const & other_a) const
+bool rai::send_block_v2::operator== (rai::send_block_v2 const & other_a) const
 {
-#if 0
-   auto result (hashables.destination == other_a.hashables.destination && hashables.previous == other_a.hashables.previous && hashables.balance == other_a.hashables.balance && work == other_a.work && signature == other_a.signature);
+
+   auto result (hashables.destination == other_a.hashables.destination && hashables.previous == other_a.hashables.previous && hashables._action.bytes == other_a.hashables._action.bytes && work == other_a.work && signature == other_a.signature);
    return result;
-#endif
-   return false;
 }
 
 rai::block_hash rai::send_block_v2::previous () const
@@ -1078,6 +1088,15 @@ std::unique_ptr<rai::block> rai::deserialize_block_json (boost::property_tree::p
 				result = std::move (obj);
 			}
 		}
+      else if (type == "send_v2")
+      {
+         bool error;
+         std::unique_ptr<rai::send_block_v2> obj (new rai::send_block_v2 (error, tree_a));
+         if (!error)
+         {
+            result = std::move (obj);
+         }
+      }
 		else if (type == "open")
 		{
 			bool error;
@@ -1110,7 +1129,12 @@ std::unique_ptr<rai::block> rai::deserialize_block (rai::stream & stream_a)
 	std::unique_ptr<rai::block> result;
 	if (!error)
 	{
+      std::cout<<"deserialize:"<<(int)type<<std::endl;
 		result = rai::deserialize_block (stream_a, type);
+	}
+	else
+	{
+	   std::cout<<"deserialize failed!"<<std::endl;
 	}
 	return result;
 }
@@ -1140,6 +1164,16 @@ std::unique_ptr<rai::block> rai::deserialize_block (rai::stream & stream_a, rai:
 			}
 			break;
 		}
+      case rai::block_type::send_v2:
+      {
+         bool error;
+         std::unique_ptr<rai::send_block_v2> obj (new rai::send_block_v2 (error, stream_a));
+         if (!error)
+         {
+            result = std::move (obj);
+         }
+         break;
+      }
 		case rai::block_type::open:
 		{
 			bool error;

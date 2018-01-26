@@ -891,6 +891,7 @@ PyObject* pyrai::block_count_type ()
    rai::block_counts count (node.store.block_count (transaction));
    PyDict dict;
    dict.add ("send", std::to_string (count.send));
+   dict.add ("send_v2", std::to_string (count.send_v2));
    dict.add ("receive", std::to_string (count.receive));
    dict.add ("open", std::to_string (count.open));
    dict.add ("change", std::to_string (count.change));
@@ -3071,6 +3072,80 @@ PyObject* pyrai::send (string wallet_text, string source_text, string destinatio
 }
 
 
+PyObject* pyrai::send_v2 (string wallet_text, string source_text, string destination_text, string action_text, uint64_t work)
+{
+   rai::uint256_union wallet;
+   auto error (wallet.decode_hex (wallet_text));
+   if (!error)
+   {
+      auto existing (node.wallets.items.find (wallet));
+      if (existing != node.wallets.items.end ())
+      {
+         rai::account source;
+         auto error (source.decode_account (source_text));
+         if (!error)
+         {
+            rai::account destination;
+            auto error (destination.decode_account (destination_text));
+            if (!error)
+            {
+               rai::action _action;
+               _action.bytes = std::vector<uint8_t>(action_text.begin(), action_text.end());
+               {
+                  rai::transaction transaction (node.store.environment, nullptr, work != 0); // false if no "work" in request, true if work > 0
+                  rai::account_info info;
+                  if (!node.store.account_get (transaction, source, info))
+                  {
+                  }
+                  else
+                  {
+                     return set_last_error ("Account not found");
+                  }
+                  if (work)
+                  {
+                     if (!rai::work_validate (info.head, work))
+                     {
+                        existing->second->store.work_put (transaction, source, work);
+                     }
+                     else
+                     {
+                        return set_last_error ("Invalid work");
+                     }
+                  }
+               }
+               promise<string> result;
+               existing->second->send_async_v2 (source, destination, _action, [&result](std::shared_ptr<rai::block> block_a) {
+                  rai::uint256_union hash (0);
+                  if (block_a != nullptr)
+                  {
+                     hash = block_a->hash ();
+                  }
+                  result.set_value(hash.to_string ());
+               },
+               work == 0);
+               string _result = result.get_future ().get ();
+               return py_new_string(_result);
+            }
+            else
+            {
+               return set_last_error ("Bad destination account");
+            }
+         }
+         else
+         {
+            return set_last_error ("Bad source account");
+         }
+      }
+      else
+      {
+         return set_last_error ("Wallet not found");
+      }
+   }
+   else
+   {
+      return set_last_error ("Bad wallet number");
+   }
+}
 
 
 

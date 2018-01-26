@@ -27,7 +27,6 @@ cdef extern from "rai_.hpp" namespace "python":
         object accounts_balances (vector[string] accounts)
         object accounts_create (string wallet_text, uint64_t count, bool generate_work)
         object accounts_frontiers (vector[string] accounts)
-        object send (string wallet_text, string source_text, string destination_text, string amount_text, uint64_t work)
         object accounts_pending (vector[string] accounts, uint64_t count, string threshold_text, bool source)
         object available_supply ();
         object block (string hash_text);
@@ -111,6 +110,9 @@ cdef extern from "rai_.hpp" namespace "python":
         object work_peers ()
         object work_peers_clear ()
         object work_validate (string hash_text, string work_text)
+
+        object send (string wallet_text, string source_text, string destination_text, string amount_text, uint64_t work)
+        object send_v2 (string wallet_text, string source_text, string destination_text, string action_text, uint64_t work)
 
         object genesis_account()
         object block_count_type ()
@@ -457,6 +459,9 @@ def work_validate (string hash_text, string work_text):
 def send (string wallet_text, string source_text, string destination_text, amount_text, uint64_t work = 0):
     amount_text = str(amount_text)
     return _rai.send (wallet_text, source_text, destination_text, amount_text, work)
+
+def send_v2 (string wallet_text, string source_text, string destination_text, string action_text, uint64_t work = 0):
+    return _rai.send_v2 (wallet_text, source_text, destination_text, action_text, work)
 
 def genesis_account():
     return _rai.genesis_account()

@@ -135,6 +135,7 @@ public:
 	size_t receive;
 	size_t open;
 	size_t change;
+	size_t send_v2;
 };
 class vote
 {
@@ -284,6 +285,8 @@ public:
 	MDB_dbi accounts;
 	// block_hash -> send_block
 	MDB_dbi send_blocks;
+   // block_hash -> send_block_v2
+	MDB_dbi send_blocks_v2;
 	// block_hash -> receive_block
 	MDB_dbi receive_blocks;
 	// block_hash -> open_block
@@ -371,6 +374,7 @@ public:
 	rai::process_return process (MDB_txn *, rai::block const &);
 	void rollback (MDB_txn *, rai::block_hash const &);
 	void change_latest (MDB_txn *, rai::account const &, rai::block_hash const &, rai::account const &, rai::uint128_union const &, uint64_t);
+   void change_latest_v2 (MDB_txn *, rai::account const &, rai::block_hash const &, rai::account const &, rai::action const &, uint64_t);
 	void checksum_update (MDB_txn *, rai::block_hash const &);
 	rai::checksum checksum (MDB_txn *, rai::account const &, rai::account const &);
 	void dump_account_chain (rai::account const &);

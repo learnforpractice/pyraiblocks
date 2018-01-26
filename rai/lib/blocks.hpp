@@ -36,7 +36,8 @@ enum class block_type : uint8_t
 	send,
 	receive,
 	open,
-	change
+	change,
+	send_v2
 };
 class block
 {
@@ -105,8 +106,31 @@ public:
 };
 struct action
 {
-   int type;
-   std::vector<char> bytes;
+   std::vector<uint8_t> bytes;
+   void encode_hex(std::string& out) const
+   {
+      std::stringstream ss;
+      ss << std::hex << std::setfill('0');
+      for (size_t i = 0; bytes.size() > i; ++i) {
+         ss << std::setw(2) << static_cast<unsigned int>(static_cast<unsigned char>(bytes[i]));
+      }
+      out = ss.str();
+   }
+   bool decode_hex(std::string& _hex)
+   {
+      if ((_hex.length() % 2) != 0) {
+          throw std::runtime_error("String is not valid length ...");
+      }
+      size_t cnt = _hex.length() / 2;
+      for (size_t i = 0; cnt > i; ++i) {
+          uint32_t s = 0;
+          std::stringstream ss;
+          ss << std::hex << _hex.substr(i * 2, 2);
+          ss >> s;
+          bytes.push_back(static_cast<unsigned char>(s));
+      }
+      return false;
+   }
 };
 
 class send_hashables_v2
@@ -118,7 +142,7 @@ public:
    void hash (blake2b_state &) const;
    rai::block_hash previous;
    rai::account destination;
-   rai::action balance;
+   rai::action _action;
 };
 
 class send_block_v2 : public rai::block
@@ -144,7 +168,7 @@ public:
    rai::block_type type () const override;
    void signature_set (rai::uint512_union const &) override;
    bool operator== (rai::block const &) const override;
-   bool operator== (rai::send_block const &) const;
+   bool operator== (rai::send_block_v2 const &) const;
    static size_t constexpr size = sizeof (rai::account) + sizeof (rai::block_hash) + sizeof (rai::amount) + sizeof (rai::signature) + sizeof (uint64_t);
    send_hashables_v2 hashables;
    rai::signature signature;

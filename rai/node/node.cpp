@@ -2241,6 +2241,7 @@ public:
 	}
    void send_block_v2 (rai::send_block_v2 const & block_a) override
    {
+      printf("confirmed_visitor::send_block_v2\n");
    }
 	void receive_block (rai::receive_block const &) override
 	{
