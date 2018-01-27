@@ -7,8 +7,6 @@
 #include <boost/lexical_cast.hpp>
 #include <boost/program_options.hpp>
 
-#include <dlfcn.h>
-
 #include "py/compile.h"
 #include "py/runtime.h"
 #include "py/builtin.h"
@@ -20,32 +18,6 @@
 #include "extmod/misc.h"
 #include "genhdr/mpversion.h"
 #include "input.h"
-typedef int (*fn_main_micropython)(int argc, char **argv);
-typedef void* (*fn_execute_from_str)(const char *str);
-
-
-void init_smart_contract(int argc, char** argv)
-{
-//   micropython/libmicropython.dylib
-   printf("init_smart_contract\n");
-   {
-   void* lib_handle = dlopen("micropython/libmicropython.dylib", RTLD_LOCAL|RTLD_LAZY);
-   fn_main_micropython main_micropython = (fn_main_micropython)dlsym(lib_handle, "main_micropython");
-   main_micropython(argc,argv);
-   fn_execute_from_str execute_from_str = (fn_execute_from_str)dlsym(lib_handle, "execute_from_str");
-   void * ret = execute_from_str("print('hello,world')");
-   printf("execute_from_str return: %ld\n", ret);
-   }
-
-   {
-   void* lib_handle = dlopen("micropython/libmicropython2.dylib", RTLD_LOCAL|RTLD_LAZY);
-   fn_main_micropython main_micropython = (fn_main_micropython)dlsym(lib_handle, "main_micropython");
-   main_micropython(argc,argv);
-   fn_execute_from_str execute_from_str = (fn_execute_from_str)dlsym(lib_handle, "execute_from_str");
-   void *ret = execute_from_str("print('hello,worldddddddddd')");
-   printf("execute_from_str return: %ld\n", ret);
-   }
-}
 
 class xorshift128
 {
@@ -152,10 +124,6 @@ char** g_argv;
 
 int main (int argc, char ** argv)
 {
-   g_argc = argc;
-   g_argv = argv;
-   init_smart_contract(argc, argv);
-
 	boost::program_options::options_description description ("Command line options");
 	rai::add_node_options (description);
 

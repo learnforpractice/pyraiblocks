@@ -199,6 +199,10 @@ public:
 	bool account_get (MDB_txn *, rai::account const &, rai::account_info &);
 	void account_del (MDB_txn *, rai::account const &);
 	bool account_exists (MDB_txn *, rai::account const &);
+
+	bool account_get_code (MDB_txn * transaction_a, rai::account const & account_a, std::vector<uint8_t>& code);
+	void account_set_code (MDB_txn * transaction_a, rai::account const & account_a, const std::vector<uint8_t>& code);
+
 	rai::store_iterator latest_begin (MDB_txn *, rai::account const &);
 	rai::store_iterator latest_begin (MDB_txn *);
 	rai::store_iterator latest_end ();
@@ -283,6 +287,7 @@ public:
 	MDB_dbi frontiers;
 	// account -> block_hash, representative, balance, timestamp    // Account to head block, representative, balance, last_change
 	MDB_dbi accounts;
+   MDB_dbi vm_codes;
 	// block_hash -> send_block
 	MDB_dbi send_blocks;
    // block_hash -> send_block_v2

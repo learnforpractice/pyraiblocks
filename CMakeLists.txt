@@ -280,6 +280,13 @@ include_directories (${PYTHON_INC}/..)
 add_library (rai_lib SHARED ${RAI_LIB_SOURCES})
 add_library (rai_lib_static STATIC ${RAI_LIB_SOURCES})
 
+include_directories ( ${CMAKE_CURRENT_SOURCE_DIR}/micropython/py )
+include_directories ( ${CMAKE_CURRENT_SOURCE_DIR}/micropython/extmod )
+include_directories ( ${CMAKE_CURRENT_SOURCE_DIR}/micropython/ports/unix )
+include_directories ( ${CMAKE_CURRENT_SOURCE_DIR}/micropython/ports/unix/build )
+include_directories ( ${CMAKE_CURRENT_SOURCE_DIR}/micropython )
+
+
 add_library (node
 	${PLATFORM_NODE_SOURCE}
 	rai/node/bootstrap.cpp
@@ -295,7 +302,8 @@ add_library (node
     rai/node/rai.wrap.cpp
     rai/node/rai_.cpp
     rai/node/rai_.hpp
-
+    rai/node/vm.cpp
+    rai/node/vm.hpp
     rai/node/pyobject.cpp
     rai/node/pyobject.hpp
     rai/node/pyobject.wrap.cpp
@@ -392,9 +400,9 @@ else (WIN32)
 endif (WIN32)
 
 if (RAIBLOCKS_TEST)
-	target_link_libraries (core_test node secure lmdb ed25519 rai_lib_static argon2 ${CRYPTOPP_LIBRARY} gtest_main gtest libminiupnpc-static ${Boost_ATOMIC_LIBRARY} ${Boost_CHRONO_LIBRARY} ${Boost_REGEX_LIBRARY} ${Boost_DATE_TIME_LIBRARY} ${Boost_FILESYSTEM_LIBRARY} ${Boost_SYSTEM_LIBRARY} ${Boost_LOG_LIBRARY} ${Boost_LOG_SETUP_LIBRARY} ${Boost_PROGRAM_OPTIONS_LIBRARY} ${Boost_THREAD_LIBRARY} ${PLATFORM_LIBS})
+	target_link_libraries (core_test node secure lmdb ed25519 rai_lib_static argon2 ${CRYPTOPP_LIBRARY} gtest_main gtest libminiupnpc-static ${Boost_ATOMIC_LIBRARY} ${Boost_CHRONO_LIBRARY} ${Boost_REGEX_LIBRARY} ${Boost_DATE_TIME_LIBRARY} ${Boost_FILESYSTEM_LIBRARY} ${Boost_SYSTEM_LIBRARY} ${Boost_LOG_LIBRARY} ${Boost_LOG_SETUP_LIBRARY} ${Boost_PROGRAM_OPTIONS_LIBRARY} ${Boost_THREAD_LIBRARY} ${PLATFORM_LIBS} micropython)
 
-	target_link_libraries (slow_test node secure lmdb ed25519 rai_lib_static argon2 ${CRYPTOPP_LIBRARY} gtest_main gtest libminiupnpc-static ${Boost_ATOMIC_LIBRARY} ${Boost_CHRONO_LIBRARY} ${Boost_REGEX_LIBRARY} ${Boost_DATE_TIME_LIBRARY} ${Boost_FILESYSTEM_LIBRARY} ${Boost_SYSTEM_LIBRARY} ${Boost_LOG_LIBRARY} ${Boost_PROGRAM_OPTIONS_LIBRARY} ${Boost_LOG_SETUP_LIBRARY} ${Boost_THREAD_LIBRARY} ${PLATFORM_LIBS})
+	target_link_libraries (slow_test node secure lmdb ed25519 rai_lib_static argon2 ${CRYPTOPP_LIBRARY} gtest_main gtest libminiupnpc-static ${Boost_ATOMIC_LIBRARY} ${Boost_CHRONO_LIBRARY} ${Boost_REGEX_LIBRARY} ${Boost_DATE_TIME_LIBRARY} ${Boost_FILESYSTEM_LIBRARY} ${Boost_SYSTEM_LIBRARY} ${Boost_LOG_LIBRARY} ${Boost_PROGRAM_OPTIONS_LIBRARY} ${Boost_LOG_SETUP_LIBRARY} ${Boost_THREAD_LIBRARY} ${PLATFORM_LIBS} micropython)
 endif (RAIBLOCKS_TEST)
 
 if (RAIBLOCKS_GUI)

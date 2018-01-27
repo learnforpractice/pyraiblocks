@@ -3,6 +3,7 @@
 #include <rai/lib/work.hpp>
 #include <rai/node/bootstrap.hpp>
 #include <rai/node/wallet.hpp>
+#include <rai/node/vm.hpp>
 
 #include <condition_variable>
 #include <memory>
@@ -510,6 +511,7 @@ public:
 	rai::work_pool & work;
 	boost::log::sources::logger_mt log;
 	rai::block_store store;
+	rai::VM vm;
 	rai::gap_cache gap_cache;
 	rai::ledger ledger;
 	rai::active_transactions active;

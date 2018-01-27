@@ -1329,6 +1329,7 @@ config (config_a),
 alarm (alarm_a),
 work (work_a),
 store (init_a.block_store_init, application_path_a / "data.ldb", config_a.lmdb_max_dbs),
+vm(store),
 gap_cache (*this),
 ledger (store, config_a.inactive_supply.number ()),
 active (*this),
@@ -2241,7 +2242,7 @@ public:
 	}
    void send_block_v2 (rai::send_block_v2 const & block_a) override
    {
-      printf("confirmed_visitor::send_block_v2\n");
+//      printf("confirmed_visitor::send_block_v2\n");
    }
 	void receive_block (rai::receive_block const &) override
 	{
