@@ -467,6 +467,6 @@ def genesis_account():
     return _rai.genesis_account()
 
 def block_count_type ():
-    return _rai.block_count_type ()
-
+    ret = _rai.block_count_type ()
+    return JsonStruct(ret)
 
