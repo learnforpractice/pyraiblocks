@@ -1,5 +1,23 @@
-#include "pyobject.hpp"
+#include <dlfcn.h>
+
+#include "rai/node/pyobject.hpp"
 #include "rai_.hpp"
+
+#include <rai/node/rpc.hpp>
+#include <boost/algorithm/string.hpp>
+#include <rai/lib/interface.h>
+#include <rai/node/node.hpp>
+#include <ed25519-donna/ed25519.h>
+
+#include <boost/thread/thread.hpp>
+
+
+#include <Python.h>
+
+typedef int (*fn_main_micropython)(int argc, char **argv);
+typedef void* (*fn_execute_from_str)(const char *str);
+typedef mp_obj_t (*fn_micropy_load)(const char *mod_name, const char *data, size_t len);
+void * vm_init_(const char* dl_path);
 
 
 static rai::node *s_node;
@@ -8,7 +26,7 @@ void set_node(rai::node *_node)
    s_node = _node;
 }
 
-namespace python
+namespace rai
 {
 
 static const char* last_error = "";
@@ -19,7 +37,7 @@ PyObject* set_last_error(const char *error)
    return py_new_none();
 }
 
-void clear_last_error_()
+void pyrai::clear_last_error_()
 {
    last_error = "";
 }
@@ -32,20 +50,79 @@ PyObject* set_last_error_return_false(const char *error)
 }
 
 
-const char* get_last_error_()
+const char* pyrai::get_last_error_()
 {
    return last_error;
 }
 
-static pyrai* s_rai = NULL;
-
-pyrai* get_pyrai()
+pyrai::pyrai():node(*s_node), lib_handle(0)
 {
-   if (!s_rai)
-   {
-      s_rai = new pyrai(s_node);
-   }
-   return s_rai;
+}
+
+int pyrai::load_python(const char* dl_path, const char* python_code, int interactive_mode)
+{
+	boost::thread t([this, dl_path, python_code, interactive_mode]() {
+		void* lib_handle;
+		if (dl_path == NULL)
+		{
+			const char *_dl_path = "cpython/libpython3.6m.dylib";
+			lib_handle = dlopen(_dl_path, RTLD_LOCAL|RTLD_NOW);
+		}
+		else
+		{
+			lib_handle = dlopen(dl_path, RTLD_LOCAL|RTLD_NOW);
+		}
+		printf("dl_path %s \n", dl_path);
+		printf("lib_handle: %llu \n", (uint64_t)lib_handle);
+		printf("python_code %s \n", python_code);
+
+		fn_Py_InitializeEx 			_Py_InitializeEx;
+		fn_PyEval_InitThreads 		_PyEval_InitThreads;
+		fn_PyInit_rai 					_PyInit_rai;
+		fn_PyInit_pyobject 			_PyInit_pyobject;
+		fn_PyRun_SimpleStringFlags 	_PyRun_SimpleStringFlags;
+		fn_PyRun_InteractiveLoopFlags _PyRun_InteractiveLoopFlags;
+
+		fn_get_python_api get_python_api;
+
+		_Py_InitializeEx = (fn_Py_InitializeEx)dlsym(lib_handle, "Py_InitializeEx");
+		_PyEval_InitThreads = (fn_PyEval_InitThreads)dlsym(lib_handle, "PyEval_InitThreads");
+		_PyInit_rai = (fn_PyInit_rai)dlsym(lib_handle, "PyInit_rai");
+		_PyInit_pyobject = (fn_PyInit_pyobject)dlsym(lib_handle, "PyInit_pyobject");
+		_PyRun_SimpleStringFlags = (fn_PyRun_SimpleStringFlags)dlsym(lib_handle, "PyRun_SimpleStringFlags");
+		_PyRun_InteractiveLoopFlags = (fn_PyRun_InteractiveLoopFlags)dlsym(lib_handle, "PyRun_InteractiveLoopFlags");
+
+		get_python_api = (fn_get_python_api)dlsym(lib_handle, "get_python_api");
+		fn_register_rai_class register_rai_class = (fn_register_rai_class)dlsym(lib_handle, "register_rai_class");
+
+		struct python_api* _api = get_python_api();
+		register_python_api(_api);
+		register_rai_class(this);
+
+		_Py_InitializeEx(0);
+		_PyEval_InitThreads();
+
+		printf("run %s\n", python_code);
+		printf("++++++python_code %s \n", python_code);
+
+//		_PyRun_SimpleString(python_code);
+
+		if (python_code != NULL)
+		{
+			printf("run %s\n", python_code);
+			_PyRun_SimpleString(python_code);
+		}
+
+		if (interactive_mode)
+		{
+			_PyInit_rai();
+			_PyInit_pyobject();
+			_PyRun_SimpleString("import readline");
+			_PyRun_SimpleString("import rai");
+			_PyRun_InteractiveLoop(stdin, "<stdin>");
+		}
+	});
+	return 1;
 }
 
 class history_visitor : public rai::block_visitor
@@ -3147,7 +3224,38 @@ PyObject* pyrai::send_v2 (string wallet_text, string source_text, string destina
    }
 }
 
+PyObject* pyrai::vm_init(const char* dl_path)
+{
+   lib_handle = vm_init_(dl_path);
+	printf("lib_handle: %llu\n",(uint64_t)lib_handle);
 
+   return py_new_bool(lib_handle!=NULL);
+}
+
+PyObject* pyrai::vm_exec(const char* code)
+{
+	printf("lib_handle: %llu\n",(uint64_t)lib_handle);
+
+	if (lib_handle == NULL)
+	{
+		lib_handle = vm_init_("micropython/libmicropython.dylib");
+	}
+	if (lib_handle == NULL)
+	{
+		return py_new_none();
+	}
+	printf("lib_handle: %llu\n",(uint64_t)lib_handle);
+
+	fn_execute_from_str execute_from_str = (fn_execute_from_str)dlsym(lib_handle, "execute_from_str");
+   void * ret = execute_from_str(code);
+   return py_new_uint64((uint64_t)ret);
+}
+
+PyObject* pyrai::open_dl(const char* dl_path)
+{
+	void *lib_handle = dlopen(dl_path, RTLD_LOCAL|RTLD_NOW);
+	return py_new_uint64((uint64_t)lib_handle);
+}
 
 
 

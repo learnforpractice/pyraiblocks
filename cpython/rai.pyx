@@ -4,11 +4,12 @@ from libcpp.string cimport string
 from libcpp.vector cimport vector
 from libcpp cimport bool
 import json
+import os
 
 cdef extern from *:
     ctypedef unsigned long long uint64_t
 
-cdef extern from "rai_.hpp" namespace "python":
+cdef extern from "rai/node/rai_.hpp" namespace "rai":
     cppclass pyrai:
         int account_block_count (string& account_text)
         object account_balance (string& account_text)
@@ -117,10 +118,19 @@ cdef extern from "rai_.hpp" namespace "python":
         object genesis_account()
         object block_count_type ()
 
+        object vm_init(const char* dl_path)
+        object vm_exec(const char* code)
+
+        int load_python(const char* dl_path, const char* python_code, int interactive_mode)
+
+        object open_dl(const char* dl_path);
+
+        const char* get_last_error_()
+        void clear_last_error_()
+
     pyrai* get_pyrai()
-    const char* get_last_error_()
-    void clear_last_error_()
-    
+
+
 cdef pyrai* _rai = get_pyrai()
 
 class JsonStruct(object):
@@ -152,10 +162,10 @@ def block_count ():
     return _rai.block_count()
 
 def get_last_error():
-    return get_last_error_()
+    return _rai.get_last_error_()
 
 def clear_last_error():
-    clear_last_error_();
+    _rai.clear_last_error_();
 
 def account_balance (string account_text):
     cdef string balance
@@ -469,4 +479,28 @@ def genesis_account():
 def block_count_type ():
     ret = _rai.block_count_type ()
     return JsonStruct(ret)
+
+dylib_index = 0
+def start_py(const char* python_code):
+    global dylib_index
+    
+    print('+++++python_code:', python_code)
+    origin_dylib_path = "cpython/libcpython.dylib"
+    dylib_index += 1
+    dl_path = "cpython/libcpython{0}.dylib".format(dylib_index)
+    if not os.path.exists(dl_path):
+        with open(origin_dylib_path, 'rb') as f1:
+            with open(dl_path, 'wb') as f2:
+                f2.write(f1.read())
+                f2.write(b'abc')
+    _rai.load_python(dl_path, python_code, 0)
+
+def vm_init(const char* dl_path):
+    return _rai.vm_init(dl_path)
+
+def vm_exec(const char* code):
+    return _rai.vm_exec(code)
+
+def dlopen(const char* dl_path):
+    return _rai.open_dl(dl_path)
 

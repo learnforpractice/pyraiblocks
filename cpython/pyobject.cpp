@@ -4,57 +4,35 @@
  *  Created on: Sep 8, 2017
  *      Author: newworld
  */
-#include "rai/node/pyobject.hpp"
+#include "pyobject.hpp"
 
 static struct python_api api = {};
 
-PyObject* (* py_new_none)();
-PyObject* (* py_new_bool)(int b);
-PyObject* (* py_new_string)(std::string s);
-PyObject* (* py_new_int)(int n);
-PyObject* (* py_new_int64)(long long n);
-PyObject* (* py_new_uint64)(unsigned long long n);
-PyObject* (* py_new_float)(double n);
-PyObject* (* py_new_exception)(const char* error);
-
-PyObject* (* array_create)();
-int (* array_size)(PyObject* arr);
-
-void (* array_append)(PyObject* arr, PyObject* v);
-void (* array_append_string)(PyObject* arr, std::string& s);
-void (* array_append_int)(PyObject* arr, int n);
-void (* array_append_double)(PyObject* arr, double n);
-void (* array_append_uint64)(PyObject* arr, unsigned long long n);
-
-PyObject* (* dict_create)();
-void (* dict_add)(PyObject* d, PyObject* key, PyObject* value);
-bool (* dict_get_value)(PyObject* d, const char* key, std::string& value);
-
-
-void register_python_api (struct python_api* _api)
+extern "C" struct python_api* get_python_api ()
 {
-	api = *_api;
-	py_new_none = api.py_new_none;
-	py_new_bool = api.py_new_bool;
-	py_new_string = api.py_new_string;
-	py_new_int = api.py_new_int;
-	py_new_int64 = api.py_new_int64;
-	py_new_uint64 = api.py_new_uint64;
-	py_new_float = api.py_new_float;
-	py_new_exception = api.py_new_exception;
+	api.py_new_none = py_new_none;
+	api.py_new_bool = py_new_bool;
+	api.py_new_string = py_new_string;
 
-	array_create = api.array_create;
-	array_size = api.array_size;
+	api.py_new_int = py_new_int;
+	api.py_new_int64 = py_new_int64;
+	api.py_new_uint64 = py_new_uint64;
+	api.py_new_float = py_new_float;
+	api.py_new_exception = py_new_exception;
 
-	array_append = api.array_append;
-	array_append_string = api.array_append_string;
-	array_append_int = api.array_append_int;
-	array_append_double = api.array_append_double;
-	array_append_uint64 = api.array_append_uint64;
+	api.array_create = array_create;
+	api.array_size = array_size;
 
-	dict_create = api.dict_create;
-	dict_add = api.dict_add;
-	dict_get_value = api.dict_get_value;
+	api.array_append = array_append;
+	api.array_append_string = array_append_string;
+	api.array_append_int = array_append_int;
+	api.array_append_double = array_append_double;
+	api.array_append_uint64 = array_append_uint64;
+
+	api.dict_create = dict_create;
+	api.dict_add = dict_add;
+	api.dict_get_value = dict_get_value;
+	return &api;
 }
 
 

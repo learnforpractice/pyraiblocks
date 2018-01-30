@@ -119,9 +119,6 @@ void fill_zero (void * data)
 }
 #endif // 0
 
-int g_argc;
-char** g_argv;
-
 int main (int argc, char ** argv)
 {
 	boost::program_options::options_description description ("Command line options");

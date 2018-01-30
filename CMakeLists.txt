@@ -1,6 +1,7 @@
 cmake_minimum_required (VERSION 2.8.11)
 project (rai)
 add_subdirectory(micropython)
+add_subdirectory(cpython)
 
 set (CPACK_PACKAGE_VERSION_MAJOR "9")
 set (CPACK_PACKAGE_VERSION_MINOR "0")
@@ -108,6 +109,8 @@ if (RAIBLOCKS_GUI)
 endif (RAIBLOCKS_GUI)
 
 include_directories (${CMAKE_SOURCE_DIR})
+include_directories (${PYTHON_INC})
+
 
 set(Boost_USE_STATIC_LIBS        ON)
 set(Boost_USE_MULTITHREADED      ON)
@@ -262,18 +265,6 @@ SET (RAI_LIB_SOURCES
 	rai/lib/work.hpp
 	rai/lib/work.cpp)
 
-add_custom_command(
-    OUTPUT ${CMAKE_SOURCE_DIR}/rai/node/rai.wrap.cpp
-    COMMAND python3 -m cython --cplus ${CMAKE_SOURCE_DIR}/rai/node/rai.pyx -o ${CMAKE_SOURCE_DIR}/rai/node/rai.wrap.cpp
-    DEPENDS ${CMAKE_SOURCE_DIR}/rai/node/rai.pyx
-)
-
-add_custom_command(
-    OUTPUT ${CMAKE_SOURCE_DIR}/rai/node/pyobject.wrap.cpp
-    COMMAND python3 -m cython --cplus ${CMAKE_SOURCE_DIR}/rai/node/pyobject.pyx -o ${CMAKE_SOURCE_DIR}/rai/node/pyobject.wrap.cpp
-    DEPENDS ${CMAKE_SOURCE_DIR}/rai/node/pyobject.pyx
-)
-
 include_directories (${PYTHON_INC})
 include_directories (${PYTHON_INC}/..)
 
@@ -299,14 +290,13 @@ add_library (node
 	rai/node/openclwork.hpp
 	rai/node/rpc.hpp
 	rai/node/rpc.cpp
-    rai/node/rai.wrap.cpp
     rai/node/rai_.cpp
     rai/node/rai_.hpp
     rai/node/vm.cpp
     rai/node/vm.hpp
+
     rai/node/pyobject.cpp
     rai/node/pyobject.hpp
-    rai/node/pyobject.wrap.cpp
 
 	rai/node/testing.hpp
 	rai/node/testing.cpp
@@ -416,8 +406,6 @@ endif (RAIBLOCKS_GUI)
 target_link_libraries (rai_lib ed25519 xxhash blake2 ${CRYPTOPP_LIBRARY})
 target_link_libraries (rai_lib_static ed25519 xxhash blake2 ${CRYPTOPP_LIBRARY})
 
-add_library(python3.6m SHARED IMPORTED)
-set_property(TARGET python3.6m PROPERTY IMPORTED_LOCATION ${PYTHON_LIB})
 
 add_library( ssl SHARED IMPORTED )
 set_property( TARGET ssl PROPERTY IMPORTED_LOCATION /usr//local/opt/openssl/lib/libssl.dylib )
@@ -425,7 +413,7 @@ set_property( TARGET ssl PROPERTY IMPORTED_LOCATION /usr//local/opt/openssl/lib/
 add_library( crypto SHARED IMPORTED )
 set_property( TARGET crypto PROPERTY IMPORTED_LOCATION /usr//local/opt/openssl/lib/libcrypto.dylib )
 
-target_link_libraries (rai_node node secure lmdb ed25519 rai_lib_static argon2 ${CRYPTOPP_LIBRARY} libminiupnpc-static ${Boost_ATOMIC_LIBRARY} ${Boost_CHRONO_LIBRARY} ${Boost_REGEX_LIBRARY} ${Boost_DATE_TIME_LIBRARY} ${Boost_FILESYSTEM_LIBRARY} ${Boost_SYSTEM_LIBRARY} ${Boost_LOG_LIBRARY} ${Boost_PROGRAM_OPTIONS_LIBRARY} ${Boost_LOG_SETUP_LIBRARY} ${Boost_THREAD_LIBRARY} ${PLATFORM_LIBS} ssl crypto intl python3.6m micropython)
+target_link_libraries (rai_node node secure lmdb ed25519 rai_lib_static argon2 ${CRYPTOPP_LIBRARY} libminiupnpc-static ${Boost_ATOMIC_LIBRARY} ${Boost_CHRONO_LIBRARY} ${Boost_REGEX_LIBRARY} ${Boost_DATE_TIME_LIBRARY} ${Boost_FILESYSTEM_LIBRARY} ${Boost_SYSTEM_LIBRARY} ${Boost_LOG_LIBRARY} ${Boost_PROGRAM_OPTIONS_LIBRARY} ${Boost_LOG_SETUP_LIBRARY} ${Boost_THREAD_LIBRARY} ${PLATFORM_LIBS} ssl crypto intl micropython python3.6m)
 
 set (CPACK_RESOURCE_FILE_LICENSE ${CMAKE_SOURCE_DIR}/LICENSE)
 if (RAIBLOCKS_GUI)

@@ -1,3 +1,5 @@
+#include <dlfcn.h>
+
 #include <rai/rai_node/daemon.hpp>
 
 #include <boost/property_tree/json_parser.hpp>
@@ -9,21 +11,13 @@ void set_node(rai::node *node);
 #include <boost/thread/thread.hpp>
 #include <Python.h>
 
-extern "C" {
-   void PyInit_rai();
-   void PyInit_pyobject();
-}
-void interactive_console()
-{
-   printf("hello, world\n");
-   Py_Initialize();
-   PyEval_InitThreads();
+#include "rai/node/pyobject.hpp"
+#include "rai/node/rai_.hpp"
 
-   PyInit_rai();
-   PyInit_pyobject();
-   PyRun_SimpleString("import readline");
-   PyRun_SimpleString("import rai");
-   PyRun_InteractiveLoop(stdin, "<stdin>");
+void start_interactive_console()
+{
+	rai::pyrai* _rai = new rai::pyrai();
+	_rai->load_python(NULL, NULL, 1);
 }
 
 rai_daemon::daemon_config::daemon_config (boost::filesystem::path const & application_path_a) :
@@ -141,7 +135,8 @@ void rai_daemon::daemon::run (boost::filesystem::path const & data_path)
 			{
 				node->start ();
 		      set_node(node.get());
-		      auto thread_ = boost::thread(interactive_console);
+
+		      start_interactive_console();
 
 				rai::rpc rpc (service, *node, config.rpc);
 				if (config.rpc_enable)

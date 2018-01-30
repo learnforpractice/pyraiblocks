@@ -37,27 +37,27 @@ struct python_api
 
 };
 
-extern PyObject* (* py_new_none)();
-extern PyObject* (* py_new_bool)(int b);
-extern PyObject* (* py_new_string)(std::string s);
-extern PyObject* (* py_new_int)(int n);
-extern PyObject* (* py_new_int64)(long long n);
-extern PyObject* (* py_new_uint64)(unsigned long long n);
-extern PyObject* (* py_new_float)(double n);
-extern PyObject* (* py_new_exception)(const char* error);
+PyObject* py_new_none();
+PyObject* py_new_bool(int b);
+PyObject* py_new_string(std::string s);
+PyObject* py_new_int(int n);
+PyObject* py_new_int64(long long n);
+PyObject* py_new_uint64(unsigned long long n);
+PyObject* py_new_float(double n);
+PyObject* py_new_exception(const char* error);
 
-extern PyObject* (* array_create)();
-extern int (* array_size)(PyObject* arr);
+PyObject* array_create();
+int array_size(PyObject* arr);
 
-extern void (* array_append)(PyObject* arr, PyObject* v);
-extern void (* array_append_string)(PyObject* arr, std::string& s);
-extern void (* array_append_int)(PyObject* arr, int n);
-extern void (* array_append_double)(PyObject* arr, double n);
-extern void (* array_append_uint64)(PyObject* arr, unsigned long long n);
+void array_append(PyObject* arr, PyObject* v);
+void array_append_string(PyObject* arr, std::string& s);
+void array_append_int(PyObject* arr, int n);
+void array_append_double(PyObject* arr, double n);
+void array_append_uint64(PyObject* arr, unsigned long long n);
 
-extern PyObject* (* dict_create)();
-extern void (* dict_add)(PyObject* d, PyObject* key, PyObject* value);
-extern bool (* dict_get_value)(PyObject* d, const char* key, std::string& value);
+PyObject* dict_create();
+void dict_add(PyObject* d, PyObject* key, PyObject* value);
+bool dict_get_value(PyObject* d, const char* key, std::string& value);
 
 
 void register_python_api (struct python_api* api);
@@ -98,3 +98,4 @@ class PyDict {
   private:
    PyObject* pydict;
 };
+
